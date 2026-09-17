@@ -1,4 +1,4 @@
-import { Prisma, AvailabilityStatus } from "@/generated/prisma";
+import { AvailabilityStatus } from "@/generated/prisma/enums";
 import { prisma } from "./client";
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -32,11 +32,38 @@ const PUBLIC_PRODUCT_SELECT = {
   variants: {
     select: { id: true, name: true, priceOverride: true, skuOrRef: true },
   },
-} satisfies Prisma.ProductSelect;
+} as const;
 
-export type PublicProduct = Prisma.ProductGetPayload<{
-  select: typeof PUBLIC_PRODUCT_SELECT;
-}>;
+// Hand-written to match PUBLIC_PRODUCT_SELECT, rather than derived through
+// Prisma's Prisma.ProductGetPayload<...> generic. Prisma 7's newer generator
+// moved that generic machinery to a different internal path than the one
+// documented for the classic generator, and it's not worth re-coupling this
+// file to wherever it lives this version — a plain interface here is exactly
+// as type-safe for our own code and doesn't break the next time Prisma
+// reorganizes its internals.
+export interface PublicProduct {
+  id: string;
+  slug: string;
+  name: string;
+  brand: string | null;
+  condition: string;
+  description: string | null;
+  specs: unknown;
+  recommendedSalePrice: { toString(): string };
+  compareAtPrice: { toString(): string } | null;
+  availability: AvailabilityStatus;
+  tags: string[];
+  metaTitle: string | null;
+  metaDescription: string | null;
+  category: { id: string; name: string; slug: string };
+  images: { url: string; altText: string | null; sortOrder: number }[];
+  variants: {
+    id: string;
+    name: string;
+    priceOverride: { toString(): string } | null;
+    skuOrRef: string | null;
+  }[];
+}
 
 export async function getProductBySlug(slug: string): Promise<PublicProduct | null> {
   return prisma.product.findUnique({

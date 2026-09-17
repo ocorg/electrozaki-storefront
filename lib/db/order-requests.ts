@@ -1,4 +1,4 @@
-import { OrderRequestStatus } from "@/generated/prisma";
+import { OrderRequestStatus } from "@/generated/prisma/enums";
 import { prisma } from "./client";
 
 type OrderRequestItemInput = {
