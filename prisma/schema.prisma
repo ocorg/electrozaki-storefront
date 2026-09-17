@@ -1,0 +1,228 @@
+// ─────────────────────────────────────────────────────────────────────────
+// Electro Zaki Storefront — Prisma Schema (v1)
+// Datasource: Neon (Postgres), accessed via Prisma from Next.js (App Router)
+// ─────────────────────────────────────────────────────────────────────────
+//
+// DESIGN RULE (read this before touching the storefront code):
+// `Product` is the ONLY model the public storefront (product pages, search,
+// collections) is allowed to query. `ProductInternal` holds everything
+// staff-only (cost, supplier, margin, exact stock count). Never `include`
+// or `select` ProductInternal from any file under `app/(storefront)`.
+// The safest way to enforce this in code (built in deliverable 2) is a
+// single `lib/db/public-products.ts` file that is the *only* place allowed
+// to import the Prisma client for product reads on the public side, and
+// whose functions hard-code the field list — so a future developer adding
+// `purchasePrice` to a page has to notice they're bypassing that file.
+// ─────────────────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  // No `url`/`directUrl` here — Prisma 7's driver-adapter architecture takes
+  // the app's connection from the adapter (lib/db/client.ts) and the CLI's
+  // connection from prisma.config.ts, not from this file.
+}
+
+// ── Enums ───────────────────────────────────────────────────────────────
+
+enum ProductCondition {
+  NEW
+  REFURBISHED
+  USED
+}
+
+// Deliberately NOT the ERP's Arabic operational enum (متوفر/مباع/إصلاح/...).
+// That enum describes a phone's position in a POS workflow (sold, mid-repair,
+// mid-exchange, in transfer). A storefront listing only ever needs to say
+// "can a customer request this right now" — so it gets its own, simpler enum.
+enum AvailabilityStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  COMING_SOON // matches the current "coming soon" placeholder on accessory collections
+  DISCONTINUED
+}
+
+enum OrderRequestStatus {
+  NEW
+  CONTACTED
+  CONFIRMED
+  CANCELLED
+}
+
+// ── Catalog ─────────────────────────────────────────────────────────────
+
+// A flat-or-nested category tree, so "Accessoires" can have children like
+// Pochettes / Incassables / Câbles / Chargeurs / Oraimo without hardcoding
+// them as an enum (new subcategories are then a data change, not a deploy).
+model Category {
+  id        String     @id @default(cuid())
+  name      String
+  slug      String     @unique
+  parentId  String?
+  parent    Category?  @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children  Category[] @relation("CategoryToCategory")
+  sortOrder Int        @default(0)
+  products  Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([parentId])
+}
+
+// The PUBLIC product view. Every field here is safe to render on the site.
+model Product {
+  id          String             @id @default(cuid())
+  slug        String             @unique
+  name        String
+  brand       String?
+  condition   ProductCondition
+  description String?            @db.Text
+
+  // Flexible spec sheet (e.g. { "Stockage": "128GB", "RAM": "6GB", "Écran": "6.1\"" })
+  // so phones/laptops/accessories don't need different tables for differing spec sets.
+  specs       Json?
+
+  // Naming matches the ERP's "recommended sale price" concept for a phone,
+  // so a future shared catalog is a rename-free merge, not a remap.
+  recommendedSalePrice Decimal  @db.Decimal(10, 2)
+  compareAtPrice       Decimal? @db.Decimal(10, 2) // optional "was" price for promos
+
+  availability AvailabilityStatus @default(IN_STOCK)
+  tags         String[]           @default([]) // free-form search/facet keywords
+
+  metaTitle       String?
+  metaDescription String?
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  images   ProductImage[]
+  variants ProductVariant[]
+
+  // 1:1 to the staff-only slice. Optional at the type level only because
+  // Prisma requires it on the "many/one" side — every real product should
+  // have one; enforce that in the creation flow, not by making it required
+  // here (making it required here would force every public query to be
+  // capable of loading it, which is exactly what we don't want).
+  internal ProductInternal?
+
+  orderRequestItems OrderRequestItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([availability])
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  altText   String?
+  sortOrder Int     @default(0)
+
+  @@index([productId])
+}
+
+// Optional per-product options (storage size, color, bundle, etc).
+// A product with no meaningful options simply has zero variants.
+model ProductVariant {
+  id            String   @id @default(cuid())
+  productId     String
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name          String   // e.g. "256GB — Bleu"
+  priceOverride Decimal? @db.Decimal(10, 2) // null = use Product.recommendedSalePrice
+  skuOrRef      String?
+
+  orderRequestItems OrderRequestItem[]
+
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+}
+
+// The STAFF-ONLY slice. The storefront's query layer must never import this
+// model. IMEI is deliberately excluded (an ERP-only, per-unit field) — if a
+// future merge needs per-unit serials, that's a new table added at that
+// point, not something v1 needs to carry.
+model ProductInternal {
+  id             String   @id @default(cuid())
+  productId      String   @unique
+  product        Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  purchasePrice  Decimal  @db.Decimal(10, 2)
+  minSalePrice   Decimal  @db.Decimal(10, 2) // price floor, mirrors the ERP's concept
+  supplier       String?                     // plain text for v1, not a Supplier table —
+                                              // the ERP's 4-type supplier model is ERP-only complexity
+  stockQuantity  Int      @default(0)
+  sourceNote     String?                     // e.g. "Douane auction", "reprise client"
+  internalNotes  String?  @db.Text
+
+  updatedAt DateTime @updatedAt
+}
+
+// ── Cart → WhatsApp / order-request handoff ────────────────────────────
+//
+// The cart itself is NOT modeled here — it lives client-side only (React
+// state / localStorage-free session state) until the customer submits it.
+// Submission is the moment a cart becomes durable data, as an OrderRequest.
+// This keeps the schema simple and avoids storing abandoned carts nobody
+// asked to save. If you'd rather persist in-progress carts too, say so
+// before deliverable 2 and this gets a `Cart`/`CartItem` pair added.
+
+model OrderRequest {
+  id             String              @id @default(cuid())
+  customerName   String
+  customerPhone  String
+  status         OrderRequestStatus  @default(NEW)
+  totalEstimate  Decimal             @db.Decimal(10, 2)
+  whatsappOpenedAt DateTime?         // set once the WhatsApp prefill was triggered client-side
+  notes          String?             @db.Text
+
+  items OrderRequestItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+}
+
+model OrderRequestItem {
+  id             String        @id @default(cuid())
+  orderRequestId String
+  orderRequest   OrderRequest  @relation(fields: [orderRequestId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  variantId String?
+  variant   ProductVariant? @relation(fields: [variantId], references: [id])
+
+  // Snapshots — so an edited or later-discontinued product doesn't silently
+  // rewrite the history of what was actually requested.
+  productNameSnapshot String
+  priceAtRequest      Decimal @db.Decimal(10, 2)
+  quantity            Int     @default(1)
+
+  @@index([orderRequestId])
+  @@index([productId])
+}
+
+// ── Contact page ────────────────────────────────────────────────────────
+// Simple durable log of contact-form submissions, separate from OrderRequest
+// since a contact inquiry isn't necessarily about specific products.
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String?
+  email     String?
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+}
