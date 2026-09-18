@@ -49,6 +49,9 @@ export type ProductMinAggregateOutputType = {
   compareAtPrice: runtime.Decimal | null
   availability: $Enums.AvailabilityStatus | null
   batteryHealthPercent: number | null
+  faceIdWorking: boolean | null
+  screenGenuine: boolean | null
+  batteryGenuine: boolean | null
   hasDefects: boolean | null
   transparencyNotes: string | null
   metaTitle: string | null
@@ -69,6 +72,9 @@ export type ProductMaxAggregateOutputType = {
   compareAtPrice: runtime.Decimal | null
   availability: $Enums.AvailabilityStatus | null
   batteryHealthPercent: number | null
+  faceIdWorking: boolean | null
+  screenGenuine: boolean | null
+  batteryGenuine: boolean | null
   hasDefects: boolean | null
   transparencyNotes: string | null
   metaTitle: string | null
@@ -91,6 +97,9 @@ export type ProductCountAggregateOutputType = {
   availability: number
   tags: number
   batteryHealthPercent: number
+  faceIdWorking: number
+  screenGenuine: number
+  batteryGenuine: number
   hasDefects: number
   transparencyNotes: number
   metaTitle: number
@@ -125,6 +134,9 @@ export type ProductMinAggregateInputType = {
   compareAtPrice?: true
   availability?: true
   batteryHealthPercent?: true
+  faceIdWorking?: true
+  screenGenuine?: true
+  batteryGenuine?: true
   hasDefects?: true
   transparencyNotes?: true
   metaTitle?: true
@@ -145,6 +157,9 @@ export type ProductMaxAggregateInputType = {
   compareAtPrice?: true
   availability?: true
   batteryHealthPercent?: true
+  faceIdWorking?: true
+  screenGenuine?: true
+  batteryGenuine?: true
   hasDefects?: true
   transparencyNotes?: true
   metaTitle?: true
@@ -167,6 +182,9 @@ export type ProductCountAggregateInputType = {
   availability?: true
   tags?: true
   batteryHealthPercent?: true
+  faceIdWorking?: true
+  screenGenuine?: true
+  batteryGenuine?: true
   hasDefects?: true
   transparencyNotes?: true
   metaTitle?: true
@@ -276,6 +294,9 @@ export type ProductGroupByOutputType = {
   availability: $Enums.AvailabilityStatus
   tags: string[]
   batteryHealthPercent: number | null
+  faceIdWorking: boolean | null
+  screenGenuine: boolean | null
+  batteryGenuine: boolean | null
   hasDefects: boolean
   transparencyNotes: string | null
   metaTitle: string | null
@@ -321,6 +342,9 @@ export type ProductWhereInput = {
   availability?: Prisma.EnumAvailabilityStatusFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
   batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
+  faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  batteryGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   hasDefects?: Prisma.BoolFilter<"Product"> | boolean
   transparencyNotes?: Prisma.StringNullableFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
@@ -350,6 +374,9 @@ export type ProductOrderByWithRelationInput = {
   availability?: Prisma.SortOrder
   tags?: Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrderInput | Prisma.SortOrder
+  faceIdWorking?: Prisma.SortOrderInput | Prisma.SortOrder
+  screenGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  batteryGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
   hasDefects?: Prisma.SortOrder
   transparencyNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -382,6 +409,9 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   availability?: Prisma.EnumAvailabilityStatusFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
   batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
+  faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  batteryGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   hasDefects?: Prisma.BoolFilter<"Product"> | boolean
   transparencyNotes?: Prisma.StringNullableFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
@@ -411,6 +441,9 @@ export type ProductOrderByWithAggregationInput = {
   availability?: Prisma.SortOrder
   tags?: Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrderInput | Prisma.SortOrder
+  faceIdWorking?: Prisma.SortOrderInput | Prisma.SortOrder
+  screenGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  batteryGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
   hasDefects?: Prisma.SortOrder
   transparencyNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -441,6 +474,9 @@ export type ProductScalarWhereWithAggregatesInput = {
   availability?: Prisma.EnumAvailabilityStatusWithAggregatesFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
   batteryHealthPercent?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
+  faceIdWorking?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
+  screenGenuine?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
+  batteryGenuine?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
   hasDefects?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   transparencyNotes?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
@@ -463,6 +499,9 @@ export type ProductCreateInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -491,6 +530,9 @@ export type ProductUncheckedCreateInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -519,6 +561,9 @@ export type ProductUpdateInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -547,6 +592,9 @@ export type ProductUncheckedUpdateInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -575,6 +623,9 @@ export type ProductCreateManyInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -597,6 +648,9 @@ export type ProductUpdateManyMutationInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -618,6 +672,9 @@ export type ProductUncheckedUpdateManyInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -658,6 +715,9 @@ export type ProductCountOrderByAggregateInput = {
   availability?: Prisma.SortOrder
   tags?: Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrder
+  faceIdWorking?: Prisma.SortOrder
+  screenGenuine?: Prisma.SortOrder
+  batteryGenuine?: Prisma.SortOrder
   hasDefects?: Prisma.SortOrder
   transparencyNotes?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
@@ -684,6 +744,9 @@ export type ProductMaxOrderByAggregateInput = {
   compareAtPrice?: Prisma.SortOrder
   availability?: Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrder
+  faceIdWorking?: Prisma.SortOrder
+  screenGenuine?: Prisma.SortOrder
+  batteryGenuine?: Prisma.SortOrder
   hasDefects?: Prisma.SortOrder
   transparencyNotes?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
@@ -704,6 +767,9 @@ export type ProductMinOrderByAggregateInput = {
   compareAtPrice?: Prisma.SortOrder
   availability?: Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrder
+  faceIdWorking?: Prisma.SortOrder
+  screenGenuine?: Prisma.SortOrder
+  batteryGenuine?: Prisma.SortOrder
   hasDefects?: Prisma.SortOrder
   transparencyNotes?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
@@ -807,6 +873,10 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
@@ -908,6 +978,9 @@ export type ProductCreateWithoutCategoryInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -935,6 +1008,9 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -991,6 +1067,9 @@ export type ProductScalarWhereInput = {
   availability?: Prisma.EnumAvailabilityStatusFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
   batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
+  faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  batteryGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   hasDefects?: Prisma.BoolFilter<"Product"> | boolean
   transparencyNotes?: Prisma.StringNullableFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
@@ -1013,6 +1092,9 @@ export type ProductCreateWithoutImagesInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1040,6 +1122,9 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1083,6 +1168,9 @@ export type ProductUpdateWithoutImagesInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1110,6 +1198,9 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1137,6 +1228,9 @@ export type ProductCreateWithoutVariantsInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1164,6 +1258,9 @@ export type ProductUncheckedCreateWithoutVariantsInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1207,6 +1304,9 @@ export type ProductUpdateWithoutVariantsInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1234,6 +1334,9 @@ export type ProductUncheckedUpdateWithoutVariantsInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1261,6 +1364,9 @@ export type ProductCreateWithoutCompatibleWithPhonesInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1288,6 +1394,9 @@ export type ProductUncheckedCreateWithoutCompatibleWithPhonesInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1320,6 +1429,9 @@ export type ProductCreateWithoutCompatibleAccessoriesInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1347,6 +1459,9 @@ export type ProductUncheckedCreateWithoutCompatibleAccessoriesInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1390,6 +1505,9 @@ export type ProductUpdateWithoutCompatibleWithPhonesInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1417,6 +1535,9 @@ export type ProductUncheckedUpdateWithoutCompatibleWithPhonesInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1455,6 +1576,9 @@ export type ProductUpdateWithoutCompatibleAccessoriesInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1482,6 +1606,9 @@ export type ProductUncheckedUpdateWithoutCompatibleAccessoriesInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1509,6 +1636,9 @@ export type ProductCreateWithoutInternalInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1536,6 +1666,9 @@ export type ProductUncheckedCreateWithoutInternalInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1579,6 +1712,9 @@ export type ProductUpdateWithoutInternalInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1606,6 +1742,9 @@ export type ProductUncheckedUpdateWithoutInternalInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1633,6 +1772,9 @@ export type ProductCreateWithoutOrderRequestItemsInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1660,6 +1802,9 @@ export type ProductUncheckedCreateWithoutOrderRequestItemsInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1703,6 +1848,9 @@ export type ProductUpdateWithoutOrderRequestItemsInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1730,6 +1878,9 @@ export type ProductUncheckedUpdateWithoutOrderRequestItemsInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1757,6 +1908,9 @@ export type ProductCreateManyCategoryInput = {
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
   batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1778,6 +1932,9 @@ export type ProductUpdateWithoutCategoryInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1805,6 +1962,9 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1832,6 +1992,9 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1920,6 +2083,9 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   availability?: boolean
   tags?: boolean
   batteryHealthPercent?: boolean
+  faceIdWorking?: boolean
+  screenGenuine?: boolean
+  batteryGenuine?: boolean
   hasDefects?: boolean
   transparencyNotes?: boolean
   metaTitle?: boolean
@@ -1950,6 +2116,9 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   availability?: boolean
   tags?: boolean
   batteryHealthPercent?: boolean
+  faceIdWorking?: boolean
+  screenGenuine?: boolean
+  batteryGenuine?: boolean
   hasDefects?: boolean
   transparencyNotes?: boolean
   metaTitle?: boolean
@@ -1973,6 +2142,9 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   availability?: boolean
   tags?: boolean
   batteryHealthPercent?: boolean
+  faceIdWorking?: boolean
+  screenGenuine?: boolean
+  batteryGenuine?: boolean
   hasDefects?: boolean
   transparencyNotes?: boolean
   metaTitle?: boolean
@@ -1996,6 +2168,9 @@ export type ProductSelectScalar = {
   availability?: boolean
   tags?: boolean
   batteryHealthPercent?: boolean
+  faceIdWorking?: boolean
+  screenGenuine?: boolean
+  batteryGenuine?: boolean
   hasDefects?: boolean
   transparencyNotes?: boolean
   metaTitle?: boolean
@@ -2005,7 +2180,7 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "batteryHealthPercent" | "hasDefects" | "transparencyNotes" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "batteryHealthPercent" | "faceIdWorking" | "screenGenuine" | "batteryGenuine" | "hasDefects" | "transparencyNotes" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
@@ -2047,6 +2222,9 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     availability: $Enums.AvailabilityStatus
     tags: string[]
     batteryHealthPercent: number | null
+    faceIdWorking: boolean | null
+    screenGenuine: boolean | null
+    batteryGenuine: boolean | null
     hasDefects: boolean
     transparencyNotes: string | null
     metaTitle: string | null
@@ -2496,6 +2674,9 @@ export interface ProductFieldRefs {
   readonly availability: Prisma.FieldRef<"Product", 'AvailabilityStatus'>
   readonly tags: Prisma.FieldRef<"Product", 'String[]'>
   readonly batteryHealthPercent: Prisma.FieldRef<"Product", 'Int'>
+  readonly faceIdWorking: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly screenGenuine: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly batteryGenuine: Prisma.FieldRef<"Product", 'Boolean'>
   readonly hasDefects: Prisma.FieldRef<"Product", 'Boolean'>
   readonly transparencyNotes: Prisma.FieldRef<"Product", 'String'>
   readonly metaTitle: Prisma.FieldRef<"Product", 'String'>
