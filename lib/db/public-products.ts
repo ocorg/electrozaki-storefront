@@ -112,19 +112,49 @@ export async function getProductsByCategorySlug(
   });
 }
 
-export async function searchProducts(query: string): Promise<PublicProduct[]> {
-  const q = query.trim();
-  if (!q) return [];
+export type ProductFilters = {
+  maxPrice?: number;
+  brand?: string;
+  tag?: string;
+};
 
-  return prisma.product.findMany({
-    where: {
-      availability: { not: AvailabilityStatus.DISCONTINUED },
+// `query` and `filters` are independent — the header search bar uses query
+// alone, the homepage phone-finder uses filters alone, and either can
+// combine both. At least one of the two must be present or this returns
+// nothing, so a bare `/search` visit doesn't dump the whole catalog.
+export async function searchProducts(
+  query: string,
+  filters?: ProductFilters
+): Promise<PublicProduct[]> {
+  const q = query.trim();
+  const hasFilters = Boolean(filters?.maxPrice || filters?.brand || filters?.tag);
+  if (!q && !hasFilters) return [];
+
+  const and: Array<Record<string, unknown>> = [
+    { availability: { not: AvailabilityStatus.DISCONTINUED } },
+  ];
+
+  if (q) {
+    and.push({
       OR: [
         { name: { contains: q, mode: "insensitive" } },
         { brand: { contains: q, mode: "insensitive" } },
         { tags: { has: q.toLowerCase() } },
       ],
-    },
+    });
+  }
+  if (filters?.maxPrice) {
+    and.push({ recommendedSalePrice: { lte: filters.maxPrice } });
+  }
+  if (filters?.brand) {
+    and.push({ brand: { contains: filters.brand, mode: "insensitive" } });
+  }
+  if (filters?.tag) {
+    and.push({ tags: { has: filters.tag } });
+  }
+
+  return prisma.product.findMany({
+    where: { AND: and },
     select: PUBLIC_PRODUCT_SELECT,
     take: 30,
   });
