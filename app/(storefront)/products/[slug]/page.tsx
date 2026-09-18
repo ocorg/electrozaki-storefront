@@ -81,7 +81,7 @@ export default async function ProductPage({ params }: Props) {
         <h1 className="text-2xl font-semibold">{product.name}</h1>
 
         <div className="mt-2 flex items-baseline gap-3">
-          <span className="text-xl font-semibold text-[#c8922a]">
+          <span className="rounded bg-[#121212] px-3 py-1.5 text-xl font-bold text-[#c8922a]">
             {formatMAD(product.recommendedSalePrice.toString())}
           </span>
           {product.compareAtPrice && (

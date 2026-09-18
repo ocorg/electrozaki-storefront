@@ -22,20 +22,20 @@ export function Header({ categories }: { categories: Category[] }) {
             <Link
               key={c.id}
               href={`/collections/${c.slug}`}
-              className="text-sm font-medium text-neutral-700 transition-colors hover:text-[#c8922a]"
+              className="text-sm font-medium text-neutral-700 transition-colors hover:text-black hover:underline hover:decoration-[#c8922a] hover:decoration-2"
             >
               {c.name}
             </Link>
           ))}
           <Link
             href="/reparation"
-            className="text-sm font-medium text-neutral-700 transition-colors hover:text-[#c8922a]"
+            className="text-sm font-medium text-neutral-700 transition-colors hover:text-black hover:underline hover:decoration-[#c8922a] hover:decoration-2"
           >
             Réparation
           </Link>
           <Link
             href="/contact"
-            className="text-sm font-medium text-neutral-700 transition-colors hover:text-[#c8922a]"
+            className="text-sm font-medium text-neutral-700 transition-colors hover:text-black hover:underline hover:decoration-[#c8922a] hover:decoration-2"
           >
             Contact
           </Link>
@@ -52,7 +52,7 @@ export function Header({ categories }: { categories: Category[] }) {
             <button
               type="submit"
               aria-label="Rechercher"
-              className="rounded-r border border-black/20 bg-black px-2 py-1.5 text-sm text-white"
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-r border border-black/20 bg-[#121212] text-sm text-white"
             >
               🔍
             </button>
@@ -69,7 +69,7 @@ export function Header({ categories }: { categories: Category[] }) {
 
           <button
             type="button"
-            className="text-xl md:hidden"
+            className="flex h-11 w-11 items-center justify-center text-xl md:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Menu"
             aria-expanded={menuOpen}
@@ -104,7 +104,7 @@ export function Header({ categories }: { categories: Category[] }) {
               placeholder="Rechercher..."
               className="w-full rounded-l border border-r-0 border-black/20 px-2 py-1.5 text-sm"
             />
-            <button type="submit" className="rounded-r border border-black/20 bg-black px-3 text-sm text-white">
+            <button type="submit" className="flex min-h-11 min-w-11 items-center justify-center rounded-r border border-black/20 bg-[#121212] text-sm text-white">
               🔍
             </button>
           </form>

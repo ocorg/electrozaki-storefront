@@ -2,14 +2,14 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="mt-16 border-t border-black/10 bg-black text-neutral-300">
+    <footer className="mt-16 border-t border-black/10 bg-[#121212] text-neutral-300">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-3">
         <div>
           <p className="text-lg font-extrabold text-white">
             ELECTRO <span className="text-[#c8922a]">ZAKI</span>
           </p>
           <p className="mt-2 text-sm">
-            Téléphones neufs et reconditionnés, accessoires, et réparation à Meknès.
+            Téléphones neufs et bon occasion, accessoires, et réparation à Meknès.
           </p>
         </div>
 

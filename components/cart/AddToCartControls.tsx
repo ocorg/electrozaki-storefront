@@ -75,7 +75,7 @@ export function AddToCartControls({
         />
         <button
           onClick={handleAdd}
-          className="flex-1 rounded bg-black px-4 py-3 font-medium text-white transition-colors hover:bg-[#c8922a]"
+          className="flex-1 rounded bg-[#121212] px-4 py-3 font-medium text-white transition-colors hover:bg-[#c8922a]"
         >
           {justAdded ? "Ajouté ✓" : "Ajouter au panier"}
         </button>

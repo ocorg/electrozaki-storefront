@@ -18,7 +18,7 @@ const SERVICES = [
 export default function ReparationPage() {
   return (
     <div>
-      <section className="border-b border-black/10 bg-black px-4 py-20 text-center text-white">
+      <section className="border-b border-black/10 bg-[#121212] px-4 py-20 text-center text-white">
         <h1 className="text-3xl font-extrabold sm:text-4xl">
           Votre téléphone cassé ? <span className="text-[#c8922a]">On s&apos;en occupe.</span>
         </h1>
@@ -56,7 +56,7 @@ export default function ReparationPage() {
         </p>
         <a
           href="https://wa.me/212667654430"
-          className="mt-6 inline-block rounded bg-black px-6 py-3 font-semibold text-white transition-colors hover:bg-[#c8922a] hover:text-black"
+          className="mt-6 inline-block rounded bg-[#121212] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#c8922a] hover:text-black"
         >
           Discuter sur WhatsApp
         </a>

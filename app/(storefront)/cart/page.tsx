@@ -59,7 +59,7 @@ export default function CartPage() {
             // block the customer from reaching WhatsApp.
             void confirmWhatsAppOpened(confirmation.orderRequestId);
           }}
-          className="mt-6 inline-block rounded bg-black px-6 py-3 font-medium text-white transition-colors hover:bg-[#c8922a]"
+          className="mt-6 inline-block rounded bg-[#121212] px-6 py-3 font-medium text-white transition-colors hover:bg-[#c8922a]"
         >
           Ouvrir WhatsApp
         </a>
@@ -76,7 +76,10 @@ export default function CartPage() {
     return (
       <div className="mx-auto max-w-lg px-4 py-16 text-center">
         <h1 className="text-2xl font-semibold">Votre panier est vide</h1>
-        <Link href="/" className="mt-4 inline-block text-[#c8922a] underline">
+        <Link
+          href="/"
+          className="mt-4 inline-block font-medium text-neutral-900 underline decoration-[#c8922a] decoration-2 underline-offset-2"
+        >
           Continuer mes achats
         </Link>
       </div>
@@ -108,7 +111,9 @@ export default function CartPage() {
               {item.variantName && (
                 <p className="text-sm text-neutral-500">{item.variantName}</p>
               )}
-              <p className="text-sm text-[#c8922a]">{formatMAD(item.price)}</p>
+              <p className="mt-1 inline-block rounded bg-[#121212] px-2 py-0.5 text-sm font-bold text-[#c8922a]">
+                {formatMAD(item.price)}
+              </p>
             </div>
             <input
               type="number"
@@ -121,12 +126,12 @@ export default function CartPage() {
                   item.variantId
                 )
               }
-              className="w-16 rounded border border-black/20 px-2 py-1 text-center"
+              className="min-h-11 w-16 rounded border border-black/20 px-2 text-center"
             />
             <button
               type="button"
               onClick={() => removeItem(item.productId, item.variantId)}
-              className="text-sm text-neutral-400 hover:text-black"
+              className="min-h-11 px-2 text-sm text-neutral-400 hover:text-black"
             >
               Retirer
             </button>
@@ -171,7 +176,7 @@ export default function CartPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full rounded bg-black px-4 py-3 font-medium text-white transition-colors hover:bg-[#c8922a] disabled:opacity-50"
+          className="w-full rounded bg-[#121212] px-4 py-3 font-medium text-white transition-colors hover:bg-[#c8922a] disabled:opacity-50"
         >
           {submitting ? "Envoi..." : "Commander via WhatsApp"}
         </button>

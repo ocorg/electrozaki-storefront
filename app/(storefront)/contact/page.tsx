@@ -39,7 +39,7 @@ export default function ContactPage() {
         <h1 className="text-2xl font-bold">Message envoyé ✓</h1>
         <p className="mt-3 text-neutral-600">
           Nous vous répondrons rapidement. Pour une réponse immédiate, contactez-nous sur{" "}
-          <a href="https://wa.me/212667654430" className="text-[#c8922a] underline">
+          <a href="https://wa.me/212667654430" className="font-medium text-neutral-900 underline decoration-[#c8922a] decoration-2 underline-offset-2">
             WhatsApp
           </a>
           .
@@ -53,7 +53,7 @@ export default function ContactPage() {
       <h1 className="text-2xl font-bold">Contactez-nous</h1>
       <p className="mt-2 text-neutral-600">
         Pour une réponse rapide, préférez{" "}
-        <a href="https://wa.me/212667654430" className="text-[#c8922a] underline">
+        <a href="https://wa.me/212667654430" className="font-medium text-neutral-900 underline decoration-[#c8922a] decoration-2 underline-offset-2">
           WhatsApp
         </a>
         . Sinon, écrivez-nous ici.
@@ -96,7 +96,7 @@ export default function ContactPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full rounded bg-black px-4 py-3 font-medium text-white transition-colors hover:bg-[#c8922a] disabled:opacity-50"
+          className="w-full rounded bg-[#121212] px-4 py-3 font-medium text-white transition-colors hover:bg-[#c8922a] disabled:opacity-50"
         >
           {submitting ? "Envoi..." : "Envoyer"}
         </button>

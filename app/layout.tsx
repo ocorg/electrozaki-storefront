@@ -12,7 +12,7 @@ const manrope = Manrope({ subsets: ["latin"], display: "swap" });
 export const metadata: Metadata = {
   title: "Electro Zaki — Téléphones et accessoires à Meknès",
   description:
-    "Téléphones neufs et reconditionnés, accessoires, et réparation à Meknès. Commandez directement sur WhatsApp.",
+    "Téléphones neufs et bon occasion, accessoires, et réparation à Meknès. Commandez directement sur WhatsApp.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

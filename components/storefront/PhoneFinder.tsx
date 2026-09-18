@@ -118,7 +118,7 @@ function FinderStep({
       <p className="mb-4 font-medium">{question}</p>
       {children}
       {onBack && (
-        <button type="button" onClick={onBack} className="mt-4 text-sm text-neutral-500 underline">
+        <button type="button" onClick={onBack} className="mt-4 inline-block min-h-11 px-2 py-2 text-sm text-neutral-500 underline">
           Retour
         </button>
       )}
@@ -140,7 +140,7 @@ function OptionGrid({
           key={label}
           type="button"
           onClick={() => onSelect(label)}
-          className="rounded border border-black/10 px-4 py-3 text-left text-sm transition-colors hover:border-[#c8922a] hover:bg-[#c8922a]/5"
+          className="min-h-11 rounded border border-black/10 px-4 py-3 text-left text-sm transition-colors hover:border-[#c8922a] hover:bg-[#c8922a]/5"
         >
           {label}
         </button>

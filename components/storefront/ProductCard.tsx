@@ -41,7 +41,7 @@ export function ProductCard({ product }: { product: PublicProduct }) {
         )}
         <h3 className="font-medium leading-snug">{product.name}</h3>
         <div className="mt-1 flex items-baseline gap-2">
-          <span className="font-semibold text-[#c8922a]">
+          <span className="rounded bg-[#121212] px-2 py-1 text-sm font-bold text-[#c8922a]">
             {formatMAD(product.recommendedSalePrice.toString())}
           </span>
           {product.compareAtPrice && (

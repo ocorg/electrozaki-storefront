@@ -7,7 +7,7 @@ import { PhoneFinder } from "@/components/storefront/PhoneFinder";
 export const revalidate = 60;
 
 const REASSURANCE = [
-  { icon: "🛡️", title: "Garantie incluse", desc: "Sur tous les téléphones reconditionnés" },
+  { icon: "🛡️", title: "Garantie incluse", desc: "Sur tous les téléphones bon occasion" },
   { icon: "🚚", title: "Livraison à Meknès", desc: "Paiement à la livraison" },
   { icon: "🔧", title: "Techniciens vérifiés", desc: "Diagnostic avant chaque vente" },
   { icon: "💬", title: "Support WhatsApp", desc: "Réponse rapide, sans robot" },
@@ -21,14 +21,14 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="relative overflow-hidden border-b border-black/10 bg-black px-4 py-24 text-center text-white">
+      <section className="relative overflow-hidden border-b border-black/10 bg-[#121212] px-4 py-24 text-center text-white">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(200,146,42,0.25),_transparent_60%)]" />
         <div className="relative">
           <h1 className="text-3xl font-extrabold sm:text-4xl">
             Le bon téléphone, <span className="text-[#c8922a]">au bon prix.</span>
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-neutral-300">
-            Neufs, reconditionnés et accessoires — vérifiés, garantis, à Meknès.
+            Neufs, bon occasion et accessoires — vérifiés, garantis, à Meknès.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <a
