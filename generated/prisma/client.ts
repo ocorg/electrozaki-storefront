@@ -86,3 +86,8 @@ export type OrderRequestItem = Prisma.OrderRequestItemModel
  * 
  */
 export type ContactMessage = Prisma.ContactMessageModel
+/**
+ * Model RepairRequest
+ * 
+ */
+export type RepairRequest = Prisma.RepairRequestModel

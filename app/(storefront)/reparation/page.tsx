@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RepairDiagnostic } from "@/components/storefront/RepairDiagnostic";
 
 export const metadata: Metadata = {
   title: "Réparation — Electro Zaki",
@@ -26,16 +27,24 @@ export default function ReparationPage() {
           Diagnostic rapide, pièces de qualité, devis gratuit avant toute réparation.
         </p>
         <a
-          href="https://wa.me/212667654430?text=Bonjour%2C%20j%27aimerais%20un%20devis%20de%20r%C3%A9paration"
+          href="#diagnostic"
           className="mt-6 inline-block rounded bg-[#c8922a] px-6 py-3 font-semibold text-black transition-opacity hover:opacity-90"
         >
-          Devis gratuit sur WhatsApp
+          Demander un diagnostic ou un devis
         </a>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-14">
+      <section id="diagnostic" className="mx-auto max-w-2xl px-4 py-14">
+        <h2 className="text-center text-2xl font-bold">Demander un diagnostic ou un devis</h2>
+        <p className="mt-2 text-center text-neutral-600">
+          3 étapes rapides, sans avoir à décrire techniquement le problème.
+        </p>
+        <RepairDiagnostic />
+      </section>
+
+      <section className="border-t border-black/10 px-4 py-14">
         <h2 className="mb-8 text-center text-2xl font-bold">Nos services de réparation</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s) => (
             <div
               key={s.title}

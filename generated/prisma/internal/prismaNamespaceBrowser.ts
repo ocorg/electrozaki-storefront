@@ -59,7 +59,8 @@ export const ModelName = {
   ProductInternal: 'ProductInternal',
   OrderRequest: 'OrderRequest',
   OrderRequestItem: 'OrderRequestItem',
-  ContactMessage: 'ContactMessage'
+  ContactMessage: 'ContactMessage',
+  RepairRequest: 'RepairRequest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -206,6 +207,22 @@ export const ContactMessageScalarFieldEnum = {
 } as const
 
 export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnum)[keyof typeof ContactMessageScalarFieldEnum]
+
+
+export const RepairRequestScalarFieldEnum = {
+  id: 'id',
+  customerName: 'customerName',
+  customerPhone: 'customerPhone',
+  deviceBrand: 'deviceBrand',
+  deviceModel: 'deviceModel',
+  problemAreas: 'problemAreas',
+  notes: 'notes',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RepairRequestScalarFieldEnum = (typeof RepairRequestScalarFieldEnum)[keyof typeof RepairRequestScalarFieldEnum]
 
 
 export const SortOrder = {

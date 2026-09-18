@@ -274,3 +274,34 @@ model ContactMessage {
   message   String   @db.Text
   createdAt DateTime @default(now())
 }
+
+// ── Repair diagnostic (phase-2) ─────────────────────────────────────────
+
+enum RepairRequestStatus {
+  NEW
+  CONTACTED
+  QUOTED
+  CONFIRMED
+  CANCELLED
+}
+
+// Not linked to Product — a device brought in for repair is often a model
+// we don't sell, so device info is free text rather than a Product
+// reference. problemAreas is a plain string array of area keys (ecran,
+// batterie, camera, connecteur, son, reseau) chosen from the interactive
+// diagnostic step, not user-typed.
+model RepairRequest {
+  id            String              @id @default(cuid())
+  customerName  String
+  customerPhone String
+  deviceBrand   String
+  deviceModel   String
+  problemAreas  String[]
+  notes         String?             @db.Text
+  status        RepairRequestStatus @default(NEW)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+}

@@ -405,7 +405,8 @@ export const ModelName = {
   ProductInternal: 'ProductInternal',
   OrderRequest: 'OrderRequest',
   OrderRequestItem: 'OrderRequestItem',
-  ContactMessage: 'ContactMessage'
+  ContactMessage: 'ContactMessage',
+  RepairRequest: 'RepairRequest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -421,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage"
+    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage" | "repairRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1091,6 +1092,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RepairRequest: {
+      payload: Prisma.$RepairRequestPayload<ExtArgs>
+      fields: Prisma.RepairRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RepairRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RepairRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.RepairRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RepairRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairRequestPayload>
+        }
+        findMany: {
+          args: Prisma.RepairRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairRequestPayload>[]
+        }
+        create: {
+          args: Prisma.RepairRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairRequestPayload>
+        }
+        createMany: {
+          args: Prisma.RepairRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RepairRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.RepairRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairRequestPayload>
+        }
+        update: {
+          args: Prisma.RepairRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.RepairRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RepairRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RepairRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.RepairRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.RepairRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRepairRequest>
+        }
+        groupBy: {
+          args: Prisma.RepairRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RepairRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairRequestCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1260,6 +1335,22 @@ export const ContactMessageScalarFieldEnum = {
 export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnum)[keyof typeof ContactMessageScalarFieldEnum]
 
 
+export const RepairRequestScalarFieldEnum = {
+  id: 'id',
+  customerName: 'customerName',
+  customerPhone: 'customerPhone',
+  deviceBrand: 'deviceBrand',
+  deviceModel: 'deviceModel',
+  problemAreas: 'problemAreas',
+  notes: 'notes',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RepairRequestScalarFieldEnum = (typeof RepairRequestScalarFieldEnum)[keyof typeof RepairRequestScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1423,6 +1514,20 @@ export type EnumOrderRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'OrderRequestStatus[]'
  */
 export type ListEnumOrderRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderRequestStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RepairRequestStatus'
+ */
+export type EnumRepairRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RepairRequestStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'RepairRequestStatus[]'
+ */
+export type ListEnumRepairRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RepairRequestStatus[]'>
     
 
 
@@ -1599,6 +1704,7 @@ export type GlobalOmitConfig = {
   orderRequest?: Prisma.OrderRequestOmit
   orderRequestItem?: Prisma.OrderRequestItemOmit
   contactMessage?: Prisma.ContactMessageOmit
+  repairRequest?: Prisma.RepairRequestOmit
 }
 
 /* Types for Logging */

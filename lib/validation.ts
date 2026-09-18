@@ -1,8 +1,9 @@
 import { z } from "zod";
 
 // Accepts 06/07/05-style Moroccan mobile numbers, with or without +212,
-// with or without spaces/dashes/dots between groups.
-const MOROCCAN_PHONE_RE = /^(?:\+212|0)[\s.-]?[5-7](?:[\s.-]?\d){8}$/;
+// with or without spaces/dashes/dots between groups. Exported so other
+// forms (repair request) validate phone numbers the same way.
+export const MOROCCAN_PHONE_RE = /^(?:\+212|0)[\s.-]?[5-7](?:[\s.-]?\d){8}$/;
 
 export const orderRequestSchema = z.object({
   customerName: z

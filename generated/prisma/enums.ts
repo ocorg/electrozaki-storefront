@@ -37,3 +37,14 @@ export const OrderRequestStatus = {
 } as const
 
 export type OrderRequestStatus = (typeof OrderRequestStatus)[keyof typeof OrderRequestStatus]
+
+
+export const RepairRequestStatus = {
+  NEW: 'NEW',
+  CONTACTED: 'CONTACTED',
+  QUOTED: 'QUOTED',
+  CONFIRMED: 'CONFIRMED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type RepairRequestStatus = (typeof RepairRequestStatus)[keyof typeof RepairRequestStatus]
