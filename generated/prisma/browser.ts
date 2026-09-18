@@ -38,6 +38,11 @@ export type ProductImage = Prisma.ProductImageModel
  */
 export type ProductVariant = Prisma.ProductVariantModel
 /**
+ * Model ProductCompatibility
+ * 
+ */
+export type ProductCompatibility = Prisma.ProductCompatibilityModel
+/**
  * Model ProductInternal
  * 
  */

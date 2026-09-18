@@ -29,11 +29,13 @@ export type AggregateProduct = {
 export type ProductAvgAggregateOutputType = {
   recommendedSalePrice: runtime.Decimal | null
   compareAtPrice: runtime.Decimal | null
+  batteryHealthPercent: number | null
 }
 
 export type ProductSumAggregateOutputType = {
   recommendedSalePrice: runtime.Decimal | null
   compareAtPrice: runtime.Decimal | null
+  batteryHealthPercent: number | null
 }
 
 export type ProductMinAggregateOutputType = {
@@ -46,6 +48,9 @@ export type ProductMinAggregateOutputType = {
   recommendedSalePrice: runtime.Decimal | null
   compareAtPrice: runtime.Decimal | null
   availability: $Enums.AvailabilityStatus | null
+  batteryHealthPercent: number | null
+  hasDefects: boolean | null
+  transparencyNotes: string | null
   metaTitle: string | null
   metaDescription: string | null
   categoryId: string | null
@@ -63,6 +68,9 @@ export type ProductMaxAggregateOutputType = {
   recommendedSalePrice: runtime.Decimal | null
   compareAtPrice: runtime.Decimal | null
   availability: $Enums.AvailabilityStatus | null
+  batteryHealthPercent: number | null
+  hasDefects: boolean | null
+  transparencyNotes: string | null
   metaTitle: string | null
   metaDescription: string | null
   categoryId: string | null
@@ -82,6 +90,9 @@ export type ProductCountAggregateOutputType = {
   compareAtPrice: number
   availability: number
   tags: number
+  batteryHealthPercent: number
+  hasDefects: number
+  transparencyNotes: number
   metaTitle: number
   metaDescription: number
   categoryId: number
@@ -94,11 +105,13 @@ export type ProductCountAggregateOutputType = {
 export type ProductAvgAggregateInputType = {
   recommendedSalePrice?: true
   compareAtPrice?: true
+  batteryHealthPercent?: true
 }
 
 export type ProductSumAggregateInputType = {
   recommendedSalePrice?: true
   compareAtPrice?: true
+  batteryHealthPercent?: true
 }
 
 export type ProductMinAggregateInputType = {
@@ -111,6 +124,9 @@ export type ProductMinAggregateInputType = {
   recommendedSalePrice?: true
   compareAtPrice?: true
   availability?: true
+  batteryHealthPercent?: true
+  hasDefects?: true
+  transparencyNotes?: true
   metaTitle?: true
   metaDescription?: true
   categoryId?: true
@@ -128,6 +144,9 @@ export type ProductMaxAggregateInputType = {
   recommendedSalePrice?: true
   compareAtPrice?: true
   availability?: true
+  batteryHealthPercent?: true
+  hasDefects?: true
+  transparencyNotes?: true
   metaTitle?: true
   metaDescription?: true
   categoryId?: true
@@ -147,6 +166,9 @@ export type ProductCountAggregateInputType = {
   compareAtPrice?: true
   availability?: true
   tags?: true
+  batteryHealthPercent?: true
+  hasDefects?: true
+  transparencyNotes?: true
   metaTitle?: true
   metaDescription?: true
   categoryId?: true
@@ -253,6 +275,9 @@ export type ProductGroupByOutputType = {
   compareAtPrice: runtime.Decimal | null
   availability: $Enums.AvailabilityStatus
   tags: string[]
+  batteryHealthPercent: number | null
+  hasDefects: boolean
+  transparencyNotes: string | null
   metaTitle: string | null
   metaDescription: string | null
   categoryId: string
@@ -295,6 +320,9 @@ export type ProductWhereInput = {
   compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
+  batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
+  hasDefects?: Prisma.BoolFilter<"Product"> | boolean
+  transparencyNotes?: Prisma.StringNullableFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
   metaDescription?: Prisma.StringNullableFilter<"Product"> | string | null
   categoryId?: Prisma.StringFilter<"Product"> | string
@@ -303,6 +331,8 @@ export type ProductWhereInput = {
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   images?: Prisma.ProductImageListRelationFilter
   variants?: Prisma.ProductVariantListRelationFilter
+  compatibleAccessories?: Prisma.ProductCompatibilityListRelationFilter
+  compatibleWithPhones?: Prisma.ProductCompatibilityListRelationFilter
   internal?: Prisma.XOR<Prisma.ProductInternalNullableScalarRelationFilter, Prisma.ProductInternalWhereInput> | null
   orderRequestItems?: Prisma.OrderRequestItemListRelationFilter
 }
@@ -319,6 +349,9 @@ export type ProductOrderByWithRelationInput = {
   compareAtPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   availability?: Prisma.SortOrder
   tags?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrderInput | Prisma.SortOrder
+  hasDefects?: Prisma.SortOrder
+  transparencyNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   categoryId?: Prisma.SortOrder
@@ -327,6 +360,8 @@ export type ProductOrderByWithRelationInput = {
   category?: Prisma.CategoryOrderByWithRelationInput
   images?: Prisma.ProductImageOrderByRelationAggregateInput
   variants?: Prisma.ProductVariantOrderByRelationAggregateInput
+  compatibleAccessories?: Prisma.ProductCompatibilityOrderByRelationAggregateInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityOrderByRelationAggregateInput
   internal?: Prisma.ProductInternalOrderByWithRelationInput
   orderRequestItems?: Prisma.OrderRequestItemOrderByRelationAggregateInput
 }
@@ -346,6 +381,9 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
+  batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
+  hasDefects?: Prisma.BoolFilter<"Product"> | boolean
+  transparencyNotes?: Prisma.StringNullableFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
   metaDescription?: Prisma.StringNullableFilter<"Product"> | string | null
   categoryId?: Prisma.StringFilter<"Product"> | string
@@ -354,6 +392,8 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   images?: Prisma.ProductImageListRelationFilter
   variants?: Prisma.ProductVariantListRelationFilter
+  compatibleAccessories?: Prisma.ProductCompatibilityListRelationFilter
+  compatibleWithPhones?: Prisma.ProductCompatibilityListRelationFilter
   internal?: Prisma.XOR<Prisma.ProductInternalNullableScalarRelationFilter, Prisma.ProductInternalWhereInput> | null
   orderRequestItems?: Prisma.OrderRequestItemListRelationFilter
 }, "id" | "slug">
@@ -370,6 +410,9 @@ export type ProductOrderByWithAggregationInput = {
   compareAtPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   availability?: Prisma.SortOrder
   tags?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrderInput | Prisma.SortOrder
+  hasDefects?: Prisma.SortOrder
+  transparencyNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   categoryId?: Prisma.SortOrder
@@ -397,6 +440,9 @@ export type ProductScalarWhereWithAggregatesInput = {
   compareAtPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusWithAggregatesFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
+  batteryHealthPercent?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
+  hasDefects?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
+  transparencyNotes?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   metaDescription?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   categoryId?: Prisma.StringWithAggregatesFilter<"Product"> | string
@@ -416,6 +462,9 @@ export type ProductCreateInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   createdAt?: Date | string
@@ -423,6 +472,8 @@ export type ProductCreateInput = {
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
 }
@@ -439,6 +490,9 @@ export type ProductUncheckedCreateInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   categoryId: string
@@ -446,6 +500,8 @@ export type ProductUncheckedCreateInput = {
   updatedAt?: Date | string
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
 }
@@ -462,6 +518,9 @@ export type ProductUpdateInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -469,6 +528,8 @@ export type ProductUpdateInput = {
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
 }
@@ -485,6 +546,9 @@ export type ProductUncheckedUpdateInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -492,6 +556,8 @@ export type ProductUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -508,6 +574,9 @@ export type ProductCreateManyInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   categoryId: string
@@ -527,6 +596,9 @@ export type ProductUpdateManyMutationInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -545,6 +617,9 @@ export type ProductUncheckedUpdateManyInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -582,6 +657,9 @@ export type ProductCountOrderByAggregateInput = {
   compareAtPrice?: Prisma.SortOrder
   availability?: Prisma.SortOrder
   tags?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrder
+  hasDefects?: Prisma.SortOrder
+  transparencyNotes?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
@@ -592,6 +670,7 @@ export type ProductCountOrderByAggregateInput = {
 export type ProductAvgOrderByAggregateInput = {
   recommendedSalePrice?: Prisma.SortOrder
   compareAtPrice?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrder
 }
 
 export type ProductMaxOrderByAggregateInput = {
@@ -604,6 +683,9 @@ export type ProductMaxOrderByAggregateInput = {
   recommendedSalePrice?: Prisma.SortOrder
   compareAtPrice?: Prisma.SortOrder
   availability?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrder
+  hasDefects?: Prisma.SortOrder
+  transparencyNotes?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
@@ -621,6 +703,9 @@ export type ProductMinOrderByAggregateInput = {
   recommendedSalePrice?: Prisma.SortOrder
   compareAtPrice?: Prisma.SortOrder
   availability?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrder
+  hasDefects?: Prisma.SortOrder
+  transparencyNotes?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
@@ -631,6 +716,7 @@ export type ProductMinOrderByAggregateInput = {
 export type ProductSumOrderByAggregateInput = {
   recommendedSalePrice?: Prisma.SortOrder
   compareAtPrice?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrder
 }
 
 export type ProductScalarRelationFilter = {
@@ -713,6 +799,18 @@ export type ProductUpdatetagsInput = {
   push?: string | string[]
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type ProductCreateNestedOneWithoutImagesInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutImagesInput, Prisma.ProductUncheckedCreateWithoutImagesInput>
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutImagesInput
@@ -739,6 +837,34 @@ export type ProductUpdateOneRequiredWithoutVariantsNestedInput = {
   upsert?: Prisma.ProductUpsertWithoutVariantsInput
   connect?: Prisma.ProductWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutVariantsInput, Prisma.ProductUpdateWithoutVariantsInput>, Prisma.ProductUncheckedUpdateWithoutVariantsInput>
+}
+
+export type ProductCreateNestedOneWithoutCompatibleWithPhonesInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutCompatibleWithPhonesInput, Prisma.ProductUncheckedCreateWithoutCompatibleWithPhonesInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutCompatibleWithPhonesInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductCreateNestedOneWithoutCompatibleAccessoriesInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutCompatibleAccessoriesInput, Prisma.ProductUncheckedCreateWithoutCompatibleAccessoriesInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutCompatibleAccessoriesInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutCompatibleWithPhonesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutCompatibleWithPhonesInput, Prisma.ProductUncheckedCreateWithoutCompatibleWithPhonesInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutCompatibleWithPhonesInput
+  upsert?: Prisma.ProductUpsertWithoutCompatibleWithPhonesInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutCompatibleWithPhonesInput, Prisma.ProductUpdateWithoutCompatibleWithPhonesInput>, Prisma.ProductUncheckedUpdateWithoutCompatibleWithPhonesInput>
+}
+
+export type ProductUpdateOneRequiredWithoutCompatibleAccessoriesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutCompatibleAccessoriesInput, Prisma.ProductUncheckedCreateWithoutCompatibleAccessoriesInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutCompatibleAccessoriesInput
+  upsert?: Prisma.ProductUpsertWithoutCompatibleAccessoriesInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutCompatibleAccessoriesInput, Prisma.ProductUpdateWithoutCompatibleAccessoriesInput>, Prisma.ProductUncheckedUpdateWithoutCompatibleAccessoriesInput>
 }
 
 export type ProductCreateNestedOneWithoutInternalInput = {
@@ -781,12 +907,17 @@ export type ProductCreateWithoutCategoryInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
 }
@@ -803,12 +934,17 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
 }
@@ -854,6 +990,9 @@ export type ProductScalarWhereInput = {
   compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
+  batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
+  hasDefects?: Prisma.BoolFilter<"Product"> | boolean
+  transparencyNotes?: Prisma.StringNullableFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
   metaDescription?: Prisma.StringNullableFilter<"Product"> | string | null
   categoryId?: Prisma.StringFilter<"Product"> | string
@@ -873,12 +1012,17 @@ export type ProductCreateWithoutImagesInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
 }
@@ -895,12 +1039,17 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   categoryId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
 }
@@ -933,12 +1082,17 @@ export type ProductUpdateWithoutImagesInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
 }
@@ -955,12 +1109,17 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -977,12 +1136,17 @@ export type ProductCreateWithoutVariantsInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
 }
@@ -999,12 +1163,17 @@ export type ProductUncheckedCreateWithoutVariantsInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   categoryId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
 }
@@ -1037,12 +1206,17 @@ export type ProductUpdateWithoutVariantsInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
 }
@@ -1059,12 +1233,265 @@ export type ProductUncheckedUpdateWithoutVariantsInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
+  internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
+  orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutCompatibleWithPhonesInput = {
+  id?: string
+  slug: string
+  name: string
+  brand?: string | null
+  condition: $Enums.ProductCondition
+  description?: string | null
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: $Enums.AvailabilityStatus
+  tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  category: Prisma.CategoryCreateNestedOneWithoutProductsInput
+  images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
+  variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
+  internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
+  orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutCompatibleWithPhonesInput = {
+  id?: string
+  slug: string
+  name: string
+  brand?: string | null
+  condition: $Enums.ProductCondition
+  description?: string | null
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: $Enums.AvailabilityStatus
+  tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  categoryId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
+  variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
+  internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
+  orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutCompatibleWithPhonesInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutCompatibleWithPhonesInput, Prisma.ProductUncheckedCreateWithoutCompatibleWithPhonesInput>
+}
+
+export type ProductCreateWithoutCompatibleAccessoriesInput = {
+  id?: string
+  slug: string
+  name: string
+  brand?: string | null
+  condition: $Enums.ProductCondition
+  description?: string | null
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: $Enums.AvailabilityStatus
+  tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  category: Prisma.CategoryCreateNestedOneWithoutProductsInput
+  images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
+  variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
+  internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
+  orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutCompatibleAccessoriesInput = {
+  id?: string
+  slug: string
+  name: string
+  brand?: string | null
+  condition: $Enums.ProductCondition
+  description?: string | null
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: $Enums.AvailabilityStatus
+  tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  categoryId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
+  variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
+  internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
+  orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutCompatibleAccessoriesInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutCompatibleAccessoriesInput, Prisma.ProductUncheckedCreateWithoutCompatibleAccessoriesInput>
+}
+
+export type ProductUpsertWithoutCompatibleWithPhonesInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutCompatibleWithPhonesInput, Prisma.ProductUncheckedUpdateWithoutCompatibleWithPhonesInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutCompatibleWithPhonesInput, Prisma.ProductUncheckedCreateWithoutCompatibleWithPhonesInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutCompatibleWithPhonesInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutCompatibleWithPhonesInput, Prisma.ProductUncheckedUpdateWithoutCompatibleWithPhonesInput>
+}
+
+export type ProductUpdateWithoutCompatibleWithPhonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
+  tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
+  images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
+  variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
+  internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
+  orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutCompatibleWithPhonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
+  tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
+  variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
+  internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
+  orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUpsertWithoutCompatibleAccessoriesInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutCompatibleAccessoriesInput, Prisma.ProductUncheckedUpdateWithoutCompatibleAccessoriesInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutCompatibleAccessoriesInput, Prisma.ProductUncheckedCreateWithoutCompatibleAccessoriesInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutCompatibleAccessoriesInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutCompatibleAccessoriesInput, Prisma.ProductUncheckedUpdateWithoutCompatibleAccessoriesInput>
+}
+
+export type ProductUpdateWithoutCompatibleAccessoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
+  tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
+  images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
+  variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
+  internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
+  orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutCompatibleAccessoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
+  tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
+  variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -1081,6 +1508,9 @@ export type ProductCreateWithoutInternalInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   createdAt?: Date | string
@@ -1088,6 +1518,8 @@ export type ProductCreateWithoutInternalInput = {
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
 }
 
@@ -1103,6 +1535,9 @@ export type ProductUncheckedCreateWithoutInternalInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   categoryId: string
@@ -1110,6 +1545,8 @@ export type ProductUncheckedCreateWithoutInternalInput = {
   updatedAt?: Date | string
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
 }
 
@@ -1141,6 +1578,9 @@ export type ProductUpdateWithoutInternalInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1148,6 +1588,8 @@ export type ProductUpdateWithoutInternalInput = {
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
 }
 
@@ -1163,6 +1605,9 @@ export type ProductUncheckedUpdateWithoutInternalInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1170,6 +1615,8 @@ export type ProductUncheckedUpdateWithoutInternalInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
@@ -1185,6 +1632,9 @@ export type ProductCreateWithoutOrderRequestItemsInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   createdAt?: Date | string
@@ -1192,6 +1642,8 @@ export type ProductCreateWithoutOrderRequestItemsInput = {
   category: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
 }
 
@@ -1207,6 +1659,9 @@ export type ProductUncheckedCreateWithoutOrderRequestItemsInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   categoryId: string
@@ -1214,6 +1669,8 @@ export type ProductUncheckedCreateWithoutOrderRequestItemsInput = {
   updatedAt?: Date | string
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
 }
 
@@ -1245,6 +1702,9 @@ export type ProductUpdateWithoutOrderRequestItemsInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1252,6 +1712,8 @@ export type ProductUpdateWithoutOrderRequestItemsInput = {
   category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
 }
 
@@ -1267,6 +1729,9 @@ export type ProductUncheckedUpdateWithoutOrderRequestItemsInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1274,6 +1739,8 @@ export type ProductUncheckedUpdateWithoutOrderRequestItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
 }
 
@@ -1289,6 +1756,9 @@ export type ProductCreateManyCategoryInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  batteryHealthPercent?: number | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   metaTitle?: string | null
   metaDescription?: string | null
   createdAt?: Date | string
@@ -1307,12 +1777,17 @@ export type ProductUpdateWithoutCategoryInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
 }
@@ -1329,12 +1804,17 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -1351,6 +1831,9 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1365,12 +1848,16 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
 export type ProductCountOutputType = {
   images: number
   variants: number
+  compatibleAccessories: number
+  compatibleWithPhones: number
   orderRequestItems: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | ProductCountOutputTypeCountImagesArgs
   variants?: boolean | ProductCountOutputTypeCountVariantsArgs
+  compatibleAccessories?: boolean | ProductCountOutputTypeCountCompatibleAccessoriesArgs
+  compatibleWithPhones?: boolean | ProductCountOutputTypeCountCompatibleWithPhonesArgs
   orderRequestItems?: boolean | ProductCountOutputTypeCountOrderRequestItemsArgs
 }
 
@@ -1401,6 +1888,20 @@ export type ProductCountOutputTypeCountVariantsArgs<ExtArgs extends runtime.Type
 /**
  * ProductCountOutputType without action
  */
+export type ProductCountOutputTypeCountCompatibleAccessoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductCompatibilityWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountCompatibleWithPhonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductCompatibilityWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
 export type ProductCountOutputTypeCountOrderRequestItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OrderRequestItemWhereInput
 }
@@ -1418,6 +1919,9 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   compareAtPrice?: boolean
   availability?: boolean
   tags?: boolean
+  batteryHealthPercent?: boolean
+  hasDefects?: boolean
+  transparencyNotes?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
   categoryId?: boolean
@@ -1426,6 +1930,8 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
+  compatibleAccessories?: boolean | Prisma.Product$compatibleAccessoriesArgs<ExtArgs>
+  compatibleWithPhones?: boolean | Prisma.Product$compatibleWithPhonesArgs<ExtArgs>
   internal?: boolean | Prisma.Product$internalArgs<ExtArgs>
   orderRequestItems?: boolean | Prisma.Product$orderRequestItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -1443,6 +1949,9 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   compareAtPrice?: boolean
   availability?: boolean
   tags?: boolean
+  batteryHealthPercent?: boolean
+  hasDefects?: boolean
+  transparencyNotes?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
   categoryId?: boolean
@@ -1463,6 +1972,9 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   compareAtPrice?: boolean
   availability?: boolean
   tags?: boolean
+  batteryHealthPercent?: boolean
+  hasDefects?: boolean
+  transparencyNotes?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
   categoryId?: boolean
@@ -1483,6 +1995,9 @@ export type ProductSelectScalar = {
   compareAtPrice?: boolean
   availability?: boolean
   tags?: boolean
+  batteryHealthPercent?: boolean
+  hasDefects?: boolean
+  transparencyNotes?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
   categoryId?: boolean
@@ -1490,11 +2005,13 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "batteryHealthPercent" | "hasDefects" | "transparencyNotes" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
+  compatibleAccessories?: boolean | Prisma.Product$compatibleAccessoriesArgs<ExtArgs>
+  compatibleWithPhones?: boolean | Prisma.Product$compatibleWithPhonesArgs<ExtArgs>
   internal?: boolean | Prisma.Product$internalArgs<ExtArgs>
   orderRequestItems?: boolean | Prisma.Product$orderRequestItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -1512,6 +2029,8 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     category: Prisma.$CategoryPayload<ExtArgs>
     images: Prisma.$ProductImagePayload<ExtArgs>[]
     variants: Prisma.$ProductVariantPayload<ExtArgs>[]
+    compatibleAccessories: Prisma.$ProductCompatibilityPayload<ExtArgs>[]
+    compatibleWithPhones: Prisma.$ProductCompatibilityPayload<ExtArgs>[]
     internal: Prisma.$ProductInternalPayload<ExtArgs> | null
     orderRequestItems: Prisma.$OrderRequestItemPayload<ExtArgs>[]
   }
@@ -1527,6 +2046,9 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     compareAtPrice: runtime.Decimal | null
     availability: $Enums.AvailabilityStatus
     tags: string[]
+    batteryHealthPercent: number | null
+    hasDefects: boolean
+    transparencyNotes: string | null
     metaTitle: string | null
     metaDescription: string | null
     categoryId: string
@@ -1929,6 +2451,8 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   images<T extends Prisma.Product$imagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   variants<T extends Prisma.Product$variantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$variantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductVariantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  compatibleAccessories<T extends Prisma.Product$compatibleAccessoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$compatibleAccessoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductCompatibilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  compatibleWithPhones<T extends Prisma.Product$compatibleWithPhonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$compatibleWithPhonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductCompatibilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   internal<T extends Prisma.Product$internalArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$internalArgs<ExtArgs>>): Prisma.Prisma__ProductInternalClient<runtime.Types.Result.GetResult<Prisma.$ProductInternalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   orderRequestItems<T extends Prisma.Product$orderRequestItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$orderRequestItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderRequestItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1971,6 +2495,9 @@ export interface ProductFieldRefs {
   readonly compareAtPrice: Prisma.FieldRef<"Product", 'Decimal'>
   readonly availability: Prisma.FieldRef<"Product", 'AvailabilityStatus'>
   readonly tags: Prisma.FieldRef<"Product", 'String[]'>
+  readonly batteryHealthPercent: Prisma.FieldRef<"Product", 'Int'>
+  readonly hasDefects: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly transparencyNotes: Prisma.FieldRef<"Product", 'String'>
   readonly metaTitle: Prisma.FieldRef<"Product", 'String'>
   readonly metaDescription: Prisma.FieldRef<"Product", 'String'>
   readonly categoryId: Prisma.FieldRef<"Product", 'String'>
@@ -2422,6 +2949,54 @@ export type Product$variantsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.ProductVariantScalarFieldEnum | Prisma.ProductVariantScalarFieldEnum[]
+}
+
+/**
+ * Product.compatibleAccessories
+ */
+export type Product$compatibleAccessoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductCompatibility
+   */
+  select?: Prisma.ProductCompatibilitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductCompatibility
+   */
+  omit?: Prisma.ProductCompatibilityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductCompatibilityInclude<ExtArgs> | null
+  where?: Prisma.ProductCompatibilityWhereInput
+  orderBy?: Prisma.ProductCompatibilityOrderByWithRelationInput | Prisma.ProductCompatibilityOrderByWithRelationInput[]
+  cursor?: Prisma.ProductCompatibilityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductCompatibilityScalarFieldEnum | Prisma.ProductCompatibilityScalarFieldEnum[]
+}
+
+/**
+ * Product.compatibleWithPhones
+ */
+export type Product$compatibleWithPhonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductCompatibility
+   */
+  select?: Prisma.ProductCompatibilitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductCompatibility
+   */
+  omit?: Prisma.ProductCompatibilityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductCompatibilityInclude<ExtArgs> | null
+  where?: Prisma.ProductCompatibilityWhereInput
+  orderBy?: Prisma.ProductCompatibilityOrderByWithRelationInput | Prisma.ProductCompatibilityOrderByWithRelationInput[]
+  cursor?: Prisma.ProductCompatibilityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductCompatibilityScalarFieldEnum | Prisma.ProductCompatibilityScalarFieldEnum[]
 }
 
 /**

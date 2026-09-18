@@ -1,20 +1,16 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { getProductBySlug } from "@/lib/db/public-products";
 import { formatMAD } from "@/lib/format";
 import { AddToCartControls } from "@/components/cart/AddToCartControls";
+import { CONDITION_LABEL } from "@/lib/conditions";
 
 export const revalidate = 60;
 
 // Next.js 16: `params` is a Promise and must be awaited.
 type Props = { params: Promise<{ slug: string }> };
-
-const CONDITION_LABEL: Record<string, string> = {
-  NEW: "Neuf",
-  REFURBISHED: "Reconditionné",
-  USED: "Occasion",
-};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -33,6 +29,7 @@ export default async function ProductPage({ params }: Props) {
 
   const specs = (product.specs ?? {}) as Record<string, string>;
   const cover = product.images[0];
+  const giftOptions = product.compatibleAccessories.filter((c) => c.isGiftOption);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -94,12 +91,28 @@ export default async function ProductPage({ params }: Props) {
           )}
         </div>
 
-        <span className="mt-2 inline-block rounded-full bg-black/5 px-3 py-1 text-xs">
-          {CONDITION_LABEL[product.condition] ?? product.condition}
-        </span>
+        <div className="mt-2 flex flex-wrap gap-2">
+          <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs">
+            {CONDITION_LABEL[product.condition] ?? product.condition}
+          </span>
+          {product.batteryHealthPercent !== null && (
+            <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs">
+              Batterie {product.batteryHealthPercent}%
+            </span>
+          )}
+        </div>
 
         {product.description && (
           <p className="mt-4 text-neutral-700">{product.description}</p>
+        )}
+
+        {/* Phase-2 "transparency" block — only shown when the product actually
+            has something to disclose, never a generic reassurance filler. */}
+        {product.hasDefects && product.transparencyNotes && (
+          <div className="mt-4 rounded-lg border border-[#c8922a]/40 bg-[#c8922a]/5 p-4">
+            <p className="text-sm font-semibold">Transparence</p>
+            <p className="mt-1 text-sm text-neutral-700">{product.transparencyNotes}</p>
+          </div>
         )}
 
         {Object.keys(specs).length > 0 && (
@@ -111,6 +124,40 @@ export default async function ProductPage({ params }: Props) {
               </div>
             ))}
           </dl>
+        )}
+
+        {/* Phase-2 accessory compatibility — the interactive "pick your
+            phone" selector is a later step; this is the underlying data
+            already showing correctly. */}
+        {product.compatibleWithPhones.length > 0 && (
+          <div className="mt-4">
+            <p className="text-sm font-semibold">Compatible avec</p>
+            <ul className="mt-1 flex flex-wrap gap-2">
+              {product.compatibleWithPhones.map((c) => (
+                <li key={c.compatibleWith.id}>
+                  <Link
+                    href={`/products/${c.compatibleWith.slug}`}
+                    className="inline-block rounded border border-black/10 px-2 py-1 text-xs hover:border-[#c8922a]"
+                  >
+                    {c.compatibleWith.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Phase-2 gift bundle — same note as above: this is the data plumbed
+            through; the pop-up picker itself is a later, dedicated step. */}
+        {giftOptions.length > 0 && (
+          <div className="mt-4 rounded-lg border border-black/10 p-4">
+            <p className="text-sm font-semibold">Cadeau offert au choix</p>
+            <ul className="mt-1 space-y-1 text-sm text-neutral-700">
+              {giftOptions.map((g) => (
+                <li key={g.product.id}>🎁 {g.product.name}</li>
+              ))}
+            </ul>
+          </div>
         )}
 
         {product.availability === "IN_STOCK" ? (

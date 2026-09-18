@@ -22,6 +22,9 @@ const PUBLIC_PRODUCT_SELECT = {
   compareAtPrice: true,
   availability: true,
   tags: true,
+  batteryHealthPercent: true,
+  hasDefects: true,
+  transparencyNotes: true,
   metaTitle: true,
   metaDescription: true,
   category: { select: { id: true, name: true, slug: true } },
@@ -31,6 +34,20 @@ const PUBLIC_PRODUCT_SELECT = {
   },
   variants: {
     select: { id: true, name: true, priceOverride: true, skuOrRef: true },
+  },
+  // Phase-2: for a phone, its gift-eligible accessory choices; for an
+  // accessory, this is empty (compatibility runs the other direction below).
+  compatibleAccessories: {
+    select: {
+      isGiftOption: true,
+      product: { select: { id: true, slug: true, name: true } },
+    },
+  },
+  // Phase-2: for an accessory, the phone models it's confirmed to fit.
+  compatibleWithPhones: {
+    select: {
+      compatibleWith: { select: { id: true, slug: true, name: true } },
+    },
   },
 } as const;
 
@@ -53,6 +70,9 @@ export interface PublicProduct {
   compareAtPrice: { toString(): string } | null;
   availability: AvailabilityStatus;
   tags: string[];
+  batteryHealthPercent: number | null;
+  hasDefects: boolean;
+  transparencyNotes: string | null;
   metaTitle: string | null;
   metaDescription: string | null;
   category: { id: string; name: string; slug: string };
@@ -62,6 +82,13 @@ export interface PublicProduct {
     name: string;
     priceOverride: { toString(): string } | null;
     skuOrRef: string | null;
+  }[];
+  compatibleAccessories: {
+    isGiftOption: boolean;
+    product: { id: string; slug: string; name: string };
+  }[];
+  compatibleWithPhones: {
+    compatibleWith: { id: string; slug: string; name: string };
   }[];
 }
 

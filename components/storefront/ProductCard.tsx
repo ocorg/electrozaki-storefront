@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { formatMAD } from "@/lib/format";
+import { CONDITION_LABEL } from "@/lib/conditions";
 import type { PublicProduct } from "@/lib/db/public-products";
 
 export function ProductCard({ product }: { product: PublicProduct }) {
@@ -49,6 +50,9 @@ export function ProductCard({ product }: { product: PublicProduct }) {
             </span>
           )}
         </div>
+        <span className="mt-1 inline-block rounded-full bg-black/5 px-2 py-0.5 text-[11px] text-neutral-600">
+          {CONDITION_LABEL[product.condition] ?? product.condition}
+        </span>
       </div>
     </Link>
   );

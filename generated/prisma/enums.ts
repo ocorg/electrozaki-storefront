@@ -10,9 +10,10 @@
 */
 
 export const ProductCondition = {
-  NEW: 'NEW',
-  REFURBISHED: 'REFURBISHED',
-  USED: 'USED'
+  NEUF: 'NEUF',
+  TRES_BON: 'TRES_BON',
+  BON: 'BON',
+  PIECES_REMPLACEES: 'PIECES_REMPLACEES'
 } as const
 
 export type ProductCondition = (typeof ProductCondition)[keyof typeof ProductCondition]

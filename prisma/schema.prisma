@@ -29,10 +29,14 @@ datasource db {
 
 // ── Enums ───────────────────────────────────────────────────────────────
 
+// 4-tier grading standard from the phase-2 spec, replacing the earlier
+// NEW/REFURBISHED/USED. This is a breaking rename — every place that reads
+// ProductCondition (product page, ProductCard) needs updating alongside it.
 enum ProductCondition {
-  NEW
-  REFURBISHED
-  USED
+  NEUF
+  TRES_BON
+  BON
+  PIECES_REMPLACEES
 }
 
 // Deliberately NOT the ERP's Arabic operational enum (متوفر/مباع/إصلاح/...).
@@ -95,6 +99,13 @@ model Product {
   availability AvailabilityStatus @default(IN_STOCK)
   tags         String[]           @default([]) // free-form search/facet keywords
 
+  // Phase-2 "transparency" spec: battery health is iPhone-specific in
+  // practice but kept generic here rather than a phone-only subtype: any
+  // used device with a battery can carry it, and it's just null otherwise.
+  batteryHealthPercent Int?
+  hasDefects           Boolean @default(false)
+  transparencyNotes    String? @db.Text // shown on the PDP when hasDefects is true
+
   metaTitle       String?
   metaDescription String?
 
@@ -103,6 +114,14 @@ model Product {
 
   images   ProductImage[]
   variants ProductVariant[]
+
+  // Phase-2 accessory compatibility + gift-bundle spec. A phone's
+  // `giftOptions` are its own `compatibleAccessories` filtered by
+  // `isGiftOption` — modeled as one join table so "does this case fit that
+  // phone" and "which cases are free gift choices for that phone" share the
+  // same data rather than drifting apart as two separate lists.
+  compatibleAccessories ProductCompatibility[] @relation("CompatibilityPhone")
+  compatibleWithPhones  ProductCompatibility[] @relation("CompatibilityAccessory")
 
   // 1:1 to the staff-only slice. Optional at the type level only because
   // Prisma requires it on the "many/one" side — every real product should
@@ -146,6 +165,28 @@ model ProductVariant {
   createdAt DateTime @default(now())
 
   @@index([productId])
+}
+
+// Links an accessory to a phone it fits. `isGiftOption` marks it as also
+// offered as one of the free choices in the phase-2 gift-bundle popup for
+// that specific phone — the accessory-page "does this fit my phone?"
+// selector and the phone-page "pick your free gift" popup both read from
+// this same table instead of two separately-maintained lists.
+model ProductCompatibility {
+  id String @id @default(cuid())
+
+  productId String // the accessory
+  product   Product @relation("CompatibilityAccessory", fields: [productId], references: [id], onDelete: Cascade)
+
+  compatibleWithId String // the phone
+  compatibleWith   Product @relation("CompatibilityPhone", fields: [compatibleWithId], references: [id], onDelete: Cascade)
+
+  isGiftOption Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@unique([productId, compatibleWithId])
+  @@index([compatibleWithId])
 }
 
 // The STAFF-ONLY slice. The storefront's query layer must never import this

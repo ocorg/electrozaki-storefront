@@ -401,6 +401,7 @@ export const ModelName = {
   Product: 'Product',
   ProductImage: 'ProductImage',
   ProductVariant: 'ProductVariant',
+  ProductCompatibility: 'ProductCompatibility',
   ProductInternal: 'ProductInternal',
   OrderRequest: 'OrderRequest',
   OrderRequestItem: 'OrderRequestItem',
@@ -420,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "product" | "productImage" | "productVariant" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage"
+    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -717,6 +718,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProductVariantCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProductVariantCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProductCompatibility: {
+      payload: Prisma.$ProductCompatibilityPayload<ExtArgs>
+      fields: Prisma.ProductCompatibilityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProductCompatibilityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductCompatibilityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProductCompatibilityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductCompatibilityPayload>
+        }
+        findFirst: {
+          args: Prisma.ProductCompatibilityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductCompatibilityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProductCompatibilityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductCompatibilityPayload>
+        }
+        findMany: {
+          args: Prisma.ProductCompatibilityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductCompatibilityPayload>[]
+        }
+        create: {
+          args: Prisma.ProductCompatibilityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductCompatibilityPayload>
+        }
+        createMany: {
+          args: Prisma.ProductCompatibilityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProductCompatibilityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductCompatibilityPayload>[]
+        }
+        delete: {
+          args: Prisma.ProductCompatibilityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductCompatibilityPayload>
+        }
+        update: {
+          args: Prisma.ProductCompatibilityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductCompatibilityPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProductCompatibilityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProductCompatibilityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProductCompatibilityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductCompatibilityPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProductCompatibilityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductCompatibilityPayload>
+        }
+        aggregate: {
+          args: Prisma.ProductCompatibilityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProductCompatibility>
+        }
+        groupBy: {
+          args: Prisma.ProductCompatibilityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductCompatibilityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProductCompatibilityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductCompatibilityCountAggregateOutputType> | number
         }
       }
     }
@@ -1080,6 +1155,9 @@ export const ProductScalarFieldEnum = {
   compareAtPrice: 'compareAtPrice',
   availability: 'availability',
   tags: 'tags',
+  batteryHealthPercent: 'batteryHealthPercent',
+  hasDefects: 'hasDefects',
+  transparencyNotes: 'transparencyNotes',
   metaTitle: 'metaTitle',
   metaDescription: 'metaDescription',
   categoryId: 'categoryId',
@@ -1111,6 +1189,17 @@ export const ProductVariantScalarFieldEnum = {
 } as const
 
 export type ProductVariantScalarFieldEnum = (typeof ProductVariantScalarFieldEnum)[keyof typeof ProductVariantScalarFieldEnum]
+
+
+export const ProductCompatibilityScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  compatibleWithId: 'compatibleWithId',
+  isGiftOption: 'isGiftOption',
+  createdAt: 'createdAt'
+} as const
+
+export type ProductCompatibilityScalarFieldEnum = (typeof ProductCompatibilityScalarFieldEnum)[keyof typeof ProductCompatibilityScalarFieldEnum]
 
 
 export const ProductInternalScalarFieldEnum = {
@@ -1314,6 +1403,13 @@ export type ListEnumAvailabilityStatusFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'OrderRequestStatus'
  */
 export type EnumOrderRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderRequestStatus'>
@@ -1495,6 +1591,7 @@ export type GlobalOmitConfig = {
   product?: Prisma.ProductOmit
   productImage?: Prisma.ProductImageOmit
   productVariant?: Prisma.ProductVariantOmit
+  productCompatibility?: Prisma.ProductCompatibilityOmit
   productInternal?: Prisma.ProductInternalOmit
   orderRequest?: Prisma.OrderRequestOmit
   orderRequestItem?: Prisma.OrderRequestItemOmit

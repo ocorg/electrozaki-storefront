@@ -55,6 +55,7 @@ export const ModelName = {
   Product: 'Product',
   ProductImage: 'ProductImage',
   ProductVariant: 'ProductVariant',
+  ProductCompatibility: 'ProductCompatibility',
   ProductInternal: 'ProductInternal',
   OrderRequest: 'OrderRequest',
   OrderRequestItem: 'OrderRequestItem',
@@ -102,6 +103,9 @@ export const ProductScalarFieldEnum = {
   compareAtPrice: 'compareAtPrice',
   availability: 'availability',
   tags: 'tags',
+  batteryHealthPercent: 'batteryHealthPercent',
+  hasDefects: 'hasDefects',
+  transparencyNotes: 'transparencyNotes',
   metaTitle: 'metaTitle',
   metaDescription: 'metaDescription',
   categoryId: 'categoryId',
@@ -133,6 +137,17 @@ export const ProductVariantScalarFieldEnum = {
 } as const
 
 export type ProductVariantScalarFieldEnum = (typeof ProductVariantScalarFieldEnum)[keyof typeof ProductVariantScalarFieldEnum]
+
+
+export const ProductCompatibilityScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  compatibleWithId: 'compatibleWithId',
+  isGiftOption: 'isGiftOption',
+  createdAt: 'createdAt'
+} as const
+
+export type ProductCompatibilityScalarFieldEnum = (typeof ProductCompatibilityScalarFieldEnum)[keyof typeof ProductCompatibilityScalarFieldEnum]
 
 
 export const ProductInternalScalarFieldEnum = {
