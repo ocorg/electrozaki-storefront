@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getProductBySlug } from "@/lib/db/public-products";
 import { formatMAD } from "@/lib/format";
 import { AddToCartControls } from "@/components/cart/AddToCartControls";
+import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
 import { CONDITION_LABEL } from "@/lib/conditions";
 
 export const revalidate = 60;
@@ -95,12 +96,14 @@ export default async function ProductPage({ params }: Props) {
           <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs">
             {CONDITION_LABEL[product.condition] ?? product.condition}
           </span>
-          {product.batteryHealthPercent !== null && (
-            <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs">
-              Batterie {product.batteryHealthPercent}%
-            </span>
-          )}
         </div>
+
+        <ConditionDashboard
+          batteryHealthPercent={product.batteryHealthPercent}
+          batteryGenuine={product.batteryGenuine}
+          screenGenuine={product.screenGenuine}
+          faceIdWorking={product.faceIdWorking}
+        />
 
         {product.description && (
           <p className="mt-4 text-neutral-700">{product.description}</p>

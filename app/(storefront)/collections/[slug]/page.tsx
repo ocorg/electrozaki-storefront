@@ -1,16 +1,27 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import {
+  getProductsByCategorySlug,
+  getDistinctBrandsForCategory,
+} from "@/lib/db/public-products";
 import { getCategoryBySlug } from "@/lib/db/categories";
-import { getProductsByCategorySlug } from "@/lib/db/public-products";
 import { ProductCard } from "@/components/storefront/ProductCard";
+import { CatalogFilters } from "@/components/storefront/CatalogFilters";
 
 // Catalog changes rarely (staff add products by hand) — a 60s cache keeps
 // pages fast without needing to hand-manage cache invalidation for v1.
 export const revalidate = 60;
 
-// Next.js 16: `params` is a Promise and must be awaited — this is not
-// optional the way it briefly was under Next.js 15's compatibility shim.
-type Props = { params: Promise<{ slug: string }> };
+// Next.js 16: both params and searchParams are Promises now.
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{
+    brand?: string;
+    condition?: string;
+    minBattery?: string;
+    maxPrice?: string;
+  }>;
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -22,29 +33,57 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function CollectionPage({ params }: Props) {
+export default async function CollectionPage({ params, searchParams }: Props) {
   const { slug } = await params;
+  const filterParams = await searchParams;
+
   const category = await getCategoryBySlug(slug);
   if (!category) notFound();
 
-  const products = await getProductsByCategorySlug(slug);
+  const filters = {
+    brand: filterParams.brand || undefined,
+    condition: filterParams.condition || undefined,
+    minBatteryHealth: filterParams.minBattery ? Number(filterParams.minBattery) : undefined,
+    maxPrice: filterParams.maxPrice ? Number(filterParams.maxPrice) : undefined,
+  };
+
+  const [products, brands] = await Promise.all([
+    getProductsByCategorySlug(slug, filters),
+    getDistinctBrandsForCategory(slug),
+  ]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <h1 className="mb-6 text-2xl font-semibold">{category.name}</h1>
 
-      {products.length === 0 ? (
-        <p className="text-neutral-500">
-          Cette catégorie sera bientôt disponible. Contactez-nous sur WhatsApp
-          pour toute demande.
-        </p>
-      ) : (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+      <div className="grid gap-8 md:grid-cols-[220px_1fr]">
+        <aside>
+          <CatalogFilters
+            brands={brands}
+            basePath={`/collections/${slug}`}
+            defaults={{
+              brand: filterParams.brand,
+              condition: filterParams.condition,
+              minBattery: filterParams.minBattery,
+              maxPrice: filterParams.maxPrice,
+            }}
+          />
+        </aside>
+
+        <div>
+          {products.length === 0 ? (
+            <p className="text-neutral-500">
+              Aucun résultat pour ces filtres. Contactez-nous sur WhatsApp pour toute demande.
+            </p>
+          ) : (
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

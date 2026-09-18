@@ -103,6 +103,13 @@ model Product {
   // practice but kept generic here rather than a phone-only subtype: any
   // used device with a battery can carry it, and it's just null otherwise.
   batteryHealthPercent Int?
+  // Dashboard fields for the phase-2 "état" visual — null means not
+  // applicable (e.g. an accessory, or a phone with no Face ID hardware),
+  // not "unknown", so the UI can tell the difference and simply omit the
+  // tile rather than showing a false negative.
+  faceIdWorking   Boolean?
+  screenGenuine   Boolean?
+  batteryGenuine  Boolean?
   hasDefects           Boolean @default(false)
   transparencyNotes    String? @db.Text // shown on the PDP when hasDefects is true
 

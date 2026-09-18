@@ -23,6 +23,9 @@ const PUBLIC_PRODUCT_SELECT = {
   availability: true,
   tags: true,
   batteryHealthPercent: true,
+  faceIdWorking: true,
+  screenGenuine: true,
+  batteryGenuine: true,
   hasDefects: true,
   transparencyNotes: true,
   metaTitle: true,
@@ -71,6 +74,9 @@ export interface PublicProduct {
   availability: AvailabilityStatus;
   tags: string[];
   batteryHealthPercent: number | null;
+  faceIdWorking: boolean | null;
+  screenGenuine: boolean | null;
+  batteryGenuine: boolean | null;
   hasDefects: boolean;
   transparencyNotes: string | null;
   metaTitle: string | null;
@@ -92,6 +98,26 @@ export interface PublicProduct {
   }[];
 }
 
+export type ProductFilters = {
+  maxPrice?: number;
+  brand?: string;
+  tag?: string;
+  condition?: string;
+  minBatteryHealth?: number;
+};
+
+function buildFilterConditions(filters?: ProductFilters): Array<Record<string, unknown>> {
+  const and: Array<Record<string, unknown>> = [];
+  if (filters?.maxPrice) and.push({ recommendedSalePrice: { lte: filters.maxPrice } });
+  if (filters?.brand) and.push({ brand: { contains: filters.brand, mode: "insensitive" } });
+  if (filters?.tag) and.push({ tags: { has: filters.tag } });
+  if (filters?.condition) and.push({ condition: filters.condition });
+  if (filters?.minBatteryHealth) {
+    and.push({ batteryHealthPercent: { gte: filters.minBatteryHealth } });
+  }
+  return and;
+}
+
 export async function getProductBySlug(slug: string): Promise<PublicProduct | null> {
   return prisma.product.findUnique({
     where: { slug },
@@ -100,23 +126,36 @@ export async function getProductBySlug(slug: string): Promise<PublicProduct | nu
 }
 
 export async function getProductsByCategorySlug(
-  categorySlug: string
+  categorySlug: string,
+  filters?: ProductFilters
 ): Promise<PublicProduct[]> {
+  const and: Array<Record<string, unknown>> = [
+    { category: { slug: categorySlug } },
+    { availability: { not: AvailabilityStatus.DISCONTINUED } },
+    ...buildFilterConditions(filters),
+  ];
+
   return prisma.product.findMany({
-    where: {
-      category: { slug: categorySlug },
-      availability: { not: AvailabilityStatus.DISCONTINUED },
-    },
+    where: { AND: and },
     select: PUBLIC_PRODUCT_SELECT,
     orderBy: { createdAt: "desc" },
   });
 }
 
-export type ProductFilters = {
-  maxPrice?: number;
-  brand?: string;
-  tag?: string;
-};
+// Powers the sidebar's brand dropdown with brands that actually exist in
+// this category right now, instead of a hardcoded list that drifts from
+// the real catalog.
+export async function getDistinctBrandsForCategory(categorySlug: string): Promise<string[]> {
+  const rows = await prisma.product.findMany({
+    where: { category: { slug: categorySlug }, brand: { not: null } },
+    select: { brand: true },
+    distinct: ["brand"],
+  });
+  return rows
+    .map((r: { brand: string | null }) => r.brand)
+    .filter((b: string | null): b is string => Boolean(b))
+    .sort();
+}
 
 // `query` and `filters` are independent — the header search bar uses query
 // alone, the homepage phone-finder uses filters alone, and either can
@@ -127,11 +166,12 @@ export async function searchProducts(
   filters?: ProductFilters
 ): Promise<PublicProduct[]> {
   const q = query.trim();
-  const hasFilters = Boolean(filters?.maxPrice || filters?.brand || filters?.tag);
-  if (!q && !hasFilters) return [];
+  const filterConditions = buildFilterConditions(filters);
+  if (!q && filterConditions.length === 0) return [];
 
   const and: Array<Record<string, unknown>> = [
     { availability: { not: AvailabilityStatus.DISCONTINUED } },
+    ...filterConditions,
   ];
 
   if (q) {
@@ -142,15 +182,6 @@ export async function searchProducts(
         { tags: { has: q.toLowerCase() } },
       ],
     });
-  }
-  if (filters?.maxPrice) {
-    and.push({ recommendedSalePrice: { lte: filters.maxPrice } });
-  }
-  if (filters?.brand) {
-    and.push({ brand: { contains: filters.brand, mode: "insensitive" } });
-  }
-  if (filters?.tag) {
-    and.push({ tags: { has: filters.tag } });
   }
 
   return prisma.product.findMany({
