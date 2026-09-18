@@ -3,9 +3,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getProductBySlug } from "@/lib/db/public-products";
+import { getCompatibilityTargetPhones } from "@/lib/db/compatibility";
 import { formatMAD } from "@/lib/format";
 import { AddToCartControls } from "@/components/cart/AddToCartControls";
 import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
+import { CompatibilitySelector } from "@/components/storefront/CompatibilitySelector";
 import { CONDITION_LABEL } from "@/lib/conditions";
 
 export const revalidate = 60;
@@ -27,6 +29,10 @@ export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
   if (!product) notFound();
+
+  const compatibilityPhones = product.compatibleWithPhones.length
+    ? await getCompatibilityTargetPhones()
+    : [];
 
   const specs = (product.specs ?? {}) as Record<string, string>;
   const cover = product.images[0];
@@ -129,9 +135,9 @@ export default async function ProductPage({ params }: Props) {
           </dl>
         )}
 
-        {/* Phase-2 accessory compatibility — the interactive "pick your
-            phone" selector is a later step; this is the underlying data
-            already showing correctly. */}
+        {/* Phase-2 accessory compatibility — known-compatible phones as a
+            quick-scan list, plus the interactive "pick your phone" checker
+            below it for anyone whose phone isn't in that list. */}
         {product.compatibleWithPhones.length > 0 && (
           <div className="mt-4">
             <p className="text-sm font-semibold">Compatible avec</p>
@@ -147,6 +153,11 @@ export default async function ProductPage({ params }: Props) {
                 </li>
               ))}
             </ul>
+
+            <CompatibilitySelector
+              allPhones={compatibilityPhones}
+              compatiblePhoneIds={product.compatibleWithPhones.map((c) => c.compatibleWith.id)}
+            />
           </div>
         )}
 
