@@ -43,7 +43,15 @@ const PUBLIC_PRODUCT_SELECT = {
   compatibleAccessories: {
     select: {
       isGiftOption: true,
-      product: { select: { id: true, slug: true, name: true } },
+      product: {
+        select: {
+          id: true,
+          slug: true,
+          name: true,
+          category: { select: { name: true } },
+          images: { select: { url: true }, orderBy: { sortOrder: "asc" as const }, take: 1 },
+        },
+      },
     },
   },
   // Phase-2: for an accessory, the phone models it's confirmed to fit.
@@ -91,7 +99,13 @@ export interface PublicProduct {
   }[];
   compatibleAccessories: {
     isGiftOption: boolean;
-    product: { id: string; slug: string; name: string };
+    product: {
+      id: string;
+      slug: string;
+      name: string;
+      category: { name: string };
+      images: { url: string }[];
+    };
   }[];
   compatibleWithPhones: {
     compatibleWith: { id: string; slug: string; name: string };

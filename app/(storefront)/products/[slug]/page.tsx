@@ -8,6 +8,7 @@ import { formatMAD } from "@/lib/format";
 import { AddToCartControls } from "@/components/cart/AddToCartControls";
 import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
 import { CompatibilitySelector } from "@/components/storefront/CompatibilitySelector";
+import { GiftPicker } from "@/components/storefront/GiftPicker";
 import { CONDITION_LABEL } from "@/lib/conditions";
 
 export const revalidate = 60;
@@ -161,18 +162,7 @@ export default async function ProductPage({ params }: Props) {
           </div>
         )}
 
-        {/* Phase-2 gift bundle — same note as above: this is the data plumbed
-            through; the pop-up picker itself is a later, dedicated step. */}
-        {giftOptions.length > 0 && (
-          <div className="mt-4 rounded-lg border border-black/10 p-4">
-            <p className="text-sm font-semibold">Cadeau offert au choix</p>
-            <ul className="mt-1 space-y-1 text-sm text-neutral-700">
-              {giftOptions.map((g) => (
-                <li key={g.product.id}>🎁 {g.product.name}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <GiftPicker giftOptions={giftOptions} />
 
         {product.availability === "IN_STOCK" ? (
           <div className="mt-6">
