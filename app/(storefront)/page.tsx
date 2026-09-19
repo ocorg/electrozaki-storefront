@@ -87,9 +87,18 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-10">
         <h2 className="mb-4 text-xl font-semibold">Sélection du moment</h2>
         {featured.length === 0 ? (
-          <p className="text-neutral-500">
-            Le catalogue est en cours de mise en place — revenez bientôt.
-          </p>
+          <div className="rounded-lg border border-black/10 bg-neutral-50 p-6 text-center">
+            <p className="text-neutral-600">
+              Notre catalogue en ligne est en cours de mise à jour, mais nos téléphones et
+              accessoires sont disponibles dès maintenant en boutique et sur WhatsApp.
+            </p>
+            <a
+              href="https://wa.me/212667654430"
+              className="mt-4 inline-block rounded bg-[#121212] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#c8922a] hover:text-black"
+            >
+              Voir les disponibilités sur WhatsApp
+            </a>
+          </div>
         ) : (
           <div className="-mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2">
             {featured.map((product) => (

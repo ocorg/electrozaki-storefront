@@ -39,7 +39,7 @@ export default function ContactPage() {
         <h1 className="text-2xl font-bold">Message envoyé ✓</h1>
         <p className="mt-3 text-neutral-600">
           Nous vous répondrons rapidement. Pour une réponse immédiate, contactez-nous sur{" "}
-          <a href="https://wa.me/212667654430" className="font-medium text-neutral-900 underline decoration-[#c8922a] decoration-2 underline-offset-2">
+          <a href="https://wa.me/212667654430" className="font-semibold text-neutral-900 underline decoration-[#25D366] decoration-2 underline-offset-2">
             WhatsApp
           </a>
           .
@@ -53,7 +53,7 @@ export default function ContactPage() {
       <h1 className="text-2xl font-bold">Contactez-nous</h1>
       <p className="mt-2 text-neutral-600">
         Pour une réponse rapide, préférez{" "}
-        <a href="https://wa.me/212667654430" className="font-medium text-neutral-900 underline decoration-[#c8922a] decoration-2 underline-offset-2">
+        <a href="https://wa.me/212667654430" className="font-semibold text-neutral-900 underline decoration-[#25D366] decoration-2 underline-offset-2">
           WhatsApp
         </a>
         . Sinon, écrivez-nous ici.
@@ -70,18 +70,21 @@ export default function ContactPage() {
         />
         <input
           type="tel"
-          placeholder="Téléphone (optionnel)"
+          placeholder="Téléphone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           className="w-full rounded border border-black/20 px-3 py-2"
         />
         <input
           type="email"
-          placeholder="Email (optionnel)"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full rounded border border-black/20 px-3 py-2"
         />
+        <p className="-mt-2 text-xs text-neutral-500">
+          Indiquez au moins l&apos;un des deux, pour qu&apos;on puisse vous répondre.
+        </p>
         <textarea
           required
           rows={5}
@@ -95,7 +98,7 @@ export default function ContactPage() {
 
         <button
           type="submit"
-          disabled={submitting}
+          disabled={submitting || (!phone.trim() && !email.trim())}
           className="w-full rounded bg-[#121212] px-4 py-3 font-medium text-white transition-colors hover:bg-[#c8922a] disabled:opacity-50"
         >
           {submitting ? "Envoi..." : "Envoyer"}

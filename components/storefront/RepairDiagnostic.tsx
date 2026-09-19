@@ -89,10 +89,10 @@ export function RepairDiagnostic() {
               key={b}
               type="button"
               onClick={() => setDeviceBrand(b)}
-              className={`min-h-11 rounded border px-4 py-3 text-sm transition-colors ${
+              className={`min-h-11 rounded border bg-white px-4 py-3 text-sm shadow-sm transition-colors ${
                 deviceBrand === b
                   ? "border-[#c8922a] bg-[#c8922a]/5"
-                  : "border-black/10 hover:border-[#c8922a]"
+                  : "border-neutral-300 hover:border-[#c8922a]"
               }`}
             >
               {b}
@@ -139,10 +139,10 @@ export function RepairDiagnostic() {
                 key={p.key}
                 type="button"
                 onClick={() => toggleProblem(p.key)}
-                className={`min-h-11 rounded-lg border p-4 text-center transition-colors ${
+                className={`min-h-11 rounded-lg border bg-white p-4 text-center shadow-sm transition-colors ${
                   isSelected
                     ? "border-[#c8922a] bg-[#c8922a]/5"
-                    : "border-black/10 hover:border-[#c8922a]"
+                    : "border-neutral-300 hover:border-[#c8922a]"
                 }`}
               >
                 <div className="text-2xl">{p.icon}</div>

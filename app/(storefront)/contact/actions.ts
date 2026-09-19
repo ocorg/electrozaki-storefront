@@ -3,17 +3,22 @@
 import { z } from "zod";
 import { createContactMessage } from "@/lib/db/contact";
 
-const contactSchema = z.object({
-  name: z.string().trim().min(2, "Merci d'indiquer votre nom."),
-  phone: z.string().trim().optional(),
-  email: z
-    .string()
-    .trim()
-    .email("Email invalide.")
-    .optional()
-    .or(z.literal("")),
-  message: z.string().trim().min(5, "Le message est trop court."),
-});
+const contactSchema = z
+  .object({
+    name: z.string().trim().min(2, "Merci d'indiquer votre nom."),
+    phone: z.string().trim().optional(),
+    email: z
+      .string()
+      .trim()
+      .email("Email invalide.")
+      .optional()
+      .or(z.literal("")),
+    message: z.string().trim().min(5, "Le message est trop court."),
+  })
+  .refine((data) => Boolean(data.phone) || Boolean(data.email), {
+    message: "Merci d'indiquer un téléphone ou un email pour qu'on puisse vous répondre.",
+    path: ["phone"],
+  });
 
 type ContactInput = {
   name: string;

@@ -98,8 +98,8 @@ export function GiftPicker({ giftOptions }: { giftOptions: GiftOption[] }) {
                         onClick={() =>
                           setSelections((prev) => ({ ...prev, [categoryName]: g.product.id }))
                         }
-                        className={`rounded-lg border p-2 text-left transition-colors ${
-                          isSelected ? "border-[#c8922a] bg-[#c8922a]/5" : "border-black/10"
+                        className={`rounded-lg border bg-white p-2 text-left shadow-sm transition-colors ${
+                          isSelected ? "border-[#c8922a] bg-[#c8922a]/5" : "border-neutral-300 hover:border-[#c8922a]"
                         }`}
                       >
                         <div className="relative aspect-square overflow-hidden rounded bg-neutral-50">

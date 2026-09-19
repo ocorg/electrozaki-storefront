@@ -18,7 +18,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="fr">
-      <body className={manrope.className}>{children}</body>
+      {/* This site has no dark-mode design of its own — every surface is
+          explicitly light (bg-white, bg-neutral-50, etc). Without pinning
+          text/background here, the scaffold's default dark-mode media
+          query silently swaps body text to a light color on devices with
+          dark mode on, making any unstyled text (like a bare logo word)
+          invisible against our hardcoded light surfaces. */}
+      <body className={`${manrope.className} bg-white text-neutral-900`}>{children}</body>
     </html>
   );
 }

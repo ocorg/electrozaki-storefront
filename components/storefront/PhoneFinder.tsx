@@ -140,7 +140,7 @@ function OptionGrid({
           key={label}
           type="button"
           onClick={() => onSelect(label)}
-          className="min-h-11 rounded border border-black/10 px-4 py-3 text-left text-sm transition-colors hover:border-[#c8922a] hover:bg-[#c8922a]/5"
+          className="min-h-11 rounded border border-neutral-300 bg-white px-4 py-3 text-left text-sm shadow-sm transition-colors hover:border-[#c8922a] hover:bg-[#c8922a]/5"
         >
           {label}
         </button>

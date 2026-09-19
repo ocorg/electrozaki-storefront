@@ -34,7 +34,7 @@ export default async function SearchPage({ searchParams }: Props) {
       ) : results.length === 0 ? (
         <p className="text-neutral-500">
           Aucun résultat. Essayez un autre terme, ou{" "}
-          <a href="https://wa.me/212667654430" className="font-medium text-neutral-900 underline decoration-[#c8922a] decoration-2 underline-offset-2">
+          <a href="https://wa.me/212667654430" className="font-semibold text-neutral-900 underline decoration-[#25D366] decoration-2 underline-offset-2">
             contactez-nous sur WhatsApp
           </a>
           .
