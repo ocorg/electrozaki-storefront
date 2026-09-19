@@ -38,10 +38,16 @@ export type OrderRequestMinAggregateOutputType = {
   id: string | null
   customerName: string | null
   customerPhone: string | null
+  deliveryAddress: string | null
   status: $Enums.OrderRequestStatus | null
   totalEstimate: runtime.Decimal | null
   whatsappOpenedAt: Date | null
   notes: string | null
+  requiresAdvance: boolean | null
+  advancePaymentStatus: $Enums.AdvancePaymentStatus | null
+  receiptUrl: string | null
+  receiptUploadedAt: Date | null
+  dataConsentAccepted: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,10 +56,16 @@ export type OrderRequestMaxAggregateOutputType = {
   id: string | null
   customerName: string | null
   customerPhone: string | null
+  deliveryAddress: string | null
   status: $Enums.OrderRequestStatus | null
   totalEstimate: runtime.Decimal | null
   whatsappOpenedAt: Date | null
   notes: string | null
+  requiresAdvance: boolean | null
+  advancePaymentStatus: $Enums.AdvancePaymentStatus | null
+  receiptUrl: string | null
+  receiptUploadedAt: Date | null
+  dataConsentAccepted: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,10 +74,16 @@ export type OrderRequestCountAggregateOutputType = {
   id: number
   customerName: number
   customerPhone: number
+  deliveryAddress: number
   status: number
   totalEstimate: number
   whatsappOpenedAt: number
   notes: number
+  requiresAdvance: number
+  advancePaymentStatus: number
+  receiptUrl: number
+  receiptUploadedAt: number
+  dataConsentAccepted: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -84,10 +102,16 @@ export type OrderRequestMinAggregateInputType = {
   id?: true
   customerName?: true
   customerPhone?: true
+  deliveryAddress?: true
   status?: true
   totalEstimate?: true
   whatsappOpenedAt?: true
   notes?: true
+  requiresAdvance?: true
+  advancePaymentStatus?: true
+  receiptUrl?: true
+  receiptUploadedAt?: true
+  dataConsentAccepted?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -96,10 +120,16 @@ export type OrderRequestMaxAggregateInputType = {
   id?: true
   customerName?: true
   customerPhone?: true
+  deliveryAddress?: true
   status?: true
   totalEstimate?: true
   whatsappOpenedAt?: true
   notes?: true
+  requiresAdvance?: true
+  advancePaymentStatus?: true
+  receiptUrl?: true
+  receiptUploadedAt?: true
+  dataConsentAccepted?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -108,10 +138,16 @@ export type OrderRequestCountAggregateInputType = {
   id?: true
   customerName?: true
   customerPhone?: true
+  deliveryAddress?: true
   status?: true
   totalEstimate?: true
   whatsappOpenedAt?: true
   notes?: true
+  requiresAdvance?: true
+  advancePaymentStatus?: true
+  receiptUrl?: true
+  receiptUploadedAt?: true
+  dataConsentAccepted?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -207,10 +243,16 @@ export type OrderRequestGroupByOutputType = {
   id: string
   customerName: string
   customerPhone: string
+  deliveryAddress: string | null
   status: $Enums.OrderRequestStatus
   totalEstimate: runtime.Decimal
   whatsappOpenedAt: Date | null
   notes: string | null
+  requiresAdvance: boolean
+  advancePaymentStatus: $Enums.AdvancePaymentStatus
+  receiptUrl: string | null
+  receiptUploadedAt: Date | null
+  dataConsentAccepted: boolean
   createdAt: Date
   updatedAt: Date
   _count: OrderRequestCountAggregateOutputType | null
@@ -242,10 +284,16 @@ export type OrderRequestWhereInput = {
   id?: Prisma.StringFilter<"OrderRequest"> | string
   customerName?: Prisma.StringFilter<"OrderRequest"> | string
   customerPhone?: Prisma.StringFilter<"OrderRequest"> | string
+  deliveryAddress?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   status?: Prisma.EnumOrderRequestStatusFilter<"OrderRequest"> | $Enums.OrderRequestStatus
   totalEstimate?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  requiresAdvance?: Prisma.BoolFilter<"OrderRequest"> | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFilter<"OrderRequest"> | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  receiptUploadedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFilter<"OrderRequest"> | boolean
   createdAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
   items?: Prisma.OrderRequestItemListRelationFilter
@@ -255,10 +303,16 @@ export type OrderRequestOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
+  deliveryAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   totalEstimate?: Prisma.SortOrder
   whatsappOpenedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiresAdvance?: Prisma.SortOrder
+  advancePaymentStatus?: Prisma.SortOrder
+  receiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  receiptUploadedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  dataConsentAccepted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   items?: Prisma.OrderRequestItemOrderByRelationAggregateInput
@@ -271,10 +325,16 @@ export type OrderRequestWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.OrderRequestWhereInput | Prisma.OrderRequestWhereInput[]
   customerName?: Prisma.StringFilter<"OrderRequest"> | string
   customerPhone?: Prisma.StringFilter<"OrderRequest"> | string
+  deliveryAddress?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   status?: Prisma.EnumOrderRequestStatusFilter<"OrderRequest"> | $Enums.OrderRequestStatus
   totalEstimate?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  requiresAdvance?: Prisma.BoolFilter<"OrderRequest"> | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFilter<"OrderRequest"> | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  receiptUploadedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFilter<"OrderRequest"> | boolean
   createdAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
   items?: Prisma.OrderRequestItemListRelationFilter
@@ -284,10 +344,16 @@ export type OrderRequestOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
+  deliveryAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   totalEstimate?: Prisma.SortOrder
   whatsappOpenedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiresAdvance?: Prisma.SortOrder
+  advancePaymentStatus?: Prisma.SortOrder
+  receiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  receiptUploadedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  dataConsentAccepted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.OrderRequestCountOrderByAggregateInput
@@ -304,10 +370,16 @@ export type OrderRequestScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"OrderRequest"> | string
   customerName?: Prisma.StringWithAggregatesFilter<"OrderRequest"> | string
   customerPhone?: Prisma.StringWithAggregatesFilter<"OrderRequest"> | string
+  deliveryAddress?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
   status?: Prisma.EnumOrderRequestStatusWithAggregatesFilter<"OrderRequest"> | $Enums.OrderRequestStatus
   totalEstimate?: Prisma.DecimalWithAggregatesFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"OrderRequest"> | Date | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
+  requiresAdvance?: Prisma.BoolWithAggregatesFilter<"OrderRequest"> | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusWithAggregatesFilter<"OrderRequest"> | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
+  receiptUploadedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"OrderRequest"> | Date | string | null
+  dataConsentAccepted?: Prisma.BoolWithAggregatesFilter<"OrderRequest"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"OrderRequest"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"OrderRequest"> | Date | string
 }
@@ -316,10 +388,16 @@ export type OrderRequestCreateInput = {
   id?: string
   customerName: string
   customerPhone: string
+  deliveryAddress?: string | null
   status?: $Enums.OrderRequestStatus
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
+  requiresAdvance?: boolean
+  advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptUrl?: string | null
+  receiptUploadedAt?: Date | string | null
+  dataConsentAccepted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.OrderRequestItemCreateNestedManyWithoutOrderRequestInput
@@ -329,10 +407,16 @@ export type OrderRequestUncheckedCreateInput = {
   id?: string
   customerName: string
   customerPhone: string
+  deliveryAddress?: string | null
   status?: $Enums.OrderRequestStatus
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
+  requiresAdvance?: boolean
+  advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptUrl?: string | null
+  receiptUploadedAt?: Date | string | null
+  dataConsentAccepted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutOrderRequestInput
@@ -342,10 +426,16 @@ export type OrderRequestUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderRequestItemUpdateManyWithoutOrderRequestNestedInput
@@ -355,10 +445,16 @@ export type OrderRequestUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutOrderRequestNestedInput
@@ -368,10 +464,16 @@ export type OrderRequestCreateManyInput = {
   id?: string
   customerName: string
   customerPhone: string
+  deliveryAddress?: string | null
   status?: $Enums.OrderRequestStatus
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
+  requiresAdvance?: boolean
+  advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptUrl?: string | null
+  receiptUploadedAt?: Date | string | null
+  dataConsentAccepted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -380,10 +482,16 @@ export type OrderRequestUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -392,10 +500,16 @@ export type OrderRequestUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -404,10 +518,16 @@ export type OrderRequestCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
+  deliveryAddress?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalEstimate?: Prisma.SortOrder
   whatsappOpenedAt?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  requiresAdvance?: Prisma.SortOrder
+  advancePaymentStatus?: Prisma.SortOrder
+  receiptUrl?: Prisma.SortOrder
+  receiptUploadedAt?: Prisma.SortOrder
+  dataConsentAccepted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -420,10 +540,16 @@ export type OrderRequestMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
+  deliveryAddress?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalEstimate?: Prisma.SortOrder
   whatsappOpenedAt?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  requiresAdvance?: Prisma.SortOrder
+  advancePaymentStatus?: Prisma.SortOrder
+  receiptUrl?: Prisma.SortOrder
+  receiptUploadedAt?: Prisma.SortOrder
+  dataConsentAccepted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -432,10 +558,16 @@ export type OrderRequestMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
+  deliveryAddress?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalEstimate?: Prisma.SortOrder
   whatsappOpenedAt?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  requiresAdvance?: Prisma.SortOrder
+  advancePaymentStatus?: Prisma.SortOrder
+  receiptUrl?: Prisma.SortOrder
+  receiptUploadedAt?: Prisma.SortOrder
+  dataConsentAccepted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -457,6 +589,10 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
+export type EnumAdvancePaymentStatusFieldUpdateOperationsInput = {
+  set?: $Enums.AdvancePaymentStatus
+}
+
 export type OrderRequestCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.OrderRequestCreateWithoutItemsInput, Prisma.OrderRequestUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.OrderRequestCreateOrConnectWithoutItemsInput
@@ -475,10 +611,16 @@ export type OrderRequestCreateWithoutItemsInput = {
   id?: string
   customerName: string
   customerPhone: string
+  deliveryAddress?: string | null
   status?: $Enums.OrderRequestStatus
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
+  requiresAdvance?: boolean
+  advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptUrl?: string | null
+  receiptUploadedAt?: Date | string | null
+  dataConsentAccepted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -487,10 +629,16 @@ export type OrderRequestUncheckedCreateWithoutItemsInput = {
   id?: string
   customerName: string
   customerPhone: string
+  deliveryAddress?: string | null
   status?: $Enums.OrderRequestStatus
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
+  requiresAdvance?: boolean
+  advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptUrl?: string | null
+  receiptUploadedAt?: Date | string | null
+  dataConsentAccepted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -515,10 +663,16 @@ export type OrderRequestUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -527,10 +681,16 @@ export type OrderRequestUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -570,10 +730,16 @@ export type OrderRequestSelect<ExtArgs extends runtime.Types.Extensions.Internal
   id?: boolean
   customerName?: boolean
   customerPhone?: boolean
+  deliveryAddress?: boolean
   status?: boolean
   totalEstimate?: boolean
   whatsappOpenedAt?: boolean
   notes?: boolean
+  requiresAdvance?: boolean
+  advancePaymentStatus?: boolean
+  receiptUrl?: boolean
+  receiptUploadedAt?: boolean
+  dataConsentAccepted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   items?: boolean | Prisma.OrderRequest$itemsArgs<ExtArgs>
@@ -584,10 +750,16 @@ export type OrderRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   id?: boolean
   customerName?: boolean
   customerPhone?: boolean
+  deliveryAddress?: boolean
   status?: boolean
   totalEstimate?: boolean
   whatsappOpenedAt?: boolean
   notes?: boolean
+  requiresAdvance?: boolean
+  advancePaymentStatus?: boolean
+  receiptUrl?: boolean
+  receiptUploadedAt?: boolean
+  dataConsentAccepted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["orderRequest"]>
@@ -596,10 +768,16 @@ export type OrderRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   id?: boolean
   customerName?: boolean
   customerPhone?: boolean
+  deliveryAddress?: boolean
   status?: boolean
   totalEstimate?: boolean
   whatsappOpenedAt?: boolean
   notes?: boolean
+  requiresAdvance?: boolean
+  advancePaymentStatus?: boolean
+  receiptUrl?: boolean
+  receiptUploadedAt?: boolean
+  dataConsentAccepted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["orderRequest"]>
@@ -608,15 +786,21 @@ export type OrderRequestSelectScalar = {
   id?: boolean
   customerName?: boolean
   customerPhone?: boolean
+  deliveryAddress?: boolean
   status?: boolean
   totalEstimate?: boolean
   whatsappOpenedAt?: boolean
   notes?: boolean
+  requiresAdvance?: boolean
+  advancePaymentStatus?: boolean
+  receiptUrl?: boolean
+  receiptUploadedAt?: boolean
+  dataConsentAccepted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OrderRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerName" | "customerPhone" | "status" | "totalEstimate" | "whatsappOpenedAt" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["orderRequest"]>
+export type OrderRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerName" | "customerPhone" | "deliveryAddress" | "status" | "totalEstimate" | "whatsappOpenedAt" | "notes" | "requiresAdvance" | "advancePaymentStatus" | "receiptUrl" | "receiptUploadedAt" | "dataConsentAccepted" | "createdAt" | "updatedAt", ExtArgs["result"]["orderRequest"]>
 export type OrderRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | Prisma.OrderRequest$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.OrderRequestCountOutputTypeDefaultArgs<ExtArgs>
@@ -633,10 +817,16 @@ export type $OrderRequestPayload<ExtArgs extends runtime.Types.Extensions.Intern
     id: string
     customerName: string
     customerPhone: string
+    deliveryAddress: string | null
     status: $Enums.OrderRequestStatus
     totalEstimate: runtime.Decimal
     whatsappOpenedAt: Date | null
     notes: string | null
+    requiresAdvance: boolean
+    advancePaymentStatus: $Enums.AdvancePaymentStatus
+    receiptUrl: string | null
+    receiptUploadedAt: Date | null
+    dataConsentAccepted: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["orderRequest"]>
@@ -1066,10 +1256,16 @@ export interface OrderRequestFieldRefs {
   readonly id: Prisma.FieldRef<"OrderRequest", 'String'>
   readonly customerName: Prisma.FieldRef<"OrderRequest", 'String'>
   readonly customerPhone: Prisma.FieldRef<"OrderRequest", 'String'>
+  readonly deliveryAddress: Prisma.FieldRef<"OrderRequest", 'String'>
   readonly status: Prisma.FieldRef<"OrderRequest", 'OrderRequestStatus'>
   readonly totalEstimate: Prisma.FieldRef<"OrderRequest", 'Decimal'>
   readonly whatsappOpenedAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
   readonly notes: Prisma.FieldRef<"OrderRequest", 'String'>
+  readonly requiresAdvance: Prisma.FieldRef<"OrderRequest", 'Boolean'>
+  readonly advancePaymentStatus: Prisma.FieldRef<"OrderRequest", 'AdvancePaymentStatus'>
+  readonly receiptUrl: Prisma.FieldRef<"OrderRequest", 'String'>
+  readonly receiptUploadedAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
+  readonly dataConsentAccepted: Prisma.FieldRef<"OrderRequest", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
 }

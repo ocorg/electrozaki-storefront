@@ -17,6 +17,7 @@ export type CartItem = {
   price: number; // MAD, snapshot at the moment it was added
   image?: string;
   quantity: number;
+  isPhone?: boolean; // drives the checkout's dynamic advance-payment step
 };
 
 type CartContextValue = {

@@ -177,6 +177,7 @@ export default async function ProductPage({ params }: Props) {
                 skuOrRef: v.skuOrRef,
               }))}
               basePrice={product.recommendedSalePrice.toString()}
+              isPhone={product.isPhone}
             />
           </div>
         ) : (

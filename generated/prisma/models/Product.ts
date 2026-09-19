@@ -45,6 +45,7 @@ export type ProductMinAggregateOutputType = {
   brand: string | null
   condition: $Enums.ProductCondition | null
   description: string | null
+  isPhone: boolean | null
   recommendedSalePrice: runtime.Decimal | null
   compareAtPrice: runtime.Decimal | null
   availability: $Enums.AvailabilityStatus | null
@@ -68,6 +69,7 @@ export type ProductMaxAggregateOutputType = {
   brand: string | null
   condition: $Enums.ProductCondition | null
   description: string | null
+  isPhone: boolean | null
   recommendedSalePrice: runtime.Decimal | null
   compareAtPrice: runtime.Decimal | null
   availability: $Enums.AvailabilityStatus | null
@@ -91,6 +93,7 @@ export type ProductCountAggregateOutputType = {
   brand: number
   condition: number
   description: number
+  isPhone: number
   specs: number
   recommendedSalePrice: number
   compareAtPrice: number
@@ -130,6 +133,7 @@ export type ProductMinAggregateInputType = {
   brand?: true
   condition?: true
   description?: true
+  isPhone?: true
   recommendedSalePrice?: true
   compareAtPrice?: true
   availability?: true
@@ -153,6 +157,7 @@ export type ProductMaxAggregateInputType = {
   brand?: true
   condition?: true
   description?: true
+  isPhone?: true
   recommendedSalePrice?: true
   compareAtPrice?: true
   availability?: true
@@ -176,6 +181,7 @@ export type ProductCountAggregateInputType = {
   brand?: true
   condition?: true
   description?: true
+  isPhone?: true
   specs?: true
   recommendedSalePrice?: true
   compareAtPrice?: true
@@ -288,6 +294,7 @@ export type ProductGroupByOutputType = {
   brand: string | null
   condition: $Enums.ProductCondition
   description: string | null
+  isPhone: boolean
   specs: runtime.JsonValue | null
   recommendedSalePrice: runtime.Decimal
   compareAtPrice: runtime.Decimal | null
@@ -336,6 +343,7 @@ export type ProductWhereInput = {
   brand?: Prisma.StringNullableFilter<"Product"> | string | null
   condition?: Prisma.EnumProductConditionFilter<"Product"> | $Enums.ProductCondition
   description?: Prisma.StringNullableFilter<"Product"> | string | null
+  isPhone?: Prisma.BoolFilter<"Product"> | boolean
   specs?: Prisma.JsonNullableFilter<"Product">
   recommendedSalePrice?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -368,6 +376,7 @@ export type ProductOrderByWithRelationInput = {
   brand?: Prisma.SortOrderInput | Prisma.SortOrder
   condition?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPhone?: Prisma.SortOrder
   specs?: Prisma.SortOrderInput | Prisma.SortOrder
   recommendedSalePrice?: Prisma.SortOrder
   compareAtPrice?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -403,6 +412,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   brand?: Prisma.StringNullableFilter<"Product"> | string | null
   condition?: Prisma.EnumProductConditionFilter<"Product"> | $Enums.ProductCondition
   description?: Prisma.StringNullableFilter<"Product"> | string | null
+  isPhone?: Prisma.BoolFilter<"Product"> | boolean
   specs?: Prisma.JsonNullableFilter<"Product">
   recommendedSalePrice?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -435,6 +445,7 @@ export type ProductOrderByWithAggregationInput = {
   brand?: Prisma.SortOrderInput | Prisma.SortOrder
   condition?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPhone?: Prisma.SortOrder
   specs?: Prisma.SortOrderInput | Prisma.SortOrder
   recommendedSalePrice?: Prisma.SortOrder
   compareAtPrice?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -468,6 +479,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   brand?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   condition?: Prisma.EnumProductConditionWithAggregatesFilter<"Product"> | $Enums.ProductCondition
   description?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  isPhone?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   specs?: Prisma.JsonNullableWithAggregatesFilter<"Product">
   recommendedSalePrice?: Prisma.DecimalWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -493,6 +505,7 @@ export type ProductCreateInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -524,6 +537,7 @@ export type ProductUncheckedCreateInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -555,6 +569,7 @@ export type ProductUpdateInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -586,6 +601,7 @@ export type ProductUncheckedUpdateInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -617,6 +633,7 @@ export type ProductCreateManyInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -642,6 +659,7 @@ export type ProductUpdateManyMutationInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -666,6 +684,7 @@ export type ProductUncheckedUpdateManyInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -709,6 +728,7 @@ export type ProductCountOrderByAggregateInput = {
   brand?: Prisma.SortOrder
   condition?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  isPhone?: Prisma.SortOrder
   specs?: Prisma.SortOrder
   recommendedSalePrice?: Prisma.SortOrder
   compareAtPrice?: Prisma.SortOrder
@@ -740,6 +760,7 @@ export type ProductMaxOrderByAggregateInput = {
   brand?: Prisma.SortOrder
   condition?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  isPhone?: Prisma.SortOrder
   recommendedSalePrice?: Prisma.SortOrder
   compareAtPrice?: Prisma.SortOrder
   availability?: Prisma.SortOrder
@@ -763,6 +784,7 @@ export type ProductMinOrderByAggregateInput = {
   brand?: Prisma.SortOrder
   condition?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  isPhone?: Prisma.SortOrder
   recommendedSalePrice?: Prisma.SortOrder
   compareAtPrice?: Prisma.SortOrder
   availability?: Prisma.SortOrder
@@ -840,6 +862,10 @@ export type EnumProductConditionFieldUpdateOperationsInput = {
   set?: $Enums.ProductCondition
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type DecimalFieldUpdateOperationsInput = {
   set?: runtime.Decimal | runtime.DecimalJsLike | number | string
   increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -875,10 +901,6 @@ export type NullableIntFieldUpdateOperationsInput = {
 
 export type NullableBoolFieldUpdateOperationsInput = {
   set?: boolean | null
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
 }
 
 export type ProductCreateNestedOneWithoutImagesInput = {
@@ -972,6 +994,7 @@ export type ProductCreateWithoutCategoryInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1002,6 +1025,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1061,6 +1085,7 @@ export type ProductScalarWhereInput = {
   brand?: Prisma.StringNullableFilter<"Product"> | string | null
   condition?: Prisma.EnumProductConditionFilter<"Product"> | $Enums.ProductCondition
   description?: Prisma.StringNullableFilter<"Product"> | string | null
+  isPhone?: Prisma.BoolFilter<"Product"> | boolean
   specs?: Prisma.JsonNullableFilter<"Product">
   recommendedSalePrice?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1086,6 +1111,7 @@ export type ProductCreateWithoutImagesInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1116,6 +1142,7 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1162,6 +1189,7 @@ export type ProductUpdateWithoutImagesInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1192,6 +1220,7 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1222,6 +1251,7 @@ export type ProductCreateWithoutVariantsInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1252,6 +1282,7 @@ export type ProductUncheckedCreateWithoutVariantsInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1298,6 +1329,7 @@ export type ProductUpdateWithoutVariantsInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1328,6 +1360,7 @@ export type ProductUncheckedUpdateWithoutVariantsInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1358,6 +1391,7 @@ export type ProductCreateWithoutCompatibleWithPhonesInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1388,6 +1422,7 @@ export type ProductUncheckedCreateWithoutCompatibleWithPhonesInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1423,6 +1458,7 @@ export type ProductCreateWithoutCompatibleAccessoriesInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1453,6 +1489,7 @@ export type ProductUncheckedCreateWithoutCompatibleAccessoriesInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1499,6 +1536,7 @@ export type ProductUpdateWithoutCompatibleWithPhonesInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1529,6 +1567,7 @@ export type ProductUncheckedUpdateWithoutCompatibleWithPhonesInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1570,6 +1609,7 @@ export type ProductUpdateWithoutCompatibleAccessoriesInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1600,6 +1640,7 @@ export type ProductUncheckedUpdateWithoutCompatibleAccessoriesInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1630,6 +1671,7 @@ export type ProductCreateWithoutInternalInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1660,6 +1702,7 @@ export type ProductUncheckedCreateWithoutInternalInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1706,6 +1749,7 @@ export type ProductUpdateWithoutInternalInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1736,6 +1780,7 @@ export type ProductUncheckedUpdateWithoutInternalInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1766,6 +1811,7 @@ export type ProductCreateWithoutOrderRequestItemsInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1796,6 +1842,7 @@ export type ProductUncheckedCreateWithoutOrderRequestItemsInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1842,6 +1889,7 @@ export type ProductUpdateWithoutOrderRequestItemsInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1872,6 +1920,7 @@ export type ProductUncheckedUpdateWithoutOrderRequestItemsInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1902,6 +1951,7 @@ export type ProductCreateManyCategoryInput = {
   brand?: string | null
   condition: $Enums.ProductCondition
   description?: string | null
+  isPhone?: boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1926,6 +1976,7 @@ export type ProductUpdateWithoutCategoryInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1956,6 +2007,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1986,6 +2038,7 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2077,6 +2130,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   brand?: boolean
   condition?: boolean
   description?: boolean
+  isPhone?: boolean
   specs?: boolean
   recommendedSalePrice?: boolean
   compareAtPrice?: boolean
@@ -2110,6 +2164,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   brand?: boolean
   condition?: boolean
   description?: boolean
+  isPhone?: boolean
   specs?: boolean
   recommendedSalePrice?: boolean
   compareAtPrice?: boolean
@@ -2136,6 +2191,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   brand?: boolean
   condition?: boolean
   description?: boolean
+  isPhone?: boolean
   specs?: boolean
   recommendedSalePrice?: boolean
   compareAtPrice?: boolean
@@ -2162,6 +2218,7 @@ export type ProductSelectScalar = {
   brand?: boolean
   condition?: boolean
   description?: boolean
+  isPhone?: boolean
   specs?: boolean
   recommendedSalePrice?: boolean
   compareAtPrice?: boolean
@@ -2180,7 +2237,7 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "batteryHealthPercent" | "faceIdWorking" | "screenGenuine" | "batteryGenuine" | "hasDefects" | "transparencyNotes" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "isPhone" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "batteryHealthPercent" | "faceIdWorking" | "screenGenuine" | "batteryGenuine" | "hasDefects" | "transparencyNotes" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
@@ -2216,6 +2273,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     brand: string | null
     condition: $Enums.ProductCondition
     description: string | null
+    isPhone: boolean
     specs: runtime.JsonValue | null
     recommendedSalePrice: runtime.Decimal
     compareAtPrice: runtime.Decimal | null
@@ -2668,6 +2726,7 @@ export interface ProductFieldRefs {
   readonly brand: Prisma.FieldRef<"Product", 'String'>
   readonly condition: Prisma.FieldRef<"Product", 'ProductCondition'>
   readonly description: Prisma.FieldRef<"Product", 'String'>
+  readonly isPhone: Prisma.FieldRef<"Product", 'Boolean'>
   readonly specs: Prisma.FieldRef<"Product", 'Json'>
   readonly recommendedSalePrice: Prisma.FieldRef<"Product", 'Decimal'>
   readonly compareAtPrice: Prisma.FieldRef<"Product", 'Decimal'>

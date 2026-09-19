@@ -87,6 +87,12 @@ model Product {
   condition   ProductCondition
   description String?            @db.Text
 
+  // Drives the checkout's dynamic payment logic (phase-2): an order needs
+  // the 300 DH advance if ANY item has isPhone=true. Deliberately an
+  // explicit staff-set flag rather than inferred from category name/slug,
+  // which would silently break if a category gets renamed.
+  isPhone Boolean @default(false)
+
   // Flexible spec sheet (e.g. { "Stockage": "128GB", "RAM": "6GB", "Écran": "6.1\"" })
   // so phones/laptops/accessories don't need different tables for differing spec sets.
   specs       Json?
@@ -229,10 +235,21 @@ model OrderRequest {
   id             String              @id @default(cuid())
   customerName   String
   customerPhone  String
+  deliveryAddress String?            @db.Text
   status         OrderRequestStatus  @default(NEW)
   totalEstimate  Decimal             @db.Decimal(10, 2)
   whatsappOpenedAt DateTime?         // set once the WhatsApp prefill was triggered client-side
   notes          String?             @db.Text
+
+  // Phase-2 dynamic payment tunnel. requiresAdvance is computed once at
+  // submission time from whether the cart contained an isPhone item, then
+  // stored — so a later catalog change (marking something isPhone) never
+  // silently rewrites the terms of an order already placed.
+  requiresAdvance      Boolean              @default(false)
+  advancePaymentStatus AdvancePaymentStatus @default(NOT_REQUIRED)
+  receiptUrl           String?
+  receiptUploadedAt    DateTime?
+  dataConsentAccepted  Boolean              @default(false)
 
   items OrderRequestItem[]
 
@@ -240,6 +257,14 @@ model OrderRequest {
   updatedAt DateTime @updatedAt
 
   @@index([status])
+}
+
+enum AdvancePaymentStatus {
+  NOT_REQUIRED
+  AWAITING_RECEIPT
+  RECEIPT_UPLOADED
+  VERIFIED
+  REJECTED
 }
 
 model OrderRequestItem {

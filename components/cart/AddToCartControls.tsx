@@ -16,6 +16,7 @@ type Props = {
   image?: string;
   variants: VariantOption[];
   basePrice: string; // Decimal serialized as string from the server component
+  isPhone?: boolean;
 };
 
 export function AddToCartControls({
@@ -24,6 +25,7 @@ export function AddToCartControls({
   image,
   variants,
   basePrice,
+  isPhone,
 }: Props) {
   const { addItem } = useCart();
   const [variantId, setVariantId] = useState<string | undefined>(variants[0]?.id);
@@ -42,6 +44,7 @@ export function AddToCartControls({
         variantName: selectedVariant?.name,
         price,
         image,
+        isPhone,
       },
       quantity
     );

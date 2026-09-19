@@ -8,9 +8,16 @@ type CartLine = {
   price: number; // MAD
 };
 
+type OrderContext = {
+  deliveryAddress?: string;
+  requiresAdvance: boolean;
+  receiptUploaded: boolean;
+};
+
 export function buildWhatsAppOrderLink(
   customerName: string,
-  lines: CartLine[]
+  lines: CartLine[],
+  context?: OrderContext
 ): string {
   const itemLines = lines
     .map(
@@ -23,11 +30,23 @@ export function buildWhatsAppOrderLink(
 
   const total = lines.reduce((sum, l) => sum + l.price * l.quantity, 0);
 
-  const message = [
+  const messageParts = [
     `Bonjour, je souhaite commander (${customerName}) :`,
     itemLines,
     `Total estimé : ${total} MAD`,
-  ].join("\n\n");
+  ];
 
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  if (context?.deliveryAddress) {
+    messageParts.push(`Adresse de livraison : ${context.deliveryAddress}`);
+  }
+
+  if (context?.requiresAdvance) {
+    messageParts.push(
+      context.receiptUploaded
+        ? "Avance de 300 DH : reçu envoyé, en attente de vérification."
+        : "Avance de 300 DH : reçu non encore envoyé."
+    );
+  }
+
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messageParts.join("\n\n"))}`;
 }

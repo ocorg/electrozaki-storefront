@@ -39,6 +39,17 @@ export const OrderRequestStatus = {
 export type OrderRequestStatus = (typeof OrderRequestStatus)[keyof typeof OrderRequestStatus]
 
 
+export const AdvancePaymentStatus = {
+  NOT_REQUIRED: 'NOT_REQUIRED',
+  AWAITING_RECEIPT: 'AWAITING_RECEIPT',
+  RECEIPT_UPLOADED: 'RECEIPT_UPLOADED',
+  VERIFIED: 'VERIFIED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type AdvancePaymentStatus = (typeof AdvancePaymentStatus)[keyof typeof AdvancePaymentStatus]
+
+
 export const RepairRequestStatus = {
   NEW: 'NEW',
   CONTACTED: 'CONTACTED',

@@ -16,6 +16,7 @@ const PUBLIC_PRODUCT_SELECT = {
   name: true,
   brand: true,
   condition: true,
+  isPhone: true,
   description: true,
   specs: true,
   recommendedSalePrice: true,
@@ -75,6 +76,7 @@ export interface PublicProduct {
   name: string;
   brand: string | null;
   condition: string;
+  isPhone: boolean;
   description: string | null;
   specs: unknown;
   recommendedSalePrice: { toString(): string };

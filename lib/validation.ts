@@ -15,7 +15,21 @@ export const orderRequestSchema = z.object({
     .string()
     .trim()
     .regex(MOROCCAN_PHONE_RE, "Numéro de téléphone invalide (ex: 06XXXXXXXX)."),
+  deliveryAddress: z
+    .string()
+    .trim()
+    .min(10, "Merci d'indiquer une adresse complète.")
+    .max(300),
   notes: z.string().trim().max(500).optional(),
+  requiresAdvance: z.boolean(),
+  receiptUrl: z.string().url().optional(),
+  dataConsentAccepted: z.boolean(),
+}).refine((data) => !data.requiresAdvance || data.dataConsentAccepted, {
+  message: "Merci d'accepter le traitement de vos données pour continuer.",
+  path: ["dataConsentAccepted"],
+}).refine((data) => !data.requiresAdvance || Boolean(data.receiptUrl), {
+  message: "Merci de déposer votre reçu de virement avant de confirmer.",
+  path: ["receiptUrl"],
 });
 
 export type OrderRequestInput = z.infer<typeof orderRequestSchema>;
