@@ -1,12 +1,25 @@
 import Link from "next/link";
-import { MessageCircle, ShieldCheck, Smartphone, Truck, Wrench } from "lucide-react";
-import { getAllCategories } from "@/lib/db/categories";
+import {
+  Cable,
+  Headphones,
+  Layers,
+  MessageCircle,
+  Plug,
+  ShieldCheck,
+  Smartphone,
+  Truck,
+  Wrench,
+  type LucideIcon,
+} from "lucide-react";
+import { getBrowsableCategories } from "@/lib/db/categories";
 import { getFeaturedProducts } from "@/lib/db/public-products";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { PhoneFinder } from "@/components/storefront/PhoneFinder";
 import { AnchorButton } from "@/components/ui/Button";
 import { interactiveCardClasses } from "@/components/ui/Card";
 import { IconTile } from "@/components/ui/IconTile";
+import { Carousel } from "@/components/ui/Carousel";
+import { Reveal } from "@/components/ui/Reveal";
 
 export const revalidate = 60;
 
@@ -17,9 +30,20 @@ const REASSURANCE = [
   { icon: MessageCircle, title: "Support WhatsApp", desc: "Réponse rapide, sans robot" },
 ];
 
+// Icon per leaf category slug — falls back to a generic tile when a new
+// category is added without a matching entry here.
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  telephones: Smartphone,
+  pochettes: Layers,
+  incassables: ShieldCheck,
+  chargeurs: Plug,
+  cables: Cable,
+  ecouteurs: Headphones,
+};
+
 export default async function HomePage() {
   const [categories, featured] = await Promise.all([
-    getAllCategories(),
+    getBrowsableCategories(),
     getFeaturedProducts(8),
   ]);
 
@@ -50,64 +74,70 @@ export default async function HomePage() {
 
       <section className="border-b border-black/10 bg-neutral-50 px-4 py-10">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 sm:grid-cols-4">
-          {REASSURANCE.map((item) => (
-            <div key={item.title} className="flex flex-col items-center text-center">
+          {REASSURANCE.map((item, i) => (
+            <Reveal key={item.title} delayMs={i * 75} className="flex flex-col items-center text-center">
               <IconTile icon={item.icon} size={48} />
               <p className="mt-2.5 text-sm font-semibold">{item.title}</p>
               <p className="mt-0.5 text-xs text-neutral-500">{item.desc}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
-      <section id="trouver" className="mx-auto max-w-3xl px-4 py-16">
-        <h2 className="text-center text-2xl font-bold sm:text-3xl">Trouvez votre téléphone</h2>
-        <p className="mt-2 text-center text-neutral-600">
-          3 questions rapides pour vous proposer les modèles qui correspondent.
-        </p>
-        <PhoneFinder />
-      </section>
+      <Reveal>
+        <section id="trouver" className="mx-auto max-w-3xl px-4 py-16">
+          <h2 className="text-center text-2xl font-bold sm:text-3xl">Trouvez votre téléphone</h2>
+          <p className="mt-2 text-center text-neutral-600">
+            3 questions rapides pour vous proposer les modèles qui correspondent.
+          </p>
+          <PhoneFinder />
+        </section>
+      </Reveal>
 
       {categories.length > 0 && (
-        <section className="mx-auto max-w-6xl px-4 py-16">
-          <h2 className="mb-6 text-2xl font-bold">Catégories</h2>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/collections/${category.slug}`}
-                className={interactiveCardClasses("flex flex-col items-center gap-3 px-4 py-7 text-center")}
-              >
-                <IconTile icon={Smartphone} tone="gold" size={40} />
-                <span className="font-medium">{category.name}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
+        <Reveal>
+          <section className="mx-auto max-w-6xl px-4 py-16">
+            <h2 className="mb-6 text-2xl font-bold">Catégories</h2>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {categories.map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/collections/${category.slug}`}
+                  className={interactiveCardClasses("flex flex-col items-center gap-3 px-4 py-7 text-center")}
+                >
+                  <IconTile icon={CATEGORY_ICONS[category.slug] ?? Smartphone} tone="gold" size={40} />
+                  <span className="font-medium">{category.name}</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        </Reveal>
       )}
 
-      <section className="mx-auto max-w-6xl px-4 py-16">
-        <h2 className="mb-6 text-2xl font-bold">Sélection du moment</h2>
-        {featured.length === 0 ? (
-          <div className="rounded-xl border border-black/10 bg-neutral-50 p-8 text-center">
-            <p className="text-neutral-600">
-              Notre catalogue en ligne est en cours de mise à jour, mais nos téléphones et
-              accessoires sont disponibles dès maintenant en boutique et sur WhatsApp.
-            </p>
-            <AnchorButton href="https://wa.me/212667654430" className="mt-4">
-              Voir les disponibilités sur WhatsApp
-            </AnchorButton>
-          </div>
-        ) : (
-          <div className="-mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2">
-            {featured.map((product) => (
-              <div key={product.id} className="w-[45%] flex-none snap-start sm:w-[30%] lg:w-[22%]">
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
+      <Reveal>
+        <section className="mx-auto max-w-6xl px-4 py-16">
+          <h2 className="mb-6 text-2xl font-bold">Sélection du moment</h2>
+          {featured.length === 0 ? (
+            <div className="rounded-xl border border-black/10 bg-neutral-50 p-8 text-center">
+              <p className="text-neutral-600">
+                Notre catalogue en ligne est en cours de mise à jour, mais nos téléphones et
+                accessoires sont disponibles dès maintenant en boutique et sur WhatsApp.
+              </p>
+              <AnchorButton href="https://wa.me/212667654430" className="mt-4">
+                Voir les disponibilités sur WhatsApp
+              </AnchorButton>
+            </div>
+          ) : (
+            <Carousel>
+              {featured.map((product) => (
+                <div key={product.id} className="w-[45%] flex-none snap-start sm:w-[30%] lg:w-[22%]">
+                  <ProductCard product={product} />
+                </div>
+              ))}
+            </Carousel>
+          )}
+        </section>
+      </Reveal>
     </div>
   );
 }

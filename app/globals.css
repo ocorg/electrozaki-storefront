@@ -31,3 +31,53 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* ── Animation convention ──────────────────────────────────────────────
+   Reusable, CSS-only building blocks: `.reveal` for scroll-triggered
+   fade-ins (paired with components/ui/Reveal.tsx), `.animate-in` for
+   conditionally-rendered popovers/modals entering via @starting-style
+   (no extra JS state machine needed). Both collapse to an instant,
+   motion-free state under prefers-reduced-motion. */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.5s ease-out var(--reveal-delay, 0ms),
+    transform 0.5s ease-out var(--reveal-delay, 0ms);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@supports (transition-behavior: allow-discrete) {
+  .animate-in {
+    opacity: 1;
+    transform: scale(1);
+    transition:
+      opacity 0.18s ease-out,
+      transform 0.18s ease-out;
+    transition-behavior: allow-discrete;
+
+    @starting-style {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-in {
+    transition: none;
+  }
+}

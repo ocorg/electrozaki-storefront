@@ -141,12 +141,26 @@ export async function getProductBySlug(slug: string): Promise<PublicProduct | nu
   });
 }
 
+// A category page can be visited at a leaf (e.g. "chargeurs") or at a
+// parent that groups several leaves (e.g. "accessoires"). Products only
+// ever live on a leaf category, so a parent's page needs to pull in all of
+// its children's products too, or it would always render empty.
+async function resolveCategoryIds(categorySlug: string): Promise<string[]> {
+  const category = await prisma.category.findUnique({
+    where: { slug: categorySlug },
+    select: { id: true, children: { select: { id: true } } },
+  });
+  if (!category) return [];
+  return [category.id, ...category.children.map((c: { id: string }) => c.id)];
+}
+
 export async function getProductsByCategorySlug(
   categorySlug: string,
   filters?: ProductFilters
 ): Promise<PublicProduct[]> {
+  const categoryIds = await resolveCategoryIds(categorySlug);
   const and: Array<Record<string, unknown>> = [
-    { category: { slug: categorySlug } },
+    { categoryId: { in: categoryIds } },
     { availability: { not: AvailabilityStatus.DISCONTINUED } },
     ...buildFilterConditions(filters),
   ];
@@ -162,8 +176,9 @@ export async function getProductsByCategorySlug(
 // this category right now, instead of a hardcoded list that drifts from
 // the real catalog.
 export async function getDistinctBrandsForCategory(categorySlug: string): Promise<string[]> {
+  const categoryIds = await resolveCategoryIds(categorySlug);
   const rows = await prisma.product.findMany({
-    where: { category: { slug: categorySlug }, brand: { not: null } },
+    where: { categoryId: { in: categoryIds }, brand: { not: null } },
     select: { brand: true },
     distinct: ["brand"],
   });

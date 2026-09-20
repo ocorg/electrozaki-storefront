@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { RepairDiagnostic } from "@/components/storefront/RepairDiagnostic";
 import { AnchorButton } from "@/components/ui/Button";
 import { interactiveCardClasses } from "@/components/ui/Card";
+import { IconTile } from "@/components/ui/IconTile";
+import { Reveal } from "@/components/ui/Reveal";
+import { REPAIR_TOPIC_ORDER, REPAIR_TOPICS } from "@/lib/repair-faq";
 
 export const metadata: Metadata = {
   title: "Réparation — Electro Zaki",
@@ -9,14 +14,7 @@ export const metadata: Metadata = {
     "Réparation de téléphones à Meknès : écran, batterie, port de charge, caméra, et plus. Devis gratuit sur WhatsApp.",
 };
 
-const SERVICES = [
-  { title: "Écran cassé", desc: "Remplacement d'écran toutes marques, pièces de qualité." },
-  { title: "Batterie", desc: "Batterie qui ne tient plus la charge ? On la remplace." },
-  { title: "Port de charge", desc: "Le téléphone ne charge plus ou mal — réparation rapide." },
-  { title: "Caméra", desc: "Photo floue ou caméra hors service, diagnostic et réparation." },
-  { title: "Son / Micro", desc: "Haut-parleur ou micro défaillant, remis en état." },
-  { title: "Désimlockage réseau", desc: "Déblocage réseau pour utiliser votre téléphone partout." },
-];
+const SERVICES = REPAIR_TOPIC_ORDER.map((slug) => REPAIR_TOPICS[slug]);
 
 export default function ReparationPage() {
   return (
@@ -48,11 +46,18 @@ export default function ReparationPage() {
           Nos services de réparation
         </h2>
         <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((s) => (
-            <div key={s.title} className={interactiveCardClasses("p-6")}>
-              <h3 className="font-semibold">{s.title}</h3>
-              <p className="mt-2 text-sm text-neutral-600">{s.desc}</p>
-            </div>
+          {SERVICES.map((s, i) => (
+            <Reveal key={s.slug} delayMs={i * 60}>
+              <Link href={`/reparation/${s.slug}`} className={interactiveCardClasses("flex h-full flex-col p-6")}>
+                <IconTile icon={s.icon} tone="gold" size={40} />
+                <h3 className="mt-3 font-semibold">{s.shortTitle}</h3>
+                <p className="mt-2 flex-1 text-sm text-neutral-600">{s.cardDescription}</p>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-gold">
+                  Voir les questions fréquentes
+                  <ArrowRight size={15} />
+                </span>
+              </Link>
+            </Reveal>
           ))}
         </div>
       </section>

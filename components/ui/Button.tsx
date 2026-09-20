@@ -17,7 +17,7 @@ const SIZE_CLASSES: Record<ButtonSize, string> = {
 };
 
 const BASE =
-  "inline-flex items-center justify-center gap-2 rounded-lg font-semibold shadow-sm transition-all hover:shadow-md disabled:pointer-events-none disabled:opacity-40 disabled:shadow-none";
+  "inline-flex items-center justify-center gap-2 rounded-lg font-semibold shadow-sm transition-all hover:shadow-md active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40 disabled:shadow-none disabled:active:scale-100";
 
 export function buttonClasses(
   variant: ButtonVariant = "primary",

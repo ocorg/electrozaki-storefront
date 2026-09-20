@@ -78,7 +78,7 @@ export function Header({ categories }: { categories: Category[] }) {
       </div>
 
       {menuOpen && (
-        <nav className="flex flex-col gap-1 border-t border-black/10 px-4 py-3 md:hidden">
+        <nav className="animate-in flex flex-col gap-1 border-t border-black/10 px-4 py-3 md:hidden">
           {categories.map((c) => (
             <Link
               key={c.id}
