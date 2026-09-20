@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { RepairDiagnostic } from "@/components/storefront/RepairDiagnostic";
+import { AnchorButton } from "@/components/ui/Button";
+import { interactiveCardClasses } from "@/components/ui/Card";
 
 export const metadata: Metadata = {
   title: "Réparation — Electro Zaki",
@@ -19,37 +21,35 @@ const SERVICES = [
 export default function ReparationPage() {
   return (
     <div>
-      <section className="border-b border-black/10 bg-[#121212] px-4 py-20 text-center text-white">
-        <h1 className="text-3xl font-extrabold sm:text-4xl">
-          Votre téléphone cassé ? <span className="text-[#c8922a]">On s&apos;en occupe.</span>
+      <section className="border-b border-black/10 bg-ink px-4 py-20 text-center text-white sm:py-28">
+        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+          Votre téléphone cassé ? <span className="text-gold">On s&apos;en occupe.</span>
         </h1>
-        <p className="mx-auto mt-4 max-w-lg text-neutral-300">
+        <p className="mx-auto mt-4 max-w-lg text-lg text-neutral-300">
           Diagnostic rapide, pièces de qualité, devis gratuit avant toute réparation.
         </p>
-        <a
-          href="#diagnostic"
-          className="mt-6 inline-block rounded bg-[#c8922a] px-6 py-3 font-semibold text-black transition-opacity hover:opacity-90"
-        >
+        <AnchorButton href="#diagnostic" variant="accent" className="mt-8">
           Demander un diagnostic ou un devis
-        </a>
+        </AnchorButton>
       </section>
 
-      <section id="diagnostic" className="mx-auto max-w-2xl px-4 py-14">
-        <h2 className="text-center text-2xl font-bold">Demander un diagnostic ou un devis</h2>
+      <section id="diagnostic" className="mx-auto max-w-2xl px-4 py-16">
+        <h2 className="text-center text-2xl font-bold sm:text-3xl">
+          Demander un diagnostic ou un devis
+        </h2>
         <p className="mt-2 text-center text-neutral-600">
           3 étapes rapides, sans avoir à décrire techniquement le problème.
         </p>
         <RepairDiagnostic />
       </section>
 
-      <section className="border-t border-black/10 px-4 py-14">
-        <h2 className="mb-8 text-center text-2xl font-bold">Nos services de réparation</h2>
+      <section className="border-t border-black/10 px-4 py-16">
+        <h2 className="mb-8 text-center text-2xl font-bold sm:text-3xl">
+          Nos services de réparation
+        </h2>
         <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s) => (
-            <div
-              key={s.title}
-              className="rounded-lg border border-black/10 p-6 transition-colors hover:border-[#c8922a]"
-            >
+            <div key={s.title} className={interactiveCardClasses("p-6")}>
               <h3 className="font-semibold">{s.title}</h3>
               <p className="mt-2 text-sm text-neutral-600">{s.desc}</p>
             </div>
@@ -57,18 +57,15 @@ export default function ReparationPage() {
         </div>
       </section>
 
-      <section className="border-t border-black/10 bg-neutral-50 px-4 py-14 text-center">
-        <h2 className="text-2xl font-bold">Une question sur votre appareil ?</h2>
+      <section className="border-t border-black/10 bg-neutral-50 px-4 py-16 text-center">
+        <h2 className="text-2xl font-bold sm:text-3xl">Une question sur votre appareil ?</h2>
         <p className="mx-auto mt-3 max-w-md text-neutral-600">
           Envoyez-nous une photo ou décrivez le problème sur WhatsApp — réponse rapide, sans
           engagement.
         </p>
-        <a
-          href="https://wa.me/212667654430"
-          className="mt-6 inline-block rounded bg-[#121212] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#c8922a] hover:text-black"
-        >
+        <AnchorButton href="https://wa.me/212667654430" className="mt-6">
           Discuter sur WhatsApp
-        </a>
+        </AnchorButton>
       </section>
     </div>
   );

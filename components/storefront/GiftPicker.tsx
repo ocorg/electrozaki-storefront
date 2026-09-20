@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { CheckCircle2, Gift, X } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
+import { Button } from "@/components/ui/Button";
+import { cardClasses } from "@/components/ui/Card";
 
 type GiftOption = {
   isGiftOption: boolean;
@@ -51,37 +54,39 @@ export function GiftPicker({ giftOptions }: { giftOptions: GiftOption[] }) {
   if (giftOptions.length === 0) return null;
 
   return (
-    <div className="mt-4 rounded-lg border border-black/10 p-4">
-      <p className="text-sm font-semibold">🎁 Cadeau offert à l'achat</p>
+    <div className={cardClasses("mt-4 p-4")}>
+      <p className="flex items-center gap-2 text-sm font-semibold">
+        <Gift size={16} className="text-gold" />
+        Cadeau offert à l&apos;achat
+      </p>
       <p className="mt-1 text-sm text-neutral-600">
         Choisissez {Object.keys(groups).length > 1 ? "vos cadeaux" : "votre cadeau"} parmi les
         modèles compatibles.
       </p>
 
       {added ? (
-        <p className="mt-3 text-sm font-medium text-green-700">✓ Cadeaux ajoutés au panier</p>
+        <p className="mt-3 flex items-center gap-2 text-sm font-medium text-green-700">
+          <CheckCircle2 size={16} />
+          Cadeaux ajoutés au panier
+        </p>
       ) : (
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="mt-3 min-h-11 rounded bg-[#c8922a] px-4 text-sm font-semibold text-black transition-opacity hover:opacity-90"
-        >
+        <Button type="button" variant="accent" size="sm" onClick={() => setOpen(true)} className="mt-3">
           Choisir mon cadeau
-        </button>
+        </Button>
       )}
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-6">
+          <div className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-xl bg-white p-6 shadow-xl">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-bold">Choisissez votre cadeau</h2>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Fermer"
-                className="flex h-11 w-11 items-center justify-center text-xl"
+                className="flex h-11 w-11 items-center justify-center rounded-full text-neutral-500 hover:bg-neutral-100 hover:text-ink"
               >
-                ✕
+                <X size={20} />
               </button>
             </div>
 
@@ -98,11 +103,11 @@ export function GiftPicker({ giftOptions }: { giftOptions: GiftOption[] }) {
                         onClick={() =>
                           setSelections((prev) => ({ ...prev, [categoryName]: g.product.id }))
                         }
-                        className={`rounded-lg border bg-white p-2 text-left shadow-sm transition-colors ${
-                          isSelected ? "border-[#c8922a] bg-[#c8922a]/5" : "border-neutral-300 hover:border-[#c8922a]"
+                        className={`rounded-xl border bg-white p-2 text-left shadow-sm transition-colors ${
+                          isSelected ? "border-gold bg-gold/5" : "border-neutral-300 hover:border-gold"
                         }`}
                       >
-                        <div className="relative aspect-square overflow-hidden rounded bg-neutral-50">
+                        <div className="relative aspect-square overflow-hidden rounded-lg bg-neutral-50">
                           {g.product.images[0] ? (
                             <Image
                               src={g.product.images[0].url}
@@ -120,14 +125,14 @@ export function GiftPicker({ giftOptions }: { giftOptions: GiftOption[] }) {
               </div>
             ))}
 
-            <button
+            <Button
               type="button"
               onClick={confirm}
               disabled={Object.keys(selections).length < Object.keys(groups).length}
-              className="mt-6 min-h-11 w-full rounded bg-[#121212] px-4 text-sm font-semibold text-white disabled:opacity-40"
+              className="mt-6 w-full"
             >
               Confirmer mon choix
-            </button>
+            </Button>
           </div>
         </div>
       )}

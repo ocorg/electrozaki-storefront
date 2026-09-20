@@ -1,3 +1,5 @@
+import { BatteryCharging, Ban, ScanFace, MonitorSmartphone, type LucideIcon } from "lucide-react";
+
 type Props = {
   batteryHealthPercent: number | null;
   batteryGenuine: boolean | null;
@@ -14,11 +16,11 @@ export function ConditionDashboard({
   screenGenuine,
   faceIdWorking,
 }: Props) {
-  const tiles: { icon: string; label: string; value: string; ok: boolean }[] = [];
+  const tiles: { icon: LucideIcon; label: string; value: string; ok: boolean }[] = [];
 
   if (batteryHealthPercent !== null) {
     tiles.push({
-      icon: "🔋",
+      icon: BatteryCharging,
       label: "Batterie",
       value: `${batteryHealthPercent}%${batteryGenuine === true ? " · d'origine" : batteryGenuine === false ? " · remplacée" : ""}`,
       ok: batteryHealthPercent >= 80,
@@ -27,7 +29,7 @@ export function ConditionDashboard({
 
   if (screenGenuine !== null) {
     tiles.push({
-      icon: "🖼️",
+      icon: MonitorSmartphone,
       label: "Écran",
       value: screenGenuine ? "D'origine" : "Remplacé",
       ok: screenGenuine,
@@ -36,7 +38,7 @@ export function ConditionDashboard({
 
   if (faceIdWorking !== null) {
     tiles.push({
-      icon: faceIdWorking ? "🆔" : "🚫",
+      icon: faceIdWorking ? ScanFace : Ban,
       label: "Face ID",
       value: faceIdWorking ? "Fonctionnel" : "Non fonctionnel",
       ok: faceIdWorking,
@@ -50,13 +52,13 @@ export function ConditionDashboard({
       {tiles.map((tile) => (
         <div
           key={tile.label}
-          className={`rounded-lg border p-3 text-center ${
-            tile.ok ? "border-black/10" : "border-[#c8922a]/50 bg-[#c8922a]/5"
+          className={`rounded-xl border p-3 text-center shadow-sm ${
+            tile.ok ? "border-black/10 bg-white" : "border-gold/50 bg-gold/5"
           }`}
         >
-          <div className="text-xl">{tile.icon}</div>
-          <p className="mt-1 text-xs font-semibold text-neutral-500">{tile.label}</p>
-          <p className="text-sm font-medium">{tile.value}</p>
+          <tile.icon size={20} className={`mx-auto ${tile.ok ? "text-neutral-700" : "text-gold"}`} />
+          <p className="mt-1.5 text-xs font-semibold text-neutral-500">{tile.label}</p>
+          <p className="text-sm font-medium text-neutral-900">{tile.value}</p>
         </div>
       ))}
     </div>

@@ -1,17 +1,29 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import {
+  BatteryCharging,
+  Camera,
+  CheckCircle2,
+  Globe,
+  Plug,
+  Smartphone,
+  Volume2,
+} from "lucide-react";
 import { submitRepairRequest } from "@/app/(storefront)/reparation/actions";
+import { Button } from "@/components/ui/Button";
+import { cardClasses } from "@/components/ui/Card";
+import { StepProgress } from "@/components/ui/StepProgress";
 
 const BRANDS = ["Apple", "Samsung", "Xiaomi", "Huawei", "Autre"];
 
 const PROBLEM_AREAS = [
-  { key: "ecran", icon: "📱", label: "Écran" },
-  { key: "batterie", icon: "🔋", label: "Batterie" },
-  { key: "camera", icon: "📷", label: "Appareil photo" },
-  { key: "connecteur", icon: "🔌", label: "Port de charge" },
-  { key: "son", icon: "🔊", label: "Son / Micro" },
-  { key: "reseau", icon: "🌐", label: "Désimlockage réseau" },
+  { key: "ecran", icon: Smartphone, label: "Écran" },
+  { key: "batterie", icon: BatteryCharging, label: "Batterie" },
+  { key: "camera", icon: Camera, label: "Appareil photo" },
+  { key: "connecteur", icon: Plug, label: "Port de charge" },
+  { key: "son", icon: Volume2, label: "Son / Micro" },
+  { key: "reseau", icon: Globe, label: "Désimlockage réseau" },
 ];
 
 export function RepairDiagnostic() {
@@ -57,14 +69,15 @@ export function RepairDiagnostic() {
 
   if (done) {
     return (
-      <div className="mt-8 rounded-lg border border-black/10 p-6 text-center">
-        <p className="text-lg font-bold">Demande envoyée ✓</p>
+      <div className={cardClasses("mt-8 p-6 text-center")}>
+        <CheckCircle2 size={28} className="mx-auto text-green-600" />
+        <p className="mt-2 text-lg font-bold">Demande envoyée</p>
         <p className="mt-2 text-sm text-neutral-600">
           Nous vous répondrons rapidement avec une estimation. Pour une réponse immédiate,
           contactez-nous sur{" "}
           <a
             href="https://wa.me/212667654430"
-            className="font-medium text-neutral-900 underline decoration-[#c8922a] decoration-2 underline-offset-2"
+            className="font-medium text-neutral-900 underline decoration-gold decoration-2 underline-offset-2"
           >
             WhatsApp
           </a>
@@ -77,26 +90,21 @@ export function RepairDiagnostic() {
   // Step 0 — one action: identify the device.
   if (step === 0) {
     return (
-      <div className="mt-8 rounded-lg border border-black/10 p-6">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-neutral-400">
-          Étape 1 / 3
-        </p>
+      <div className={cardClasses("mt-8 p-6")}>
+        <StepProgress step={1} total={3} />
         <p className="mb-4 font-medium">Quel est votre appareil ?</p>
 
         <div className="grid gap-2 sm:grid-cols-3">
           {BRANDS.map((b) => (
-            <button
+            <Button
               key={b}
               type="button"
+              variant={deviceBrand === b ? "accent" : "outline"}
               onClick={() => setDeviceBrand(b)}
-              className={`min-h-11 rounded border bg-white px-4 py-3 text-sm shadow-sm transition-colors ${
-                deviceBrand === b
-                  ? "border-[#c8922a] bg-[#c8922a]/5"
-                  : "border-neutral-300 hover:border-[#c8922a]"
-              }`}
+              className={deviceBrand === b ? "" : "hover:bg-gold/5"}
             >
               {b}
-            </button>
+            </Button>
           ))}
         </div>
 
@@ -106,18 +114,18 @@ export function RepairDiagnostic() {
             placeholder="Modèle (ex: iPhone 12, Galaxy A32...)"
             value={deviceModel}
             onChange={(e) => setDeviceModel(e.target.value)}
-            className="mt-4 min-h-11 w-full rounded border border-black/20 px-3"
+            className="mt-4 min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
           />
         )}
 
-        <button
+        <Button
           type="button"
           disabled={!deviceBrand || !deviceModel.trim()}
           onClick={() => setStep(1)}
-          className="mt-4 min-h-11 w-full rounded bg-[#121212] px-4 text-sm font-semibold text-white disabled:opacity-40"
+          className="mt-4 w-full"
         >
           Continuer
-        </button>
+        </Button>
       </div>
     );
   }
@@ -125,10 +133,8 @@ export function RepairDiagnostic() {
   // Step 1 — one action: identify the problem(s), no text field required.
   if (step === 1) {
     return (
-      <div className="mt-8 rounded-lg border border-black/10 p-6">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-neutral-400">
-          Étape 2 / 3
-        </p>
+      <div className={cardClasses("mt-8 p-6")}>
+        <StepProgress step={2} total={3} />
         <p className="mb-4 font-medium">Quel est le problème ? (plusieurs choix possibles)</p>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -139,35 +145,31 @@ export function RepairDiagnostic() {
                 key={p.key}
                 type="button"
                 onClick={() => toggleProblem(p.key)}
-                className={`min-h-11 rounded-lg border bg-white p-4 text-center shadow-sm transition-colors ${
+                className={`min-h-11 rounded-xl border bg-white p-4 text-center shadow-sm transition-colors ${
                   isSelected
-                    ? "border-[#c8922a] bg-[#c8922a]/5"
-                    : "border-neutral-300 hover:border-[#c8922a]"
+                    ? "border-gold bg-gold/5"
+                    : "border-neutral-300 hover:border-gold"
                 }`}
               >
-                <div className="text-2xl">{p.icon}</div>
-                <p className="mt-1 text-xs font-medium">{p.label}</p>
+                <p.icon size={22} className={`mx-auto ${isSelected ? "text-gold" : "text-neutral-600"}`} />
+                <p className="mt-1.5 text-xs font-medium">{p.label}</p>
               </button>
             );
           })}
         </div>
 
         <div className="mt-4 flex gap-2">
-          <button
-            type="button"
-            onClick={() => setStep(0)}
-            className="min-h-11 flex-1 rounded border border-black/20 px-4 text-sm"
-          >
+          <Button type="button" variant="outline" onClick={() => setStep(0)} className="flex-1">
             Retour
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             disabled={problemAreas.length === 0}
             onClick={() => setStep(2)}
-            className="min-h-11 flex-1 rounded bg-[#121212] px-4 text-sm font-semibold text-white disabled:opacity-40"
+            className="flex-1"
           >
             Continuer
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -175,13 +177,8 @@ export function RepairDiagnostic() {
 
   // Step 2 — one action: leave contact info and submit.
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mt-8 space-y-4 rounded-lg border border-black/10 p-6"
-    >
-      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-neutral-400">
-        Étape 3 / 3
-      </p>
+    <form onSubmit={handleSubmit} className={cardClasses("mt-8 space-y-4 p-6")}>
+      <StepProgress step={3} total={3} />
       <p className="mb-2 font-medium">Vos coordonnées</p>
 
       <input
@@ -190,7 +187,7 @@ export function RepairDiagnostic() {
         placeholder="Nom complet"
         value={customerName}
         onChange={(e) => setCustomerName(e.target.value)}
-        className="min-h-11 w-full rounded border border-black/20 px-3"
+        className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
       />
       <input
         type="tel"
@@ -198,33 +195,25 @@ export function RepairDiagnostic() {
         placeholder="Numéro de téléphone (ex: 06XXXXXXXX)"
         value={customerPhone}
         onChange={(e) => setCustomerPhone(e.target.value)}
-        className="min-h-11 w-full rounded border border-black/20 px-3"
+        className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
       />
       <textarea
         placeholder="Détail supplémentaire (optionnel)"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
         rows={3}
-        className="w-full rounded border border-black/20 px-3 py-2"
+        className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
       />
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 
       <div className="flex gap-2">
-        <button
-          type="button"
-          onClick={() => setStep(1)}
-          className="min-h-11 flex-1 rounded border border-black/20 px-4 text-sm"
-        >
+        <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1">
           Retour
-        </button>
-        <button
-          type="submit"
-          disabled={submitting}
-          className="min-h-11 flex-1 rounded bg-[#c8922a] px-4 text-sm font-semibold text-black transition-opacity hover:opacity-90 disabled:opacity-40"
-        >
+        </Button>
+        <Button type="submit" variant="accent" disabled={submitting} className="flex-1">
           {submitting ? "Envoi..." : "Demander une évaluation"}
-        </button>
+        </Button>
       </div>
     </form>
   );

@@ -26,13 +26,13 @@ export default async function SearchPage({ searchParams }: Props) {
       : "Rechercher";
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
-      <h1 className="mb-6 text-2xl font-semibold">{title}</h1>
+    <div className="mx-auto max-w-6xl px-4 py-10">
+      <h1 className="mb-6 text-2xl font-semibold sm:text-3xl">{title}</h1>
 
       {!query && !hasFilters ? (
-        <p className="text-neutral-500">Utilisez la barre de recherche pour trouver un produit.</p>
+        <p className="text-neutral-600">Utilisez la barre de recherche pour trouver un produit.</p>
       ) : results.length === 0 ? (
-        <p className="text-neutral-500">
+        <p className="text-neutral-600">
           Aucun résultat. Essayez un autre terme, ou{" "}
           <a href="https://wa.me/212667654430" className="font-semibold text-neutral-900 underline decoration-[#25D366] decoration-2 underline-offset-2">
             contactez-nous sur WhatsApp

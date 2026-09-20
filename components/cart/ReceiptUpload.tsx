@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { CheckCircle2, Upload } from "lucide-react";
 import { uploadReceipt } from "@/app/(storefront)/cart/actions";
 
 type Props = {
@@ -46,15 +47,15 @@ export function ReceiptUpload({ onUploaded }: Props) {
       />
       <label
         htmlFor="receipt-upload"
-        className={`flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 text-center transition-colors ${
+        className={`flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 text-center transition-colors ${
           status === "done"
             ? "border-green-400 bg-green-50"
-            : "border-black/20 hover:border-[#c8922a]"
+            : "border-black/20 hover:border-gold"
         }`}
       >
         {status === "done" ? (
           <>
-            <span className="text-3xl">✅</span>
+            <CheckCircle2 size={30} className="text-green-600" />
             <p className="mt-2 text-sm font-medium text-green-700">Reçu envoyé avec succès</p>
             <p className="mt-1 text-xs text-neutral-500">Appuyez pour remplacer le fichier</p>
           </>
@@ -62,11 +63,11 @@ export function ReceiptUpload({ onUploaded }: Props) {
           <p className="text-sm text-neutral-500">Envoi en cours...</p>
         ) : (
           <>
-            <span className="text-3xl">📤</span>
+            <Upload size={30} className="text-neutral-400" />
             <p className="mt-2 text-sm font-medium">
               Déposez votre reçu ou appuyez pour prendre une photo
             </p>
-            <p className="mt-1 text-xs text-neutral-400">JPG, PNG — 5 Mo maximum</p>
+            <p className="mt-1 text-xs text-neutral-500">JPG, PNG — 5 Mo maximum</p>
           </>
         )}
       </label>

@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { AnchorButton } from "@/components/ui/Button";
+import { cardClasses } from "@/components/ui/Card";
+import { StepProgress } from "@/components/ui/StepProgress";
 
 const BUDGETS = [
   { label: "Moins de 2 000 MAD", maxPrice: 2000 },
@@ -75,14 +78,11 @@ export function PhoneFinder() {
   if (brand) params.set("brand", brand);
 
   return (
-    <div className="mt-8 rounded-lg border border-black/10 p-6 text-center">
+    <div className={cardClasses("mt-8 p-6 text-center")}>
       <p className="font-medium">Merci ! Voici nos suggestions.</p>
-      <a
-        href={`/search?${params.toString()}`}
-        className="mt-4 inline-block rounded bg-[#c8922a] px-6 py-3 font-semibold text-black transition-opacity hover:opacity-90"
-      >
+      <AnchorButton href={`/search?${params.toString()}`} variant="accent" className="mt-4">
         Voir les résultats
-      </a>
+      </AnchorButton>
       <button
         type="button"
         onClick={() => {
@@ -111,17 +111,10 @@ function FinderStep({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mt-8 rounded-lg border border-black/10 p-6">
-      <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-neutral-400">
-        Étape {step} / 3
-      </p>
+    <div className={cardClasses("mt-8 p-6")}>
+      <StepProgress step={step} total={3} onBack={onBack} />
       <p className="mb-4 font-medium">{question}</p>
       {children}
-      {onBack && (
-        <button type="button" onClick={onBack} className="mt-4 inline-block min-h-11 px-2 py-2 text-sm text-neutral-500 underline">
-          Retour
-        </button>
-      )}
     </div>
   );
 }
@@ -140,7 +133,7 @@ function OptionGrid({
           key={label}
           type="button"
           onClick={() => onSelect(label)}
-          className="min-h-11 rounded border border-neutral-300 bg-white px-4 py-3 text-left text-sm shadow-sm transition-colors hover:border-[#c8922a] hover:bg-[#c8922a]/5"
+          className="min-h-11 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-left text-sm shadow-sm transition-colors hover:border-gold hover:bg-gold/5"
         >
           {label}
         </button>

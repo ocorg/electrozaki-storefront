@@ -1,8 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ImageOff } from "lucide-react";
 import { formatMAD } from "@/lib/format";
 import { CONDITION_LABEL } from "@/lib/conditions";
 import type { PublicProduct } from "@/lib/db/public-products";
+import { interactiveCardClasses } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
 
 export function ProductCard({ product }: { product: PublicProduct }) {
   const cover = product.images[0];
@@ -11,10 +14,7 @@ export function ProductCard({ product }: { product: PublicProduct }) {
   const isComingSoon = product.availability === "COMING_SOON";
 
   return (
-    <Link
-      href={`/products/${product.slug}`}
-      className="group block overflow-hidden rounded-lg border border-black/10 transition-colors hover:border-[#c8922a]"
-    >
+    <Link href={`/products/${product.slug}`} className={interactiveCardClasses("group block overflow-hidden")}>
       <div className="relative aspect-square bg-neutral-50">
         {cover ? (
           <Image
@@ -25,12 +25,13 @@ export function ProductCard({ product }: { product: PublicProduct }) {
             sizes="(min-width: 1024px) 25vw, 50vw"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-neutral-400">
-            Image à venir
+          <div className="flex h-full flex-col items-center justify-center gap-1.5 text-neutral-400">
+            <ImageOff size={22} />
+            <span className="text-xs">Image à venir</span>
           </div>
         )}
         {(isSoldOut || isComingSoon) && (
-          <span className="absolute left-2 top-2 rounded bg-black/80 px-2 py-1 text-xs text-white">
+          <span className="absolute left-2 top-2 rounded-full bg-ink/90 px-2.5 py-1 text-xs font-medium text-white">
             {isComingSoon ? "Bientôt disponible" : "Épuisé"}
           </span>
         )}
@@ -39,20 +40,18 @@ export function ProductCard({ product }: { product: PublicProduct }) {
         {product.brand && (
           <p className="text-xs uppercase tracking-wide text-neutral-500">{product.brand}</p>
         )}
-        <h3 className="font-medium leading-snug">{product.name}</h3>
-        <div className="mt-1 flex items-baseline gap-2">
-          <span className="rounded bg-[#121212] px-2 py-1 text-sm font-bold text-[#c8922a]">
+        <h3 className="font-medium leading-snug text-neutral-900">{product.name}</h3>
+        <div className="mt-1.5 flex items-baseline gap-2">
+          <span className="rounded-lg bg-ink px-2 py-1 text-sm font-bold text-gold">
             {formatMAD(product.recommendedSalePrice.toString())}
           </span>
           {product.compareAtPrice && (
-            <span className="text-sm text-neutral-400 line-through">
+            <span className="text-sm text-neutral-500 line-through">
               {formatMAD(product.compareAtPrice.toString())}
             </span>
           )}
         </div>
-        <span className="mt-1 inline-block rounded-full bg-black/5 px-2 py-0.5 text-[11px] text-neutral-600">
-          {CONDITION_LABEL[product.condition] ?? product.condition}
-        </span>
+        <Badge className="mt-2">{CONDITION_LABEL[product.condition] ?? product.condition}</Badge>
       </div>
     </Link>
   );

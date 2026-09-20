@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { ImageOff } from "lucide-react";
 import { getProductBySlug } from "@/lib/db/public-products";
 import { getCompatibilityTargetPhones } from "@/lib/db/compatibility";
 import { formatMAD } from "@/lib/format";
@@ -10,6 +11,7 @@ import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
 import { CompatibilitySelector } from "@/components/storefront/CompatibilitySelector";
 import { GiftPicker } from "@/components/storefront/GiftPicker";
 import { CONDITION_LABEL } from "@/lib/conditions";
+import { Badge } from "@/components/ui/Badge";
 
 export const revalidate = 60;
 
@@ -65,7 +67,7 @@ export default async function ProductPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="relative aspect-square overflow-hidden rounded-lg bg-neutral-50">
+      <div className="relative aspect-square overflow-hidden rounded-xl bg-neutral-50 shadow-sm">
         {cover ? (
           <Image
             src={cover.url}
@@ -76,8 +78,9 @@ export default async function ProductPage({ params }: Props) {
             priority
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-neutral-400">
-            Image à venir
+          <div className="flex h-full flex-col items-center justify-center gap-2 text-neutral-400">
+            <ImageOff size={28} />
+            <span className="text-sm">Image à venir</span>
           </div>
         )}
       </div>
@@ -86,23 +89,21 @@ export default async function ProductPage({ params }: Props) {
         {product.brand && (
           <p className="text-sm uppercase tracking-wide text-neutral-500">{product.brand}</p>
         )}
-        <h1 className="text-2xl font-semibold">{product.name}</h1>
+        <h1 className="text-2xl font-semibold sm:text-3xl">{product.name}</h1>
 
-        <div className="mt-2 flex items-baseline gap-3">
-          <span className="rounded bg-[#121212] px-3 py-1.5 text-xl font-bold text-[#c8922a]">
+        <div className="mt-3 flex items-baseline gap-3">
+          <span className="rounded-lg bg-ink px-3 py-1.5 text-xl font-bold text-gold">
             {formatMAD(product.recommendedSalePrice.toString())}
           </span>
           {product.compareAtPrice && (
-            <span className="text-neutral-400 line-through">
+            <span className="text-neutral-500 line-through">
               {formatMAD(product.compareAtPrice.toString())}
             </span>
           )}
         </div>
 
-        <div className="mt-2 flex flex-wrap gap-2">
-          <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs">
-            {CONDITION_LABEL[product.condition] ?? product.condition}
-          </span>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Badge>{CONDITION_LABEL[product.condition] ?? product.condition}</Badge>
         </div>
 
         <ConditionDashboard
@@ -119,7 +120,7 @@ export default async function ProductPage({ params }: Props) {
         {/* Phase-2 "transparency" block — only shown when the product actually
             has something to disclose, never a generic reassurance filler. */}
         {product.hasDefects && product.transparencyNotes && (
-          <div className="mt-4 rounded-lg border border-[#c8922a]/40 bg-[#c8922a]/5 p-4">
+          <div className="mt-4 rounded-xl border border-gold/40 bg-gold/5 p-4">
             <p className="text-sm font-semibold">Transparence</p>
             <p className="mt-1 text-sm text-neutral-700">{product.transparencyNotes}</p>
           </div>
@@ -147,7 +148,7 @@ export default async function ProductPage({ params }: Props) {
                 <li key={c.compatibleWith.id}>
                   <Link
                     href={`/products/${c.compatibleWith.slug}`}
-                    className="inline-block rounded border border-black/10 px-2 py-1 text-xs hover:border-[#c8922a]"
+                    className="inline-block rounded-lg border border-black/10 px-2.5 py-1.5 text-xs transition-colors hover:border-gold"
                   >
                     {c.compatibleWith.name}
                   </Link>
@@ -181,7 +182,7 @@ export default async function ProductPage({ params }: Props) {
             />
           </div>
         ) : (
-          <p className="mt-6 rounded bg-black/5 px-4 py-3 text-sm text-neutral-600">
+          <p className="mt-6 rounded-lg bg-black/5 px-4 py-3 text-sm text-neutral-600">
             {product.availability === "COMING_SOON"
               ? "Bientôt disponible — contactez-nous sur WhatsApp pour être prévenu."
               : "Actuellement indisponible."}

@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { CheckCircle2 } from "lucide-react";
 import { submitContactMessage } from "./actions";
+import { Button } from "@/components/ui/Button";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -36,7 +38,8 @@ export default function ContactPage() {
   if (done) {
     return (
       <div className="mx-auto max-w-lg px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold">Message envoyé ✓</h1>
+        <CheckCircle2 size={32} className="mx-auto text-green-600" />
+        <h1 className="mt-3 text-2xl font-bold">Message envoyé</h1>
         <p className="mt-3 text-neutral-600">
           Nous vous répondrons rapidement. Pour une réponse immédiate, contactez-nous sur{" "}
           <a href="https://wa.me/212667654430" className="font-semibold text-neutral-900 underline decoration-[#25D366] decoration-2 underline-offset-2">
@@ -49,9 +52,9 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="mx-auto max-w-lg px-4 py-14">
-      <h1 className="text-2xl font-bold">Contactez-nous</h1>
-      <p className="mt-2 text-neutral-600">
+    <div className="mx-auto max-w-lg px-4 py-16">
+      <h1 className="text-2xl font-bold sm:text-3xl">Contactez-nous</h1>
+      <p className="mt-3 text-neutral-600">
         Pour une réponse rapide, préférez{" "}
         <a href="https://wa.me/212667654430" className="font-semibold text-neutral-900 underline decoration-[#25D366] decoration-2 underline-offset-2">
           WhatsApp
@@ -66,21 +69,21 @@ export default function ContactPage() {
           placeholder="Nom"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full rounded border border-black/20 px-3 py-2"
+          className="min-h-11 w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
         />
         <input
           type="tel"
           placeholder="Téléphone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className="w-full rounded border border-black/20 px-3 py-2"
+          className="min-h-11 w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
         />
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded border border-black/20 px-3 py-2"
+          className="min-h-11 w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
         />
         <p className="-mt-2 text-xs text-neutral-500">
           Indiquez au moins l&apos;un des deux, pour qu&apos;on puisse vous répondre.
@@ -91,18 +94,14 @@ export default function ContactPage() {
           placeholder="Votre message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="w-full rounded border border-black/20 px-3 py-2"
+          className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
         />
 
         {error && <p className="text-sm text-red-600">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={submitting || (!phone.trim() && !email.trim())}
-          className="w-full rounded bg-[#121212] px-4 py-3 font-medium text-white transition-colors hover:bg-[#c8922a] disabled:opacity-50"
-        >
+        <Button type="submit" disabled={submitting || (!phone.trim() && !email.trim())} className="w-full">
           {submitting ? "Envoi..." : "Envoyer"}
-        </button>
+        </Button>
       </form>
     </div>
   );

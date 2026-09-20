@@ -3,10 +3,13 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { CheckCircle2, X } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
 import { formatMAD } from "@/lib/format";
 import { submitOrderRequest, confirmWhatsAppOpened } from "./actions";
 import { ReceiptUpload } from "@/components/cart/ReceiptUpload";
+import { AnchorButton, Button } from "@/components/ui/Button";
+import { StepProgress } from "@/components/ui/StepProgress";
 
 type Confirmation = { orderRequestId: string; whatsappUrl: string };
 
@@ -66,20 +69,21 @@ export default function CartPage() {
   if (confirmation) {
     return (
       <div className="mx-auto max-w-lg px-4 py-16 text-center">
-        <h1 className="text-2xl font-semibold">Demande envoyée ✓</h1>
+        <CheckCircle2 size={32} className="mx-auto text-green-600" />
+        <h1 className="mt-3 text-2xl font-semibold">Demande envoyée</h1>
         <p className="mt-3 text-neutral-600">
           Référence : {confirmation.orderRequestId.slice(0, 8).toUpperCase()}
           <br />
           Appuyez ci-dessous pour finaliser votre commande sur WhatsApp — nous vous répondrons
           rapidement.
         </p>
-        <a
+        <AnchorButton
           href={confirmation.whatsappUrl}
           onClick={() => void confirmWhatsAppOpened(confirmation.orderRequestId)}
-          className="mt-6 inline-block rounded bg-[#121212] px-6 py-3 font-medium text-white transition-colors hover:bg-[#c8922a] hover:text-black"
+          className="mt-6"
         >
           Ouvrir WhatsApp
-        </a>
+        </AnchorButton>
         <div className="mt-6">
           <Link href="/" className="text-sm text-neutral-500 underline">
             Retour à l&apos;accueil
@@ -95,7 +99,7 @@ export default function CartPage() {
         <h1 className="text-2xl font-semibold">Votre panier est vide</h1>
         <Link
           href="/"
-          className="mt-4 inline-block font-medium text-neutral-900 underline decoration-[#c8922a] decoration-2 underline-offset-2"
+          className="mt-4 inline-block font-medium text-neutral-900 underline decoration-gold decoration-2 underline-offset-2"
         >
           Continuer mes achats
         </Link>
@@ -103,14 +107,10 @@ export default function CartPage() {
     );
   }
 
-  const stepLabels = ["Panier", "Livraison", "Paiement"];
-
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
-      <h1 className="mb-2 text-2xl font-semibold">Commande</h1>
-      <p className="mb-6 text-xs font-semibold uppercase tracking-wide text-neutral-400">
-        Étape {step + 1} / 3 — {stepLabels[step]}
-      </p>
+    <div className="mx-auto max-w-3xl px-4 py-10">
+      <h1 className="mb-4 text-2xl font-semibold sm:text-3xl">Commande</h1>
+      <StepProgress step={step + 1} total={3} />
 
       {/* ── Step 0: cart review ─────────────────────────────────────── */}
       {step === 0 && (
@@ -121,7 +121,7 @@ export default function CartPage() {
                 key={`${item.productId}-${item.variantId ?? ""}`}
                 className="flex items-center gap-4 py-4"
               >
-                <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded bg-neutral-50">
+                <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-neutral-50">
                   {item.image && (
                     <Image
                       src={item.image}
@@ -136,7 +136,7 @@ export default function CartPage() {
                   {item.variantName && (
                     <p className="text-sm text-neutral-500">{item.variantName}</p>
                   )}
-                  <p className="mt-1 inline-block rounded bg-[#121212] px-2 py-0.5 text-sm font-bold text-[#c8922a]">
+                  <p className="mt-1 inline-block rounded-lg bg-ink px-2 py-0.5 text-sm font-bold text-gold">
                     {formatMAD(item.price)}
                   </p>
                 </div>
@@ -151,14 +151,15 @@ export default function CartPage() {
                       item.variantId
                     )
                   }
-                  className="min-h-11 w-16 rounded border border-black/20 px-2 text-center"
+                  className="min-h-11 w-16 rounded-lg border border-black/15 px-2 text-center focus:border-gold focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => removeItem(item.productId, item.variantId)}
-                  className="min-h-11 px-2 text-sm text-neutral-400 hover:text-black"
+                  aria-label={`Retirer ${item.productName}`}
+                  className="flex h-11 w-11 items-center justify-center rounded-full text-neutral-400 hover:bg-neutral-100 hover:text-ink"
                 >
-                  Retirer
+                  <X size={18} />
                 </button>
               </li>
             ))}
@@ -169,13 +170,9 @@ export default function CartPage() {
             <span>{formatMAD(totalPrice)}</span>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setStep(1)}
-            className="mt-6 min-h-11 w-full rounded bg-[#121212] px-4 text-sm font-semibold text-white"
-          >
+          <Button type="button" onClick={() => setStep(1)} className="mt-6 w-full">
             Continuer
-          </button>
+          </Button>
         </>
       )}
 
@@ -188,7 +185,7 @@ export default function CartPage() {
             placeholder="Nom complet"
             value={customerName}
             onChange={(e) => setCustomerName(e.target.value)}
-            className="min-h-11 w-full rounded border border-black/20 px-3"
+            className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
           />
           <input
             type="tel"
@@ -196,7 +193,7 @@ export default function CartPage() {
             placeholder="Numéro de téléphone (ex: 06XXXXXXXX)"
             value={customerPhone}
             onChange={(e) => setCustomerPhone(e.target.value)}
-            className="min-h-11 w-full rounded border border-black/20 px-3"
+            className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
           />
           <textarea
             required
@@ -204,30 +201,26 @@ export default function CartPage() {
             value={deliveryAddress}
             onChange={(e) => setDeliveryAddress(e.target.value)}
             rows={3}
-            className="w-full rounded border border-black/20 px-3 py-2"
+            className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
           />
           <textarea
             placeholder="Notes (optionnel)"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={2}
-            className="w-full rounded border border-black/20 px-3 py-2"
+            className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
           />
 
-          <p className="rounded bg-neutral-50 px-3 py-2 text-xs text-neutral-500">
+          <p className="rounded-lg bg-neutral-50 px-3 py-2 text-xs text-neutral-600">
             Frais de livraison calculés selon votre zone — confirmés par WhatsApp après votre
             commande.
           </p>
 
           <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => setStep(0)}
-              className="min-h-11 flex-1 rounded border border-black/20 px-4 text-sm"
-            >
+            <Button type="button" variant="outline" onClick={() => setStep(0)} className="flex-1">
               Retour
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
               disabled={
                 !customerName.trim() ||
@@ -235,10 +228,10 @@ export default function CartPage() {
                 deliveryAddress.trim().length < 10
               }
               onClick={() => setStep(2)}
-              className="min-h-11 flex-1 rounded bg-[#121212] px-4 text-sm font-semibold text-white disabled:opacity-40"
+              className="flex-1"
             >
               Continuer
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -248,19 +241,19 @@ export default function CartPage() {
         <div className="space-y-4">
           {requiresAdvance ? (
             <>
-              <div className="rounded-lg border border-[#c8922a]/40 bg-[#c8922a]/5 p-4">
+              <div className="rounded-xl border border-gold/40 bg-gold/5 p-4">
                 <p className="text-sm font-semibold">Avance de réservation : 300 MAD</p>
                 <p className="mt-1 text-sm text-neutral-700">
                   Effectuez un virement de 300 MAD, puis déposez le reçu ci-dessous. Le reste du
                   montant ({formatMAD(totalPrice - 300)}) est payable à la livraison.
                 </p>
-                <div className="mt-3 rounded bg-white p-3 text-sm">
+                <div className="mt-3 rounded-lg bg-white p-3 text-sm shadow-sm">
                   <p>Banque : {BANK_TRANSFER_INFO.bank}</p>
                   <p>RIB / IBAN : {BANK_TRANSFER_INFO.rib}</p>
                   <p>Titulaire : {BANK_TRANSFER_INFO.holder}</p>
                 </div>
 
-                <details className="mt-3 rounded bg-white p-3 text-sm">
+                <details className="mt-3 rounded-lg bg-white p-3 text-sm shadow-sm">
                   <summary className="cursor-pointer font-medium">Pourquoi cette avance ?</summary>
                   <p className="mt-2 text-neutral-600">
                     Cette avance couvre les frais logistiques et garantit la réservation de votre
@@ -285,7 +278,7 @@ export default function CartPage() {
               </label>
             </>
           ) : (
-            <div className="rounded-lg border border-black/10 p-4">
+            <div className="rounded-xl border border-black/10 p-4">
               <p className="text-sm font-semibold">Paiement à la livraison</p>
               <p className="mt-1 text-sm text-neutral-700">
                 Aucune avance requise pour une commande d&apos;accessoires — vous payez à la
@@ -297,23 +290,18 @@ export default function CartPage() {
           {error && <p className="text-sm text-red-600">{error}</p>}
 
           <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => setStep(1)}
-              className="min-h-11 flex-1 rounded border border-black/20 px-4 text-sm"
-            >
+            <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1">
               Retour
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
-              disabled={
-                submitting || (requiresAdvance && (!receiptUrl || !dataConsentAccepted))
-              }
+              variant="accent"
+              disabled={submitting || (requiresAdvance && (!receiptUrl || !dataConsentAccepted))}
               onClick={handleConfirm}
-              className="min-h-11 flex-1 rounded bg-[#c8922a] px-4 text-sm font-semibold text-black transition-opacity hover:opacity-90 disabled:opacity-40"
+              className="flex-1"
             >
               {submitting ? "Envoi..." : "Confirmer ma commande"}
-            </button>
+            </Button>
           </div>
         </div>
       )}

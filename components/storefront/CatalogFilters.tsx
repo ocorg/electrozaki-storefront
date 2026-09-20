@@ -1,6 +1,8 @@
 "use client";
 
 import { useRef } from "react";
+import { Button, AnchorButton } from "@/components/ui/Button";
+import { cardClasses } from "@/components/ui/Card";
 
 const CONDITIONS = [
   { value: "", label: "Tous états" },
@@ -26,7 +28,7 @@ export function CatalogFilters({ brands, basePath, defaults }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
 
   return (
-    <form ref={formRef} method="get" className="space-y-5">
+    <form ref={formRef} method="get" className={cardClasses("space-y-5 p-4")}>
       <div>
         <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-neutral-500">
           Marque
@@ -35,7 +37,7 @@ export function CatalogFilters({ brands, basePath, defaults }: Props) {
           name="brand"
           defaultValue={defaults.brand ?? ""}
           onChange={() => formRef.current?.requestSubmit()}
-          className="min-h-11 w-full rounded border border-black/20 px-2 text-sm"
+          className="min-h-11 w-full rounded-lg border border-black/15 px-2 text-sm focus:border-gold focus:outline-none"
         >
           <option value="">Toutes marques</option>
           {brands.map((b) => (
@@ -54,7 +56,7 @@ export function CatalogFilters({ brands, basePath, defaults }: Props) {
           name="condition"
           defaultValue={defaults.condition ?? ""}
           onChange={() => formRef.current?.requestSubmit()}
-          className="min-h-11 w-full rounded border border-black/20 px-2 text-sm"
+          className="min-h-11 w-full rounded-lg border border-black/15 px-2 text-sm focus:border-gold focus:outline-none"
         >
           {CONDITIONS.map((c) => (
             <option key={c.value} value={c.value}>
@@ -72,7 +74,7 @@ export function CatalogFilters({ brands, basePath, defaults }: Props) {
           name="minBattery"
           defaultValue={defaults.minBattery ?? ""}
           onChange={() => formRef.current?.requestSubmit()}
-          className="min-h-11 w-full rounded border border-black/20 px-2 text-sm"
+          className="min-h-11 w-full rounded-lg border border-black/15 px-2 text-sm focus:border-gold focus:outline-none"
         >
           {BATTERY_TIERS.map((t) => (
             <option key={t.value} value={t.value}>
@@ -91,24 +93,19 @@ export function CatalogFilters({ brands, basePath, defaults }: Props) {
           name="maxPrice"
           placeholder="Ex: 4000"
           defaultValue={defaults.maxPrice ?? ""}
-          className="min-h-11 w-full rounded border border-black/20 px-2 text-sm"
+          className="min-h-11 w-full rounded-lg border border-black/15 px-2 text-sm focus:border-gold focus:outline-none"
         />
       </div>
 
       <div className="flex gap-2">
-        <button
-          type="submit"
-          className="min-h-11 flex-1 rounded bg-[#121212] px-3 text-sm font-medium text-white"
-        >
+        <Button type="submit" size="sm" className="flex-1">
           Filtrer
-        </button>
-        <a
-          href={basePath}
-          className="flex min-h-11 items-center justify-center rounded border border-black/20 px-3 text-sm text-neutral-600"
-        >
+        </Button>
+        <AnchorButton href={basePath} variant="outline" size="sm">
           Réinitialiser
-        </a>
+        </AnchorButton>
       </div>
     </form>
   );
 }
+

@@ -3,24 +3,31 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Brand tokens — single source of truth for the ink/gold palette so
+     components reference `bg-ink` / `text-gold` instead of hex literals. */
+  --color-ink: #121212;
+  --color-ink-foreground: #ffffff;
+  --color-gold: #c8922a;
+  --color-gold-foreground: #121212;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-ink: var(--color-ink);
+  --color-ink-foreground: var(--color-ink-foreground);
+  --color-gold: var(--color-gold);
+  --color-gold-foreground: var(--color-gold-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* This site has no dark-mode design of its own — every surface is
+   explicitly light. Brand tokens stay fixed across color schemes so a
+   device with dark mode on can't silently shift ink/gold surfaces. */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }

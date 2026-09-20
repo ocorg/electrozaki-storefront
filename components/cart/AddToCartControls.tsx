@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { Check, ShoppingBag } from "lucide-react";
 import { useCart } from "./CartContext";
+import { Button } from "@/components/ui/Button";
 
 type VariantOption = {
   id: string;
@@ -58,7 +60,7 @@ export function AddToCartControls({
         <select
           value={variantId}
           onChange={(e) => setVariantId(e.target.value)}
-          className="w-full rounded border border-black/20 px-3 py-2"
+          className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
         >
           {variants.map((v) => (
             <option key={v.id} value={v.id}>
@@ -74,14 +76,19 @@ export function AddToCartControls({
           min={1}
           value={quantity}
           onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-          className="w-20 rounded border border-black/20 px-3 py-2"
+          className="min-h-11 w-20 rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
         />
-        <button
-          onClick={handleAdd}
-          className="flex-1 rounded bg-[#121212] px-4 py-3 font-medium text-white transition-colors hover:bg-[#c8922a]"
-        >
-          {justAdded ? "Ajouté ✓" : "Ajouter au panier"}
-        </button>
+        <Button onClick={handleAdd} className="flex-1">
+          {justAdded ? (
+            <>
+              <Check size={18} /> Ajouté
+            </>
+          ) : (
+            <>
+              <ShoppingBag size={18} /> Ajouter au panier
+            </>
+          )}
+        </Button>
       </div>
     </div>
   );
