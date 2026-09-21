@@ -405,6 +405,23 @@ export type EnumRepairRequestStatusWithAggregatesFilter<$PrismaModel = never> = 
   _max?: Prisma.NestedEnumRepairRequestStatusFilter<$PrismaModel>
 }
 
+export type EnumPromoCodeTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromoCodeType | Prisma.EnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromoCodeTypeFilter<$PrismaModel> | $Enums.PromoCodeType
+}
+
+export type EnumPromoCodeTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromoCodeType | Prisma.EnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromoCodeTypeWithAggregatesFilter<$PrismaModel> | $Enums.PromoCodeType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPromoCodeTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPromoCodeTypeFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -780,6 +797,23 @@ export type NestedEnumRepairRequestStatusWithAggregatesFilter<$PrismaModel = nev
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumRepairRequestStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumRepairRequestStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumPromoCodeTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromoCodeType | Prisma.EnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromoCodeTypeFilter<$PrismaModel> | $Enums.PromoCodeType
+}
+
+export type NestedEnumPromoCodeTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromoCodeType | Prisma.EnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromoCodeTypeWithAggregatesFilter<$PrismaModel> | $Enums.PromoCodeType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPromoCodeTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPromoCodeTypeFilter<$PrismaModel>
 }
 
 

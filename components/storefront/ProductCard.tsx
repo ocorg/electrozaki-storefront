@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ImageOff } from "lucide-react";
-import { formatMAD } from "@/lib/format";
+import { formatMAD, discountPercent } from "@/lib/format";
 import { CONDITION_LABEL } from "@/lib/conditions";
 import type { PublicProduct } from "@/lib/db/public-products";
 import { interactiveCardClasses } from "@/components/ui/Card";
@@ -12,6 +12,10 @@ export function ProductCard({ product }: { product: PublicProduct }) {
   const isSoldOut =
     product.availability === "OUT_OF_STOCK" || product.availability === "DISCONTINUED";
   const isComingSoon = product.availability === "COMING_SOON";
+  const percentOff = discountPercent(
+    product.recommendedSalePrice.toString(),
+    product.compareAtPrice?.toString()
+  );
 
   return (
     <Link href={`/products/${product.slug}`} className={interactiveCardClasses("group block overflow-hidden")}>
@@ -33,6 +37,11 @@ export function ProductCard({ product }: { product: PublicProduct }) {
         {(isSoldOut || isComingSoon) && (
           <span className="absolute left-2 top-2 rounded-full bg-ink/90 px-2.5 py-1 text-xs font-medium text-white">
             {isComingSoon ? "Bientôt disponible" : "Épuisé"}
+          </span>
+        )}
+        {percentOff !== null && (
+          <span className="absolute right-2 top-2 rounded-full bg-red-600 px-2.5 py-1 text-xs font-bold text-white">
+            -{percentOff}%
           </span>
         )}
       </div>

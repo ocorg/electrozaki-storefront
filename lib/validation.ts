@@ -22,8 +22,10 @@ export const orderRequestSchema = z.object({
     .max(300),
   notes: z.string().trim().max(500).optional(),
   requiresAdvance: z.boolean(),
-  receiptUrl: z.string().url().optional(),
+  receiptUrl: z.url().optional(),
   dataConsentAccepted: z.boolean(),
+  promoCodeId: z.string().optional(),
+  discountAmount: z.number().min(0).optional(),
 }).refine((data) => !data.requiresAdvance || data.dataConsentAccepted, {
   message: "Merci d'accepter le traitement de vos données pour continuer.",
   path: ["dataConsentAccepted"],

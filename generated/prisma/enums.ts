@@ -59,3 +59,11 @@ export const RepairRequestStatus = {
 } as const
 
 export type RepairRequestStatus = (typeof RepairRequestStatus)[keyof typeof RepairRequestStatus]
+
+
+export const PromoCodeType = {
+  PERCENTAGE: 'PERCENTAGE',
+  FIXED_AMOUNT: 'FIXED_AMOUNT'
+} as const
+
+export type PromoCodeType = (typeof PromoCodeType)[keyof typeof PromoCodeType]

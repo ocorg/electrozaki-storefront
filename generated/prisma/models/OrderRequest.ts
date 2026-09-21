@@ -28,10 +28,12 @@ export type AggregateOrderRequest = {
 
 export type OrderRequestAvgAggregateOutputType = {
   totalEstimate: runtime.Decimal | null
+  discountAmount: runtime.Decimal | null
 }
 
 export type OrderRequestSumAggregateOutputType = {
   totalEstimate: runtime.Decimal | null
+  discountAmount: runtime.Decimal | null
 }
 
 export type OrderRequestMinAggregateOutputType = {
@@ -48,6 +50,8 @@ export type OrderRequestMinAggregateOutputType = {
   receiptUrl: string | null
   receiptUploadedAt: Date | null
   dataConsentAccepted: boolean | null
+  promoCodeId: string | null
+  discountAmount: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -66,6 +70,8 @@ export type OrderRequestMaxAggregateOutputType = {
   receiptUrl: string | null
   receiptUploadedAt: Date | null
   dataConsentAccepted: boolean | null
+  promoCodeId: string | null
+  discountAmount: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -84,6 +90,8 @@ export type OrderRequestCountAggregateOutputType = {
   receiptUrl: number
   receiptUploadedAt: number
   dataConsentAccepted: number
+  promoCodeId: number
+  discountAmount: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -92,10 +100,12 @@ export type OrderRequestCountAggregateOutputType = {
 
 export type OrderRequestAvgAggregateInputType = {
   totalEstimate?: true
+  discountAmount?: true
 }
 
 export type OrderRequestSumAggregateInputType = {
   totalEstimate?: true
+  discountAmount?: true
 }
 
 export type OrderRequestMinAggregateInputType = {
@@ -112,6 +122,8 @@ export type OrderRequestMinAggregateInputType = {
   receiptUrl?: true
   receiptUploadedAt?: true
   dataConsentAccepted?: true
+  promoCodeId?: true
+  discountAmount?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -130,6 +142,8 @@ export type OrderRequestMaxAggregateInputType = {
   receiptUrl?: true
   receiptUploadedAt?: true
   dataConsentAccepted?: true
+  promoCodeId?: true
+  discountAmount?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -148,6 +162,8 @@ export type OrderRequestCountAggregateInputType = {
   receiptUrl?: true
   receiptUploadedAt?: true
   dataConsentAccepted?: true
+  promoCodeId?: true
+  discountAmount?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -253,6 +269,8 @@ export type OrderRequestGroupByOutputType = {
   receiptUrl: string | null
   receiptUploadedAt: Date | null
   dataConsentAccepted: boolean
+  promoCodeId: string | null
+  discountAmount: runtime.Decimal
   createdAt: Date
   updatedAt: Date
   _count: OrderRequestCountAggregateOutputType | null
@@ -294,8 +312,11 @@ export type OrderRequestWhereInput = {
   receiptUrl?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   receiptUploadedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   dataConsentAccepted?: Prisma.BoolFilter<"OrderRequest"> | boolean
+  promoCodeId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  discountAmount?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
+  promoCode?: Prisma.XOR<Prisma.PromoCodeNullableScalarRelationFilter, Prisma.PromoCodeWhereInput> | null
   items?: Prisma.OrderRequestItemListRelationFilter
 }
 
@@ -313,8 +334,11 @@ export type OrderRequestOrderByWithRelationInput = {
   receiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptUploadedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   dataConsentAccepted?: Prisma.SortOrder
+  promoCodeId?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  promoCode?: Prisma.PromoCodeOrderByWithRelationInput
   items?: Prisma.OrderRequestItemOrderByRelationAggregateInput
 }
 
@@ -335,8 +359,11 @@ export type OrderRequestWhereUniqueInput = Prisma.AtLeast<{
   receiptUrl?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   receiptUploadedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   dataConsentAccepted?: Prisma.BoolFilter<"OrderRequest"> | boolean
+  promoCodeId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  discountAmount?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
+  promoCode?: Prisma.XOR<Prisma.PromoCodeNullableScalarRelationFilter, Prisma.PromoCodeWhereInput> | null
   items?: Prisma.OrderRequestItemListRelationFilter
 }, "id">
 
@@ -354,6 +381,8 @@ export type OrderRequestOrderByWithAggregationInput = {
   receiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptUploadedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   dataConsentAccepted?: Prisma.SortOrder
+  promoCodeId?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.OrderRequestCountOrderByAggregateInput
@@ -380,6 +409,8 @@ export type OrderRequestScalarWhereWithAggregatesInput = {
   receiptUrl?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
   receiptUploadedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"OrderRequest"> | Date | string | null
   dataConsentAccepted?: Prisma.BoolWithAggregatesFilter<"OrderRequest"> | boolean
+  promoCodeId?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
+  discountAmount?: Prisma.DecimalWithAggregatesFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"OrderRequest"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"OrderRequest"> | Date | string
 }
@@ -398,8 +429,10 @@ export type OrderRequestCreateInput = {
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  promoCode?: Prisma.PromoCodeCreateNestedOneWithoutOrderRequestsInput
   items?: Prisma.OrderRequestItemCreateNestedManyWithoutOrderRequestInput
 }
 
@@ -417,6 +450,8 @@ export type OrderRequestUncheckedCreateInput = {
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
+  promoCodeId?: string | null
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutOrderRequestInput
@@ -436,8 +471,10 @@ export type OrderRequestUpdateInput = {
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  promoCode?: Prisma.PromoCodeUpdateOneWithoutOrderRequestsNestedInput
   items?: Prisma.OrderRequestItemUpdateManyWithoutOrderRequestNestedInput
 }
 
@@ -455,6 +492,8 @@ export type OrderRequestUncheckedUpdateInput = {
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  promoCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutOrderRequestNestedInput
@@ -474,6 +513,8 @@ export type OrderRequestCreateManyInput = {
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
+  promoCodeId?: string | null
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -492,6 +533,7 @@ export type OrderRequestUpdateManyMutationInput = {
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -510,6 +552,8 @@ export type OrderRequestUncheckedUpdateManyInput = {
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  promoCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -528,12 +572,15 @@ export type OrderRequestCountOrderByAggregateInput = {
   receiptUrl?: Prisma.SortOrder
   receiptUploadedAt?: Prisma.SortOrder
   dataConsentAccepted?: Prisma.SortOrder
+  promoCodeId?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type OrderRequestAvgOrderByAggregateInput = {
   totalEstimate?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
 }
 
 export type OrderRequestMaxOrderByAggregateInput = {
@@ -550,6 +597,8 @@ export type OrderRequestMaxOrderByAggregateInput = {
   receiptUrl?: Prisma.SortOrder
   receiptUploadedAt?: Prisma.SortOrder
   dataConsentAccepted?: Prisma.SortOrder
+  promoCodeId?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -568,17 +617,30 @@ export type OrderRequestMinOrderByAggregateInput = {
   receiptUrl?: Prisma.SortOrder
   receiptUploadedAt?: Prisma.SortOrder
   dataConsentAccepted?: Prisma.SortOrder
+  promoCodeId?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type OrderRequestSumOrderByAggregateInput = {
   totalEstimate?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
 }
 
 export type OrderRequestScalarRelationFilter = {
   is?: Prisma.OrderRequestWhereInput
   isNot?: Prisma.OrderRequestWhereInput
+}
+
+export type OrderRequestListRelationFilter = {
+  every?: Prisma.OrderRequestWhereInput
+  some?: Prisma.OrderRequestWhereInput
+  none?: Prisma.OrderRequestWhereInput
+}
+
+export type OrderRequestOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type EnumOrderRequestStatusFieldUpdateOperationsInput = {
@@ -607,6 +669,48 @@ export type OrderRequestUpdateOneRequiredWithoutItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrderRequestUpdateToOneWithWhereWithoutItemsInput, Prisma.OrderRequestUpdateWithoutItemsInput>, Prisma.OrderRequestUncheckedUpdateWithoutItemsInput>
 }
 
+export type OrderRequestCreateNestedManyWithoutPromoCodeInput = {
+  create?: Prisma.XOR<Prisma.OrderRequestCreateWithoutPromoCodeInput, Prisma.OrderRequestUncheckedCreateWithoutPromoCodeInput> | Prisma.OrderRequestCreateWithoutPromoCodeInput[] | Prisma.OrderRequestUncheckedCreateWithoutPromoCodeInput[]
+  connectOrCreate?: Prisma.OrderRequestCreateOrConnectWithoutPromoCodeInput | Prisma.OrderRequestCreateOrConnectWithoutPromoCodeInput[]
+  createMany?: Prisma.OrderRequestCreateManyPromoCodeInputEnvelope
+  connect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+}
+
+export type OrderRequestUncheckedCreateNestedManyWithoutPromoCodeInput = {
+  create?: Prisma.XOR<Prisma.OrderRequestCreateWithoutPromoCodeInput, Prisma.OrderRequestUncheckedCreateWithoutPromoCodeInput> | Prisma.OrderRequestCreateWithoutPromoCodeInput[] | Prisma.OrderRequestUncheckedCreateWithoutPromoCodeInput[]
+  connectOrCreate?: Prisma.OrderRequestCreateOrConnectWithoutPromoCodeInput | Prisma.OrderRequestCreateOrConnectWithoutPromoCodeInput[]
+  createMany?: Prisma.OrderRequestCreateManyPromoCodeInputEnvelope
+  connect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+}
+
+export type OrderRequestUpdateManyWithoutPromoCodeNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderRequestCreateWithoutPromoCodeInput, Prisma.OrderRequestUncheckedCreateWithoutPromoCodeInput> | Prisma.OrderRequestCreateWithoutPromoCodeInput[] | Prisma.OrderRequestUncheckedCreateWithoutPromoCodeInput[]
+  connectOrCreate?: Prisma.OrderRequestCreateOrConnectWithoutPromoCodeInput | Prisma.OrderRequestCreateOrConnectWithoutPromoCodeInput[]
+  upsert?: Prisma.OrderRequestUpsertWithWhereUniqueWithoutPromoCodeInput | Prisma.OrderRequestUpsertWithWhereUniqueWithoutPromoCodeInput[]
+  createMany?: Prisma.OrderRequestCreateManyPromoCodeInputEnvelope
+  set?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  disconnect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  delete?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  connect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  update?: Prisma.OrderRequestUpdateWithWhereUniqueWithoutPromoCodeInput | Prisma.OrderRequestUpdateWithWhereUniqueWithoutPromoCodeInput[]
+  updateMany?: Prisma.OrderRequestUpdateManyWithWhereWithoutPromoCodeInput | Prisma.OrderRequestUpdateManyWithWhereWithoutPromoCodeInput[]
+  deleteMany?: Prisma.OrderRequestScalarWhereInput | Prisma.OrderRequestScalarWhereInput[]
+}
+
+export type OrderRequestUncheckedUpdateManyWithoutPromoCodeNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderRequestCreateWithoutPromoCodeInput, Prisma.OrderRequestUncheckedCreateWithoutPromoCodeInput> | Prisma.OrderRequestCreateWithoutPromoCodeInput[] | Prisma.OrderRequestUncheckedCreateWithoutPromoCodeInput[]
+  connectOrCreate?: Prisma.OrderRequestCreateOrConnectWithoutPromoCodeInput | Prisma.OrderRequestCreateOrConnectWithoutPromoCodeInput[]
+  upsert?: Prisma.OrderRequestUpsertWithWhereUniqueWithoutPromoCodeInput | Prisma.OrderRequestUpsertWithWhereUniqueWithoutPromoCodeInput[]
+  createMany?: Prisma.OrderRequestCreateManyPromoCodeInputEnvelope
+  set?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  disconnect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  delete?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  connect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  update?: Prisma.OrderRequestUpdateWithWhereUniqueWithoutPromoCodeInput | Prisma.OrderRequestUpdateWithWhereUniqueWithoutPromoCodeInput[]
+  updateMany?: Prisma.OrderRequestUpdateManyWithWhereWithoutPromoCodeInput | Prisma.OrderRequestUpdateManyWithWhereWithoutPromoCodeInput[]
+  deleteMany?: Prisma.OrderRequestScalarWhereInput | Prisma.OrderRequestScalarWhereInput[]
+}
+
 export type OrderRequestCreateWithoutItemsInput = {
   id?: string
   customerName: string
@@ -621,8 +725,10 @@ export type OrderRequestCreateWithoutItemsInput = {
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  promoCode?: Prisma.PromoCodeCreateNestedOneWithoutOrderRequestsInput
 }
 
 export type OrderRequestUncheckedCreateWithoutItemsInput = {
@@ -639,6 +745,8 @@ export type OrderRequestUncheckedCreateWithoutItemsInput = {
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
+  promoCodeId?: string | null
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -673,8 +781,10 @@ export type OrderRequestUpdateWithoutItemsInput = {
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  promoCode?: Prisma.PromoCodeUpdateOneWithoutOrderRequestsNestedInput
 }
 
 export type OrderRequestUncheckedUpdateWithoutItemsInput = {
@@ -691,6 +801,175 @@ export type OrderRequestUncheckedUpdateWithoutItemsInput = {
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  promoCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OrderRequestCreateWithoutPromoCodeInput = {
+  id?: string
+  customerName: string
+  customerPhone: string
+  deliveryAddress?: string | null
+  status?: $Enums.OrderRequestStatus
+  totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Date | string | null
+  notes?: string | null
+  requiresAdvance?: boolean
+  advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptUrl?: string | null
+  receiptUploadedAt?: Date | string | null
+  dataConsentAccepted?: boolean
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.OrderRequestItemCreateNestedManyWithoutOrderRequestInput
+}
+
+export type OrderRequestUncheckedCreateWithoutPromoCodeInput = {
+  id?: string
+  customerName: string
+  customerPhone: string
+  deliveryAddress?: string | null
+  status?: $Enums.OrderRequestStatus
+  totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Date | string | null
+  notes?: string | null
+  requiresAdvance?: boolean
+  advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptUrl?: string | null
+  receiptUploadedAt?: Date | string | null
+  dataConsentAccepted?: boolean
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutOrderRequestInput
+}
+
+export type OrderRequestCreateOrConnectWithoutPromoCodeInput = {
+  where: Prisma.OrderRequestWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderRequestCreateWithoutPromoCodeInput, Prisma.OrderRequestUncheckedCreateWithoutPromoCodeInput>
+}
+
+export type OrderRequestCreateManyPromoCodeInputEnvelope = {
+  data: Prisma.OrderRequestCreateManyPromoCodeInput | Prisma.OrderRequestCreateManyPromoCodeInput[]
+  skipDuplicates?: boolean
+}
+
+export type OrderRequestUpsertWithWhereUniqueWithoutPromoCodeInput = {
+  where: Prisma.OrderRequestWhereUniqueInput
+  update: Prisma.XOR<Prisma.OrderRequestUpdateWithoutPromoCodeInput, Prisma.OrderRequestUncheckedUpdateWithoutPromoCodeInput>
+  create: Prisma.XOR<Prisma.OrderRequestCreateWithoutPromoCodeInput, Prisma.OrderRequestUncheckedCreateWithoutPromoCodeInput>
+}
+
+export type OrderRequestUpdateWithWhereUniqueWithoutPromoCodeInput = {
+  where: Prisma.OrderRequestWhereUniqueInput
+  data: Prisma.XOR<Prisma.OrderRequestUpdateWithoutPromoCodeInput, Prisma.OrderRequestUncheckedUpdateWithoutPromoCodeInput>
+}
+
+export type OrderRequestUpdateManyWithWhereWithoutPromoCodeInput = {
+  where: Prisma.OrderRequestScalarWhereInput
+  data: Prisma.XOR<Prisma.OrderRequestUpdateManyMutationInput, Prisma.OrderRequestUncheckedUpdateManyWithoutPromoCodeInput>
+}
+
+export type OrderRequestScalarWhereInput = {
+  AND?: Prisma.OrderRequestScalarWhereInput | Prisma.OrderRequestScalarWhereInput[]
+  OR?: Prisma.OrderRequestScalarWhereInput[]
+  NOT?: Prisma.OrderRequestScalarWhereInput | Prisma.OrderRequestScalarWhereInput[]
+  id?: Prisma.StringFilter<"OrderRequest"> | string
+  customerName?: Prisma.StringFilter<"OrderRequest"> | string
+  customerPhone?: Prisma.StringFilter<"OrderRequest"> | string
+  deliveryAddress?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  status?: Prisma.EnumOrderRequestStatusFilter<"OrderRequest"> | $Enums.OrderRequestStatus
+  totalEstimate?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
+  notes?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  requiresAdvance?: Prisma.BoolFilter<"OrderRequest"> | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFilter<"OrderRequest"> | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  receiptUploadedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFilter<"OrderRequest"> | boolean
+  promoCodeId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  discountAmount?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
+}
+
+export type OrderRequestCreateManyPromoCodeInput = {
+  id?: string
+  customerName: string
+  customerPhone: string
+  deliveryAddress?: string | null
+  status?: $Enums.OrderRequestStatus
+  totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Date | string | null
+  notes?: string | null
+  requiresAdvance?: boolean
+  advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptUrl?: string | null
+  receiptUploadedAt?: Date | string | null
+  dataConsentAccepted?: boolean
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type OrderRequestUpdateWithoutPromoCodeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.OrderRequestItemUpdateManyWithoutOrderRequestNestedInput
+}
+
+export type OrderRequestUncheckedUpdateWithoutPromoCodeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutOrderRequestNestedInput
+}
+
+export type OrderRequestUncheckedUpdateManyWithoutPromoCodeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -740,8 +1019,11 @@ export type OrderRequestSelect<ExtArgs extends runtime.Types.Extensions.Internal
   receiptUrl?: boolean
   receiptUploadedAt?: boolean
   dataConsentAccepted?: boolean
+  promoCodeId?: boolean
+  discountAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
   items?: boolean | Prisma.OrderRequest$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.OrderRequestCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["orderRequest"]>
@@ -760,8 +1042,11 @@ export type OrderRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   receiptUrl?: boolean
   receiptUploadedAt?: boolean
   dataConsentAccepted?: boolean
+  promoCodeId?: boolean
+  discountAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
 }, ExtArgs["result"]["orderRequest"]>
 
 export type OrderRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -778,8 +1063,11 @@ export type OrderRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   receiptUrl?: boolean
   receiptUploadedAt?: boolean
   dataConsentAccepted?: boolean
+  promoCodeId?: boolean
+  discountAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
 }, ExtArgs["result"]["orderRequest"]>
 
 export type OrderRequestSelectScalar = {
@@ -796,21 +1084,29 @@ export type OrderRequestSelectScalar = {
   receiptUrl?: boolean
   receiptUploadedAt?: boolean
   dataConsentAccepted?: boolean
+  promoCodeId?: boolean
+  discountAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OrderRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerName" | "customerPhone" | "deliveryAddress" | "status" | "totalEstimate" | "whatsappOpenedAt" | "notes" | "requiresAdvance" | "advancePaymentStatus" | "receiptUrl" | "receiptUploadedAt" | "dataConsentAccepted" | "createdAt" | "updatedAt", ExtArgs["result"]["orderRequest"]>
+export type OrderRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerName" | "customerPhone" | "deliveryAddress" | "status" | "totalEstimate" | "whatsappOpenedAt" | "notes" | "requiresAdvance" | "advancePaymentStatus" | "receiptUrl" | "receiptUploadedAt" | "dataConsentAccepted" | "promoCodeId" | "discountAmount" | "createdAt" | "updatedAt", ExtArgs["result"]["orderRequest"]>
 export type OrderRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
   items?: boolean | Prisma.OrderRequest$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.OrderRequestCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type OrderRequestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type OrderRequestIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type OrderRequestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
+}
+export type OrderRequestIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
+}
 
 export type $OrderRequestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "OrderRequest"
   objects: {
+    promoCode: Prisma.$PromoCodePayload<ExtArgs> | null
     items: Prisma.$OrderRequestItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -827,6 +1123,8 @@ export type $OrderRequestPayload<ExtArgs extends runtime.Types.Extensions.Intern
     receiptUrl: string | null
     receiptUploadedAt: Date | null
     dataConsentAccepted: boolean
+    promoCodeId: string | null
+    discountAmount: runtime.Decimal
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["orderRequest"]>
@@ -1223,6 +1521,7 @@ readonly fields: OrderRequestFieldRefs;
  */
 export interface Prisma__OrderRequestClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  promoCode<T extends Prisma.OrderRequest$promoCodeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderRequest$promoCodeArgs<ExtArgs>>): Prisma.Prisma__PromoCodeClient<runtime.Types.Result.GetResult<Prisma.$PromoCodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.OrderRequest$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderRequest$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderRequestItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1266,6 +1565,8 @@ export interface OrderRequestFieldRefs {
   readonly receiptUrl: Prisma.FieldRef<"OrderRequest", 'String'>
   readonly receiptUploadedAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
   readonly dataConsentAccepted: Prisma.FieldRef<"OrderRequest", 'Boolean'>
+  readonly promoCodeId: Prisma.FieldRef<"OrderRequest", 'String'>
+  readonly discountAmount: Prisma.FieldRef<"OrderRequest", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
 }
@@ -1522,6 +1823,10 @@ export type OrderRequestCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    */
   data: Prisma.OrderRequestCreateManyInput | Prisma.OrderRequestCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderRequestIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1592,6 +1897,10 @@ export type OrderRequestUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    * Limit how many OrderRequests to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderRequestIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1658,6 +1967,25 @@ export type OrderRequestDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many OrderRequests to delete.
    */
   limit?: number
+}
+
+/**
+ * OrderRequest.promoCode
+ */
+export type OrderRequest$promoCodeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PromoCode
+   */
+  select?: Prisma.PromoCodeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PromoCode
+   */
+  omit?: Prisma.PromoCodeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PromoCodeInclude<ExtArgs> | null
+  where?: Prisma.PromoCodeWhereInput
 }
 
 /**

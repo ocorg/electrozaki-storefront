@@ -3,10 +3,10 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { CheckCircle2, X } from "lucide-react";
+import { CheckCircle2, Tag, X } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
 import { formatMAD } from "@/lib/format";
-import { submitOrderRequest, confirmWhatsAppOpened } from "./actions";
+import { submitOrderRequest, confirmWhatsAppOpened, applyPromoCode } from "./actions";
 import { ReceiptUpload } from "@/components/cart/ReceiptUpload";
 import { AnchorButton, Button } from "@/components/ui/Button";
 import { StepProgress } from "@/components/ui/StepProgress";
@@ -37,7 +37,30 @@ export default function CartPage() {
   const [error, setError] = useState<string | null>(null);
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
 
+  const [promoInput, setPromoInput] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState<{ code: string; discountAmount: number } | null>(
+    null
+  );
+  const [promoError, setPromoError] = useState<string | null>(null);
+  const [applyingPromo, setApplyingPromo] = useState(false);
+
   const requiresAdvance = useMemo(() => items.some((item) => item.isPhone), [items]);
+  const discountAmount = appliedPromo?.discountAmount ?? 0;
+  const discountedTotal = Math.max(0, totalPrice - discountAmount);
+
+  async function handleApplyPromo() {
+    setPromoError(null);
+    setApplyingPromo(true);
+    const result = await applyPromoCode(promoInput, totalPrice);
+    setApplyingPromo(false);
+
+    if (!result.ok) {
+      setPromoError(result.error);
+      return;
+    }
+    setAppliedPromo({ code: result.code, discountAmount: result.discountAmount });
+    setPromoInput("");
+  }
 
   async function handleConfirm() {
     setError(null);
@@ -52,6 +75,7 @@ export default function CartPage() {
       requiresAdvance,
       receiptUrl: receiptUrl ?? undefined,
       dataConsentAccepted,
+      promoCode: appliedPromo?.code,
     });
 
     setSubmitting(false);
@@ -165,9 +189,58 @@ export default function CartPage() {
             ))}
           </ul>
 
-          <div className="mt-4 flex justify-between text-lg font-semibold">
-            <span>Total estimé</span>
-            <span>{formatMAD(totalPrice)}</span>
+          {appliedPromo ? (
+            <div className="mt-4 flex items-center justify-between rounded-lg bg-green-50 px-3 py-2 text-sm text-green-800">
+              <span className="flex items-center gap-1.5 font-medium">
+                <Tag size={14} />
+                Code {appliedPromo.code} appliqué
+              </span>
+              <button
+                type="button"
+                onClick={() => setAppliedPromo(null)}
+                className="text-green-700 underline hover:text-green-900"
+              >
+                Retirer
+              </button>
+            </div>
+          ) : (
+            <div className="mt-4 flex gap-2">
+              <input
+                type="text"
+                placeholder="Code promo"
+                value={promoInput}
+                onChange={(e) => setPromoInput(e.target.value)}
+                className="min-h-11 flex-1 rounded-lg border border-black/15 px-3 uppercase focus:border-gold focus:outline-none"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                disabled={applyingPromo || !promoInput.trim()}
+                onClick={handleApplyPromo}
+              >
+                {applyingPromo ? "..." : "Appliquer"}
+              </Button>
+            </div>
+          )}
+          {promoError && <p className="mt-2 text-sm text-red-600">{promoError}</p>}
+
+          <div className="mt-4 space-y-1 border-t border-black/10 pt-4">
+            {discountAmount > 0 && (
+              <div className="flex justify-between text-sm text-neutral-600">
+                <span>Sous-total</span>
+                <span>{formatMAD(totalPrice)}</span>
+              </div>
+            )}
+            {discountAmount > 0 && (
+              <div className="flex justify-between text-sm text-green-700">
+                <span>Réduction</span>
+                <span>-{formatMAD(discountAmount)}</span>
+              </div>
+            )}
+            <div className="flex justify-between text-lg font-semibold">
+              <span>Total estimé</span>
+              <span>{formatMAD(discountedTotal)}</span>
+            </div>
           </div>
 
           <Button type="button" onClick={() => setStep(1)} className="mt-6 w-full">
@@ -245,7 +318,7 @@ export default function CartPage() {
                 <p className="text-sm font-semibold">Avance de réservation : 300 MAD</p>
                 <p className="mt-1 text-sm text-neutral-700">
                   Effectuez un virement de 300 MAD, puis déposez le reçu ci-dessous. Le reste du
-                  montant ({formatMAD(totalPrice - 300)}) est payable à la livraison.
+                  montant ({formatMAD(discountedTotal - 300)}) est payable à la livraison.
                 </p>
                 <div className="mt-3 rounded-lg bg-white p-3 text-sm shadow-sm">
                   <p>Banque : {BANK_TRANSFER_INFO.bank}</p>

@@ -5,11 +5,13 @@ import Link from "next/link";
 import { ImageOff } from "lucide-react";
 import { getProductBySlug } from "@/lib/db/public-products";
 import { getCompatibilityTargetPhones } from "@/lib/db/compatibility";
-import { formatMAD } from "@/lib/format";
+import { getActiveBundlesForProduct } from "@/lib/db/bundles";
+import { formatMAD, discountPercent } from "@/lib/format";
 import { AddToCartControls } from "@/components/cart/AddToCartControls";
 import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
 import { CompatibilitySelector } from "@/components/storefront/CompatibilitySelector";
 import { GiftPicker } from "@/components/storefront/GiftPicker";
+import { BundleOffer, type BundleOfferData } from "@/components/storefront/BundleOffer";
 import { CONDITION_LABEL } from "@/lib/conditions";
 import { Badge } from "@/components/ui/Badge";
 
@@ -36,10 +38,34 @@ export default async function ProductPage({ params }: Props) {
   const compatibilityPhones = product.compatibleWithPhones.length
     ? await getCompatibilityTargetPhones()
     : [];
+  const rawBundles = product.isPhone ? await getActiveBundlesForProduct(product.id) : [];
+  // Prisma Decimal fields can't cross the Server -> Client boundary as-is —
+  // serialize before handing off to <BundleOffer>, a Client Component.
+  const bundles: BundleOfferData[] = rawBundles.map((b) => ({
+    id: b.id,
+    name: b.name,
+    description: b.description,
+    bundlePrice: b.bundlePrice.toString(),
+    items: b.items.map((i) => ({
+      id: i.id,
+      quantity: i.quantity,
+      product: {
+        id: i.product.id,
+        name: i.product.name,
+        isPhone: i.product.isPhone,
+        recommendedSalePrice: i.product.recommendedSalePrice.toString(),
+        images: i.product.images,
+      },
+    })),
+  }));
 
   const specs = (product.specs ?? {}) as Record<string, string>;
   const cover = product.images[0];
   const giftOptions = product.compatibleAccessories.filter((c) => c.isGiftOption);
+  const percentOff = discountPercent(
+    product.recommendedSalePrice.toString(),
+    product.compareAtPrice?.toString()
+  );
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -100,6 +126,7 @@ export default async function ProductPage({ params }: Props) {
               {formatMAD(product.compareAtPrice.toString())}
             </span>
           )}
+          {percentOff !== null && <Badge tone="sale">-{percentOff}%</Badge>}
         </div>
 
         <div className="mt-3 flex flex-wrap gap-2">
@@ -164,6 +191,8 @@ export default async function ProductPage({ params }: Props) {
         )}
 
         <GiftPicker giftOptions={giftOptions} />
+
+        {bundles.length > 0 && <BundleOffer bundles={bundles} />}
 
         {product.availability === "IN_STOCK" ? (
           <div className="mt-6">

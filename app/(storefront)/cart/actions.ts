@@ -1,8 +1,9 @@
 "use server";
 
-import { put } from "@vercel/blob";
+import { uploadImage, IMAGE_PRESETS } from "@/lib/storage";
 import { orderRequestSchema } from "@/lib/validation";
 import { createOrderRequest, markWhatsAppOpened } from "@/lib/db/order-requests";
+import { validatePromoCode, type PromoValidationResult } from "@/lib/db/promo-codes";
 import { buildWhatsAppOrderLink } from "@/lib/whatsapp";
 import type { CartItem } from "@/components/cart/CartContext";
 
@@ -15,7 +16,15 @@ type SubmitInput = {
   requiresAdvance: boolean;
   receiptUrl?: string;
   dataConsentAccepted: boolean;
+  promoCode?: string;
 };
+
+// Called when the customer clicks "Appliquer" in the cart, purely to show
+// them the discount before they commit. submitOrderRequest re-validates
+// the same code from scratch at submission time — see the comment there.
+export async function applyPromoCode(code: string, cartTotal: number): Promise<PromoValidationResult> {
+  return validatePromoCode(code, cartTotal);
+}
 
 type SubmitResult =
   | { ok: true; orderRequestId: string; whatsappUrl: string }
@@ -26,6 +35,23 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
     return { ok: false, error: "Votre panier est vide." };
   }
 
+  const subtotal = input.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  // Re-validate the promo code against the real, server-computed subtotal
+  // rather than trusting whatever the cart page displayed — the code could
+  // have expired, hit its redemption cap, or been deactivated in the
+  // minutes between "Appliquer" and "Confirmer ma commande".
+  let promoCodeId: string | undefined;
+  let discountAmount = 0;
+  if (input.promoCode) {
+    const promoResult = await validatePromoCode(input.promoCode, subtotal);
+    if (!promoResult.ok) {
+      return { ok: false, error: promoResult.error };
+    }
+    promoCodeId = promoResult.promoCodeId;
+    discountAmount = promoResult.discountAmount;
+  }
+
   const parsed = orderRequestSchema.safeParse({
     customerName: input.customerName,
     customerPhone: input.customerPhone,
@@ -34,6 +60,8 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
     requiresAdvance: input.requiresAdvance,
     receiptUrl: input.receiptUrl,
     dataConsentAccepted: input.dataConsentAccepted,
+    promoCodeId,
+    discountAmount,
   });
 
   if (!parsed.success) {
@@ -53,6 +81,8 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
     requiresAdvance: parsed.data.requiresAdvance,
     receiptUrl: parsed.data.receiptUrl,
     dataConsentAccepted: parsed.data.dataConsentAccepted,
+    promoCodeId: parsed.data.promoCodeId,
+    discountAmount: parsed.data.discountAmount,
     items: input.items.map((item) => ({
       productId: item.productId,
       variantId: item.variantId,
@@ -76,6 +106,7 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
       deliveryAddress: parsed.data.deliveryAddress,
       requiresAdvance: parsed.data.requiresAdvance,
       receiptUploaded: Boolean(parsed.data.receiptUrl),
+      discountAmount,
     }
   );
 
@@ -91,29 +122,16 @@ export async function confirmWhatsAppOpened(orderRequestId: string): Promise<voi
 
 type UploadResult = { ok: true; url: string } | { ok: false; error: string };
 
-// Uploads the bank-transfer receipt to Vercel Blob and returns its public
-// URL. Requires Vercel Blob storage enabled on the project (provides
-// BLOB_READ_WRITE_TOKEN automatically) — see the setup note alongside this
-// deliverable.
+// Resized, compressed to WebP, and uploaded to Cloudflare R2 — see
+// lib/storage.ts. The "receipt" preset keeps more resolution/quality than
+// the product-photo preset so a bank transfer receipt's fine print stays
+// legible.
 export async function uploadReceipt(formData: FormData): Promise<UploadResult> {
   const file = formData.get("receipt");
 
   if (!(file instanceof File) || file.size === 0) {
     return { ok: false, error: "Aucun fichier sélectionné." };
   }
-  if (file.size > 5 * 1024 * 1024) {
-    return { ok: false, error: "Fichier trop volumineux (5 Mo maximum)." };
-  }
-  if (!file.type.startsWith("image/")) {
-    return { ok: false, error: "Le reçu doit être une image (JPG, PNG)." };
-  }
 
-  try {
-    const blob = await put(`receipts/${Date.now()}-${file.name}`, file, {
-      access: "public",
-    });
-    return { ok: true, url: blob.url };
-  } catch {
-    return { ok: false, error: "Échec de l'envoi du reçu. Réessayez." };
-  }
+  return uploadImage(file, "receipts", IMAGE_PRESETS.receipt);
 }

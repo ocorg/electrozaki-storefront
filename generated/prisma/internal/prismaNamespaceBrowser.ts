@@ -60,7 +60,10 @@ export const ModelName = {
   OrderRequest: 'OrderRequest',
   OrderRequestItem: 'OrderRequestItem',
   ContactMessage: 'ContactMessage',
-  RepairRequest: 'RepairRequest'
+  RepairRequest: 'RepairRequest',
+  PromoCode: 'PromoCode',
+  Bundle: 'Bundle',
+  BundleItem: 'BundleItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -184,6 +187,8 @@ export const OrderRequestScalarFieldEnum = {
   receiptUrl: 'receiptUrl',
   receiptUploadedAt: 'receiptUploadedAt',
   dataConsentAccepted: 'dataConsentAccepted',
+  promoCodeId: 'promoCodeId',
+  discountAmount: 'discountAmount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -230,6 +235,48 @@ export const RepairRequestScalarFieldEnum = {
 } as const
 
 export type RepairRequestScalarFieldEnum = (typeof RepairRequestScalarFieldEnum)[keyof typeof RepairRequestScalarFieldEnum]
+
+
+export const PromoCodeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  type: 'type',
+  value: 'value',
+  active: 'active',
+  startsAt: 'startsAt',
+  expiresAt: 'expiresAt',
+  maxRedemptions: 'maxRedemptions',
+  redemptionCount: 'redemptionCount',
+  minOrderAmount: 'minOrderAmount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PromoCodeScalarFieldEnum = (typeof PromoCodeScalarFieldEnum)[keyof typeof PromoCodeScalarFieldEnum]
+
+
+export const BundleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  bundlePrice: 'bundlePrice',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BundleScalarFieldEnum = (typeof BundleScalarFieldEnum)[keyof typeof BundleScalarFieldEnum]
+
+
+export const BundleItemScalarFieldEnum = {
+  id: 'id',
+  bundleId: 'bundleId',
+  productId: 'productId',
+  quantity: 'quantity'
+} as const
+
+export type BundleItemScalarFieldEnum = (typeof BundleItemScalarFieldEnum)[keyof typeof BundleItemScalarFieldEnum]
 
 
 export const SortOrder = {

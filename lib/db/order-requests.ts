@@ -18,16 +18,18 @@ type OrderRequestInput = {
   receiptUrl?: string;
   dataConsentAccepted: boolean;
   items: OrderRequestItemInput[];
+  // Locked in at submission time — see the schema comment on OrderRequest.
+  promoCodeId?: string;
+  discountAmount?: number;
 };
 
 // Called from the cart submit action. Creates the durable record that both
 // feeds the internal queue and supplies the numbers used to build the
 // WhatsApp prefill message.
 export async function createOrderRequest(input: OrderRequestInput) {
-  const totalEstimate = input.items.reduce(
-    (sum, i) => sum + i.priceAtRequest * i.quantity,
-    0
-  );
+  const subtotal = input.items.reduce((sum, i) => sum + i.priceAtRequest * i.quantity, 0);
+  const discountAmount = input.discountAmount ?? 0;
+  const totalEstimate = Math.max(0, subtotal - discountAmount);
 
   // Phase-2 payment status: only meaningful when the order actually
   // requires the advance — an accessory-only order stays NOT_REQUIRED
@@ -38,30 +40,44 @@ export async function createOrderRequest(input: OrderRequestInput) {
       ? AdvancePaymentStatus.RECEIPT_UPLOADED
       : AdvancePaymentStatus.AWAITING_RECEIPT;
 
-  return prisma.orderRequest.create({
-    data: {
-      customerName: input.customerName,
-      customerPhone: input.customerPhone,
-      deliveryAddress: input.deliveryAddress,
-      notes: input.notes,
-      totalEstimate,
-      requiresAdvance: input.requiresAdvance,
-      advancePaymentStatus,
-      receiptUrl: input.receiptUrl,
-      receiptUploadedAt: input.receiptUrl ? new Date() : undefined,
-      dataConsentAccepted: input.dataConsentAccepted,
-      items: {
-        create: input.items.map((i) => ({
-          productId: i.productId,
-          variantId: i.variantId,
-          productNameSnapshot: i.productNameSnapshot,
-          priceAtRequest: i.priceAtRequest,
-          quantity: i.quantity,
-        })),
+  const [order] = await prisma.$transaction([
+    prisma.orderRequest.create({
+      data: {
+        customerName: input.customerName,
+        customerPhone: input.customerPhone,
+        deliveryAddress: input.deliveryAddress,
+        notes: input.notes,
+        totalEstimate,
+        requiresAdvance: input.requiresAdvance,
+        advancePaymentStatus,
+        receiptUrl: input.receiptUrl,
+        receiptUploadedAt: input.receiptUrl ? new Date() : undefined,
+        dataConsentAccepted: input.dataConsentAccepted,
+        promoCodeId: input.promoCodeId,
+        discountAmount,
+        items: {
+          create: input.items.map((i) => ({
+            productId: i.productId,
+            variantId: i.variantId,
+            productNameSnapshot: i.productNameSnapshot,
+            priceAtRequest: i.priceAtRequest,
+            quantity: i.quantity,
+          })),
+        },
       },
-    },
-    include: { items: true },
-  });
+      include: { items: true },
+    }),
+    ...(input.promoCodeId
+      ? [
+          prisma.promoCode.update({
+            where: { id: input.promoCodeId },
+            data: { redemptionCount: { increment: 1 } },
+          }),
+        ]
+      : []),
+  ]);
+
+  return order;
 }
 
 export async function markWhatsAppOpened(orderRequestId: string) {
@@ -78,6 +94,17 @@ export async function listOrderRequests(status?: OrderRequestStatus) {
     where: status ? { status } : undefined,
     include: { items: true },
     orderBy: { createdAt: "desc" },
+  });
+}
+
+export async function countNewOrderRequests(): Promise<number> {
+  return prisma.orderRequest.count({ where: { status: OrderRequestStatus.NEW } });
+}
+
+export async function getOrderRequestById(id: string) {
+  return prisma.orderRequest.findUnique({
+    where: { id },
+    include: { items: true, promoCode: { select: { code: true } } },
   });
 }
 

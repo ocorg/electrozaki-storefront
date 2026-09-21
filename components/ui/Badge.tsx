@@ -1,12 +1,13 @@
 import type { ReactNode } from "react";
 
-export type BadgeTone = "neutral" | "gold" | "success" | "dark";
+export type BadgeTone = "neutral" | "gold" | "success" | "dark" | "sale";
 
 const TONE_CLASSES: Record<BadgeTone, string> = {
   neutral: "bg-black/5 text-neutral-700",
   gold: "border border-gold/40 bg-gold/10 text-ink",
   success: "bg-green-50 text-green-800",
   dark: "bg-ink text-gold",
+  sale: "bg-red-600 text-white",
 };
 
 export function Badge({

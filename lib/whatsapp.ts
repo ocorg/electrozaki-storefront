@@ -12,6 +12,7 @@ type OrderContext = {
   deliveryAddress?: string;
   requiresAdvance: boolean;
   receiptUploaded: boolean;
+  discountAmount?: number;
 };
 
 export function buildWhatsAppOrderLink(
@@ -28,13 +29,17 @@ export function buildWhatsAppOrderLink(
     )
     .join("\n");
 
-  const total = lines.reduce((sum, l) => sum + l.price * l.quantity, 0);
+  const subtotal = lines.reduce((sum, l) => sum + l.price * l.quantity, 0);
+  const discountAmount = context?.discountAmount ?? 0;
+  const total = Math.max(0, subtotal - discountAmount);
 
-  const messageParts = [
-    `Bonjour, je souhaite commander (${customerName}) :`,
-    itemLines,
-    `Total estimé : ${total} MAD`,
-  ];
+  const messageParts = [`Bonjour, je souhaite commander (${customerName}) :`, itemLines];
+
+  if (discountAmount > 0) {
+    messageParts.push(`Sous-total : ${subtotal} MAD`);
+    messageParts.push(`Réduction : -${discountAmount} MAD`);
+  }
+  messageParts.push(`Total estimé : ${total} MAD`);
 
   if (context?.deliveryAddress) {
     messageParts.push(`Adresse de livraison : ${context.deliveryAddress}`);

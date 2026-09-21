@@ -67,3 +67,18 @@ export type ContactMessage = Prisma.ContactMessageModel
  * 
  */
 export type RepairRequest = Prisma.RepairRequestModel
+/**
+ * Model PromoCode
+ * 
+ */
+export type PromoCode = Prisma.PromoCodeModel
+/**
+ * Model Bundle
+ * 
+ */
+export type Bundle = Prisma.BundleModel
+/**
+ * Model BundleItem
+ * 
+ */
+export type BundleItem = Prisma.BundleItemModel

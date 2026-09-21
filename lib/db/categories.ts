@@ -59,3 +59,56 @@ export async function getBrowsableCategories() {
     })
     .map(({ id, name, slug }: (typeof categories)[number]) => ({ id, name, slug }));
 }
+
+// ── Admin-only ──────────────────────────────────────────────────────────
+// Categories carry no cost/internal data, unlike Product, so there's no
+// security reason to keep these out of the same file as the public reads
+// above — just a functional split (write vs. read).
+
+export async function listAdminCategories() {
+  return prisma.category.findMany({
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      sortOrder: true,
+      parentId: true,
+      parent: { select: { name: true } },
+      _count: { select: { products: true, children: true } },
+    },
+    orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }],
+  });
+}
+
+export type CategoryInput = {
+  name: string;
+  slug: string;
+  parentId?: string | null;
+  sortOrder: number;
+};
+
+export async function createCategory(input: CategoryInput) {
+  return prisma.category.create({ data: input });
+}
+
+export async function updateCategory(id: string, input: CategoryInput) {
+  return prisma.category.update({ where: { id }, data: input });
+}
+
+type DeleteCategoryResult = { ok: true } | { ok: false; error: string };
+
+export async function deleteCategory(id: string): Promise<DeleteCategoryResult> {
+  const category = await prisma.category.findUnique({
+    where: { id },
+    select: { _count: { select: { products: true, children: true } } },
+  });
+  if (!category) return { ok: false, error: "Catégorie introuvable." };
+  if (category._count.products > 0) {
+    return { ok: false, error: "Impossible de supprimer : des produits sont encore dans cette catégorie." };
+  }
+  if (category._count.children > 0) {
+    return { ok: false, error: "Impossible de supprimer : cette catégorie a des sous-catégories." };
+  }
+  await prisma.category.delete({ where: { id } });
+  return { ok: true };
+}

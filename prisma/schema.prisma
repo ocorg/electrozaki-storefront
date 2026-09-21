@@ -80,12 +80,12 @@ model Category {
 
 // The PUBLIC product view. Every field here is safe to render on the site.
 model Product {
-  id          String             @id @default(cuid())
-  slug        String             @unique
+  id          String           @id @default(cuid())
+  slug        String           @unique
   name        String
   brand       String?
   condition   ProductCondition
-  description String?            @db.Text
+  description String?          @db.Text
 
   // Drives the checkout's dynamic payment logic (phase-2): an order needs
   // the 300 DH advance if ANY item has isPhone=true. Deliberately an
@@ -95,7 +95,7 @@ model Product {
 
   // Flexible spec sheet (e.g. { "Stockage": "128GB", "RAM": "6GB", "Écran": "6.1\"" })
   // so phones/laptops/accessories don't need different tables for differing spec sets.
-  specs       Json?
+  specs Json?
 
   // Naming matches the ERP's "recommended sale price" concept for a phone,
   // so a future shared catalog is a rename-free merge, not a remap.
@@ -113,11 +113,11 @@ model Product {
   // applicable (e.g. an accessory, or a phone with no Face ID hardware),
   // not "unknown", so the UI can tell the difference and simply omit the
   // tile rather than showing a false negative.
-  faceIdWorking   Boolean?
-  screenGenuine   Boolean?
-  batteryGenuine  Boolean?
-  hasDefects           Boolean @default(false)
-  transparencyNotes    String? @db.Text // shown on the PDP when hasDefects is true
+  faceIdWorking        Boolean?
+  screenGenuine        Boolean?
+  batteryGenuine       Boolean?
+  hasDefects           Boolean  @default(false)
+  transparencyNotes    String?  @db.Text // shown on the PDP when hasDefects is true
 
   metaTitle       String?
   metaDescription String?
@@ -145,6 +145,10 @@ model Product {
 
   orderRequestItems OrderRequestItem[]
 
+  // Curated bundles this product is a member of (e.g. "iPhone 13 + case +
+  // glass"). See Bundle below — bundlePrice lives on the bundle, not here.
+  bundleItems BundleItem[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -169,7 +173,7 @@ model ProductVariant {
   id            String   @id @default(cuid())
   productId     String
   product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  name          String   // e.g. "256GB — Bleu"
+  name          String // e.g. "256GB — Bleu"
   priceOverride Decimal? @db.Decimal(10, 2) // null = use Product.recommendedSalePrice
   skuOrRef      String?
 
@@ -207,17 +211,17 @@ model ProductCompatibility {
 // future merge needs per-unit serials, that's a new table added at that
 // point, not something v1 needs to carry.
 model ProductInternal {
-  id             String   @id @default(cuid())
-  productId      String   @unique
-  product        Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        String  @id @default(cuid())
+  productId String  @unique
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  purchasePrice  Decimal  @db.Decimal(10, 2)
-  minSalePrice   Decimal  @db.Decimal(10, 2) // price floor, mirrors the ERP's concept
-  supplier       String?                     // plain text for v1, not a Supplier table —
-                                              // the ERP's 4-type supplier model is ERP-only complexity
-  stockQuantity  Int      @default(0)
-  sourceNote     String?                     // e.g. "Douane auction", "reprise client"
-  internalNotes  String?  @db.Text
+  purchasePrice Decimal @db.Decimal(10, 2)
+  minSalePrice  Decimal @db.Decimal(10, 2) // price floor, mirrors the ERP's concept
+  supplier      String? // plain text for v1, not a Supplier table —
+  // the ERP's 4-type supplier model is ERP-only complexity
+  stockQuantity Int     @default(0)
+  sourceNote    String? // e.g. "Douane auction", "reprise client"
+  internalNotes String? @db.Text
 
   updatedAt DateTime @updatedAt
 }
@@ -232,14 +236,14 @@ model ProductInternal {
 // before deliverable 2 and this gets a `Cart`/`CartItem` pair added.
 
 model OrderRequest {
-  id             String              @id @default(cuid())
-  customerName   String
-  customerPhone  String
-  deliveryAddress String?            @db.Text
-  status         OrderRequestStatus  @default(NEW)
-  totalEstimate  Decimal             @db.Decimal(10, 2)
-  whatsappOpenedAt DateTime?         // set once the WhatsApp prefill was triggered client-side
-  notes          String?             @db.Text
+  id               String             @id @default(cuid())
+  customerName     String
+  customerPhone    String
+  deliveryAddress  String?            @db.Text
+  status           OrderRequestStatus @default(NEW)
+  totalEstimate    Decimal            @db.Decimal(10, 2)
+  whatsappOpenedAt DateTime? // set once the WhatsApp prefill was triggered client-side
+  notes            String?            @db.Text
 
   // Phase-2 dynamic payment tunnel. requiresAdvance is computed once at
   // submission time from whether the cart contained an isPhone item, then
@@ -250,6 +254,13 @@ model OrderRequest {
   receiptUrl           String?
   receiptUploadedAt    DateTime?
   dataConsentAccepted  Boolean              @default(false)
+
+  // Promo-code discount, locked in at submission time — same philosophy as
+  // requiresAdvance above: a later change to the code (or its deletion)
+  // must never rewrite the terms of an order already placed.
+  promoCodeId    String?
+  promoCode      PromoCode? @relation(fields: [promoCodeId], references: [id])
+  discountAmount Decimal    @default(0) @db.Decimal(10, 2)
 
   items OrderRequestItem[]
 
@@ -268,9 +279,9 @@ enum AdvancePaymentStatus {
 }
 
 model OrderRequestItem {
-  id             String        @id @default(cuid())
+  id             String       @id @default(cuid())
   orderRequestId String
-  orderRequest   OrderRequest  @relation(fields: [orderRequestId], references: [id], onDelete: Cascade)
+  orderRequest   OrderRequest @relation(fields: [orderRequestId], references: [id], onDelete: Cascade)
 
   productId String
   product   Product @relation(fields: [productId], references: [id])
@@ -329,4 +340,68 @@ model RepairRequest {
   updatedAt DateTime @updatedAt
 
   @@index([status])
+}
+
+// ── Discounts & bundles ─────────────────────────────────────────────────
+
+enum PromoCodeType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+// Customer-entered codes, applied in the cart before submission. Kept
+// separate from Product.compareAtPrice (the staff-set "sale price" shown
+// directly on a listing) — a promo code is a targeted, redeemable discount
+// rather than a standing merchandising price.
+model PromoCode {
+  id        String        @id @default(cuid())
+  code      String        @unique
+  type      PromoCodeType
+  value     Decimal       @db.Decimal(10, 2) // 10 means "10%" or "10 MAD", per `type`
+  active    Boolean       @default(true)
+  startsAt  DateTime?
+  expiresAt DateTime?
+
+  // Both optional — null means "no cap" / "no minimum".
+  maxRedemptions  Int?
+  redemptionCount Int      @default(0)
+  minOrderAmount  Decimal? @db.Decimal(10, 2)
+
+  orderRequests OrderRequest[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// A staff-curated set of products sold together at one combined price
+// (e.g. "iPhone 13 + coque + verre trempé"). Distinct from the existing
+// ProductCompatibility "free gift" mechanic — a bundle item is priced, not
+// free, and bundles aren't tied to exactly one phone the way gift options
+// are.
+model Bundle {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String? @db.Text
+  bundlePrice Decimal @db.Decimal(10, 2)
+  active      Boolean @default(true)
+
+  items BundleItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BundleItem {
+  id       String @id @default(cuid())
+  bundleId String
+  bundle   Bundle @relation(fields: [bundleId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  quantity Int @default(1)
+
+  @@unique([bundleId, productId])
+  @@index([productId])
 }
