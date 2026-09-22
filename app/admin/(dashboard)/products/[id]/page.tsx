@@ -21,7 +21,7 @@ export default async function EditProductPage({ params }: Props) {
 
   const options = categories
     .filter((c) => c._count.children === 0 || c.id === product.categoryId)
-    .map((c) => ({ id: c.id, name: c.parent ? `${c.parent.name} > ${c.name}` : c.name }));
+    .map((c) => ({ id: c.id, name: c.name, group: c.parent?.name ?? null }));
 
   const specs = (product.specs ?? {}) as Record<string, string>;
 
@@ -43,6 +43,9 @@ export default async function EditProductPage({ params }: Props) {
     faceIdWorking: boolToSelect(product.faceIdWorking),
     screenGenuine: boolToSelect(product.screenGenuine),
     batteryGenuine: boolToSelect(product.batteryGenuine),
+    cameraGenuine: boolToSelect(product.cameraGenuine),
+    chargingPortGenuine: boolToSelect(product.chargingPortGenuine),
+    speakerGenuine: boolToSelect(product.speakerGenuine),
     hasDefects: product.hasDefects,
     transparencyNotes: product.transparencyNotes ?? "",
     imageUrl: product.images[0]?.url ?? "",
@@ -50,6 +53,19 @@ export default async function EditProductPage({ params }: Props) {
       name: v.name,
       priceOverride: v.priceOverride?.toString() ?? "",
       skuOrRef: v.skuOrRef ?? "",
+      color: v.color ?? "",
+      storageLabel: v.storageLabel ?? "",
+      imageUrl: v.imageUrl ?? "",
+      stockQuantity: v.stockQuantity.toString(),
+      batteryHealthPercent: v.batteryHealthPercent?.toString() ?? "",
+      faceIdWorking: boolToSelect(v.faceIdWorking),
+      screenGenuine: boolToSelect(v.screenGenuine),
+      batteryGenuine: boolToSelect(v.batteryGenuine),
+      cameraGenuine: boolToSelect(v.cameraGenuine),
+      chargingPortGenuine: boolToSelect(v.chargingPortGenuine),
+      speakerGenuine: boolToSelect(v.speakerGenuine),
+      hasDefects: v.hasDefects,
+      transparencyNotes: v.transparencyNotes ?? "",
     })),
     purchasePrice: product.internal?.purchasePrice.toString() ?? "",
     minSalePrice: product.internal?.minSalePrice.toString() ?? "",

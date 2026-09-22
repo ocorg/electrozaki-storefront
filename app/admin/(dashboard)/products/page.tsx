@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import { listAdminProducts } from "@/lib/db/admin-products";
+import { listAdminProducts, effectiveStock } from "@/lib/db/admin-products";
 import { CONDITION_LABEL } from "@/lib/conditions";
 import { LinkButton } from "@/components/ui/Button";
 import { ProductSearchFilter } from "./ProductSearchFilter";
@@ -35,7 +35,7 @@ export default async function AdminProductsPage() {
           categoryName: p.category.name,
           price: p.recommendedSalePrice.toString(),
           compareAtPrice: p.compareAtPrice?.toString() ?? null,
-          stock: p.internal?.stockQuantity ?? 0,
+          stock: effectiveStock(p),
           availability: p.availability,
           condition: p.condition,
         }))}

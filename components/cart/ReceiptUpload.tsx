@@ -5,10 +5,10 @@ import { CheckCircle2, Upload } from "lucide-react";
 import { uploadReceipt } from "@/app/(storefront)/cart/actions";
 
 type Props = {
-  onUploaded: (url: string) => void;
+  onUploadedAction: (url: string) => void;
 };
 
-export function ReceiptUpload({ onUploaded }: Props) {
+export function ReceiptUpload({ onUploadedAction }: Props) {
   const [status, setStatus] = useState<"idle" | "uploading" | "done" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -31,7 +31,7 @@ export function ReceiptUpload({ onUploaded }: Props) {
     }
 
     setStatus("done");
-    onUploaded(result.url);
+    onUploadedAction(result.url);
   }
 
   return (

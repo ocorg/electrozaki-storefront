@@ -145,7 +145,7 @@ export default function CartPage() {
                 key={`${item.productId}-${item.variantId ?? ""}`}
                 className="flex items-center gap-4 py-4"
               >
-                <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-neutral-50">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-neutral-50">
                   {item.image && (
                     <Image
                       src={item.image}
@@ -335,7 +335,7 @@ export default function CartPage() {
                 </details>
               </div>
 
-              <ReceiptUpload onUploaded={setReceiptUrl} />
+              <ReceiptUpload onUploadedAction={setReceiptUrl} />
 
               <label className="flex items-start gap-2 text-xs text-neutral-600">
                 <input

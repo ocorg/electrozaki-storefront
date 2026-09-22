@@ -27,6 +27,9 @@ const PUBLIC_PRODUCT_SELECT = {
   faceIdWorking: true,
   screenGenuine: true,
   batteryGenuine: true,
+  cameraGenuine: true,
+  chargingPortGenuine: true,
+  speakerGenuine: true,
   hasDefects: true,
   transparencyNotes: true,
   metaTitle: true,
@@ -37,7 +40,25 @@ const PUBLIC_PRODUCT_SELECT = {
     orderBy: { sortOrder: "asc" as const },
   },
   variants: {
-    select: { id: true, name: true, priceOverride: true, skuOrRef: true },
+    select: {
+      id: true,
+      name: true,
+      priceOverride: true,
+      skuOrRef: true,
+      color: true,
+      storageLabel: true,
+      imageUrl: true,
+      stockQuantity: true,
+      batteryHealthPercent: true,
+      faceIdWorking: true,
+      screenGenuine: true,
+      batteryGenuine: true,
+      cameraGenuine: true,
+      chargingPortGenuine: true,
+      speakerGenuine: true,
+      hasDefects: true,
+      transparencyNotes: true,
+    },
   },
   // Phase-2: for a phone, its gift-eligible accessory choices; for an
   // accessory, this is empty (compatibility runs the other direction below).
@@ -87,6 +108,9 @@ export interface PublicProduct {
   faceIdWorking: boolean | null;
   screenGenuine: boolean | null;
   batteryGenuine: boolean | null;
+  cameraGenuine: boolean | null;
+  chargingPortGenuine: boolean | null;
+  speakerGenuine: boolean | null;
   hasDefects: boolean;
   transparencyNotes: string | null;
   metaTitle: string | null;
@@ -98,6 +122,19 @@ export interface PublicProduct {
     name: string;
     priceOverride: { toString(): string } | null;
     skuOrRef: string | null;
+    color: string | null;
+    storageLabel: string | null;
+    imageUrl: string | null;
+    stockQuantity: number;
+    batteryHealthPercent: number | null;
+    faceIdWorking: boolean | null;
+    screenGenuine: boolean | null;
+    batteryGenuine: boolean | null;
+    cameraGenuine: boolean | null;
+    chargingPortGenuine: boolean | null;
+    speakerGenuine: boolean | null;
+    hasDefects: boolean;
+    transparencyNotes: string | null;
   }[];
   compatibleAccessories: {
     isGiftOption: boolean;

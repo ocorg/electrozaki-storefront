@@ -25,7 +25,7 @@ export const revalidate = 60;
 
 const REASSURANCE = [
   { icon: ShieldCheck, title: "Garantie incluse", desc: "Sur tous les téléphones bon occasion" },
-  { icon: Truck, title: "Livraison à Meknès", desc: "Paiement à la livraison" },
+  { icon: Truck, title: "Livraison partout au Maroc", desc: "Paiement à la livraison" },
   { icon: Wrench, title: "Techniciens vérifiés", desc: "Diagnostic avant chaque vente" },
   { icon: MessageCircle, title: "Support WhatsApp", desc: "Réponse rapide, sans robot" },
 ];

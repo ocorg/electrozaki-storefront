@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Sparkles } from "lucide-react";
 import { saveProduct } from "@/app/admin/(dashboard)/products/actions";
 import type { ProductInput } from "@/lib/db/admin-products";
 import { Button } from "@/components/ui/Button";
@@ -25,11 +25,70 @@ const AVAILABILITIES = [
 
 const inputClasses =
   "min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none";
+const smallInputClasses =
+  "min-h-9 w-full rounded-lg border border-black/15 px-2 text-sm focus:border-gold focus:outline-none";
 
+type BoolSelect = "" | "true" | "false";
 type SpecRow = { key: string; value: string };
-type VariantRow = { name: string; priceOverride: string; skuOrRef: string };
 
-export type ProductFormInitial = {
+// The 6-field genuine/replaced set is repeated at both the product level
+// and per-variant — a shared shape keeps the two forms (and the toBool/
+// fromBool conversions) from drifting apart.
+type ConditionFields = {
+  faceIdWorking: BoolSelect;
+  screenGenuine: BoolSelect;
+  batteryGenuine: BoolSelect;
+  cameraGenuine: BoolSelect;
+  chargingPortGenuine: BoolSelect;
+  speakerGenuine: BoolSelect;
+};
+
+const EMPTY_CONDITION: ConditionFields = {
+  faceIdWorking: "",
+  screenGenuine: "",
+  batteryGenuine: "",
+  cameraGenuine: "",
+  chargingPortGenuine: "",
+  speakerGenuine: "",
+};
+
+const CONDITION_FIELD_LABELS: { field: keyof ConditionFields; appleLabel: string; otherLabel: string }[] = [
+  { field: "screenGenuine", appleLabel: "Écran d'origine", otherLabel: "Écran d'origine" },
+  { field: "batteryGenuine", appleLabel: "Batterie d'origine", otherLabel: "Batterie d'origine" },
+  { field: "cameraGenuine", appleLabel: "Caméra d'origine", otherLabel: "Caméra d'origine" },
+  { field: "chargingPortGenuine", appleLabel: "Port de charge d'origine", otherLabel: "Port de charge d'origine" },
+  { field: "speakerGenuine", appleLabel: "Haut-parleur d'origine", otherLabel: "Haut-parleur d'origine" },
+  { field: "faceIdWorking", appleLabel: "Face ID fonctionnel", otherLabel: "Déverrouillage biométrique fonctionnel" },
+];
+
+type VariantRow = ConditionFields & {
+  name: string;
+  priceOverride: string;
+  skuOrRef: string;
+  color: string;
+  storageLabel: string;
+  imageUrl: string;
+  stockQuantity: string;
+  batteryHealthPercent: string;
+  hasDefects: boolean;
+  transparencyNotes: string;
+};
+
+const EMPTY_VARIANT: VariantRow = {
+  ...EMPTY_CONDITION,
+  name: "",
+  priceOverride: "",
+  skuOrRef: "",
+  color: "",
+  storageLabel: "",
+  imageUrl: "",
+  stockQuantity: "0",
+  batteryHealthPercent: "",
+  hasDefects: false,
+  transparencyNotes: "",
+};
+
+export type ProductFormInitial = ConditionFields & {
   id: string;
   slug: string;
   name: string;
@@ -44,9 +103,6 @@ export type ProductFormInitial = {
   availability: (typeof AVAILABILITIES)[number]["value"];
   tags: string;
   batteryHealthPercent: string;
-  faceIdWorking: "" | "true" | "false";
-  screenGenuine: "" | "true" | "false";
-  batteryGenuine: "" | "true" | "false";
   hasDefects: boolean;
   transparencyNotes: string;
   imageUrl: string;
@@ -60,6 +116,7 @@ export type ProductFormInitial = {
 };
 
 const EMPTY: Omit<ProductFormInitial, "id" | "categoryId"> = {
+  ...EMPTY_CONDITION,
   slug: "",
   name: "",
   brand: "",
@@ -72,9 +129,6 @@ const EMPTY: Omit<ProductFormInitial, "id" | "categoryId"> = {
   availability: "IN_STOCK",
   tags: "",
   batteryHealthPercent: "",
-  faceIdWorking: "",
-  screenGenuine: "",
-  batteryGenuine: "",
   hasDefects: false,
   transparencyNotes: "",
   imageUrl: "",
@@ -87,15 +141,17 @@ const EMPTY: Omit<ProductFormInitial, "id" | "categoryId"> = {
   internalNotes: "",
 };
 
-function toBool(v: "" | "true" | "false"): boolean | null {
+function toBool(v: BoolSelect): boolean | null {
   return v === "" ? null : v === "true";
 }
+
+export type CategoryOption = { id: string; name: string; group: string | null };
 
 export function ProductForm({
   categories,
   initial,
 }: {
-  categories: { id: string; name: string }[];
+  categories: CategoryOption[];
   initial?: ProductFormInitial;
 }) {
   const router = useRouter();
@@ -104,6 +160,8 @@ export function ProductForm({
   );
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const isApple = form.brand.trim().toLowerCase() === "apple";
 
   function set<K extends keyof ProductFormInitial>(key: K, value: ProductFormInitial[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -120,11 +178,25 @@ export function ProductForm({
   function removeSpecRow(index: number) {
     set("specs", form.specs.filter((_, i) => i !== index));
   }
+  // Only adds keys that aren't already present, so clicking this twice
+  // (or after already filling one in by hand) doesn't create duplicates.
+  function addSuggestedSpecs() {
+    const existingKeys = new Set(form.specs.map((s) => s.key.trim().toLowerCase()));
+    // Storage/RAM are phone-specific — an accessory's spec sheet only ever
+    // needs a color, so it doesn't get those two suggested.
+    const suggestions = form.isPhone
+      ? ["Stockage", "Couleur", ...(isApple ? [] : ["RAM"])]
+      : ["Couleur"];
+    const newRows = suggestions
+      .filter((key) => !existingKeys.has(key.toLowerCase()))
+      .map((key) => ({ key, value: "" }));
+    if (newRows.length) set("specs", [...form.specs, ...newRows]);
+  }
 
   function addVariantRow() {
-    set("variants", [...form.variants, { name: "", priceOverride: "", skuOrRef: "" }]);
+    set("variants", [...form.variants, { ...EMPTY_VARIANT }]);
   }
-  function updateVariantRow(index: number, field: keyof VariantRow, value: string) {
+  function updateVariantRow<K extends keyof VariantRow>(index: number, field: K, value: VariantRow[K]) {
     const next = [...form.variants];
     next[index] = { ...next[index], [field]: value };
     set("variants", next);
@@ -160,6 +232,9 @@ export function ProductForm({
       faceIdWorking: toBool(form.faceIdWorking),
       screenGenuine: toBool(form.screenGenuine),
       batteryGenuine: toBool(form.batteryGenuine),
+      cameraGenuine: toBool(form.cameraGenuine),
+      chargingPortGenuine: toBool(form.chargingPortGenuine),
+      speakerGenuine: toBool(form.speakerGenuine),
       hasDefects: form.hasDefects,
       transparencyNotes: form.transparencyNotes.trim() || null,
       imageUrl: form.imageUrl || null,
@@ -169,6 +244,19 @@ export function ProductForm({
           name: v.name.trim(),
           priceOverride: v.priceOverride ? Number(v.priceOverride) : null,
           skuOrRef: v.skuOrRef.trim() || null,
+          color: v.color.trim() || null,
+          storageLabel: v.storageLabel.trim() || null,
+          imageUrl: v.imageUrl || null,
+          stockQuantity: Number(v.stockQuantity) || 0,
+          batteryHealthPercent: v.batteryHealthPercent ? Number(v.batteryHealthPercent) : null,
+          faceIdWorking: toBool(v.faceIdWorking),
+          screenGenuine: toBool(v.screenGenuine),
+          batteryGenuine: toBool(v.batteryGenuine),
+          cameraGenuine: toBool(v.cameraGenuine),
+          chargingPortGenuine: toBool(v.chargingPortGenuine),
+          speakerGenuine: toBool(v.speakerGenuine),
+          hasDefects: v.hasDefects,
+          transparencyNotes: v.transparencyNotes.trim() || null,
         })),
       purchasePrice: Number(form.purchasePrice) || 0,
       minSalePrice: Number(form.minSalePrice) || Number(form.recommendedSalePrice) || 0,
@@ -188,6 +276,15 @@ export function ProductForm({
     router.push("/admin/products");
     router.refresh();
   }
+
+  // Ungrouped (true top-level leaf categories, e.g. "Téléphones") render as
+  // plain options; everything else groups under its parent's <optgroup> —
+  // replaces one long flat "Parent > Child" list for every category.
+  const ungroupedCategories = categories.filter((c) => !c.group);
+  const groupedCategories = categories.reduce<Record<string, CategoryOption[]>>((acc, c) => {
+    if (c.group) (acc[c.group] ??= []).push(c);
+    return acc;
+  }, {});
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -231,29 +328,40 @@ export function ProductForm({
               onChange={(e) => set("categoryId", e.target.value)}
               className={inputClasses}
             >
-              {categories.map((c) => (
+              {ungroupedCategories.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name}
                 </option>
               ))}
-            </select>
-          </div>
-          <div>
-            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-neutral-500">
-              État
-            </label>
-            <select
-              value={form.condition}
-              onChange={(e) => set("condition", e.target.value as ProductFormInitial["condition"])}
-              className={inputClasses}
-            >
-              {CONDITIONS.map((c) => (
-                <option key={c.value} value={c.value}>
-                  {c.label}
-                </option>
+              {Object.entries(groupedCategories).map(([group, options]) => (
+                <optgroup key={group} label={group}>
+                  {options.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                    </option>
+                  ))}
+                </optgroup>
               ))}
             </select>
           </div>
+          {form.isPhone && (
+            <div>
+              <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-neutral-500">
+                État
+              </label>
+              <select
+                value={form.condition}
+                onChange={(e) => set("condition", e.target.value as ProductFormInitial["condition"])}
+                className={inputClasses}
+              >
+                {CONDITIONS.map((c) => (
+                  <option key={c.value} value={c.value}>
+                    {c.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <div>
             <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-neutral-500">
               Disponibilité
@@ -276,7 +384,13 @@ export function ProductForm({
           <input
             type="checkbox"
             checked={form.isPhone}
-            onChange={(e) => set("isPhone", e.target.checked)}
+            onChange={(e) => {
+              const isPhone = e.target.checked;
+              // Accessories are always sold new — condition/battery/genuine-parts
+              // tracking is a used-phone concept, so it's reset rather than left
+              // stale when switching a listing over to an accessory.
+              setForm((prev) => ({ ...prev, isPhone, condition: isPhone ? prev.condition : "NEUF" }));
+            }}
             className="h-4 w-4"
           />
           Ce produit est un téléphone (déclenche l&apos;avance de 300 MAD au panier)
@@ -336,12 +450,18 @@ export function ProductForm({
           <div>
             <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-neutral-500">
               Quantité en stock
+              {form.variants.length > 0 && (
+                <span className="ml-1 font-normal normal-case text-neutral-400">
+                  (ignoré — géré par variante ci-dessous)
+                </span>
+              )}
             </label>
             <input
               type="number"
+              disabled={form.variants.length > 0}
               value={form.stockQuantity}
               onChange={(e) => set("stockQuantity", e.target.value)}
-              className={inputClasses}
+              className={`${inputClasses} disabled:bg-neutral-50 disabled:text-neutral-400`}
             />
           </div>
           <div>
@@ -388,12 +508,18 @@ export function ProductForm({
 
       <div className={cardClasses("space-y-4 p-5")}>
         <h2 className="font-semibold">Image</h2>
-        <AdminImageUpload currentUrl={form.imageUrl} onUploaded={(url) => set("imageUrl", url)} />
+        <AdminImageUpload currentUrl={form.imageUrl} onUploadedAction={(url) => set("imageUrl", url)} />
       </div>
 
       {form.isPhone && (
         <div className={cardClasses("space-y-4 p-5")}>
-          <h2 className="font-semibold">Détails téléphone</h2>
+          <h2 className="font-semibold">Détails téléphone (valeur générale)</h2>
+          {form.variants.length > 0 && (
+            <p className="text-xs text-neutral-500">
+              Sert de valeur par défaut — chaque variante ci-dessous peut la remplacer pour son
+              unité/couleur spécifique.
+            </p>
+          )}
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-neutral-500">
@@ -406,20 +532,14 @@ export function ProductForm({
                 className={inputClasses}
               />
             </div>
-            {(
-              [
-                ["faceIdWorking", "Face ID fonctionnel"],
-                ["screenGenuine", "Écran d'origine"],
-                ["batteryGenuine", "Batterie d'origine"],
-              ] as const
-            ).map(([field, label]) => (
+            {CONDITION_FIELD_LABELS.map(({ field, appleLabel, otherLabel }) => (
               <div key={field}>
                 <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-neutral-500">
-                  {label}
+                  {isApple ? appleLabel : otherLabel}
                 </label>
                 <select
                   value={form[field]}
-                  onChange={(e) => set(field, e.target.value as "" | "true" | "false")}
+                  onChange={(e) => set(field, e.target.value as BoolSelect)}
                   className={inputClasses}
                 >
                   <option value="">Non applicable</option>
@@ -454,9 +574,14 @@ export function ProductForm({
       <div className={cardClasses("space-y-3 p-5")}>
         <div className="flex items-center justify-between">
           <h2 className="font-semibold">Fiche technique</h2>
-          <Button type="button" variant="outline" size="sm" onClick={addSpecRow}>
-            <Plus size={14} /> Ajouter
-          </Button>
+          <div className="flex gap-2">
+            <Button type="button" variant="outline" size="sm" onClick={addSuggestedSpecs}>
+              <Sparkles size={14} /> Champs suggérés
+            </Button>
+            <Button type="button" variant="outline" size="sm" onClick={addSpecRow}>
+              <Plus size={14} /> Ajouter
+            </Button>
+          </div>
         </div>
         {form.specs.map((row, i) => (
           <div key={i} className="flex gap-2">
@@ -483,41 +608,136 @@ export function ProductForm({
         ))}
       </div>
 
-      <div className={cardClasses("space-y-3 p-5")}>
+      <div className={cardClasses("space-y-4 p-5")}>
         <div className="flex items-center justify-between">
-          <h2 className="font-semibold">Variantes (options)</h2>
-          <Button type="button" variant="outline" size="sm" onClick={addVariantRow}>
+          <div>
+            <h2 className="font-semibold">Variantes / unités</h2>
+            <p className="mt-1 text-xs text-neutral-500">
+              Un lot de couleurs/stockages identiques (prix commun) : renseignez couleur, stockage,
+              stock et photo. Un lot d&apos;unités reconditionnées (prix différent par unité) :
+              ouvrez « État de cette unité » sur chaque ligne. Laissez un champ vide pour hériter de
+              la valeur générale ci-dessus.
+            </p>
+          </div>
+          <Button type="button" variant="outline" size="sm" onClick={addVariantRow} className="flex-none">
             <Plus size={14} /> Ajouter
           </Button>
         </div>
+
         {form.variants.map((row, i) => (
-          <div key={i} className="flex gap-2">
-            <input
-              placeholder="256GB — Bleu"
-              value={row.name}
-              onChange={(e) => updateVariantRow(i, "name", e.target.value)}
-              className={inputClasses}
-            />
-            <input
-              type="number"
-              placeholder="Prix (optionnel)"
-              value={row.priceOverride}
-              onChange={(e) => updateVariantRow(i, "priceOverride", e.target.value)}
-              className={inputClasses}
-            />
-            <input
-              placeholder="SKU (optionnel)"
-              value={row.skuOrRef}
-              onChange={(e) => updateVariantRow(i, "skuOrRef", e.target.value)}
-              className={inputClasses}
-            />
-            <button
-              type="button"
-              onClick={() => removeVariantRow(i)}
-              className="flex h-11 w-11 flex-none items-center justify-center rounded-lg text-neutral-400 hover:bg-neutral-100 hover:text-red-600"
-            >
-              <Trash2 size={16} />
-            </button>
+          <div key={i} className="rounded-xl border border-black/10 p-4">
+            <div className="grid gap-2 sm:grid-cols-3">
+              <input
+                placeholder="Nom (ex: 128GB — Bleu)"
+                value={row.name}
+                onChange={(e) => updateVariantRow(i, "name", e.target.value)}
+                className={smallInputClasses}
+              />
+              <input
+                placeholder="Couleur (ex: Bleu)"
+                value={row.color}
+                onChange={(e) => updateVariantRow(i, "color", e.target.value)}
+                className={smallInputClasses}
+              />
+              {form.isPhone && (
+                <input
+                  placeholder="Stockage (ex: 128GB)"
+                  value={row.storageLabel}
+                  onChange={(e) => updateVariantRow(i, "storageLabel", e.target.value)}
+                  className={smallInputClasses}
+                />
+              )}
+              <input
+                type="number"
+                placeholder="Prix (optionnel)"
+                value={row.priceOverride}
+                onChange={(e) => updateVariantRow(i, "priceOverride", e.target.value)}
+                className={smallInputClasses}
+              />
+              <input
+                type="number"
+                placeholder="Stock"
+                value={row.stockQuantity}
+                onChange={(e) => updateVariantRow(i, "stockQuantity", e.target.value)}
+                className={smallInputClasses}
+              />
+              {form.isPhone && (
+                <input
+                  type="number"
+                  placeholder="Batterie (%)"
+                  value={row.batteryHealthPercent}
+                  onChange={(e) => updateVariantRow(i, "batteryHealthPercent", e.target.value)}
+                  className={smallInputClasses}
+                />
+              )}
+              <input
+                placeholder="SKU (optionnel)"
+                value={row.skuOrRef}
+                onChange={(e) => updateVariantRow(i, "skuOrRef", e.target.value)}
+                className={smallInputClasses}
+              />
+            </div>
+
+            <div className="mt-2 flex items-end gap-2">
+              <div className="flex-1">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+                  Photo de cette variante (optionnel)
+                </p>
+                <AdminImageUpload
+                  currentUrl={row.imageUrl || null}
+                  onUploadedAction={(url) => updateVariantRow(i, "imageUrl", url)}
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => removeVariantRow(i)}
+                className="flex h-11 w-11 flex-none items-center justify-center rounded-lg text-neutral-400 hover:bg-neutral-100 hover:text-red-600"
+              >
+                <Trash2 size={16} />
+              </button>
+            </div>
+
+            {form.isPhone && (
+              <details className="mt-3 rounded-lg bg-neutral-50 p-3">
+                <summary className="cursor-pointer text-sm font-medium">État de cette unité</summary>
+                <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                  {CONDITION_FIELD_LABELS.map(({ field, appleLabel, otherLabel }) => (
+                    <div key={field}>
+                      <label className="mb-1 block text-xs text-neutral-500">
+                        {isApple ? appleLabel : otherLabel}
+                      </label>
+                      <select
+                        value={row[field]}
+                        onChange={(e) => updateVariantRow(i, field, e.target.value as BoolSelect)}
+                        className={smallInputClasses}
+                      >
+                        <option value="">Hérite</option>
+                        <option value="true">Oui</option>
+                        <option value="false">Non</option>
+                      </select>
+                    </div>
+                  ))}
+                </div>
+                <label className="mt-3 flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={row.hasDefects}
+                    onChange={(e) => updateVariantRow(i, "hasDefects", e.target.checked)}
+                    className="h-4 w-4"
+                  />
+                  Cette unité a des défauts à signaler
+                </label>
+                {row.hasDefects && (
+                  <textarea
+                    rows={2}
+                    placeholder="Décrivez le défaut de cette unité précise"
+                    value={row.transparencyNotes}
+                    onChange={(e) => updateVariantRow(i, "transparencyNotes", e.target.value)}
+                    className="mt-2 w-full rounded-lg border border-black/15 px-3 py-2 text-sm focus:border-gold focus:outline-none"
+                  />
+                )}
+              </details>
+            )}
           </div>
         ))}
       </div>

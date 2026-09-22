@@ -1,50 +1,91 @@
-import { BatteryCharging, Ban, ScanFace, MonitorSmartphone, type LucideIcon } from "lucide-react";
+import {
+  BatteryCharging,
+  Ban,
+  ScanFace,
+  MonitorSmartphone,
+  Camera,
+  Plug,
+  Volume2,
+  type LucideIcon,
+} from "lucide-react";
 
-type Props = {
+export type ConditionData = {
   batteryHealthPercent: number | null;
   batteryGenuine: boolean | null;
   screenGenuine: boolean | null;
   faceIdWorking: boolean | null;
+  cameraGenuine: boolean | null;
+  chargingPortGenuine: boolean | null;
+  speakerGenuine: boolean | null;
 };
+
+type Tile = { icon: LucideIcon; label: string; value: string; ok: boolean };
 
 // Each tile is omitted entirely when its value is null (not applicable —
 // an accessory, or a phone with no Face ID hardware) rather than shown as
 // a false "unknown" or "defective" state.
-export function ConditionDashboard({
-  batteryHealthPercent,
-  batteryGenuine,
-  screenGenuine,
-  faceIdWorking,
-}: Props) {
-  const tiles: { icon: LucideIcon; label: string; value: string; ok: boolean }[] = [];
+function buildTiles(data: ConditionData): Tile[] {
+  const tiles: Tile[] = [];
 
-  if (batteryHealthPercent !== null) {
+  if (data.batteryHealthPercent !== null) {
     tiles.push({
       icon: BatteryCharging,
       label: "Batterie",
-      value: `${batteryHealthPercent}%${batteryGenuine === true ? " · d'origine" : batteryGenuine === false ? " · remplacée" : ""}`,
-      ok: batteryHealthPercent >= 80,
+      value: `${data.batteryHealthPercent}%${data.batteryGenuine === true ? " · d'origine" : data.batteryGenuine === false ? " · remplacée" : ""}`,
+      ok: data.batteryHealthPercent >= 80,
     });
   }
 
-  if (screenGenuine !== null) {
+  if (data.screenGenuine !== null) {
     tiles.push({
       icon: MonitorSmartphone,
       label: "Écran",
-      value: screenGenuine ? "D'origine" : "Remplacé",
-      ok: screenGenuine,
+      value: data.screenGenuine ? "D'origine" : "Remplacé",
+      ok: data.screenGenuine,
     });
   }
 
-  if (faceIdWorking !== null) {
+  if (data.cameraGenuine !== null) {
     tiles.push({
-      icon: faceIdWorking ? ScanFace : Ban,
-      label: "Face ID",
-      value: faceIdWorking ? "Fonctionnel" : "Non fonctionnel",
-      ok: faceIdWorking,
+      icon: Camera,
+      label: "Caméra",
+      value: data.cameraGenuine ? "D'origine" : "Remplacée",
+      ok: data.cameraGenuine,
     });
   }
 
+  if (data.chargingPortGenuine !== null) {
+    tiles.push({
+      icon: Plug,
+      label: "Port de charge",
+      value: data.chargingPortGenuine ? "D'origine" : "Remplacé",
+      ok: data.chargingPortGenuine,
+    });
+  }
+
+  if (data.speakerGenuine !== null) {
+    tiles.push({
+      icon: Volume2,
+      label: "Haut-parleur",
+      value: data.speakerGenuine ? "D'origine" : "Remplacé",
+      ok: data.speakerGenuine,
+    });
+  }
+
+  if (data.faceIdWorking !== null) {
+    tiles.push({
+      icon: data.faceIdWorking ? ScanFace : Ban,
+      label: "Face ID",
+      value: data.faceIdWorking ? "Fonctionnel" : "Non fonctionnel",
+      ok: data.faceIdWorking,
+    });
+  }
+
+  return tiles;
+}
+
+export function ConditionDashboard(props: ConditionData) {
+  const tiles = buildTiles(props);
   if (tiles.length === 0) return null;
 
   return (

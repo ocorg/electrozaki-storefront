@@ -7,10 +7,10 @@ import { uploadProductImage } from "@/app/admin/(dashboard)/products/actions";
 
 export function AdminImageUpload({
   currentUrl,
-  onUploaded,
+  onUploadedAction,
 }: {
   currentUrl?: string | null;
-  onUploaded: (url: string) => void;
+  onUploadedAction: (url: string) => void;
 }) {
   const [preview, setPreview] = useState<string | null>(currentUrl ?? null);
   const [status, setStatus] = useState<"idle" | "uploading" | "error">("idle");
@@ -35,7 +35,7 @@ export function AdminImageUpload({
 
     setStatus("idle");
     setPreview(result.url);
-    onUploaded(result.url);
+    onUploadedAction(result.url);
   }
 
   return (

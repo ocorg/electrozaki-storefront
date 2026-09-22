@@ -1,19 +1,19 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { ImageOff } from "lucide-react";
 import { getProductBySlug } from "@/lib/db/public-products";
 import { getCompatibilityTargetPhones } from "@/lib/db/compatibility";
 import { getActiveBundlesForProduct } from "@/lib/db/bundles";
-import { formatMAD, discountPercent } from "@/lib/format";
-import { AddToCartControls } from "@/components/cart/AddToCartControls";
-import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
+import { discountPercent } from "@/lib/format";
 import { CompatibilitySelector } from "@/components/storefront/CompatibilitySelector";
 import { GiftPicker } from "@/components/storefront/GiftPicker";
 import { BundleOffer, type BundleOfferData } from "@/components/storefront/BundleOffer";
+import {
+  ProductVariantExperience,
+  type ProductVariantExperienceData,
+  type VariantData,
+} from "@/components/storefront/ProductVariantExperience";
 import { CONDITION_LABEL } from "@/lib/conditions";
-import { Badge } from "@/components/ui/Badge";
 
 export const revalidate = 60;
 
@@ -67,6 +67,52 @@ export default async function ProductPage({ params }: Props) {
     product.compareAtPrice?.toString()
   );
 
+  // Prisma Decimal fields (and the whole product/variant shape generally)
+  // can't cross the Server -> Client boundary as-is — serialize before
+  // handing off to <ProductVariantExperience>, a Client Component.
+  const variantsData: VariantData[] = product.variants.map((v) => ({
+    id: v.id,
+    name: v.name,
+    priceOverride: v.priceOverride ? v.priceOverride.toString() : null,
+    color: v.color,
+    storageLabel: v.storageLabel,
+    imageUrl: v.imageUrl,
+    stockQuantity: v.stockQuantity,
+    batteryHealthPercent: v.batteryHealthPercent,
+    batteryGenuine: v.batteryGenuine,
+    screenGenuine: v.screenGenuine,
+    faceIdWorking: v.faceIdWorking,
+    cameraGenuine: v.cameraGenuine,
+    chargingPortGenuine: v.chargingPortGenuine,
+    speakerGenuine: v.speakerGenuine,
+    hasDefects: v.hasDefects,
+    transparencyNotes: v.transparencyNotes,
+  }));
+
+  const productData: ProductVariantExperienceData = {
+    id: product.id,
+    name: product.name,
+    brand: product.brand,
+    conditionLabel: CONDITION_LABEL[product.condition] ?? product.condition,
+    isPhone: product.isPhone,
+    availability: product.availability,
+    recommendedSalePrice: product.recommendedSalePrice.toString(),
+    compareAtPrice: product.compareAtPrice?.toString() ?? null,
+    percentOff,
+    description: product.description,
+    hasDefects: product.hasDefects,
+    transparencyNotes: product.transparencyNotes,
+    condition: {
+      batteryHealthPercent: product.batteryHealthPercent,
+      batteryGenuine: product.batteryGenuine,
+      screenGenuine: product.screenGenuine,
+      faceIdWorking: product.faceIdWorking,
+      cameraGenuine: product.cameraGenuine,
+      chargingPortGenuine: product.chargingPortGenuine,
+      speakerGenuine: product.speakerGenuine,
+    },
+  };
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -87,72 +133,16 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div className="mx-auto grid max-w-5xl gap-8 px-4 py-8 md:grid-cols-2">
-      {/* eslint-disable-next-line react/no-danger */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="relative aspect-square overflow-hidden rounded-xl bg-neutral-50 shadow-sm">
-        {cover ? (
-          <Image
-            src={cover.url}
-            alt={cover.altText ?? product.name}
-            fill
-            className="object-contain p-6"
-            sizes="(min-width: 768px) 40vw, 90vw"
-            priority
-          />
-        ) : (
-          <div className="flex h-full flex-col items-center justify-center gap-2 text-neutral-400">
-            <ImageOff size={28} />
-            <span className="text-sm">Image à venir</span>
-          </div>
-        )}
-      </div>
-
-      <div>
-        {product.brand && (
-          <p className="text-sm uppercase tracking-wide text-neutral-500">{product.brand}</p>
-        )}
-        <h1 className="text-2xl font-semibold sm:text-3xl">{product.name}</h1>
-
-        <div className="mt-3 flex items-baseline gap-3">
-          <span className="rounded-lg bg-ink px-3 py-1.5 text-xl font-bold text-gold">
-            {formatMAD(product.recommendedSalePrice.toString())}
-          </span>
-          {product.compareAtPrice && (
-            <span className="text-neutral-500 line-through">
-              {formatMAD(product.compareAtPrice.toString())}
-            </span>
-          )}
-          {percentOff !== null && <Badge tone="sale">-{percentOff}%</Badge>}
-        </div>
-
-        <div className="mt-3 flex flex-wrap gap-2">
-          <Badge>{CONDITION_LABEL[product.condition] ?? product.condition}</Badge>
-        </div>
-
-        <ConditionDashboard
-          batteryHealthPercent={product.batteryHealthPercent}
-          batteryGenuine={product.batteryGenuine}
-          screenGenuine={product.screenGenuine}
-          faceIdWorking={product.faceIdWorking}
-        />
-
-        {product.description && (
-          <p className="mt-4 text-neutral-700">{product.description}</p>
-        )}
-
-        {/* Phase-2 "transparency" block — only shown when the product actually
-            has something to disclose, never a generic reassurance filler. */}
-        {product.hasDefects && product.transparencyNotes && (
-          <div className="mt-4 rounded-xl border border-gold/40 bg-gold/5 p-4">
-            <p className="text-sm font-semibold">Transparence</p>
-            <p className="mt-1 text-sm text-neutral-700">{product.transparencyNotes}</p>
-          </div>
-        )}
-
+      <ProductVariantExperience
+        product={productData}
+        variants={variantsData}
+        coverImage={cover ? { url: cover.url, altText: cover.altText } : null}
+      >
         {Object.keys(specs).length > 0 && (
           <dl className="mt-4 divide-y divide-black/10 border-t border-black/10">
             {Object.entries(specs).map(([key, value]) => (
@@ -193,31 +183,7 @@ export default async function ProductPage({ params }: Props) {
         <GiftPicker giftOptions={giftOptions} />
 
         {bundles.length > 0 && <BundleOffer bundles={bundles} />}
-
-        {product.availability === "IN_STOCK" ? (
-          <div className="mt-6">
-            <AddToCartControls
-              productId={product.id}
-              productName={product.name}
-              image={cover?.url}
-              variants={product.variants.map((v) => ({
-                id: v.id,
-                name: v.name,
-                priceOverride: v.priceOverride ? v.priceOverride.toString() : null,
-                skuOrRef: v.skuOrRef,
-              }))}
-              basePrice={product.recommendedSalePrice.toString()}
-              isPhone={product.isPhone}
-            />
-          </div>
-        ) : (
-          <p className="mt-6 rounded-lg bg-black/5 px-4 py-3 text-sm text-neutral-600">
-            {product.availability === "COMING_SOON"
-              ? "Bientôt disponible — contactez-nous sur WhatsApp pour être prévenu."
-              : "Actuellement indisponible."}
-          </p>
-        )}
-      </div>
+      </ProductVariantExperience>
     </div>
   );
 }

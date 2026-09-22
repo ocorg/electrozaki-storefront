@@ -28,10 +28,14 @@ export type AggregateProductVariant = {
 
 export type ProductVariantAvgAggregateOutputType = {
   priceOverride: runtime.Decimal | null
+  stockQuantity: number | null
+  batteryHealthPercent: number | null
 }
 
 export type ProductVariantSumAggregateOutputType = {
   priceOverride: runtime.Decimal | null
+  stockQuantity: number | null
+  batteryHealthPercent: number | null
 }
 
 export type ProductVariantMinAggregateOutputType = {
@@ -40,6 +44,19 @@ export type ProductVariantMinAggregateOutputType = {
   name: string | null
   priceOverride: runtime.Decimal | null
   skuOrRef: string | null
+  color: string | null
+  storageLabel: string | null
+  imageUrl: string | null
+  stockQuantity: number | null
+  batteryHealthPercent: number | null
+  faceIdWorking: boolean | null
+  screenGenuine: boolean | null
+  batteryGenuine: boolean | null
+  cameraGenuine: boolean | null
+  chargingPortGenuine: boolean | null
+  speakerGenuine: boolean | null
+  hasDefects: boolean | null
+  transparencyNotes: string | null
   createdAt: Date | null
 }
 
@@ -49,6 +66,19 @@ export type ProductVariantMaxAggregateOutputType = {
   name: string | null
   priceOverride: runtime.Decimal | null
   skuOrRef: string | null
+  color: string | null
+  storageLabel: string | null
+  imageUrl: string | null
+  stockQuantity: number | null
+  batteryHealthPercent: number | null
+  faceIdWorking: boolean | null
+  screenGenuine: boolean | null
+  batteryGenuine: boolean | null
+  cameraGenuine: boolean | null
+  chargingPortGenuine: boolean | null
+  speakerGenuine: boolean | null
+  hasDefects: boolean | null
+  transparencyNotes: string | null
   createdAt: Date | null
 }
 
@@ -58,6 +88,19 @@ export type ProductVariantCountAggregateOutputType = {
   name: number
   priceOverride: number
   skuOrRef: number
+  color: number
+  storageLabel: number
+  imageUrl: number
+  stockQuantity: number
+  batteryHealthPercent: number
+  faceIdWorking: number
+  screenGenuine: number
+  batteryGenuine: number
+  cameraGenuine: number
+  chargingPortGenuine: number
+  speakerGenuine: number
+  hasDefects: number
+  transparencyNotes: number
   createdAt: number
   _all: number
 }
@@ -65,10 +108,14 @@ export type ProductVariantCountAggregateOutputType = {
 
 export type ProductVariantAvgAggregateInputType = {
   priceOverride?: true
+  stockQuantity?: true
+  batteryHealthPercent?: true
 }
 
 export type ProductVariantSumAggregateInputType = {
   priceOverride?: true
+  stockQuantity?: true
+  batteryHealthPercent?: true
 }
 
 export type ProductVariantMinAggregateInputType = {
@@ -77,6 +124,19 @@ export type ProductVariantMinAggregateInputType = {
   name?: true
   priceOverride?: true
   skuOrRef?: true
+  color?: true
+  storageLabel?: true
+  imageUrl?: true
+  stockQuantity?: true
+  batteryHealthPercent?: true
+  faceIdWorking?: true
+  screenGenuine?: true
+  batteryGenuine?: true
+  cameraGenuine?: true
+  chargingPortGenuine?: true
+  speakerGenuine?: true
+  hasDefects?: true
+  transparencyNotes?: true
   createdAt?: true
 }
 
@@ -86,6 +146,19 @@ export type ProductVariantMaxAggregateInputType = {
   name?: true
   priceOverride?: true
   skuOrRef?: true
+  color?: true
+  storageLabel?: true
+  imageUrl?: true
+  stockQuantity?: true
+  batteryHealthPercent?: true
+  faceIdWorking?: true
+  screenGenuine?: true
+  batteryGenuine?: true
+  cameraGenuine?: true
+  chargingPortGenuine?: true
+  speakerGenuine?: true
+  hasDefects?: true
+  transparencyNotes?: true
   createdAt?: true
 }
 
@@ -95,6 +168,19 @@ export type ProductVariantCountAggregateInputType = {
   name?: true
   priceOverride?: true
   skuOrRef?: true
+  color?: true
+  storageLabel?: true
+  imageUrl?: true
+  stockQuantity?: true
+  batteryHealthPercent?: true
+  faceIdWorking?: true
+  screenGenuine?: true
+  batteryGenuine?: true
+  cameraGenuine?: true
+  chargingPortGenuine?: true
+  speakerGenuine?: true
+  hasDefects?: true
+  transparencyNotes?: true
   createdAt?: true
   _all?: true
 }
@@ -191,6 +277,19 @@ export type ProductVariantGroupByOutputType = {
   name: string
   priceOverride: runtime.Decimal | null
   skuOrRef: string | null
+  color: string | null
+  storageLabel: string | null
+  imageUrl: string | null
+  stockQuantity: number
+  batteryHealthPercent: number | null
+  faceIdWorking: boolean | null
+  screenGenuine: boolean | null
+  batteryGenuine: boolean | null
+  cameraGenuine: boolean | null
+  chargingPortGenuine: boolean | null
+  speakerGenuine: boolean | null
+  hasDefects: boolean
+  transparencyNotes: string | null
   createdAt: Date
   _count: ProductVariantCountAggregateOutputType | null
   _avg: ProductVariantAvgAggregateOutputType | null
@@ -223,6 +322,19 @@ export type ProductVariantWhereInput = {
   name?: Prisma.StringFilter<"ProductVariant"> | string
   priceOverride?: Prisma.DecimalNullableFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  color?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  storageLabel?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  imageUrl?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  stockQuantity?: Prisma.IntFilter<"ProductVariant"> | number
+  batteryHealthPercent?: Prisma.IntNullableFilter<"ProductVariant"> | number | null
+  faceIdWorking?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  screenGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  batteryGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  cameraGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  chargingPortGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  speakerGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  hasDefects?: Prisma.BoolFilter<"ProductVariant"> | boolean
+  transparencyNotes?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ProductVariant"> | Date | string
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   orderRequestItems?: Prisma.OrderRequestItemListRelationFilter
@@ -234,6 +346,19 @@ export type ProductVariantOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   priceOverride?: Prisma.SortOrderInput | Prisma.SortOrder
   skuOrRef?: Prisma.SortOrderInput | Prisma.SortOrder
+  color?: Prisma.SortOrderInput | Prisma.SortOrder
+  storageLabel?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrderInput | Prisma.SortOrder
+  faceIdWorking?: Prisma.SortOrderInput | Prisma.SortOrder
+  screenGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  batteryGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  cameraGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  chargingPortGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  speakerGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  hasDefects?: Prisma.SortOrder
+  transparencyNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   product?: Prisma.ProductOrderByWithRelationInput
   orderRequestItems?: Prisma.OrderRequestItemOrderByRelationAggregateInput
@@ -248,6 +373,19 @@ export type ProductVariantWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"ProductVariant"> | string
   priceOverride?: Prisma.DecimalNullableFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  color?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  storageLabel?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  imageUrl?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  stockQuantity?: Prisma.IntFilter<"ProductVariant"> | number
+  batteryHealthPercent?: Prisma.IntNullableFilter<"ProductVariant"> | number | null
+  faceIdWorking?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  screenGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  batteryGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  cameraGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  chargingPortGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  speakerGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  hasDefects?: Prisma.BoolFilter<"ProductVariant"> | boolean
+  transparencyNotes?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ProductVariant"> | Date | string
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   orderRequestItems?: Prisma.OrderRequestItemListRelationFilter
@@ -259,6 +397,19 @@ export type ProductVariantOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   priceOverride?: Prisma.SortOrderInput | Prisma.SortOrder
   skuOrRef?: Prisma.SortOrderInput | Prisma.SortOrder
+  color?: Prisma.SortOrderInput | Prisma.SortOrder
+  storageLabel?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrderInput | Prisma.SortOrder
+  faceIdWorking?: Prisma.SortOrderInput | Prisma.SortOrder
+  screenGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  batteryGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  cameraGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  chargingPortGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  speakerGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  hasDefects?: Prisma.SortOrder
+  transparencyNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ProductVariantCountOrderByAggregateInput
   _avg?: Prisma.ProductVariantAvgOrderByAggregateInput
@@ -276,6 +427,19 @@ export type ProductVariantScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"ProductVariant"> | string
   priceOverride?: Prisma.DecimalNullableWithAggregatesFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.StringNullableWithAggregatesFilter<"ProductVariant"> | string | null
+  color?: Prisma.StringNullableWithAggregatesFilter<"ProductVariant"> | string | null
+  storageLabel?: Prisma.StringNullableWithAggregatesFilter<"ProductVariant"> | string | null
+  imageUrl?: Prisma.StringNullableWithAggregatesFilter<"ProductVariant"> | string | null
+  stockQuantity?: Prisma.IntWithAggregatesFilter<"ProductVariant"> | number
+  batteryHealthPercent?: Prisma.IntNullableWithAggregatesFilter<"ProductVariant"> | number | null
+  faceIdWorking?: Prisma.BoolNullableWithAggregatesFilter<"ProductVariant"> | boolean | null
+  screenGenuine?: Prisma.BoolNullableWithAggregatesFilter<"ProductVariant"> | boolean | null
+  batteryGenuine?: Prisma.BoolNullableWithAggregatesFilter<"ProductVariant"> | boolean | null
+  cameraGenuine?: Prisma.BoolNullableWithAggregatesFilter<"ProductVariant"> | boolean | null
+  chargingPortGenuine?: Prisma.BoolNullableWithAggregatesFilter<"ProductVariant"> | boolean | null
+  speakerGenuine?: Prisma.BoolNullableWithAggregatesFilter<"ProductVariant"> | boolean | null
+  hasDefects?: Prisma.BoolWithAggregatesFilter<"ProductVariant"> | boolean
+  transparencyNotes?: Prisma.StringNullableWithAggregatesFilter<"ProductVariant"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProductVariant"> | Date | string
 }
 
@@ -284,6 +448,19 @@ export type ProductVariantCreateInput = {
   name: string
   priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: string | null
+  color?: string | null
+  storageLabel?: string | null
+  imageUrl?: string | null
+  stockQuantity?: number
+  batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   createdAt?: Date | string
   product: Prisma.ProductCreateNestedOneWithoutVariantsInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutVariantInput
@@ -295,6 +472,19 @@ export type ProductVariantUncheckedCreateInput = {
   name: string
   priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: string | null
+  color?: string | null
+  storageLabel?: string | null
+  imageUrl?: string | null
+  stockQuantity?: number
+  batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   createdAt?: Date | string
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutVariantInput
 }
@@ -304,6 +494,19 @@ export type ProductVariantUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   product?: Prisma.ProductUpdateOneRequiredWithoutVariantsNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutVariantNestedInput
@@ -315,6 +518,19 @@ export type ProductVariantUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutVariantNestedInput
 }
@@ -325,6 +541,19 @@ export type ProductVariantCreateManyInput = {
   name: string
   priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: string | null
+  color?: string | null
+  storageLabel?: string | null
+  imageUrl?: string | null
+  stockQuantity?: number
+  batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   createdAt?: Date | string
 }
 
@@ -333,6 +562,19 @@ export type ProductVariantUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -342,6 +584,19 @@ export type ProductVariantUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -361,11 +616,26 @@ export type ProductVariantCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   priceOverride?: Prisma.SortOrder
   skuOrRef?: Prisma.SortOrder
+  color?: Prisma.SortOrder
+  storageLabel?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrder
+  faceIdWorking?: Prisma.SortOrder
+  screenGenuine?: Prisma.SortOrder
+  batteryGenuine?: Prisma.SortOrder
+  cameraGenuine?: Prisma.SortOrder
+  chargingPortGenuine?: Prisma.SortOrder
+  speakerGenuine?: Prisma.SortOrder
+  hasDefects?: Prisma.SortOrder
+  transparencyNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type ProductVariantAvgOrderByAggregateInput = {
   priceOverride?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrder
 }
 
 export type ProductVariantMaxOrderByAggregateInput = {
@@ -374,6 +644,19 @@ export type ProductVariantMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   priceOverride?: Prisma.SortOrder
   skuOrRef?: Prisma.SortOrder
+  color?: Prisma.SortOrder
+  storageLabel?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrder
+  faceIdWorking?: Prisma.SortOrder
+  screenGenuine?: Prisma.SortOrder
+  batteryGenuine?: Prisma.SortOrder
+  cameraGenuine?: Prisma.SortOrder
+  chargingPortGenuine?: Prisma.SortOrder
+  speakerGenuine?: Prisma.SortOrder
+  hasDefects?: Prisma.SortOrder
+  transparencyNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -383,11 +666,26 @@ export type ProductVariantMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   priceOverride?: Prisma.SortOrder
   skuOrRef?: Prisma.SortOrder
+  color?: Prisma.SortOrder
+  storageLabel?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrder
+  faceIdWorking?: Prisma.SortOrder
+  screenGenuine?: Prisma.SortOrder
+  batteryGenuine?: Prisma.SortOrder
+  cameraGenuine?: Prisma.SortOrder
+  chargingPortGenuine?: Prisma.SortOrder
+  speakerGenuine?: Prisma.SortOrder
+  hasDefects?: Prisma.SortOrder
+  transparencyNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type ProductVariantSumOrderByAggregateInput = {
   priceOverride?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  batteryHealthPercent?: Prisma.SortOrder
 }
 
 export type ProductVariantNullableScalarRelationFilter = {
@@ -458,6 +756,19 @@ export type ProductVariantCreateWithoutProductInput = {
   name: string
   priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: string | null
+  color?: string | null
+  storageLabel?: string | null
+  imageUrl?: string | null
+  stockQuantity?: number
+  batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   createdAt?: Date | string
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutVariantInput
 }
@@ -467,6 +778,19 @@ export type ProductVariantUncheckedCreateWithoutProductInput = {
   name: string
   priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: string | null
+  color?: string | null
+  storageLabel?: string | null
+  imageUrl?: string | null
+  stockQuantity?: number
+  batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   createdAt?: Date | string
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutVariantInput
 }
@@ -506,6 +830,19 @@ export type ProductVariantScalarWhereInput = {
   name?: Prisma.StringFilter<"ProductVariant"> | string
   priceOverride?: Prisma.DecimalNullableFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  color?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  storageLabel?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  imageUrl?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
+  stockQuantity?: Prisma.IntFilter<"ProductVariant"> | number
+  batteryHealthPercent?: Prisma.IntNullableFilter<"ProductVariant"> | number | null
+  faceIdWorking?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  screenGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  batteryGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  cameraGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  chargingPortGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  speakerGenuine?: Prisma.BoolNullableFilter<"ProductVariant"> | boolean | null
+  hasDefects?: Prisma.BoolFilter<"ProductVariant"> | boolean
+  transparencyNotes?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ProductVariant"> | Date | string
 }
 
@@ -514,6 +851,19 @@ export type ProductVariantCreateWithoutOrderRequestItemsInput = {
   name: string
   priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: string | null
+  color?: string | null
+  storageLabel?: string | null
+  imageUrl?: string | null
+  stockQuantity?: number
+  batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   createdAt?: Date | string
   product: Prisma.ProductCreateNestedOneWithoutVariantsInput
 }
@@ -524,6 +874,19 @@ export type ProductVariantUncheckedCreateWithoutOrderRequestItemsInput = {
   name: string
   priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: string | null
+  color?: string | null
+  storageLabel?: string | null
+  imageUrl?: string | null
+  stockQuantity?: number
+  batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   createdAt?: Date | string
 }
 
@@ -548,6 +911,19 @@ export type ProductVariantUpdateWithoutOrderRequestItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   product?: Prisma.ProductUpdateOneRequiredWithoutVariantsNestedInput
 }
@@ -558,6 +934,19 @@ export type ProductVariantUncheckedUpdateWithoutOrderRequestItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -566,6 +955,19 @@ export type ProductVariantCreateManyProductInput = {
   name: string
   priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: string | null
+  color?: string | null
+  storageLabel?: string | null
+  imageUrl?: string | null
+  stockQuantity?: number
+  batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
   createdAt?: Date | string
 }
 
@@ -574,6 +976,19 @@ export type ProductVariantUpdateWithoutProductInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutVariantNestedInput
 }
@@ -583,6 +998,19 @@ export type ProductVariantUncheckedUpdateWithoutProductInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutVariantNestedInput
 }
@@ -592,6 +1020,19 @@ export type ProductVariantUncheckedUpdateManyWithoutProductInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   skuOrRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -632,6 +1073,19 @@ export type ProductVariantSelect<ExtArgs extends runtime.Types.Extensions.Intern
   name?: boolean
   priceOverride?: boolean
   skuOrRef?: boolean
+  color?: boolean
+  storageLabel?: boolean
+  imageUrl?: boolean
+  stockQuantity?: boolean
+  batteryHealthPercent?: boolean
+  faceIdWorking?: boolean
+  screenGenuine?: boolean
+  batteryGenuine?: boolean
+  cameraGenuine?: boolean
+  chargingPortGenuine?: boolean
+  speakerGenuine?: boolean
+  hasDefects?: boolean
+  transparencyNotes?: boolean
   createdAt?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   orderRequestItems?: boolean | Prisma.ProductVariant$orderRequestItemsArgs<ExtArgs>
@@ -644,6 +1098,19 @@ export type ProductVariantSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   name?: boolean
   priceOverride?: boolean
   skuOrRef?: boolean
+  color?: boolean
+  storageLabel?: boolean
+  imageUrl?: boolean
+  stockQuantity?: boolean
+  batteryHealthPercent?: boolean
+  faceIdWorking?: boolean
+  screenGenuine?: boolean
+  batteryGenuine?: boolean
+  cameraGenuine?: boolean
+  chargingPortGenuine?: boolean
+  speakerGenuine?: boolean
+  hasDefects?: boolean
+  transparencyNotes?: boolean
   createdAt?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productVariant"]>
@@ -654,6 +1121,19 @@ export type ProductVariantSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   name?: boolean
   priceOverride?: boolean
   skuOrRef?: boolean
+  color?: boolean
+  storageLabel?: boolean
+  imageUrl?: boolean
+  stockQuantity?: boolean
+  batteryHealthPercent?: boolean
+  faceIdWorking?: boolean
+  screenGenuine?: boolean
+  batteryGenuine?: boolean
+  cameraGenuine?: boolean
+  chargingPortGenuine?: boolean
+  speakerGenuine?: boolean
+  hasDefects?: boolean
+  transparencyNotes?: boolean
   createdAt?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productVariant"]>
@@ -664,10 +1144,23 @@ export type ProductVariantSelectScalar = {
   name?: boolean
   priceOverride?: boolean
   skuOrRef?: boolean
+  color?: boolean
+  storageLabel?: boolean
+  imageUrl?: boolean
+  stockQuantity?: boolean
+  batteryHealthPercent?: boolean
+  faceIdWorking?: boolean
+  screenGenuine?: boolean
+  batteryGenuine?: boolean
+  cameraGenuine?: boolean
+  chargingPortGenuine?: boolean
+  speakerGenuine?: boolean
+  hasDefects?: boolean
+  transparencyNotes?: boolean
   createdAt?: boolean
 }
 
-export type ProductVariantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "name" | "priceOverride" | "skuOrRef" | "createdAt", ExtArgs["result"]["productVariant"]>
+export type ProductVariantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "name" | "priceOverride" | "skuOrRef" | "color" | "storageLabel" | "imageUrl" | "stockQuantity" | "batteryHealthPercent" | "faceIdWorking" | "screenGenuine" | "batteryGenuine" | "cameraGenuine" | "chargingPortGenuine" | "speakerGenuine" | "hasDefects" | "transparencyNotes" | "createdAt", ExtArgs["result"]["productVariant"]>
 export type ProductVariantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   orderRequestItems?: boolean | Prisma.ProductVariant$orderRequestItemsArgs<ExtArgs>
@@ -692,6 +1185,19 @@ export type $ProductVariantPayload<ExtArgs extends runtime.Types.Extensions.Inte
     name: string
     priceOverride: runtime.Decimal | null
     skuOrRef: string | null
+    color: string | null
+    storageLabel: string | null
+    imageUrl: string | null
+    stockQuantity: number
+    batteryHealthPercent: number | null
+    faceIdWorking: boolean | null
+    screenGenuine: boolean | null
+    batteryGenuine: boolean | null
+    cameraGenuine: boolean | null
+    chargingPortGenuine: boolean | null
+    speakerGenuine: boolean | null
+    hasDefects: boolean
+    transparencyNotes: string | null
     createdAt: Date
   }, ExtArgs["result"]["productVariant"]>
   composites: {}
@@ -1123,6 +1629,19 @@ export interface ProductVariantFieldRefs {
   readonly name: Prisma.FieldRef<"ProductVariant", 'String'>
   readonly priceOverride: Prisma.FieldRef<"ProductVariant", 'Decimal'>
   readonly skuOrRef: Prisma.FieldRef<"ProductVariant", 'String'>
+  readonly color: Prisma.FieldRef<"ProductVariant", 'String'>
+  readonly storageLabel: Prisma.FieldRef<"ProductVariant", 'String'>
+  readonly imageUrl: Prisma.FieldRef<"ProductVariant", 'String'>
+  readonly stockQuantity: Prisma.FieldRef<"ProductVariant", 'Int'>
+  readonly batteryHealthPercent: Prisma.FieldRef<"ProductVariant", 'Int'>
+  readonly faceIdWorking: Prisma.FieldRef<"ProductVariant", 'Boolean'>
+  readonly screenGenuine: Prisma.FieldRef<"ProductVariant", 'Boolean'>
+  readonly batteryGenuine: Prisma.FieldRef<"ProductVariant", 'Boolean'>
+  readonly cameraGenuine: Prisma.FieldRef<"ProductVariant", 'Boolean'>
+  readonly chargingPortGenuine: Prisma.FieldRef<"ProductVariant", 'Boolean'>
+  readonly speakerGenuine: Prisma.FieldRef<"ProductVariant", 'Boolean'>
+  readonly hasDefects: Prisma.FieldRef<"ProductVariant", 'Boolean'>
+  readonly transparencyNotes: Prisma.FieldRef<"ProductVariant", 'String'>
   readonly createdAt: Prisma.FieldRef<"ProductVariant", 'DateTime'>
 }
     

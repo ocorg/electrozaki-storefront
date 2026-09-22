@@ -116,6 +116,12 @@ model Product {
   faceIdWorking        Boolean?
   screenGenuine        Boolean?
   batteryGenuine       Boolean?
+  // Extends the same genuine/replaced tracking to the rest of the
+  // component list the repair-request flow already uses (écran, batterie,
+  // caméra, connecteur, son) — one consistent vocabulary across the app.
+  cameraGenuine        Boolean?
+  chargingPortGenuine  Boolean?
+  speakerGenuine       Boolean?
   hasDefects           Boolean  @default(false)
   transparencyNotes    String?  @db.Text // shown on the PDP when hasDefects is true
 
@@ -167,8 +173,16 @@ model ProductImage {
   @@index([productId])
 }
 
-// Optional per-product options (storage size, color, bundle, etc).
-// A product with no meaningful options simply has zero variants.
+// Optional per-product options (storage size, color, bundle, etc). A
+// product with no meaningful options simply has zero variants.
+//
+// Also doubles as "one specific physical unit in a batch" — a shipment of
+// otherwise-identical phones differing only by color/storage uses color +
+// storageLabel + imageUrl + stockQuantity; a shipment of individually
+// reconditioned units (each with its own replaced part and price) uses the
+// genuine/defect fields below instead. Every field here is optional and
+// falls back to the matching Product-level field when null — a variant
+// only needs to set what actually differs for that unit, not everything.
 model ProductVariant {
   id            String   @id @default(cuid())
   productId     String
@@ -176,6 +190,27 @@ model ProductVariant {
   name          String // e.g. "256GB — Bleu"
   priceOverride Decimal? @db.Decimal(10, 2) // null = use Product.recommendedSalePrice
   skuOrRef      String?
+
+  // "Clean batch" attributes — color drives the color-swatch picker and
+  // which photo displays; storageLabel is informational (e.g. "128GB").
+  color         String?
+  storageLabel  String?
+  imageUrl      String?
+  // Per-variant stock — a specific color/storage combo (or a specific
+  // unit) can be sold out independently of the rest of the product.
+  stockQuantity Int     @default(0)
+
+  // "Faulty batch" attributes — this specific unit's condition, same
+  // vocabulary as Product's own fields.
+  batteryHealthPercent Int?
+  faceIdWorking        Boolean?
+  screenGenuine        Boolean?
+  batteryGenuine       Boolean?
+  cameraGenuine        Boolean?
+  chargingPortGenuine  Boolean?
+  speakerGenuine       Boolean?
+  hasDefects           Boolean  @default(false)
+  transparencyNotes    String?  @db.Text
 
   orderRequestItems OrderRequestItem[]
 

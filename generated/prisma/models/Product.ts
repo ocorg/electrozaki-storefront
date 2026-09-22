@@ -53,6 +53,9 @@ export type ProductMinAggregateOutputType = {
   faceIdWorking: boolean | null
   screenGenuine: boolean | null
   batteryGenuine: boolean | null
+  cameraGenuine: boolean | null
+  chargingPortGenuine: boolean | null
+  speakerGenuine: boolean | null
   hasDefects: boolean | null
   transparencyNotes: string | null
   metaTitle: string | null
@@ -77,6 +80,9 @@ export type ProductMaxAggregateOutputType = {
   faceIdWorking: boolean | null
   screenGenuine: boolean | null
   batteryGenuine: boolean | null
+  cameraGenuine: boolean | null
+  chargingPortGenuine: boolean | null
+  speakerGenuine: boolean | null
   hasDefects: boolean | null
   transparencyNotes: string | null
   metaTitle: string | null
@@ -103,6 +109,9 @@ export type ProductCountAggregateOutputType = {
   faceIdWorking: number
   screenGenuine: number
   batteryGenuine: number
+  cameraGenuine: number
+  chargingPortGenuine: number
+  speakerGenuine: number
   hasDefects: number
   transparencyNotes: number
   metaTitle: number
@@ -141,6 +150,9 @@ export type ProductMinAggregateInputType = {
   faceIdWorking?: true
   screenGenuine?: true
   batteryGenuine?: true
+  cameraGenuine?: true
+  chargingPortGenuine?: true
+  speakerGenuine?: true
   hasDefects?: true
   transparencyNotes?: true
   metaTitle?: true
@@ -165,6 +177,9 @@ export type ProductMaxAggregateInputType = {
   faceIdWorking?: true
   screenGenuine?: true
   batteryGenuine?: true
+  cameraGenuine?: true
+  chargingPortGenuine?: true
+  speakerGenuine?: true
   hasDefects?: true
   transparencyNotes?: true
   metaTitle?: true
@@ -191,6 +206,9 @@ export type ProductCountAggregateInputType = {
   faceIdWorking?: true
   screenGenuine?: true
   batteryGenuine?: true
+  cameraGenuine?: true
+  chargingPortGenuine?: true
+  speakerGenuine?: true
   hasDefects?: true
   transparencyNotes?: true
   metaTitle?: true
@@ -304,6 +322,9 @@ export type ProductGroupByOutputType = {
   faceIdWorking: boolean | null
   screenGenuine: boolean | null
   batteryGenuine: boolean | null
+  cameraGenuine: boolean | null
+  chargingPortGenuine: boolean | null
+  speakerGenuine: boolean | null
   hasDefects: boolean
   transparencyNotes: string | null
   metaTitle: string | null
@@ -353,6 +374,9 @@ export type ProductWhereInput = {
   faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   batteryGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  cameraGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  chargingPortGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  speakerGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   hasDefects?: Prisma.BoolFilter<"Product"> | boolean
   transparencyNotes?: Prisma.StringNullableFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
@@ -387,6 +411,9 @@ export type ProductOrderByWithRelationInput = {
   faceIdWorking?: Prisma.SortOrderInput | Prisma.SortOrder
   screenGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
   batteryGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  cameraGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  chargingPortGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  speakerGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
   hasDefects?: Prisma.SortOrder
   transparencyNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -424,6 +451,9 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   batteryGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  cameraGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  chargingPortGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  speakerGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   hasDefects?: Prisma.BoolFilter<"Product"> | boolean
   transparencyNotes?: Prisma.StringNullableFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
@@ -458,6 +488,9 @@ export type ProductOrderByWithAggregationInput = {
   faceIdWorking?: Prisma.SortOrderInput | Prisma.SortOrder
   screenGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
   batteryGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  cameraGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  chargingPortGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
+  speakerGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
   hasDefects?: Prisma.SortOrder
   transparencyNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -492,6 +525,9 @@ export type ProductScalarWhereWithAggregatesInput = {
   faceIdWorking?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
   batteryGenuine?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
+  cameraGenuine?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
+  chargingPortGenuine?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
+  speakerGenuine?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
   hasDefects?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   transparencyNotes?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
@@ -518,6 +554,9 @@ export type ProductCreateInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -551,6 +590,9 @@ export type ProductUncheckedCreateInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -584,6 +626,9 @@ export type ProductUpdateInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -617,6 +662,9 @@ export type ProductUncheckedUpdateInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -650,6 +698,9 @@ export type ProductCreateManyInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -676,6 +727,9 @@ export type ProductUpdateManyMutationInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -701,6 +755,9 @@ export type ProductUncheckedUpdateManyInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -745,6 +802,9 @@ export type ProductCountOrderByAggregateInput = {
   faceIdWorking?: Prisma.SortOrder
   screenGenuine?: Prisma.SortOrder
   batteryGenuine?: Prisma.SortOrder
+  cameraGenuine?: Prisma.SortOrder
+  chargingPortGenuine?: Prisma.SortOrder
+  speakerGenuine?: Prisma.SortOrder
   hasDefects?: Prisma.SortOrder
   transparencyNotes?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
@@ -775,6 +835,9 @@ export type ProductMaxOrderByAggregateInput = {
   faceIdWorking?: Prisma.SortOrder
   screenGenuine?: Prisma.SortOrder
   batteryGenuine?: Prisma.SortOrder
+  cameraGenuine?: Prisma.SortOrder
+  chargingPortGenuine?: Prisma.SortOrder
+  speakerGenuine?: Prisma.SortOrder
   hasDefects?: Prisma.SortOrder
   transparencyNotes?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
@@ -799,6 +862,9 @@ export type ProductMinOrderByAggregateInput = {
   faceIdWorking?: Prisma.SortOrder
   screenGenuine?: Prisma.SortOrder
   batteryGenuine?: Prisma.SortOrder
+  cameraGenuine?: Prisma.SortOrder
+  chargingPortGenuine?: Prisma.SortOrder
+  speakerGenuine?: Prisma.SortOrder
   hasDefects?: Prisma.SortOrder
   transparencyNotes?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
@@ -1025,6 +1091,9 @@ export type ProductCreateWithoutCategoryInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1057,6 +1126,9 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1118,6 +1190,9 @@ export type ProductScalarWhereInput = {
   faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   batteryGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  cameraGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  chargingPortGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
+  speakerGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   hasDefects?: Prisma.BoolFilter<"Product"> | boolean
   transparencyNotes?: Prisma.StringNullableFilter<"Product"> | string | null
   metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
@@ -1144,6 +1219,9 @@ export type ProductCreateWithoutImagesInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1176,6 +1254,9 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1224,6 +1305,9 @@ export type ProductUpdateWithoutImagesInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1256,6 +1340,9 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1288,6 +1375,9 @@ export type ProductCreateWithoutVariantsInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1320,6 +1410,9 @@ export type ProductUncheckedCreateWithoutVariantsInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1368,6 +1461,9 @@ export type ProductUpdateWithoutVariantsInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1400,6 +1496,9 @@ export type ProductUncheckedUpdateWithoutVariantsInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1432,6 +1531,9 @@ export type ProductCreateWithoutCompatibleWithPhonesInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1464,6 +1566,9 @@ export type ProductUncheckedCreateWithoutCompatibleWithPhonesInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1501,6 +1606,9 @@ export type ProductCreateWithoutCompatibleAccessoriesInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1533,6 +1641,9 @@ export type ProductUncheckedCreateWithoutCompatibleAccessoriesInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1581,6 +1692,9 @@ export type ProductUpdateWithoutCompatibleWithPhonesInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1613,6 +1727,9 @@ export type ProductUncheckedUpdateWithoutCompatibleWithPhonesInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1656,6 +1773,9 @@ export type ProductUpdateWithoutCompatibleAccessoriesInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1688,6 +1808,9 @@ export type ProductUncheckedUpdateWithoutCompatibleAccessoriesInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1720,6 +1843,9 @@ export type ProductCreateWithoutInternalInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1752,6 +1878,9 @@ export type ProductUncheckedCreateWithoutInternalInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1800,6 +1929,9 @@ export type ProductUpdateWithoutInternalInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1832,6 +1964,9 @@ export type ProductUncheckedUpdateWithoutInternalInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1864,6 +1999,9 @@ export type ProductCreateWithoutOrderRequestItemsInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1896,6 +2034,9 @@ export type ProductUncheckedCreateWithoutOrderRequestItemsInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -1944,6 +2085,9 @@ export type ProductUpdateWithoutOrderRequestItemsInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1976,6 +2120,9 @@ export type ProductUncheckedUpdateWithoutOrderRequestItemsInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2008,6 +2155,9 @@ export type ProductCreateWithoutBundleItemsInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -2040,6 +2190,9 @@ export type ProductUncheckedCreateWithoutBundleItemsInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -2088,6 +2241,9 @@ export type ProductUpdateWithoutBundleItemsInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2120,6 +2276,9 @@ export type ProductUncheckedUpdateWithoutBundleItemsInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2152,6 +2311,9 @@ export type ProductCreateManyCategoryInput = {
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
   batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
   hasDefects?: boolean
   transparencyNotes?: string | null
   metaTitle?: string | null
@@ -2177,6 +2339,9 @@ export type ProductUpdateWithoutCategoryInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2209,6 +2374,9 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2241,6 +2409,9 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2342,6 +2513,9 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   faceIdWorking?: boolean
   screenGenuine?: boolean
   batteryGenuine?: boolean
+  cameraGenuine?: boolean
+  chargingPortGenuine?: boolean
+  speakerGenuine?: boolean
   hasDefects?: boolean
   transparencyNotes?: boolean
   metaTitle?: boolean
@@ -2377,6 +2551,9 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   faceIdWorking?: boolean
   screenGenuine?: boolean
   batteryGenuine?: boolean
+  cameraGenuine?: boolean
+  chargingPortGenuine?: boolean
+  speakerGenuine?: boolean
   hasDefects?: boolean
   transparencyNotes?: boolean
   metaTitle?: boolean
@@ -2404,6 +2581,9 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   faceIdWorking?: boolean
   screenGenuine?: boolean
   batteryGenuine?: boolean
+  cameraGenuine?: boolean
+  chargingPortGenuine?: boolean
+  speakerGenuine?: boolean
   hasDefects?: boolean
   transparencyNotes?: boolean
   metaTitle?: boolean
@@ -2431,6 +2611,9 @@ export type ProductSelectScalar = {
   faceIdWorking?: boolean
   screenGenuine?: boolean
   batteryGenuine?: boolean
+  cameraGenuine?: boolean
+  chargingPortGenuine?: boolean
+  speakerGenuine?: boolean
   hasDefects?: boolean
   transparencyNotes?: boolean
   metaTitle?: boolean
@@ -2440,7 +2623,7 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "isPhone" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "batteryHealthPercent" | "faceIdWorking" | "screenGenuine" | "batteryGenuine" | "hasDefects" | "transparencyNotes" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "isPhone" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "batteryHealthPercent" | "faceIdWorking" | "screenGenuine" | "batteryGenuine" | "cameraGenuine" | "chargingPortGenuine" | "speakerGenuine" | "hasDefects" | "transparencyNotes" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
@@ -2488,6 +2671,9 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     faceIdWorking: boolean | null
     screenGenuine: boolean | null
     batteryGenuine: boolean | null
+    cameraGenuine: boolean | null
+    chargingPortGenuine: boolean | null
+    speakerGenuine: boolean | null
     hasDefects: boolean
     transparencyNotes: string | null
     metaTitle: string | null
@@ -2942,6 +3128,9 @@ export interface ProductFieldRefs {
   readonly faceIdWorking: Prisma.FieldRef<"Product", 'Boolean'>
   readonly screenGenuine: Prisma.FieldRef<"Product", 'Boolean'>
   readonly batteryGenuine: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly cameraGenuine: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly chargingPortGenuine: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly speakerGenuine: Prisma.FieldRef<"Product", 'Boolean'>
   readonly hasDefects: Prisma.FieldRef<"Product", 'Boolean'>
   readonly transparencyNotes: Prisma.FieldRef<"Product", 'String'>
   readonly metaTitle: Prisma.FieldRef<"Product", 'String'>
