@@ -159,6 +159,9 @@ export type ProductFilters = {
   tag?: string;
   condition?: string;
   minBatteryHealth?: number;
+  storage?: string; // e.g. "128GB" (phones)
+  subcategory?: string; // child category slug (accessories)
+  compatibleWith?: string; // phone modelKey (accessories)
 };
 
 function buildFilterConditions(filters?: ProductFilters): Array<Record<string, unknown>> {
@@ -168,7 +171,18 @@ function buildFilterConditions(filters?: ProductFilters): Array<Record<string, u
   if (filters?.tag) and.push({ tags: { has: filters.tag } });
   if (filters?.condition) and.push({ condition: filters.condition });
   if (filters?.minBatteryHealth) {
-    and.push({ batteryHealthPercent: { gte: filters.minBatteryHealth } });
+    // Synced phones carry battery per unit (variant); hand-made ones on the product.
+    and.push({
+      OR: [
+        { batteryHealthPercent: { gte: filters.minBatteryHealth } },
+        { variants: { some: { batteryHealthPercent: { gte: filters.minBatteryHealth }, stockQuantity: { gt: 0 } } } },
+      ],
+    });
+  }
+  if (filters?.storage) and.push({ tags: { has: filters.storage.toLowerCase() } });
+  if (filters?.subcategory) and.push({ category: { slug: filters.subcategory } });
+  if (filters?.compatibleWith) {
+    and.push({ compatibleWithPhones: { some: { compatibleWith: { modelKey: filters.compatibleWith, published: true } } } });
   }
   return and;
 }
@@ -270,4 +284,63 @@ export async function getFeaturedProducts(limit = 8): Promise<PublicProduct[]> {
     orderBy: { createdAt: "desc" },
     take: limit,
   });
+}
+
+export type CategoryFilterOptions = {
+  kind: "phones" | "accessories";
+  brands: string[];
+  storages: string[];
+  subcategories: { slug: string; name: string }[];
+  phoneModels: { key: string; name: string }[];
+};
+
+const STORAGE_RE = /^\d+(gb|tb)$/;
+const storageSize = (s: string) => parseInt(s, 10) * (s.endsWith("tb") ? 1024 : 1);
+
+// What the sidebar can offer for this category, taken from what's actually
+// on sale in it — phone filters for phones, accessory filters for the rest.
+export async function getCategoryFilterOptions(categorySlug: string): Promise<CategoryFilterOptions> {
+  const category = await prisma.category.findUnique({
+    where: { slug: categorySlug },
+    select: { id: true, children: { select: { id: true, slug: true, name: true }, orderBy: { sortOrder: "asc" } } },
+  });
+  if (!category) return { kind: "accessories", brands: [], storages: [], subcategories: [], phoneModels: [] };
+  const ids = [category.id, ...category.children.map((c) => c.id)];
+
+  const products = await prisma.product.findMany({
+    where: { categoryId: { in: ids }, published: true, availability: { not: AvailabilityStatus.DISCONTINUED } },
+    select: { isPhone: true, brand: true, tags: true, categoryId: true },
+  });
+  const phones = products.filter((p) => p.isPhone).length;
+  const kind = phones > 0 && phones >= products.length / 2 ? "phones" : "accessories";
+  const brands = [...new Set(products.map((p) => p.brand).filter((b): b is string => Boolean(b)))].sort((a, b) =>
+    a.localeCompare(b)
+  );
+
+  if (kind === "phones") {
+    const storages = [...new Set(products.flatMap((p) => p.tags.filter((t) => STORAGE_RE.test(t))))]
+      .sort((a, b) => storageSize(a) - storageSize(b))
+      .map((t) => t.toUpperCase());
+    return { kind, brands, storages, subcategories: [], phoneModels: [] };
+  }
+
+  const used = new Set(products.map((p) => p.categoryId));
+  const subcategories = category.children.filter((c) => used.has(c.id)).map(({ slug, name }) => ({ slug, name }));
+
+  // Phone models that at least one accessory here is confirmed to fit.
+  const links = await prisma.productCompatibility.findMany({
+    where: { product: { categoryId: { in: ids }, published: true }, compatibleWith: { published: true } },
+    select: { compatibleWith: { select: { modelKey: true, name: true, tags: true } } },
+  });
+  const models = new Map<string, string>();
+  for (const { compatibleWith: phone } of links) {
+    if (!phone.modelKey || models.has(phone.modelKey)) continue;
+    // "iPhone 13 128GB" → "iPhone 13"
+    const storage = phone.tags.find((t) => STORAGE_RE.test(t));
+    const cut = storage ? phone.name.toLowerCase().lastIndexOf(storage) : -1;
+    const name = cut > 0 ? phone.name.slice(0, cut).trim() : phone.name;
+    models.set(phone.modelKey, name);
+  }
+  const phoneModels = [...models].map(([key, name]) => ({ key, name })).sort((a, b) => a.name.localeCompare(b.name));
+  return { kind, brands, storages: [], subcategories, phoneModels };
 }

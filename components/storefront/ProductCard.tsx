@@ -12,13 +12,19 @@ export function ProductCard({ product }: { product: PublicProduct }) {
   const isSoldOut =
     product.availability === "OUT_OF_STOCK" || product.availability === "DISCONTINUED";
   const isComingSoon = product.availability === "COMING_SOON";
+  // Used phones are sold unit by unit at different prices: show the lowest.
+  const unitPrices = new Set(product.variants.filter((v) => v.stockQuantity > 0 && v.priceOverride).map((v) => v.priceOverride!.toString()));
+  const fromPrice = unitPrices.size > 1;
   const percentOff = discountPercent(
     product.recommendedSalePrice.toString(),
     product.compareAtPrice?.toString()
   );
 
   return (
-    <Link href={`/products/${product.slug}`} className={interactiveCardClasses("group block overflow-hidden")}>
+    <Link
+      href={`/products/${product.slug}`}
+      className={interactiveCardClasses("group flex h-full w-full flex-col overflow-hidden")}
+    >
       <div className="relative aspect-square bg-neutral-50">
         {cover ? (
           <Image
@@ -45,12 +51,15 @@ export function ProductCard({ product }: { product: PublicProduct }) {
           </span>
         )}
       </div>
-      <div className="p-3">
-        {product.brand && (
-          <p className="text-xs uppercase tracking-wide text-neutral-500">{product.brand}</p>
-        )}
-        <h3 className="font-medium leading-snug text-neutral-900">{product.name}</h3>
+      {/* Same height for every card: the name keeps two lines' room and the
+          grade badge sits at the bottom, whatever the name's length. */}
+      <div className="flex flex-1 flex-col p-3">
+        <p className="min-h-4 text-xs uppercase tracking-wide text-neutral-500">{product.brand ?? ""}</p>
+        <h3 className="line-clamp-2 min-h-[2.75em] font-medium leading-snug text-neutral-900" title={product.name}>
+          {product.name}
+        </h3>
         <div className="mt-1.5 flex items-baseline gap-2">
+          {fromPrice && <span className="text-xs text-neutral-500">dès</span>}
           <span className="rounded-lg bg-ink px-2 py-1 text-sm font-bold text-gold">
             {formatMAD(product.recommendedSalePrice.toString())}
           </span>
@@ -60,7 +69,13 @@ export function ProductCard({ product }: { product: PublicProduct }) {
             </span>
           )}
         </div>
-        <Badge className="mt-2">{CONDITION_LABEL[product.condition] ?? product.condition}</Badge>
+        <div className="mt-auto pt-2">
+          {product.isPhone ? (
+            <Badge>{CONDITION_LABEL[product.condition] ?? product.condition}</Badge>
+          ) : (
+            <span className="block h-6" aria-hidden />
+          )}
+        </div>
       </div>
     </Link>
   );

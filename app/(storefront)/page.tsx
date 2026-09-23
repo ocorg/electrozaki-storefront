@@ -130,7 +130,7 @@ export default async function HomePage() {
           ) : (
             <Carousel>
               {featured.map((product) => (
-                <div key={product.id} className="w-[45%] flex-none snap-start sm:w-[30%] lg:w-[22%]">
+                <div key={product.id} className="flex w-[45%] flex-none snap-start sm:w-[30%] lg:w-[22%]">
                   <ProductCard product={product} />
                 </div>
               ))}

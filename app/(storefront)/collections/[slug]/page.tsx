@@ -1,26 +1,18 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import {
-  getProductsByCategorySlug,
-  getDistinctBrandsForCategory,
-} from "@/lib/db/public-products";
+import { getProductsByCategorySlug, getCategoryFilterOptions } from "@/lib/db/public-products";
 import { getCategoryBySlug } from "@/lib/db/categories";
 import { ProductCard } from "@/components/storefront/ProductCard";
-import { CatalogFilters } from "@/components/storefront/CatalogFilters";
+import { CatalogFilters, type FilterValues } from "@/components/storefront/CatalogFilters";
 
-// Catalog changes rarely (staff add products by hand) — a 60s cache keeps
-// pages fast without needing to hand-manage cache invalidation for v1.
+// A 60s cache keeps pages fast; the ERP also asks for an immediate refresh
+// (/api/revalidate) whenever stock or presentation changes.
 export const revalidate = 60;
 
 // Next.js 16: both params and searchParams are Promises now.
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{
-    brand?: string;
-    condition?: string;
-    minBattery?: string;
-    maxPrice?: string;
-  }>;
+  searchParams: Promise<FilterValues>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -40,17 +32,23 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   const category = await getCategoryBySlug(slug);
   if (!category) notFound();
 
+  const options = await getCategoryFilterOptions(slug);
+  const phones = options.kind === "phones";
+  const str = (v?: string) => (typeof v === "string" && v ? v.slice(0, 80) : undefined);
+  const int = (v?: string) => (v && Number.isFinite(Number(v)) && Number(v) > 0 ? Number(v) : undefined);
+
+  // Only the filters that belong to this kind of category are applied.
   const filters = {
-    brand: filterParams.brand || undefined,
-    condition: filterParams.condition || undefined,
-    minBatteryHealth: filterParams.minBattery ? Number(filterParams.minBattery) : undefined,
-    maxPrice: filterParams.maxPrice ? Number(filterParams.maxPrice) : undefined,
+    brand: str(filterParams.brand),
+    maxPrice: int(filterParams.maxPrice),
+    condition: phones ? str(filterParams.condition) : undefined,
+    minBatteryHealth: phones ? int(filterParams.minBattery) : undefined,
+    storage: phones ? str(filterParams.storage) : undefined,
+    subcategory: phones ? undefined : str(filterParams.type),
+    compatibleWith: phones ? undefined : str(filterParams.fits),
   };
 
-  const [products, brands] = await Promise.all([
-    getProductsByCategorySlug(slug, filters),
-    getDistinctBrandsForCategory(slug),
-  ]);
+  const products = await getProductsByCategorySlug(slug, filters);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -58,22 +56,15 @@ export default async function CollectionPage({ params, searchParams }: Props) {
 
       <div className="grid gap-8 md:grid-cols-[220px_1fr]">
         <aside>
-          <CatalogFilters
-            brands={brands}
-            basePath={`/collections/${slug}`}
-            defaults={{
-              brand: filterParams.brand,
-              condition: filterParams.condition,
-              minBattery: filterParams.minBattery,
-              maxPrice: filterParams.maxPrice,
-            }}
-          />
+          <CatalogFilters options={options} basePath={`/collections/${slug}`} defaults={filterParams} />
         </aside>
 
         <div>
           {products.length === 0 ? (
             <p className="text-neutral-500">
-              Aucun résultat pour ces filtres. Contactez-nous sur WhatsApp pour toute demande.
+              {Object.values(filters).some(Boolean)
+                ? "Aucun résultat pour ces filtres. Contactez-nous sur WhatsApp pour toute demande."
+                : "Nouveaux articles bientôt en ligne — contactez-nous sur WhatsApp pour connaître le stock en magasin."}
             </p>
           ) : (
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
