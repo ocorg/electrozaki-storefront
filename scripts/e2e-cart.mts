@@ -2,7 +2,7 @@
 // Runs lib/db/cart-pricing.ts directly against a TEST database branch
 // (DATABASE_URL, filled by the ERP sync). Never against production.
 //
-//   npx tsx scripts/e2e-cart.ts
+//   npx tsx scripts/e2e-cart.mts
 import "dotenv/config";
 import { prisma } from "@/lib/db/client";
 import { priceCart } from "@/lib/db/cart-pricing";
