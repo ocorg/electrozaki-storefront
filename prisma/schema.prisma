@@ -125,6 +125,9 @@ model Product {
   source    ProductSource @default(MANUAL)
   erpKey    String?       @unique
   published Boolean       @default(true)
+  // Synced phones: normalised "brand|model" shared by every storage/grade
+  // of one model — lets staff set photos and gift options once per model.
+  modelKey  String?
 
   // Phase-2 "transparency" spec: battery health is iPhone-specific in
   // practice but kept generic here rather than a phone-only subtype: any
@@ -182,6 +185,7 @@ model Product {
   @@index([categoryId])
   @@index([availability])
   @@index([published])
+  @@index([modelKey])
 }
 
 model ProductImage {

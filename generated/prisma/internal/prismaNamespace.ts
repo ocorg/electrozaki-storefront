@@ -1610,6 +1610,7 @@ export const ProductScalarFieldEnum = {
   source: 'source',
   erpKey: 'erpKey',
   published: 'published',
+  modelKey: 'modelKey',
   batteryHealthPercent: 'batteryHealthPercent',
   faceIdWorking: 'faceIdWorking',
   screenGenuine: 'screenGenuine',

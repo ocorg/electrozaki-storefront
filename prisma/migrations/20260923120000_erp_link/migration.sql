@@ -14,6 +14,7 @@ ADD COLUMN     "unitRef" TEXT;
 
 -- AlterTable
 ALTER TABLE "Product" ADD COLUMN     "erpKey" TEXT,
+ADD COLUMN     "modelKey" TEXT,
 ADD COLUMN     "published" BOOLEAN NOT NULL DEFAULT true,
 ADD COLUMN     "source" "ProductSource" NOT NULL DEFAULT 'MANUAL';
 
@@ -63,6 +64,9 @@ CREATE UNIQUE INDEX "Product_erpKey_key" ON "Product"("erpKey");
 
 -- CreateIndex
 CREATE INDEX "Product_published_idx" ON "Product"("published");
+
+-- CreateIndex
+CREATE INDEX "Product_modelKey_idx" ON "Product"("modelKey");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ProductVariant_erpRef_key" ON "ProductVariant"("erpRef");
