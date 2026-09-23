@@ -29,6 +29,14 @@ export const AvailabilityStatus = {
 export type AvailabilityStatus = (typeof AvailabilityStatus)[keyof typeof AvailabilityStatus]
 
 
+export const ProductSource = {
+  MANUAL: 'MANUAL',
+  ERP: 'ERP'
+} as const
+
+export type ProductSource = (typeof ProductSource)[keyof typeof ProductSource]
+
+
 export const OrderRequestStatus = {
   NEW: 'NEW',
   CONTACTED: 'CONTACTED',

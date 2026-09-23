@@ -14,30 +14,40 @@ export type CartItem = {
   variantId?: string;
   productName: string;
   variantName?: string;
-  price: number; // MAD, snapshot at the moment it was added
+  // Display only — the server recomputes every price (and whether the
+  // 300 DH advance applies) from the database when the order is submitted.
+  price: number;
   image?: string;
   quantity: number;
-  isPhone?: boolean; // drives the checkout's dynamic advance-payment step
+  isPhone?: boolean;
+  isGift?: boolean; // free gift picked for a phone in the cart
+  bundleId?: string; // line added as part of a pack
 };
+
+type LineKey = { productId: string; variantId?: string; isGift?: boolean; bundleId?: string };
 
 type CartContextValue = {
   items: CartItem[];
   addItem: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
-  removeItem: (productId: string, variantId?: string) => void;
-  updateQuantity: (productId: string, quantity: number, variantId?: string) => void;
+  removeItem: (line: LineKey) => void;
+  updateQuantity: (line: LineKey, quantity: number) => void;
   clear: () => void;
   totalItems: number;
   totalPrice: number;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
-const STORAGE_KEY = "ez_cart_v1";
+// v2: lines carry isGift/bundleId; v1 carts are dropped rather than
+// resubmitted with gifts mistaken for paid lines.
+const STORAGE_KEY = "ez_cart_v2";
 
-function sameLine(
-  a: { productId: string; variantId?: string },
-  b: { productId: string; variantId?: string }
-) {
-  return a.productId === b.productId && (a.variantId ?? null) === (b.variantId ?? null);
+function sameLine(a: LineKey, b: LineKey) {
+  return (
+    a.productId === b.productId &&
+    (a.variantId ?? null) === (b.variantId ?? null) &&
+    Boolean(a.isGift) === Boolean(b.isGift) &&
+    (a.bundleId ?? null) === (b.bundleId ?? null)
+  );
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
@@ -76,20 +86,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const removeItem: CartContextValue["removeItem"] = (productId, variantId) => {
-    setItems((prev) => prev.filter((line) => !sameLine(line, { productId, variantId })));
+  const removeItem: CartContextValue["removeItem"] = (key) => {
+    setItems((prev) => prev.filter((line) => !sameLine(line, key)));
   };
 
-  const updateQuantity: CartContextValue["updateQuantity"] = (
-    productId,
-    quantity,
-    variantId
-  ) => {
+  const updateQuantity: CartContextValue["updateQuantity"] = (key, quantity) => {
     setItems((prev) =>
       prev
-        .map((line) =>
-          sameLine(line, { productId, variantId }) ? { ...line, quantity } : line
-        )
+        .map((line) => (sameLine(line, key) ? { ...line, quantity } : line))
         .filter((line) => line.quantity > 0)
     );
   };

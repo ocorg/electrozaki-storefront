@@ -47,6 +47,7 @@ export type OrderRequestMinAggregateOutputType = {
   notes: string | null
   requiresAdvance: boolean | null
   advancePaymentStatus: $Enums.AdvancePaymentStatus | null
+  receiptKey: string | null
   receiptUrl: string | null
   receiptUploadedAt: Date | null
   dataConsentAccepted: boolean | null
@@ -67,6 +68,7 @@ export type OrderRequestMaxAggregateOutputType = {
   notes: string | null
   requiresAdvance: boolean | null
   advancePaymentStatus: $Enums.AdvancePaymentStatus | null
+  receiptKey: string | null
   receiptUrl: string | null
   receiptUploadedAt: Date | null
   dataConsentAccepted: boolean | null
@@ -87,6 +89,7 @@ export type OrderRequestCountAggregateOutputType = {
   notes: number
   requiresAdvance: number
   advancePaymentStatus: number
+  receiptKey: number
   receiptUrl: number
   receiptUploadedAt: number
   dataConsentAccepted: number
@@ -119,6 +122,7 @@ export type OrderRequestMinAggregateInputType = {
   notes?: true
   requiresAdvance?: true
   advancePaymentStatus?: true
+  receiptKey?: true
   receiptUrl?: true
   receiptUploadedAt?: true
   dataConsentAccepted?: true
@@ -139,6 +143,7 @@ export type OrderRequestMaxAggregateInputType = {
   notes?: true
   requiresAdvance?: true
   advancePaymentStatus?: true
+  receiptKey?: true
   receiptUrl?: true
   receiptUploadedAt?: true
   dataConsentAccepted?: true
@@ -159,6 +164,7 @@ export type OrderRequestCountAggregateInputType = {
   notes?: true
   requiresAdvance?: true
   advancePaymentStatus?: true
+  receiptKey?: true
   receiptUrl?: true
   receiptUploadedAt?: true
   dataConsentAccepted?: true
@@ -266,6 +272,7 @@ export type OrderRequestGroupByOutputType = {
   notes: string | null
   requiresAdvance: boolean
   advancePaymentStatus: $Enums.AdvancePaymentStatus
+  receiptKey: string | null
   receiptUrl: string | null
   receiptUploadedAt: Date | null
   dataConsentAccepted: boolean
@@ -309,6 +316,7 @@ export type OrderRequestWhereInput = {
   notes?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   requiresAdvance?: Prisma.BoolFilter<"OrderRequest"> | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFilter<"OrderRequest"> | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   receiptUrl?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   receiptUploadedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   dataConsentAccepted?: Prisma.BoolFilter<"OrderRequest"> | boolean
@@ -331,6 +339,7 @@ export type OrderRequestOrderByWithRelationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   requiresAdvance?: Prisma.SortOrder
   advancePaymentStatus?: Prisma.SortOrder
+  receiptKey?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptUploadedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   dataConsentAccepted?: Prisma.SortOrder
@@ -356,6 +365,7 @@ export type OrderRequestWhereUniqueInput = Prisma.AtLeast<{
   notes?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   requiresAdvance?: Prisma.BoolFilter<"OrderRequest"> | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFilter<"OrderRequest"> | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   receiptUrl?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   receiptUploadedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   dataConsentAccepted?: Prisma.BoolFilter<"OrderRequest"> | boolean
@@ -378,6 +388,7 @@ export type OrderRequestOrderByWithAggregationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   requiresAdvance?: Prisma.SortOrder
   advancePaymentStatus?: Prisma.SortOrder
+  receiptKey?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptUploadedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   dataConsentAccepted?: Prisma.SortOrder
@@ -406,6 +417,7 @@ export type OrderRequestScalarWhereWithAggregatesInput = {
   notes?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
   requiresAdvance?: Prisma.BoolWithAggregatesFilter<"OrderRequest"> | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusWithAggregatesFilter<"OrderRequest"> | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
   receiptUrl?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
   receiptUploadedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"OrderRequest"> | Date | string | null
   dataConsentAccepted?: Prisma.BoolWithAggregatesFilter<"OrderRequest"> | boolean
@@ -426,6 +438,7 @@ export type OrderRequestCreateInput = {
   notes?: string | null
   requiresAdvance?: boolean
   advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptKey?: string | null
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
@@ -447,6 +460,7 @@ export type OrderRequestUncheckedCreateInput = {
   notes?: string | null
   requiresAdvance?: boolean
   advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptKey?: string | null
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
@@ -468,6 +482,7 @@ export type OrderRequestUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -489,6 +504,7 @@ export type OrderRequestUncheckedUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -510,6 +526,7 @@ export type OrderRequestCreateManyInput = {
   notes?: string | null
   requiresAdvance?: boolean
   advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptKey?: string | null
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
@@ -530,6 +547,7 @@ export type OrderRequestUpdateManyMutationInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -549,6 +567,7 @@ export type OrderRequestUncheckedUpdateManyInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -569,6 +588,7 @@ export type OrderRequestCountOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   requiresAdvance?: Prisma.SortOrder
   advancePaymentStatus?: Prisma.SortOrder
+  receiptKey?: Prisma.SortOrder
   receiptUrl?: Prisma.SortOrder
   receiptUploadedAt?: Prisma.SortOrder
   dataConsentAccepted?: Prisma.SortOrder
@@ -594,6 +614,7 @@ export type OrderRequestMaxOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   requiresAdvance?: Prisma.SortOrder
   advancePaymentStatus?: Prisma.SortOrder
+  receiptKey?: Prisma.SortOrder
   receiptUrl?: Prisma.SortOrder
   receiptUploadedAt?: Prisma.SortOrder
   dataConsentAccepted?: Prisma.SortOrder
@@ -614,6 +635,7 @@ export type OrderRequestMinOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   requiresAdvance?: Prisma.SortOrder
   advancePaymentStatus?: Prisma.SortOrder
+  receiptKey?: Prisma.SortOrder
   receiptUrl?: Prisma.SortOrder
   receiptUploadedAt?: Prisma.SortOrder
   dataConsentAccepted?: Prisma.SortOrder
@@ -722,6 +744,7 @@ export type OrderRequestCreateWithoutItemsInput = {
   notes?: string | null
   requiresAdvance?: boolean
   advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptKey?: string | null
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
@@ -742,6 +765,7 @@ export type OrderRequestUncheckedCreateWithoutItemsInput = {
   notes?: string | null
   requiresAdvance?: boolean
   advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptKey?: string | null
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
@@ -778,6 +802,7 @@ export type OrderRequestUpdateWithoutItemsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -798,6 +823,7 @@ export type OrderRequestUncheckedUpdateWithoutItemsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -818,6 +844,7 @@ export type OrderRequestCreateWithoutPromoCodeInput = {
   notes?: string | null
   requiresAdvance?: boolean
   advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptKey?: string | null
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
@@ -838,6 +865,7 @@ export type OrderRequestUncheckedCreateWithoutPromoCodeInput = {
   notes?: string | null
   requiresAdvance?: boolean
   advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptKey?: string | null
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
@@ -887,6 +915,7 @@ export type OrderRequestScalarWhereInput = {
   notes?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   requiresAdvance?: Prisma.BoolFilter<"OrderRequest"> | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFilter<"OrderRequest"> | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   receiptUrl?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   receiptUploadedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   dataConsentAccepted?: Prisma.BoolFilter<"OrderRequest"> | boolean
@@ -907,6 +936,7 @@ export type OrderRequestCreateManyPromoCodeInput = {
   notes?: string | null
   requiresAdvance?: boolean
   advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptKey?: string | null
   receiptUrl?: string | null
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
@@ -926,6 +956,7 @@ export type OrderRequestUpdateWithoutPromoCodeInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -946,6 +977,7 @@ export type OrderRequestUncheckedUpdateWithoutPromoCodeInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -966,6 +998,7 @@ export type OrderRequestUncheckedUpdateManyWithoutPromoCodeInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
   advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1016,6 +1049,7 @@ export type OrderRequestSelect<ExtArgs extends runtime.Types.Extensions.Internal
   notes?: boolean
   requiresAdvance?: boolean
   advancePaymentStatus?: boolean
+  receiptKey?: boolean
   receiptUrl?: boolean
   receiptUploadedAt?: boolean
   dataConsentAccepted?: boolean
@@ -1039,6 +1073,7 @@ export type OrderRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   notes?: boolean
   requiresAdvance?: boolean
   advancePaymentStatus?: boolean
+  receiptKey?: boolean
   receiptUrl?: boolean
   receiptUploadedAt?: boolean
   dataConsentAccepted?: boolean
@@ -1060,6 +1095,7 @@ export type OrderRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   notes?: boolean
   requiresAdvance?: boolean
   advancePaymentStatus?: boolean
+  receiptKey?: boolean
   receiptUrl?: boolean
   receiptUploadedAt?: boolean
   dataConsentAccepted?: boolean
@@ -1081,6 +1117,7 @@ export type OrderRequestSelectScalar = {
   notes?: boolean
   requiresAdvance?: boolean
   advancePaymentStatus?: boolean
+  receiptKey?: boolean
   receiptUrl?: boolean
   receiptUploadedAt?: boolean
   dataConsentAccepted?: boolean
@@ -1090,7 +1127,7 @@ export type OrderRequestSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerName" | "customerPhone" | "deliveryAddress" | "status" | "totalEstimate" | "whatsappOpenedAt" | "notes" | "requiresAdvance" | "advancePaymentStatus" | "receiptUrl" | "receiptUploadedAt" | "dataConsentAccepted" | "promoCodeId" | "discountAmount" | "createdAt" | "updatedAt", ExtArgs["result"]["orderRequest"]>
+export type OrderRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerName" | "customerPhone" | "deliveryAddress" | "status" | "totalEstimate" | "whatsappOpenedAt" | "notes" | "requiresAdvance" | "advancePaymentStatus" | "receiptKey" | "receiptUrl" | "receiptUploadedAt" | "dataConsentAccepted" | "promoCodeId" | "discountAmount" | "createdAt" | "updatedAt", ExtArgs["result"]["orderRequest"]>
 export type OrderRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
   items?: boolean | Prisma.OrderRequest$itemsArgs<ExtArgs>
@@ -1120,6 +1157,7 @@ export type $OrderRequestPayload<ExtArgs extends runtime.Types.Extensions.Intern
     notes: string | null
     requiresAdvance: boolean
     advancePaymentStatus: $Enums.AdvancePaymentStatus
+    receiptKey: string | null
     receiptUrl: string | null
     receiptUploadedAt: Date | null
     dataConsentAccepted: boolean
@@ -1562,6 +1600,7 @@ export interface OrderRequestFieldRefs {
   readonly notes: Prisma.FieldRef<"OrderRequest", 'String'>
   readonly requiresAdvance: Prisma.FieldRef<"OrderRequest", 'Boolean'>
   readonly advancePaymentStatus: Prisma.FieldRef<"OrderRequest", 'AdvancePaymentStatus'>
+  readonly receiptKey: Prisma.FieldRef<"OrderRequest", 'String'>
   readonly receiptUrl: Prisma.FieldRef<"OrderRequest", 'String'>
   readonly receiptUploadedAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
   readonly dataConsentAccepted: Prisma.FieldRef<"OrderRequest", 'Boolean'>

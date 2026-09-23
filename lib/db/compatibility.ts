@@ -10,6 +10,7 @@ export async function getCompatibilityTargetPhones(): Promise<
   { id: string; name: string }[]
 > {
   const rows = await prisma.productCompatibility.findMany({
+    where: { compatibleWith: { published: true }, product: { published: true } },
     select: { compatibleWith: { select: { id: true, name: true } } },
     distinct: ["compatibleWithId"],
   });

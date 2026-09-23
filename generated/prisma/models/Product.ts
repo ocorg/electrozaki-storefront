@@ -49,6 +49,9 @@ export type ProductMinAggregateOutputType = {
   recommendedSalePrice: runtime.Decimal | null
   compareAtPrice: runtime.Decimal | null
   availability: $Enums.AvailabilityStatus | null
+  source: $Enums.ProductSource | null
+  erpKey: string | null
+  published: boolean | null
   batteryHealthPercent: number | null
   faceIdWorking: boolean | null
   screenGenuine: boolean | null
@@ -76,6 +79,9 @@ export type ProductMaxAggregateOutputType = {
   recommendedSalePrice: runtime.Decimal | null
   compareAtPrice: runtime.Decimal | null
   availability: $Enums.AvailabilityStatus | null
+  source: $Enums.ProductSource | null
+  erpKey: string | null
+  published: boolean | null
   batteryHealthPercent: number | null
   faceIdWorking: boolean | null
   screenGenuine: boolean | null
@@ -105,6 +111,9 @@ export type ProductCountAggregateOutputType = {
   compareAtPrice: number
   availability: number
   tags: number
+  source: number
+  erpKey: number
+  published: number
   batteryHealthPercent: number
   faceIdWorking: number
   screenGenuine: number
@@ -146,6 +155,9 @@ export type ProductMinAggregateInputType = {
   recommendedSalePrice?: true
   compareAtPrice?: true
   availability?: true
+  source?: true
+  erpKey?: true
+  published?: true
   batteryHealthPercent?: true
   faceIdWorking?: true
   screenGenuine?: true
@@ -173,6 +185,9 @@ export type ProductMaxAggregateInputType = {
   recommendedSalePrice?: true
   compareAtPrice?: true
   availability?: true
+  source?: true
+  erpKey?: true
+  published?: true
   batteryHealthPercent?: true
   faceIdWorking?: true
   screenGenuine?: true
@@ -202,6 +217,9 @@ export type ProductCountAggregateInputType = {
   compareAtPrice?: true
   availability?: true
   tags?: true
+  source?: true
+  erpKey?: true
+  published?: true
   batteryHealthPercent?: true
   faceIdWorking?: true
   screenGenuine?: true
@@ -318,6 +336,9 @@ export type ProductGroupByOutputType = {
   compareAtPrice: runtime.Decimal | null
   availability: $Enums.AvailabilityStatus
   tags: string[]
+  source: $Enums.ProductSource
+  erpKey: string | null
+  published: boolean
   batteryHealthPercent: number | null
   faceIdWorking: boolean | null
   screenGenuine: boolean | null
@@ -370,6 +391,9 @@ export type ProductWhereInput = {
   compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
+  source?: Prisma.EnumProductSourceFilter<"Product"> | $Enums.ProductSource
+  erpKey?: Prisma.StringNullableFilter<"Product"> | string | null
+  published?: Prisma.BoolFilter<"Product"> | boolean
   batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
   faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
@@ -407,6 +431,9 @@ export type ProductOrderByWithRelationInput = {
   compareAtPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   availability?: Prisma.SortOrder
   tags?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  erpKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  published?: Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrderInput | Prisma.SortOrder
   faceIdWorking?: Prisma.SortOrderInput | Prisma.SortOrder
   screenGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -434,6 +461,7 @@ export type ProductOrderByWithRelationInput = {
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   slug?: string
+  erpKey?: string
   AND?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
   OR?: Prisma.ProductWhereInput[]
   NOT?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
@@ -447,6 +475,8 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
+  source?: Prisma.EnumProductSourceFilter<"Product"> | $Enums.ProductSource
+  published?: Prisma.BoolFilter<"Product"> | boolean
   batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
   faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
@@ -469,7 +499,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   internal?: Prisma.XOR<Prisma.ProductInternalNullableScalarRelationFilter, Prisma.ProductInternalWhereInput> | null
   orderRequestItems?: Prisma.OrderRequestItemListRelationFilter
   bundleItems?: Prisma.BundleItemListRelationFilter
-}, "id" | "slug">
+}, "id" | "slug" | "erpKey">
 
 export type ProductOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -484,6 +514,9 @@ export type ProductOrderByWithAggregationInput = {
   compareAtPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   availability?: Prisma.SortOrder
   tags?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  erpKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  published?: Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrderInput | Prisma.SortOrder
   faceIdWorking?: Prisma.SortOrderInput | Prisma.SortOrder
   screenGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -521,6 +554,9 @@ export type ProductScalarWhereWithAggregatesInput = {
   compareAtPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusWithAggregatesFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
+  source?: Prisma.EnumProductSourceWithAggregatesFilter<"Product"> | $Enums.ProductSource
+  erpKey?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  published?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   batteryHealthPercent?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
   faceIdWorking?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
@@ -550,6 +586,9 @@ export type ProductCreateInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -586,6 +625,9 @@ export type ProductUncheckedCreateInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -622,6 +664,9 @@ export type ProductUpdateInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -658,6 +703,9 @@ export type ProductUncheckedUpdateInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -694,6 +742,9 @@ export type ProductCreateManyInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -723,6 +774,9 @@ export type ProductUpdateManyMutationInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -751,6 +805,9 @@ export type ProductUncheckedUpdateManyInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -798,6 +855,9 @@ export type ProductCountOrderByAggregateInput = {
   compareAtPrice?: Prisma.SortOrder
   availability?: Prisma.SortOrder
   tags?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  erpKey?: Prisma.SortOrder
+  published?: Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrder
   faceIdWorking?: Prisma.SortOrder
   screenGenuine?: Prisma.SortOrder
@@ -831,6 +891,9 @@ export type ProductMaxOrderByAggregateInput = {
   recommendedSalePrice?: Prisma.SortOrder
   compareAtPrice?: Prisma.SortOrder
   availability?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  erpKey?: Prisma.SortOrder
+  published?: Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrder
   faceIdWorking?: Prisma.SortOrder
   screenGenuine?: Prisma.SortOrder
@@ -858,6 +921,9 @@ export type ProductMinOrderByAggregateInput = {
   recommendedSalePrice?: Prisma.SortOrder
   compareAtPrice?: Prisma.SortOrder
   availability?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  erpKey?: Prisma.SortOrder
+  published?: Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrder
   faceIdWorking?: Prisma.SortOrder
   screenGenuine?: Prisma.SortOrder
@@ -962,6 +1028,10 @@ export type EnumAvailabilityStatusFieldUpdateOperationsInput = {
 export type ProductUpdatetagsInput = {
   set?: string[]
   push?: string | string[]
+}
+
+export type EnumProductSourceFieldUpdateOperationsInput = {
+  set?: $Enums.ProductSource
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -1087,6 +1157,9 @@ export type ProductCreateWithoutCategoryInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1122,6 +1195,9 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1186,6 +1262,9 @@ export type ProductScalarWhereInput = {
   compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFilter<"Product"> | $Enums.AvailabilityStatus
   tags?: Prisma.StringNullableListFilter<"Product">
+  source?: Prisma.EnumProductSourceFilter<"Product"> | $Enums.ProductSource
+  erpKey?: Prisma.StringNullableFilter<"Product"> | string | null
+  published?: Prisma.BoolFilter<"Product"> | boolean
   batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
   faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
@@ -1215,6 +1294,9 @@ export type ProductCreateWithoutImagesInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1250,6 +1332,9 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1301,6 +1386,9 @@ export type ProductUpdateWithoutImagesInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1336,6 +1424,9 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1371,6 +1462,9 @@ export type ProductCreateWithoutVariantsInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1406,6 +1500,9 @@ export type ProductUncheckedCreateWithoutVariantsInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1457,6 +1554,9 @@ export type ProductUpdateWithoutVariantsInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1492,6 +1592,9 @@ export type ProductUncheckedUpdateWithoutVariantsInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1527,6 +1630,9 @@ export type ProductCreateWithoutCompatibleWithPhonesInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1562,6 +1668,9 @@ export type ProductUncheckedCreateWithoutCompatibleWithPhonesInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1602,6 +1711,9 @@ export type ProductCreateWithoutCompatibleAccessoriesInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1637,6 +1749,9 @@ export type ProductUncheckedCreateWithoutCompatibleAccessoriesInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1688,6 +1803,9 @@ export type ProductUpdateWithoutCompatibleWithPhonesInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1723,6 +1841,9 @@ export type ProductUncheckedUpdateWithoutCompatibleWithPhonesInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1769,6 +1890,9 @@ export type ProductUpdateWithoutCompatibleAccessoriesInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1804,6 +1928,9 @@ export type ProductUncheckedUpdateWithoutCompatibleAccessoriesInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1839,6 +1966,9 @@ export type ProductCreateWithoutInternalInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1874,6 +2004,9 @@ export type ProductUncheckedCreateWithoutInternalInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1925,6 +2058,9 @@ export type ProductUpdateWithoutInternalInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1960,6 +2096,9 @@ export type ProductUncheckedUpdateWithoutInternalInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1995,6 +2134,9 @@ export type ProductCreateWithoutOrderRequestItemsInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2030,6 +2172,9 @@ export type ProductUncheckedCreateWithoutOrderRequestItemsInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2081,6 +2226,9 @@ export type ProductUpdateWithoutOrderRequestItemsInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2116,6 +2264,9 @@ export type ProductUncheckedUpdateWithoutOrderRequestItemsInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2151,6 +2302,9 @@ export type ProductCreateWithoutBundleItemsInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2186,6 +2340,9 @@ export type ProductUncheckedCreateWithoutBundleItemsInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2237,6 +2394,9 @@ export type ProductUpdateWithoutBundleItemsInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2272,6 +2432,9 @@ export type ProductUncheckedUpdateWithoutBundleItemsInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2307,6 +2470,9 @@ export type ProductCreateManyCategoryInput = {
   compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: $Enums.AvailabilityStatus
   tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2335,6 +2501,9 @@ export type ProductUpdateWithoutCategoryInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2370,6 +2539,9 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2405,6 +2577,9 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
   tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2509,6 +2684,9 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   compareAtPrice?: boolean
   availability?: boolean
   tags?: boolean
+  source?: boolean
+  erpKey?: boolean
+  published?: boolean
   batteryHealthPercent?: boolean
   faceIdWorking?: boolean
   screenGenuine?: boolean
@@ -2547,6 +2725,9 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   compareAtPrice?: boolean
   availability?: boolean
   tags?: boolean
+  source?: boolean
+  erpKey?: boolean
+  published?: boolean
   batteryHealthPercent?: boolean
   faceIdWorking?: boolean
   screenGenuine?: boolean
@@ -2577,6 +2758,9 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   compareAtPrice?: boolean
   availability?: boolean
   tags?: boolean
+  source?: boolean
+  erpKey?: boolean
+  published?: boolean
   batteryHealthPercent?: boolean
   faceIdWorking?: boolean
   screenGenuine?: boolean
@@ -2607,6 +2791,9 @@ export type ProductSelectScalar = {
   compareAtPrice?: boolean
   availability?: boolean
   tags?: boolean
+  source?: boolean
+  erpKey?: boolean
+  published?: boolean
   batteryHealthPercent?: boolean
   faceIdWorking?: boolean
   screenGenuine?: boolean
@@ -2623,7 +2810,7 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "isPhone" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "batteryHealthPercent" | "faceIdWorking" | "screenGenuine" | "batteryGenuine" | "cameraGenuine" | "chargingPortGenuine" | "speakerGenuine" | "hasDefects" | "transparencyNotes" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "isPhone" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "source" | "erpKey" | "published" | "batteryHealthPercent" | "faceIdWorking" | "screenGenuine" | "batteryGenuine" | "cameraGenuine" | "chargingPortGenuine" | "speakerGenuine" | "hasDefects" | "transparencyNotes" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
@@ -2667,6 +2854,9 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     compareAtPrice: runtime.Decimal | null
     availability: $Enums.AvailabilityStatus
     tags: string[]
+    source: $Enums.ProductSource
+    erpKey: string | null
+    published: boolean
     batteryHealthPercent: number | null
     faceIdWorking: boolean | null
     screenGenuine: boolean | null
@@ -3124,6 +3314,9 @@ export interface ProductFieldRefs {
   readonly compareAtPrice: Prisma.FieldRef<"Product", 'Decimal'>
   readonly availability: Prisma.FieldRef<"Product", 'AvailabilityStatus'>
   readonly tags: Prisma.FieldRef<"Product", 'String[]'>
+  readonly source: Prisma.FieldRef<"Product", 'ProductSource'>
+  readonly erpKey: Prisma.FieldRef<"Product", 'String'>
+  readonly published: Prisma.FieldRef<"Product", 'Boolean'>
   readonly batteryHealthPercent: Prisma.FieldRef<"Product", 'Int'>
   readonly faceIdWorking: Prisma.FieldRef<"Product", 'Boolean'>
   readonly screenGenuine: Prisma.FieldRef<"Product", 'Boolean'>

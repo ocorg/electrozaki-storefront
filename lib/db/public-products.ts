@@ -63,6 +63,7 @@ const PUBLIC_PRODUCT_SELECT = {
   // Phase-2: for a phone, its gift-eligible accessory choices; for an
   // accessory, this is empty (compatibility runs the other direction below).
   compatibleAccessories: {
+    where: { product: { published: true } },
     select: {
       isGiftOption: true,
       product: {
@@ -78,6 +79,7 @@ const PUBLIC_PRODUCT_SELECT = {
   },
   // Phase-2: for an accessory, the phone models it's confirmed to fit.
   compatibleWithPhones: {
+    where: { compatibleWith: { published: true } },
     select: {
       compatibleWith: { select: { id: true, slug: true, name: true } },
     },
@@ -172,8 +174,8 @@ function buildFilterConditions(filters?: ProductFilters): Array<Record<string, u
 }
 
 export async function getProductBySlug(slug: string): Promise<PublicProduct | null> {
-  return prisma.product.findUnique({
-    where: { slug },
+  return prisma.product.findFirst({
+    where: { slug, published: true },
     select: PUBLIC_PRODUCT_SELECT,
   });
 }
@@ -198,6 +200,7 @@ export async function getProductsByCategorySlug(
   const categoryIds = await resolveCategoryIds(categorySlug);
   const and: Array<Record<string, unknown>> = [
     { categoryId: { in: categoryIds } },
+    { published: true },
     { availability: { not: AvailabilityStatus.DISCONTINUED } },
     ...buildFilterConditions(filters),
   ];
@@ -215,7 +218,7 @@ export async function getProductsByCategorySlug(
 export async function getDistinctBrandsForCategory(categorySlug: string): Promise<string[]> {
   const categoryIds = await resolveCategoryIds(categorySlug);
   const rows = await prisma.product.findMany({
-    where: { categoryId: { in: categoryIds }, brand: { not: null } },
+    where: { categoryId: { in: categoryIds }, published: true, brand: { not: null } },
     select: { brand: true },
     distinct: ["brand"],
   });
@@ -238,6 +241,7 @@ export async function searchProducts(
   if (!q && filterConditions.length === 0) return [];
 
   const and: Array<Record<string, unknown>> = [
+    { published: true },
     { availability: { not: AvailabilityStatus.DISCONTINUED } },
     ...filterConditions,
   ];
@@ -261,7 +265,7 @@ export async function searchProducts(
 
 export async function getFeaturedProducts(limit = 8): Promise<PublicProduct[]> {
   return prisma.product.findMany({
-    where: { availability: AvailabilityStatus.IN_STOCK },
+    where: { availability: AvailabilityStatus.IN_STOCK, published: true },
     select: PUBLIC_PRODUCT_SELECT,
     orderBy: { createdAt: "desc" },
     take: limit,

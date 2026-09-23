@@ -63,7 +63,9 @@ export const ModelName = {
   RepairRequest: 'RepairRequest',
   PromoCode: 'PromoCode',
   Bundle: 'Bundle',
-  BundleItem: 'BundleItem'
+  BundleItem: 'BundleItem',
+  ModelPhoto: 'ModelPhoto',
+  RateLimitHit: 'RateLimitHit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -86,6 +88,7 @@ export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
+  erpCode: 'erpCode',
   parentId: 'parentId',
   sortOrder: 'sortOrder',
   createdAt: 'createdAt',
@@ -108,6 +111,9 @@ export const ProductScalarFieldEnum = {
   compareAtPrice: 'compareAtPrice',
   availability: 'availability',
   tags: 'tags',
+  source: 'source',
+  erpKey: 'erpKey',
+  published: 'published',
   batteryHealthPercent: 'batteryHealthPercent',
   faceIdWorking: 'faceIdWorking',
   screenGenuine: 'screenGenuine',
@@ -144,6 +150,7 @@ export const ProductVariantScalarFieldEnum = {
   name: 'name',
   priceOverride: 'priceOverride',
   skuOrRef: 'skuOrRef',
+  erpRef: 'erpRef',
   color: 'color',
   storageLabel: 'storageLabel',
   imageUrl: 'imageUrl',
@@ -200,6 +207,7 @@ export const OrderRequestScalarFieldEnum = {
   notes: 'notes',
   requiresAdvance: 'requiresAdvance',
   advancePaymentStatus: 'advancePaymentStatus',
+  receiptKey: 'receiptKey',
   receiptUrl: 'receiptUrl',
   receiptUploadedAt: 'receiptUploadedAt',
   dataConsentAccepted: 'dataConsentAccepted',
@@ -217,6 +225,9 @@ export const OrderRequestItemScalarFieldEnum = {
   orderRequestId: 'orderRequestId',
   productId: 'productId',
   variantId: 'variantId',
+  unitRef: 'unitRef',
+  isGift: 'isGift',
+  bundleId: 'bundleId',
   productNameSnapshot: 'productNameSnapshot',
   priceAtRequest: 'priceAtRequest',
   quantity: 'quantity'
@@ -293,6 +304,28 @@ export const BundleItemScalarFieldEnum = {
 } as const
 
 export type BundleItemScalarFieldEnum = (typeof BundleItemScalarFieldEnum)[keyof typeof BundleItemScalarFieldEnum]
+
+
+export const ModelPhotoScalarFieldEnum = {
+  id: 'id',
+  modelKey: 'modelKey',
+  color: 'color',
+  url: 'url',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ModelPhotoScalarFieldEnum = (typeof ModelPhotoScalarFieldEnum)[keyof typeof ModelPhotoScalarFieldEnum]
+
+
+export const RateLimitHitScalarFieldEnum = {
+  id: 'id',
+  bucket: 'bucket',
+  keyHash: 'keyHash',
+  createdAt: 'createdAt'
+} as const
+
+export type RateLimitHitScalarFieldEnum = (typeof RateLimitHitScalarFieldEnum)[keyof typeof RateLimitHitScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -43,6 +43,7 @@ export function GiftPicker({ giftOptions }: { giftOptions: GiftOption[] }) {
           productName: `${option.product.name} (cadeau offert)`,
           price: 0,
           image: option.product.images[0]?.url,
+          isGift: true,
         },
         1
       );

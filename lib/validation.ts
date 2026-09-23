@@ -21,17 +21,17 @@ export const orderRequestSchema = z.object({
     .min(10, "Merci d'indiquer une adresse complète.")
     .max(300),
   notes: z.string().trim().max(500).optional(),
+  // Computed on the server from the priced cart — never taken from the form.
   requiresAdvance: z.boolean(),
-  receiptUrl: z.url().optional(),
+  // Already verified against its server signature by the action.
+  receiptKey: z.string().max(200).optional(),
   dataConsentAccepted: z.boolean(),
-  promoCodeId: z.string().optional(),
-  discountAmount: z.number().min(0).optional(),
 }).refine((data) => !data.requiresAdvance || data.dataConsentAccepted, {
   message: "Merci d'accepter le traitement de vos données pour continuer.",
   path: ["dataConsentAccepted"],
-}).refine((data) => !data.requiresAdvance || Boolean(data.receiptUrl), {
+}).refine((data) => !data.requiresAdvance || Boolean(data.receiptKey), {
   message: "Merci de déposer votre reçu de virement avant de confirmer.",
-  path: ["receiptUrl"],
+  path: ["receiptKey"],
 });
 
 export type OrderRequestInput = z.infer<typeof orderRequestSchema>;

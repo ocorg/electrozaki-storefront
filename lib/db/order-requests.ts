@@ -1,13 +1,7 @@
-import { OrderRequestStatus, AdvancePaymentStatus } from "@/generated/prisma/enums";
+import { AdvancePaymentStatus } from "@/generated/prisma/enums";
 import { prisma } from "./client";
 
-type OrderRequestItemInput = {
-  productId: string;
-  variantId?: string;
-  productNameSnapshot: string;
-  priceAtRequest: number;
-  quantity: number;
-};
+import type { PricedLine } from "./cart-pricing";
 
 type OrderRequestInput = {
   customerName: string;
@@ -15,33 +9,52 @@ type OrderRequestInput = {
   deliveryAddress?: string;
   notes?: string;
   requiresAdvance: boolean;
-  receiptUrl?: string;
+  receiptKey?: string;
   dataConsentAccepted: boolean;
-  items: OrderRequestItemInput[];
+  // Server-priced lines from priceCart() — never the browser's own prices.
+  lines: PricedLine[];
   // Locked in at submission time — see the schema comment on OrderRequest.
   promoCodeId?: string;
   discountAmount?: number;
 };
 
+export class PromoExhaustedError extends Error {}
+
 // Called from the cart submit action. Creates the durable record that both
 // feeds the internal queue and supplies the numbers used to build the
 // WhatsApp prefill message.
 export async function createOrderRequest(input: OrderRequestInput) {
-  const subtotal = input.items.reduce((sum, i) => sum + i.priceAtRequest * i.quantity, 0);
+  const subtotal = input.lines.reduce((sum, l) => sum + l.unitPrice * l.quantity, 0);
   const discountAmount = input.discountAmount ?? 0;
   const totalEstimate = Math.max(0, subtotal - discountAmount);
 
   // Phase-2 payment status: only meaningful when the order actually
-  // requires the advance — an accessory-only order stays NOT_REQUIRED
-  // regardless of whether a receiptUrl happens to be present.
+  // requires the advance.
   const advancePaymentStatus: AdvancePaymentStatus = !input.requiresAdvance
     ? AdvancePaymentStatus.NOT_REQUIRED
-    : input.receiptUrl
+    : input.receiptKey
       ? AdvancePaymentStatus.RECEIPT_UPLOADED
       : AdvancePaymentStatus.AWAITING_RECEIPT;
 
-  const [order] = await prisma.$transaction([
-    prisma.orderRequest.create({
+  return prisma.$transaction(async (tx) => {
+    if (input.promoCodeId) {
+      // Conditional increment: two simultaneous orders can't both use the
+      // last redemption of a capped code.
+      const promo = await tx.promoCode.findUnique({
+        where: { id: input.promoCodeId },
+        select: { maxRedemptions: true },
+      });
+      const claimed = await tx.promoCode.updateMany({
+        where: {
+          id: input.promoCodeId,
+          ...(promo?.maxRedemptions != null ? { redemptionCount: { lt: promo.maxRedemptions } } : {}),
+        },
+        data: { redemptionCount: { increment: 1 } },
+      });
+      if (claimed.count === 0) throw new PromoExhaustedError();
+    }
+
+    return tx.orderRequest.create({
       data: {
         customerName: input.customerName,
         customerPhone: input.customerPhone,
@@ -50,78 +63,33 @@ export async function createOrderRequest(input: OrderRequestInput) {
         totalEstimate,
         requiresAdvance: input.requiresAdvance,
         advancePaymentStatus,
-        receiptUrl: input.receiptUrl,
-        receiptUploadedAt: input.receiptUrl ? new Date() : undefined,
+        receiptKey: input.receiptKey,
+        receiptUploadedAt: input.receiptKey ? new Date() : undefined,
         dataConsentAccepted: input.dataConsentAccepted,
         promoCodeId: input.promoCodeId,
         discountAmount,
         items: {
-          create: input.items.map((i) => ({
-            productId: i.productId,
-            variantId: i.variantId,
-            productNameSnapshot: i.productNameSnapshot,
-            priceAtRequest: i.priceAtRequest,
-            quantity: i.quantity,
+          create: input.lines.map((l) => ({
+            productId: l.productId,
+            variantId: l.variantId,
+            unitRef: l.unitRef,
+            isGift: l.isGift,
+            bundleId: l.bundleId,
+            productNameSnapshot: l.variantName ? `${l.productName} (${l.variantName})` : l.productName,
+            priceAtRequest: l.unitPrice,
+            quantity: l.quantity,
           })),
         },
       },
       include: { items: true },
-    }),
-    ...(input.promoCodeId
-      ? [
-          prisma.promoCode.update({
-            where: { id: input.promoCodeId },
-            data: { redemptionCount: { increment: 1 } },
-          }),
-        ]
-      : []),
-  ]);
-
-  return order;
+    });
+  });
 }
 
+// updateMany: an unknown or already-marked id is a silent no-op, not an error.
 export async function markWhatsAppOpened(orderRequestId: string) {
-  return prisma.orderRequest.update({
-    where: { id: orderRequestId },
+  await prisma.orderRequest.updateMany({
+    where: { id: orderRequestId, whatsappOpenedAt: null },
     data: { whatsappOpenedAt: new Date() },
-  });
-}
-
-// Admin-only reads/writes — only ever called from app/admin routes,
-// which proxy.ts gates behind the admin session cookie.
-export async function listOrderRequests(status?: OrderRequestStatus) {
-  return prisma.orderRequest.findMany({
-    where: status ? { status } : undefined,
-    include: { items: true },
-    orderBy: { createdAt: "desc" },
-  });
-}
-
-export async function countNewOrderRequests(): Promise<number> {
-  return prisma.orderRequest.count({ where: { status: OrderRequestStatus.NEW } });
-}
-
-export async function getOrderRequestById(id: string) {
-  return prisma.orderRequest.findUnique({
-    where: { id },
-    include: { items: true, promoCode: { select: { code: true } } },
-  });
-}
-
-export async function updateOrderRequestStatus(
-  id: string,
-  status: OrderRequestStatus
-) {
-  return prisma.orderRequest.update({ where: { id }, data: { status } });
-}
-
-export async function verifyAdvancePayment(id: string, verified: boolean) {
-  return prisma.orderRequest.update({
-    where: { id },
-    data: {
-      advancePaymentStatus: verified
-        ? AdvancePaymentStatus.VERIFIED
-        : AdvancePaymentStatus.REJECTED,
-    },
   });
 }

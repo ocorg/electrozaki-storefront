@@ -7,7 +7,7 @@ import { CheckCircle2, Tag, X } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
 import { formatMAD } from "@/lib/format";
 import { submitOrderRequest, confirmWhatsAppOpened, applyPromoCode } from "./actions";
-import { ReceiptUpload } from "@/components/cart/ReceiptUpload";
+import { ReceiptUpload, type UploadedReceipt } from "@/components/cart/ReceiptUpload";
 import { AnchorButton, Button } from "@/components/ui/Button";
 import { StepProgress } from "@/components/ui/StepProgress";
 
@@ -30,7 +30,7 @@ export default function CartPage() {
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [notes, setNotes] = useState("");
 
-  const [receiptUrl, setReceiptUrl] = useState<string | null>(null);
+  const [receipt, setReceipt] = useState<UploadedReceipt | null>(null);
   const [dataConsentAccepted, setDataConsentAccepted] = useState(false);
 
   const [submitting, setSubmitting] = useState(false);
@@ -51,7 +51,7 @@ export default function CartPage() {
   async function handleApplyPromo() {
     setPromoError(null);
     setApplyingPromo(true);
-    const result = await applyPromoCode(promoInput, totalPrice);
+    const result = await applyPromoCode(promoInput, items);
     setApplyingPromo(false);
 
     if (!result.ok) {
@@ -72,8 +72,7 @@ export default function CartPage() {
       customerPhone,
       deliveryAddress,
       notes: notes || undefined,
-      requiresAdvance,
-      receiptUrl: receiptUrl ?? undefined,
+      receipt: receipt ?? undefined,
       dataConsentAccepted,
       promoCode: appliedPromo?.code,
     });
@@ -142,7 +141,7 @@ export default function CartPage() {
           <ul className="divide-y divide-black/10 border-y border-black/10">
             {items.map((item) => (
               <li
-                key={`${item.productId}-${item.variantId ?? ""}`}
+                key={`${item.productId}-${item.variantId ?? ""}-${item.isGift ? "g" : ""}-${item.bundleId ?? ""}`}
                 className="flex items-center gap-4 py-4"
               >
                 <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-neutral-50">
@@ -164,22 +163,23 @@ export default function CartPage() {
                     {formatMAD(item.price)}
                   </p>
                 </div>
-                <input
-                  type="number"
-                  min={1}
-                  value={item.quantity}
-                  onChange={(e) =>
-                    updateQuantity(
-                      item.productId,
-                      Math.max(1, Number(e.target.value)),
-                      item.variantId
-                    )
-                  }
-                  className="min-h-11 w-16 rounded-lg border border-black/15 px-2 text-center focus:border-gold focus:outline-none"
-                />
+                {item.isGift || item.bundleId ? (
+                  <span className="w-16 text-center text-sm text-neutral-500">×{item.quantity}</span>
+                ) : (
+                  <input
+                    type="number"
+                    min={1}
+                    max={20}
+                    value={item.quantity}
+                    onChange={(e) =>
+                      updateQuantity(item, Math.min(20, Math.max(1, Number(e.target.value))))
+                    }
+                    className="min-h-11 w-16 rounded-lg border border-black/15 px-2 text-center focus:border-gold focus:outline-none"
+                  />
+                )}
                 <button
                   type="button"
-                  onClick={() => removeItem(item.productId, item.variantId)}
+                  onClick={() => removeItem(item)}
                   aria-label={`Retirer ${item.productName}`}
                   className="flex h-11 w-11 items-center justify-center rounded-full text-neutral-400 hover:bg-neutral-100 hover:text-ink"
                 >
@@ -335,7 +335,7 @@ export default function CartPage() {
                 </details>
               </div>
 
-              <ReceiptUpload onUploadedAction={setReceiptUrl} />
+              <ReceiptUpload onUploadedAction={setReceipt} />
 
               <label className="flex items-start gap-2 text-xs text-neutral-600">
                 <input
@@ -369,7 +369,7 @@ export default function CartPage() {
             <Button
               type="button"
               variant="accent"
-              disabled={submitting || (requiresAdvance && (!receiptUrl || !dataConsentAccepted))}
+              disabled={submitting || (requiresAdvance && (!receipt || !dataConsentAccepted))}
               onClick={handleConfirm}
               className="flex-1"
             >

@@ -409,7 +409,9 @@ export const ModelName = {
   RepairRequest: 'RepairRequest',
   PromoCode: 'PromoCode',
   Bundle: 'Bundle',
-  BundleItem: 'BundleItem'
+  BundleItem: 'BundleItem',
+  ModelPhoto: 'ModelPhoto',
+  RateLimitHit: 'RateLimitHit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -425,7 +427,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem"
+    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem" | "modelPhoto" | "rateLimitHit"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1391,6 +1393,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ModelPhoto: {
+      payload: Prisma.$ModelPhotoPayload<ExtArgs>
+      fields: Prisma.ModelPhotoFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ModelPhotoFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelPhotoPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ModelPhotoFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelPhotoPayload>
+        }
+        findFirst: {
+          args: Prisma.ModelPhotoFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelPhotoPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ModelPhotoFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelPhotoPayload>
+        }
+        findMany: {
+          args: Prisma.ModelPhotoFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelPhotoPayload>[]
+        }
+        create: {
+          args: Prisma.ModelPhotoCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelPhotoPayload>
+        }
+        createMany: {
+          args: Prisma.ModelPhotoCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ModelPhotoCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelPhotoPayload>[]
+        }
+        delete: {
+          args: Prisma.ModelPhotoDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelPhotoPayload>
+        }
+        update: {
+          args: Prisma.ModelPhotoUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelPhotoPayload>
+        }
+        deleteMany: {
+          args: Prisma.ModelPhotoDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ModelPhotoUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ModelPhotoUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelPhotoPayload>[]
+        }
+        upsert: {
+          args: Prisma.ModelPhotoUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelPhotoPayload>
+        }
+        aggregate: {
+          args: Prisma.ModelPhotoAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateModelPhoto>
+        }
+        groupBy: {
+          args: Prisma.ModelPhotoGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ModelPhotoGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ModelPhotoCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ModelPhotoCountAggregateOutputType> | number
+        }
+      }
+    }
+    RateLimitHit: {
+      payload: Prisma.$RateLimitHitPayload<ExtArgs>
+      fields: Prisma.RateLimitHitFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RateLimitHitFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitHitPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RateLimitHitFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitHitPayload>
+        }
+        findFirst: {
+          args: Prisma.RateLimitHitFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitHitPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RateLimitHitFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitHitPayload>
+        }
+        findMany: {
+          args: Prisma.RateLimitHitFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitHitPayload>[]
+        }
+        create: {
+          args: Prisma.RateLimitHitCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitHitPayload>
+        }
+        createMany: {
+          args: Prisma.RateLimitHitCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RateLimitHitCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitHitPayload>[]
+        }
+        delete: {
+          args: Prisma.RateLimitHitDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitHitPayload>
+        }
+        update: {
+          args: Prisma.RateLimitHitUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitHitPayload>
+        }
+        deleteMany: {
+          args: Prisma.RateLimitHitDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RateLimitHitUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RateLimitHitUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitHitPayload>[]
+        }
+        upsert: {
+          args: Prisma.RateLimitHitUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitHitPayload>
+        }
+        aggregate: {
+          args: Prisma.RateLimitHitAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRateLimitHit>
+        }
+        groupBy: {
+          args: Prisma.RateLimitHitGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RateLimitHitGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RateLimitHitCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RateLimitHitCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1434,6 +1584,7 @@ export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
+  erpCode: 'erpCode',
   parentId: 'parentId',
   sortOrder: 'sortOrder',
   createdAt: 'createdAt',
@@ -1456,6 +1607,9 @@ export const ProductScalarFieldEnum = {
   compareAtPrice: 'compareAtPrice',
   availability: 'availability',
   tags: 'tags',
+  source: 'source',
+  erpKey: 'erpKey',
+  published: 'published',
   batteryHealthPercent: 'batteryHealthPercent',
   faceIdWorking: 'faceIdWorking',
   screenGenuine: 'screenGenuine',
@@ -1492,6 +1646,7 @@ export const ProductVariantScalarFieldEnum = {
   name: 'name',
   priceOverride: 'priceOverride',
   skuOrRef: 'skuOrRef',
+  erpRef: 'erpRef',
   color: 'color',
   storageLabel: 'storageLabel',
   imageUrl: 'imageUrl',
@@ -1548,6 +1703,7 @@ export const OrderRequestScalarFieldEnum = {
   notes: 'notes',
   requiresAdvance: 'requiresAdvance',
   advancePaymentStatus: 'advancePaymentStatus',
+  receiptKey: 'receiptKey',
   receiptUrl: 'receiptUrl',
   receiptUploadedAt: 'receiptUploadedAt',
   dataConsentAccepted: 'dataConsentAccepted',
@@ -1565,6 +1721,9 @@ export const OrderRequestItemScalarFieldEnum = {
   orderRequestId: 'orderRequestId',
   productId: 'productId',
   variantId: 'variantId',
+  unitRef: 'unitRef',
+  isGift: 'isGift',
+  bundleId: 'bundleId',
   productNameSnapshot: 'productNameSnapshot',
   priceAtRequest: 'priceAtRequest',
   quantity: 'quantity'
@@ -1641,6 +1800,28 @@ export const BundleItemScalarFieldEnum = {
 } as const
 
 export type BundleItemScalarFieldEnum = (typeof BundleItemScalarFieldEnum)[keyof typeof BundleItemScalarFieldEnum]
+
+
+export const ModelPhotoScalarFieldEnum = {
+  id: 'id',
+  modelKey: 'modelKey',
+  color: 'color',
+  url: 'url',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ModelPhotoScalarFieldEnum = (typeof ModelPhotoScalarFieldEnum)[keyof typeof ModelPhotoScalarFieldEnum]
+
+
+export const RateLimitHitScalarFieldEnum = {
+  id: 'id',
+  bucket: 'bucket',
+  keyHash: 'keyHash',
+  createdAt: 'createdAt'
+} as const
+
+export type RateLimitHitScalarFieldEnum = (typeof RateLimitHitScalarFieldEnum)[keyof typeof RateLimitHitScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1796,6 +1977,20 @@ export type ListEnumAvailabilityStatusFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
+ * Reference to a field of type 'ProductSource'
+ */
+export type EnumProductSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductSource'>
+    
+
+
+/**
+ * Reference to a field of type 'ProductSource[]'
+ */
+export type ListEnumProductSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductSource[]'>
+    
+
+
+/**
  * Reference to a field of type 'OrderRequestStatus'
  */
 export type EnumOrderRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderRequestStatus'>
@@ -1848,6 +2043,20 @@ export type EnumPromoCodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'PromoCodeType[]'
  */
 export type ListEnumPromoCodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PromoCodeType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'BigInt'
+ */
+export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+/**
+ * Reference to a field of type 'BigInt[]'
+ */
+export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
     
 
 
@@ -2028,6 +2237,8 @@ export type GlobalOmitConfig = {
   promoCode?: Prisma.PromoCodeOmit
   bundle?: Prisma.BundleOmit
   bundleItem?: Prisma.BundleItemOmit
+  modelPhoto?: Prisma.ModelPhotoOmit
+  rateLimitHit?: Prisma.RateLimitHitOmit
 }
 
 /* Types for Logging */
