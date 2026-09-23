@@ -82,3 +82,13 @@ export type Bundle = Prisma.BundleModel
  * 
  */
 export type BundleItem = Prisma.BundleItemModel
+/**
+ * Model ModelPhoto
+ * 
+ */
+export type ModelPhoto = Prisma.ModelPhotoModel
+/**
+ * Model RateLimitHit
+ * 
+ */
+export type RateLimitHit = Prisma.RateLimitHitModel

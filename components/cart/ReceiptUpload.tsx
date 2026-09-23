@@ -4,8 +4,12 @@ import { useState, useRef } from "react";
 import { CheckCircle2, Upload } from "lucide-react";
 import { uploadReceipt } from "@/app/(storefront)/cart/actions";
 
+// The private object key plus the server's signature over it — the order
+// action only accepts a receipt it can prove this server stored.
+export type UploadedReceipt = { key: string; token: string };
+
 type Props = {
-  onUploadedAction: (url: string) => void;
+  onUploadedAction: (receipt: UploadedReceipt) => void;
 };
 
 export function ReceiptUpload({ onUploadedAction }: Props) {
@@ -31,7 +35,7 @@ export function ReceiptUpload({ onUploadedAction }: Props) {
     }
 
     setStatus("done");
-    onUploadedAction(result.url);
+    onUploadedAction({ key: result.key, token: result.token });
   }
 
   return (

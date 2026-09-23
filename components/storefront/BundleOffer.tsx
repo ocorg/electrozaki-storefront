@@ -7,6 +7,7 @@ import { useCart } from "@/components/cart/CartContext";
 import { formatMAD } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { cardClasses } from "@/components/ui/Card";
+import { allocateBundlePrices } from "@/lib/bundle-pricing";
 
 // Plain, JSON-serializable shape — Prisma's Decimal instances (bundlePrice,
 // recommendedSalePrice) can't cross the Server -> Client Component boundary
@@ -29,30 +30,6 @@ export type BundleOfferData = {
     };
   }[];
 };
-
-// A bundle's line-item price can't be a single synthetic "discount" cart
-// line the way GiftPicker's free gifts work — every OrderRequestItem must
-// point at a real Product (see the plan note on this). Instead each member
-// product is added at its own price, scaled down proportionally so the
-// lines sum to exactly `bundlePrice`; the last item absorbs the rounding
-// remainder so the total is always exact, never off by a MAD or two.
-function allocateBundlePrices(
-  items: { normalPrice: number; quantity: number }[],
-  bundlePrice: number
-): number[] {
-  const normalTotal = items.reduce((sum, i) => sum + i.normalPrice * i.quantity, 0);
-  let allocated = 0;
-
-  return items.map((item, index) => {
-    const isLast = index === items.length - 1;
-    const lineNormal = item.normalPrice * item.quantity;
-    const lineShare =
-      normalTotal > 0 ? bundlePrice * (lineNormal / normalTotal) : bundlePrice / items.length;
-    const lineTotal = isLast ? bundlePrice - allocated : Math.round(lineShare);
-    allocated += lineTotal;
-    return lineTotal / item.quantity;
-  });
-}
 
 export function BundleOffer({ bundles }: { bundles: BundleOfferData[] }) {
   const { addItem } = useCart();
@@ -82,6 +59,7 @@ export function BundleOffer({ bundles }: { bundles: BundleOfferData[] }) {
                 price: unitPrices[index],
                 image: item.product.images[0]?.url,
                 isPhone: item.product.isPhone,
+                bundleId: bundle.id,
               },
               item.quantity
             );

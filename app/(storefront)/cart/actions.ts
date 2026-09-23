@@ -1,29 +1,37 @@
 "use server";
 
-import { uploadImage, IMAGE_PRESETS } from "@/lib/storage";
+import { uploadReceiptImage, verifyReceiptToken } from "@/lib/storage";
 import { orderRequestSchema } from "@/lib/validation";
-import { createOrderRequest, markWhatsAppOpened } from "@/lib/db/order-requests";
+import { createOrderRequest, markWhatsAppOpened, PromoExhaustedError } from "@/lib/db/order-requests";
+import { priceCart, type CartLineInput } from "@/lib/db/cart-pricing";
 import { validatePromoCode, type PromoValidationResult } from "@/lib/db/promo-codes";
+import { allowRequest, RATE_LIMIT_MESSAGE } from "@/lib/rate-limit";
 import { buildWhatsAppOrderLink } from "@/lib/whatsapp";
-import type { CartItem } from "@/components/cart/CartContext";
 
 type SubmitInput = {
-  items: CartItem[];
+  // Only product/variant ids, quantities and the gift/pack markers are read
+  // from these lines — any price the browser sends along is ignored.
+  items: CartLineInput[];
   customerName: string;
   customerPhone: string;
   deliveryAddress: string;
   notes?: string;
-  requiresAdvance: boolean;
-  receiptUrl?: string;
+  receipt?: { key: string; token: string };
   dataConsentAccepted: boolean;
   promoCode?: string;
 };
 
 // Called when the customer clicks "Appliquer" in the cart, purely to show
-// them the discount before they commit. submitOrderRequest re-validates
-// the same code from scratch at submission time — see the comment there.
-export async function applyPromoCode(code: string, cartTotal: number): Promise<PromoValidationResult> {
-  return validatePromoCode(code, cartTotal);
+// them the discount before they commit. The total is computed on the
+// server; submitOrderRequest re-validates the same code from scratch.
+export async function applyPromoCode(
+  code: string,
+  items: CartLineInput[]
+): Promise<PromoValidationResult> {
+  if (!(await allowRequest("promo"))) return { ok: false, error: RATE_LIMIT_MESSAGE };
+  const cart = await priceCart(items);
+  if (!cart.ok) return { ok: false, error: cart.error };
+  return validatePromoCode(String(code ?? ""), cart.subtotal);
 }
 
 type SubmitResult =
@@ -31,25 +39,26 @@ type SubmitResult =
   | { ok: false; error: string };
 
 export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResult> {
-  if (input.items.length === 0) {
-    return { ok: false, error: "Votre panier est vide." };
-  }
+  if (!(await allowRequest("order"))) return { ok: false, error: RATE_LIMIT_MESSAGE };
 
-  const subtotal = input.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const cart = await priceCart(input.items);
+  if (!cart.ok) return { ok: false, error: cart.error };
 
-  // Re-validate the promo code against the real, server-computed subtotal
-  // rather than trusting whatever the cart page displayed — the code could
-  // have expired, hit its redemption cap, or been deactivated in the
-  // minutes between "Appliquer" and "Confirmer ma commande".
   let promoCodeId: string | undefined;
   let discountAmount = 0;
   if (input.promoCode) {
-    const promoResult = await validatePromoCode(input.promoCode, subtotal);
-    if (!promoResult.ok) {
-      return { ok: false, error: promoResult.error };
-    }
+    const promoResult = await validatePromoCode(String(input.promoCode), cart.subtotal);
+    if (!promoResult.ok) return { ok: false, error: promoResult.error };
     promoCodeId = promoResult.promoCodeId;
     discountAmount = promoResult.discountAmount;
+  }
+
+  let receiptKey: string | undefined;
+  if (input.receipt) {
+    if (!verifyReceiptToken(String(input.receipt.key), String(input.receipt.token))) {
+      return { ok: false, error: "Reçu invalide. Merci de le déposer à nouveau." };
+    }
+    receiptKey = input.receipt.key;
   }
 
   const parsed = orderRequestSchema.safeParse({
@@ -57,55 +66,48 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
     customerPhone: input.customerPhone,
     deliveryAddress: input.deliveryAddress,
     notes: input.notes,
-    requiresAdvance: input.requiresAdvance,
-    receiptUrl: input.receiptUrl,
-    dataConsentAccepted: input.dataConsentAccepted,
-    promoCodeId,
-    discountAmount,
+    requiresAdvance: cart.requiresAdvance,
+    receiptKey,
+    dataConsentAccepted: input.dataConsentAccepted === true,
   });
-
   if (!parsed.success) {
-    return {
-      ok: false,
-      error: parsed.error.issues[0]?.message ?? "Certains champs sont invalides.",
-    };
+    return { ok: false, error: parsed.error.issues[0]?.message ?? "Certains champs sont invalides." };
   }
 
-  // The durable record — this is what makes the internal order-request
-  // queue exist, independent of whether WhatsApp actually gets opened next.
-  const order = await createOrderRequest({
-    customerName: parsed.data.customerName,
-    customerPhone: parsed.data.customerPhone,
-    deliveryAddress: parsed.data.deliveryAddress,
-    notes: parsed.data.notes,
-    requiresAdvance: parsed.data.requiresAdvance,
-    receiptUrl: parsed.data.receiptUrl,
-    dataConsentAccepted: parsed.data.dataConsentAccepted,
-    promoCodeId: parsed.data.promoCodeId,
-    discountAmount: parsed.data.discountAmount,
-    items: input.items.map((item) => ({
-      productId: item.productId,
-      variantId: item.variantId,
-      productNameSnapshot: item.variantName
-        ? `${item.productName} (${item.variantName})`
-        : item.productName,
-      priceAtRequest: item.price,
-      quantity: item.quantity,
-    })),
-  });
+  let order;
+  try {
+    order = await createOrderRequest({
+      customerName: parsed.data.customerName,
+      customerPhone: parsed.data.customerPhone,
+      deliveryAddress: parsed.data.deliveryAddress,
+      notes: parsed.data.notes,
+      requiresAdvance: parsed.data.requiresAdvance,
+      receiptKey: parsed.data.receiptKey,
+      dataConsentAccepted: parsed.data.dataConsentAccepted,
+      promoCodeId,
+      discountAmount,
+      lines: cart.lines,
+    });
+  } catch (err) {
+    if (err instanceof PromoExhaustedError) {
+      return { ok: false, error: "Ce code a atteint sa limite d'utilisation." };
+    }
+    throw err;
+  }
 
   const whatsappUrl = buildWhatsAppOrderLink(
     parsed.data.customerName,
-    input.items.map((item) => ({
-      productName: item.productName,
-      variantName: item.variantName,
-      quantity: item.quantity,
-      price: item.price,
+    cart.lines.map((l) => ({
+      productName: l.productName,
+      variantName: l.variantName,
+      quantity: l.quantity,
+      price: l.unitPrice,
     })),
     {
+      reference: order.id.slice(0, 8).toUpperCase(),
       deliveryAddress: parsed.data.deliveryAddress,
       requiresAdvance: parsed.data.requiresAdvance,
-      receiptUploaded: Boolean(parsed.data.receiptUrl),
+      receiptUploaded: Boolean(parsed.data.receiptKey),
       discountAmount,
     }
   );
@@ -114,24 +116,21 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
 }
 
 // Called client-side the moment the customer actually taps through to
-// WhatsApp, so the admin queue can distinguish "submitted" from
+// WhatsApp, so the staff queue can distinguish "submitted" from
 // "customer also opened WhatsApp" at a glance.
 export async function confirmWhatsAppOpened(orderRequestId: string): Promise<void> {
-  await markWhatsAppOpened(orderRequestId);
+  await markWhatsAppOpened(String(orderRequestId));
 }
 
-type UploadResult = { ok: true; url: string } | { ok: false; error: string };
+type UploadResult = { ok: true; key: string; token: string } | { ok: false; error: string };
 
-// Resized, compressed to WebP, and uploaded to Cloudflare R2 — see
-// lib/storage.ts. The "receipt" preset keeps more resolution/quality than
-// the product-photo preset so a bank transfer receipt's fine print stays
-// legible.
+// Stored in the private receipts bucket — see lib/storage.ts.
 export async function uploadReceipt(formData: FormData): Promise<UploadResult> {
-  const file = formData.get("receipt");
+  if (!(await allowRequest("upload"))) return { ok: false, error: RATE_LIMIT_MESSAGE };
 
+  const file = formData.get("receipt");
   if (!(file instanceof File) || file.size === 0) {
     return { ok: false, error: "Aucun fichier sélectionné." };
   }
-
-  return uploadImage(file, "receipts", IMAGE_PRESETS.receipt);
+  return uploadReceiptImage(file);
 }

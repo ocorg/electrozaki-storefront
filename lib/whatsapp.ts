@@ -9,6 +9,7 @@ type CartLine = {
 };
 
 type OrderContext = {
+  reference?: string;
   deliveryAddress?: string;
   requiresAdvance: boolean;
   receiptUploaded: boolean;
@@ -33,7 +34,10 @@ export function buildWhatsAppOrderLink(
   const discountAmount = context?.discountAmount ?? 0;
   const total = Math.max(0, subtotal - discountAmount);
 
-  const messageParts = [`Bonjour, je souhaite commander (${customerName}) :`, itemLines];
+  const messageParts = [
+    `Bonjour, je souhaite commander (${customerName})${context?.reference ? ` — réf. ${context.reference}` : ""} :`,
+    itemLines,
+  ];
 
   if (discountAmount > 0) {
     messageParts.push(`Sous-total : ${subtotal} MAD`);

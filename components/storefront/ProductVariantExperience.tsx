@@ -118,6 +118,8 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
   const hasDefects = selectedVariant ? selectedVariant.hasDefects : product.hasDefects;
   const transparencyNotes = selectedVariant ? selectedVariant.transparencyNotes : product.transparencyNotes;
 
+  // A synced used phone is a single unit — never let the customer ask for 2.
+  const maxQuantity = selectedVariant ? Math.max(1, Math.min(20, selectedVariant.stockQuantity)) : 20;
   const variantOutOfStock = variants.length > 0 && (!selectedVariant || selectedVariant.stockQuantity <= 0);
 
   function handleAdd() {
@@ -131,7 +133,7 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
         image: displayImage?.url,
         isPhone: product.isPhone,
       },
-      quantity
+      Math.min(quantity, maxQuantity)
     );
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1500);
@@ -268,8 +270,9 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
               <input
                 type="number"
                 min={1}
-                value={quantity}
-                onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+                max={maxQuantity}
+                value={Math.min(quantity, maxQuantity)}
+                onChange={(e) => setQuantity(Math.min(maxQuantity, Math.max(1, Number(e.target.value))))}
                 className="min-h-11 w-20 rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
               />
               <Button onClick={handleAdd} disabled={variantOutOfStock} className="flex-1">
