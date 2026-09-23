@@ -58,6 +58,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
+      // Deliberately after mount: the server has no localStorage, so reading
+      // it during the first render would make server and client HTML differ.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (raw) setItems(JSON.parse(raw));
     } catch {
       // Corrupted or blocked storage — starting empty beats crashing the page.
