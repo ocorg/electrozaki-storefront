@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Search, ShoppingBag, X } from "lucide-react";
+import { Menu, ShoppingBag, X } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
+import { SearchBox } from "@/components/storefront/SearchBox";
 
 type Category = { id: string; name: string; slug: string };
 
@@ -43,21 +44,7 @@ export function Header({ categories }: { categories: Category[] }) {
         </nav>
 
         <div className="flex items-center gap-4">
-          <form action="/search" className="hidden items-center sm:flex">
-            <input
-              type="search"
-              name="q"
-              placeholder="Rechercher un téléphone, un accessoire..."
-              className="min-h-11 w-56 rounded-l-lg border border-r-0 border-black/15 px-3 text-sm focus:border-gold focus:outline-none lg:w-72"
-            />
-            <button
-              type="submit"
-              aria-label="Rechercher"
-              className="flex min-h-11 min-w-11 items-center justify-center rounded-r-lg border border-black/15 bg-ink text-white transition-colors hover:bg-neutral-800"
-            >
-              <Search size={18} />
-            </button>
-          </form>
+          <SearchBox className="hidden w-64 sm:block lg:w-80" />
 
           <Link
             href="/cart"
@@ -82,6 +69,11 @@ export function Header({ categories }: { categories: Category[] }) {
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
+      </div>
+
+      {/* Phones: the search box is always there, under the logo row */}
+      <div className="px-4 pb-3 sm:hidden">
+        <SearchBox placeholder="Rechercher un téléphone, une coque…" />
       </div>
 
       {menuOpen && (
@@ -110,21 +102,6 @@ export function Header({ categories }: { categories: Category[] }) {
           >
             Contact
           </Link>
-          <form action="/search" className="flex pt-2">
-            <input
-              type="search"
-              name="q"
-              placeholder="Rechercher..."
-              className="min-h-11 w-full rounded-l-lg border border-r-0 border-black/15 px-3 text-sm focus:border-gold focus:outline-none"
-            />
-            <button
-              type="submit"
-              aria-label="Rechercher"
-              className="flex min-h-11 min-w-11 items-center justify-center rounded-r-lg border border-black/15 bg-ink text-white"
-            >
-              <Search size={18} />
-            </button>
-          </form>
         </nav>
       )}
     </header>

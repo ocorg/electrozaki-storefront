@@ -176,6 +176,41 @@ const ON_PROMO = {
   ],
 };
 
+/**
+ * What a customer types, as words: lower-case, accents removed, letters and
+ * digits split ("iPhone13" → "iphone 13"), 6 words at most.
+ */
+export function searchWords(q: string | null | undefined): string[] {
+  return (q ?? "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    // "iphone13" → "iphone 13", "13pro" → "13 pro"; model codes ("a16", "s23")
+    // and sizes ("256gb", "5g") stay whole
+    .replace(/([a-z]{3,})(\d)/g, "$1 $2")
+    .replace(/(\d)([a-z]{3,})/g, "$1 $2")
+    .split(/[^a-z0-9]+/)
+    .filter((w) => w.length > 0)
+    .slice(0, 6);
+}
+
+// Every word must be found somewhere, in any order: "apple iphone 13 256"
+// finds "iPhone 13 256GB" (brand Apple). The product and category slugs are
+// accent-free, so "telephone" finds "Téléphones" and "ecran" finds "Écran".
+function wordConditions(q: string | null | undefined): Array<Record<string, unknown>> {
+  return searchWords(q).map((word) => ({
+    OR: [
+      { name: { contains: word, mode: "insensitive" } },
+      { brand: { contains: word, mode: "insensitive" } },
+      { slug: { contains: word } },
+      { tags: { has: word } },
+      { category: { name: { contains: word, mode: "insensitive" } } },
+      { category: { slug: { contains: word } } },
+      { category: { parent: { slug: { contains: word } } } },
+    ],
+  }));
+}
+
 function buildFilterConditions(filters?: ProductFilters): Array<Record<string, unknown>> {
   const and: Array<Record<string, unknown>> = [];
   if (filters?.maxPrice) and.push({ recommendedSalePrice: { lte: filters.maxPrice } });
@@ -192,16 +227,7 @@ function buildFilterConditions(filters?: ProductFilters): Array<Record<string, u
     });
   }
   if (filters?.storage) and.push({ tags: { has: filters.storage.toLowerCase() } });
-  // Every word must appear somewhere: "coque 13" finds "Coque iPhone 13".
-  for (const word of (filters?.q ?? "").trim().split(/\s+/).filter((w) => w.length > 0).slice(0, 6)) {
-    and.push({
-      OR: [
-        { name: { contains: word, mode: "insensitive" } },
-        { brand: { contains: word, mode: "insensitive" } },
-        { category: { name: { contains: word, mode: "insensitive" } } },
-      ],
-    });
-  }
+  and.push(...wordConditions(filters?.q));
   if (filters?.promo) and.push(ON_PROMO);
   if (filters?.subcategory) and.push({ category: { slug: filters.subcategory } });
   if (filters?.compatibleWith) {
@@ -273,31 +299,71 @@ export async function searchProducts(
   query: string,
   filters?: ProductFilters
 ): Promise<PublicProduct[]> {
-  const q = query.trim();
-  const filterConditions = buildFilterConditions(filters);
-  if (!q && filterConditions.length === 0) return [];
-
-  const and: Array<Record<string, unknown>> = [
-    { published: true },
-    { availability: { not: AvailabilityStatus.DISCONTINUED } },
-    ...filterConditions,
-  ];
-
-  if (q) {
-    and.push({
-      OR: [
-        { name: { contains: q, mode: "insensitive" } },
-        { brand: { contains: q, mode: "insensitive" } },
-        { tags: { has: q.toLowerCase() } },
-      ],
-    });
-  }
+  const filterConditions = buildFilterConditions({ ...filters, q: query });
+  if (filterConditions.length === 0) return [];
 
   return prisma.product.findMany({
-    where: { AND: and },
+    where: {
+      AND: [
+        { published: true },
+        { availability: { not: AvailabilityStatus.DISCONTINUED } },
+        ...filterConditions,
+      ],
+    },
     select: PUBLIC_PRODUCT_SELECT,
-    take: 30,
+    // In stock first, then phones, then cheapest
+    orderBy: [{ availability: "asc" }, { isPhone: "desc" }, { recommendedSalePrice: "asc" }],
+    take: 48,
   });
+}
+
+export type SearchSuggestion = {
+  slug: string;
+  name: string;
+  brand: string | null;
+  price: string;
+  fromPrice: boolean;
+  compareAtPrice: string | null;
+  image: string | null;
+  condition: string;
+  isPhone: boolean;
+};
+
+/** The first matches for the header's live suggestions (as the customer types). */
+export async function suggestProducts(query: string, take = 6): Promise<{ items: SearchSuggestion[]; total: number }> {
+  const words = wordConditions(query);
+  if (!words.length) return { items: [], total: 0 };
+  const where = {
+    AND: [{ published: true }, { availability: { not: AvailabilityStatus.DISCONTINUED } }, ...words],
+  };
+  const [rows, total] = await Promise.all([
+    prisma.product.findMany({
+      where,
+      select: {
+        slug: true, name: true, brand: true, condition: true, isPhone: true,
+        recommendedSalePrice: true, compareAtPrice: true,
+        images: { select: { url: true }, orderBy: { sortOrder: "asc" }, take: 1 },
+        variants: { where: { stockQuantity: { gt: 0 } }, select: { priceOverride: true } },
+      },
+      orderBy: [{ availability: "asc" }, { isPhone: "desc" }, { recommendedSalePrice: "asc" }],
+      take,
+    }),
+    prisma.product.count({ where }),
+  ]);
+  return {
+    total,
+    items: rows.map((r) => ({
+      slug: r.slug,
+      name: r.name,
+      brand: r.brand,
+      price: r.recommendedSalePrice.toString(),
+      fromPrice: new Set(r.variants.map((v) => v.priceOverride?.toString())).size > 1,
+      compareAtPrice: r.compareAtPrice?.toString() ?? null,
+      image: r.images[0]?.url ?? null,
+      condition: r.condition,
+      isPhone: r.isPhone,
+    })),
+  };
 }
 
 export async function getFeaturedProducts(limit = 8): Promise<PublicProduct[]> {
