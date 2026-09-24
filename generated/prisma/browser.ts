@@ -92,3 +92,8 @@ export type ModelPhoto = Prisma.ModelPhotoModel
  * 
  */
 export type RateLimitHit = Prisma.RateLimitHitModel
+/**
+ * Model RepairTracking
+ * 
+ */
+export type RepairTracking = Prisma.RepairTrackingModel

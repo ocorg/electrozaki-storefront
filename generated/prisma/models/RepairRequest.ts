@@ -26,37 +26,46 @@ export type AggregateRepairRequest = {
 
 export type RepairRequestMinAggregateOutputType = {
   id: string | null
+  kind: $Enums.RepairKind | null
   customerName: string | null
   customerPhone: string | null
   deviceBrand: string | null
   deviceModel: string | null
   notes: string | null
+  preferredSlot: string | null
   status: $Enums.RepairRequestStatus | null
+  cancelReason: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type RepairRequestMaxAggregateOutputType = {
   id: string | null
+  kind: $Enums.RepairKind | null
   customerName: string | null
   customerPhone: string | null
   deviceBrand: string | null
   deviceModel: string | null
   notes: string | null
+  preferredSlot: string | null
   status: $Enums.RepairRequestStatus | null
+  cancelReason: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type RepairRequestCountAggregateOutputType = {
   id: number
+  kind: number
   customerName: number
   customerPhone: number
   deviceBrand: number
   deviceModel: number
   problemAreas: number
   notes: number
+  preferredSlot: number
   status: number
+  cancelReason: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -65,37 +74,46 @@ export type RepairRequestCountAggregateOutputType = {
 
 export type RepairRequestMinAggregateInputType = {
   id?: true
+  kind?: true
   customerName?: true
   customerPhone?: true
   deviceBrand?: true
   deviceModel?: true
   notes?: true
+  preferredSlot?: true
   status?: true
+  cancelReason?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type RepairRequestMaxAggregateInputType = {
   id?: true
+  kind?: true
   customerName?: true
   customerPhone?: true
   deviceBrand?: true
   deviceModel?: true
   notes?: true
+  preferredSlot?: true
   status?: true
+  cancelReason?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type RepairRequestCountAggregateInputType = {
   id?: true
+  kind?: true
   customerName?: true
   customerPhone?: true
   deviceBrand?: true
   deviceModel?: true
   problemAreas?: true
   notes?: true
+  preferredSlot?: true
   status?: true
+  cancelReason?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -175,13 +193,16 @@ export type RepairRequestGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type RepairRequestGroupByOutputType = {
   id: string
+  kind: $Enums.RepairKind
   customerName: string
   customerPhone: string
   deviceBrand: string
   deviceModel: string
   problemAreas: string[]
   notes: string | null
+  preferredSlot: string | null
   status: $Enums.RepairRequestStatus
+  cancelReason: string | null
   createdAt: Date
   updatedAt: Date
   _count: RepairRequestCountAggregateOutputType | null
@@ -209,26 +230,32 @@ export type RepairRequestWhereInput = {
   OR?: Prisma.RepairRequestWhereInput[]
   NOT?: Prisma.RepairRequestWhereInput | Prisma.RepairRequestWhereInput[]
   id?: Prisma.StringFilter<"RepairRequest"> | string
+  kind?: Prisma.EnumRepairKindFilter<"RepairRequest"> | $Enums.RepairKind
   customerName?: Prisma.StringFilter<"RepairRequest"> | string
   customerPhone?: Prisma.StringFilter<"RepairRequest"> | string
   deviceBrand?: Prisma.StringFilter<"RepairRequest"> | string
   deviceModel?: Prisma.StringFilter<"RepairRequest"> | string
   problemAreas?: Prisma.StringNullableListFilter<"RepairRequest">
   notes?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
+  preferredSlot?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
   status?: Prisma.EnumRepairRequestStatusFilter<"RepairRequest"> | $Enums.RepairRequestStatus
+  cancelReason?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RepairRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RepairRequest"> | Date | string
 }
 
 export type RepairRequestOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  kind?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
   deviceBrand?: Prisma.SortOrder
   deviceModel?: Prisma.SortOrder
   problemAreas?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferredSlot?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  cancelReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -238,26 +265,32 @@ export type RepairRequestWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.RepairRequestWhereInput | Prisma.RepairRequestWhereInput[]
   OR?: Prisma.RepairRequestWhereInput[]
   NOT?: Prisma.RepairRequestWhereInput | Prisma.RepairRequestWhereInput[]
+  kind?: Prisma.EnumRepairKindFilter<"RepairRequest"> | $Enums.RepairKind
   customerName?: Prisma.StringFilter<"RepairRequest"> | string
   customerPhone?: Prisma.StringFilter<"RepairRequest"> | string
   deviceBrand?: Prisma.StringFilter<"RepairRequest"> | string
   deviceModel?: Prisma.StringFilter<"RepairRequest"> | string
   problemAreas?: Prisma.StringNullableListFilter<"RepairRequest">
   notes?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
+  preferredSlot?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
   status?: Prisma.EnumRepairRequestStatusFilter<"RepairRequest"> | $Enums.RepairRequestStatus
+  cancelReason?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RepairRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RepairRequest"> | Date | string
 }, "id">
 
 export type RepairRequestOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  kind?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
   deviceBrand?: Prisma.SortOrder
   deviceModel?: Prisma.SortOrder
   problemAreas?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferredSlot?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  cancelReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.RepairRequestCountOrderByAggregateInput
@@ -270,147 +303,184 @@ export type RepairRequestScalarWhereWithAggregatesInput = {
   OR?: Prisma.RepairRequestScalarWhereWithAggregatesInput[]
   NOT?: Prisma.RepairRequestScalarWhereWithAggregatesInput | Prisma.RepairRequestScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"RepairRequest"> | string
+  kind?: Prisma.EnumRepairKindWithAggregatesFilter<"RepairRequest"> | $Enums.RepairKind
   customerName?: Prisma.StringWithAggregatesFilter<"RepairRequest"> | string
   customerPhone?: Prisma.StringWithAggregatesFilter<"RepairRequest"> | string
   deviceBrand?: Prisma.StringWithAggregatesFilter<"RepairRequest"> | string
   deviceModel?: Prisma.StringWithAggregatesFilter<"RepairRequest"> | string
   problemAreas?: Prisma.StringNullableListFilter<"RepairRequest">
   notes?: Prisma.StringNullableWithAggregatesFilter<"RepairRequest"> | string | null
+  preferredSlot?: Prisma.StringNullableWithAggregatesFilter<"RepairRequest"> | string | null
   status?: Prisma.EnumRepairRequestStatusWithAggregatesFilter<"RepairRequest"> | $Enums.RepairRequestStatus
+  cancelReason?: Prisma.StringNullableWithAggregatesFilter<"RepairRequest"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RepairRequest"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"RepairRequest"> | Date | string
 }
 
 export type RepairRequestCreateInput = {
   id?: string
+  kind?: $Enums.RepairKind
   customerName: string
   customerPhone: string
   deviceBrand: string
   deviceModel: string
   problemAreas?: Prisma.RepairRequestCreateproblemAreasInput | string[]
   notes?: string | null
+  preferredSlot?: string | null
   status?: $Enums.RepairRequestStatus
+  cancelReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type RepairRequestUncheckedCreateInput = {
   id?: string
+  kind?: $Enums.RepairKind
   customerName: string
   customerPhone: string
   deviceBrand: string
   deviceModel: string
   problemAreas?: Prisma.RepairRequestCreateproblemAreasInput | string[]
   notes?: string | null
+  preferredSlot?: string | null
   status?: $Enums.RepairRequestStatus
+  cancelReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type RepairRequestUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumRepairKindFieldUpdateOperationsInput | $Enums.RepairKind
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
   deviceBrand?: Prisma.StringFieldUpdateOperationsInput | string
   deviceModel?: Prisma.StringFieldUpdateOperationsInput | string
   problemAreas?: Prisma.RepairRequestUpdateproblemAreasInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumRepairRequestStatusFieldUpdateOperationsInput | $Enums.RepairRequestStatus
+  cancelReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RepairRequestUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumRepairKindFieldUpdateOperationsInput | $Enums.RepairKind
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
   deviceBrand?: Prisma.StringFieldUpdateOperationsInput | string
   deviceModel?: Prisma.StringFieldUpdateOperationsInput | string
   problemAreas?: Prisma.RepairRequestUpdateproblemAreasInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumRepairRequestStatusFieldUpdateOperationsInput | $Enums.RepairRequestStatus
+  cancelReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RepairRequestCreateManyInput = {
   id?: string
+  kind?: $Enums.RepairKind
   customerName: string
   customerPhone: string
   deviceBrand: string
   deviceModel: string
   problemAreas?: Prisma.RepairRequestCreateproblemAreasInput | string[]
   notes?: string | null
+  preferredSlot?: string | null
   status?: $Enums.RepairRequestStatus
+  cancelReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type RepairRequestUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumRepairKindFieldUpdateOperationsInput | $Enums.RepairKind
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
   deviceBrand?: Prisma.StringFieldUpdateOperationsInput | string
   deviceModel?: Prisma.StringFieldUpdateOperationsInput | string
   problemAreas?: Prisma.RepairRequestUpdateproblemAreasInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumRepairRequestStatusFieldUpdateOperationsInput | $Enums.RepairRequestStatus
+  cancelReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RepairRequestUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumRepairKindFieldUpdateOperationsInput | $Enums.RepairKind
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
   deviceBrand?: Prisma.StringFieldUpdateOperationsInput | string
   deviceModel?: Prisma.StringFieldUpdateOperationsInput | string
   problemAreas?: Prisma.RepairRequestUpdateproblemAreasInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumRepairRequestStatusFieldUpdateOperationsInput | $Enums.RepairRequestStatus
+  cancelReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RepairRequestCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  kind?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
   deviceBrand?: Prisma.SortOrder
   deviceModel?: Prisma.SortOrder
   problemAreas?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  preferredSlot?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  cancelReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type RepairRequestMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  kind?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
   deviceBrand?: Prisma.SortOrder
   deviceModel?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  preferredSlot?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  cancelReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type RepairRequestMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  kind?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
   deviceBrand?: Prisma.SortOrder
   deviceModel?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  preferredSlot?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  cancelReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type RepairRequestCreateproblemAreasInput = {
   set: string[]
+}
+
+export type EnumRepairKindFieldUpdateOperationsInput = {
+  set?: $Enums.RepairKind
 }
 
 export type RepairRequestUpdateproblemAreasInput = {
@@ -426,70 +496,85 @@ export type EnumRepairRequestStatusFieldUpdateOperationsInput = {
 
 export type RepairRequestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  kind?: boolean
   customerName?: boolean
   customerPhone?: boolean
   deviceBrand?: boolean
   deviceModel?: boolean
   problemAreas?: boolean
   notes?: boolean
+  preferredSlot?: boolean
   status?: boolean
+  cancelReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["repairRequest"]>
 
 export type RepairRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  kind?: boolean
   customerName?: boolean
   customerPhone?: boolean
   deviceBrand?: boolean
   deviceModel?: boolean
   problemAreas?: boolean
   notes?: boolean
+  preferredSlot?: boolean
   status?: boolean
+  cancelReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["repairRequest"]>
 
 export type RepairRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  kind?: boolean
   customerName?: boolean
   customerPhone?: boolean
   deviceBrand?: boolean
   deviceModel?: boolean
   problemAreas?: boolean
   notes?: boolean
+  preferredSlot?: boolean
   status?: boolean
+  cancelReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["repairRequest"]>
 
 export type RepairRequestSelectScalar = {
   id?: boolean
+  kind?: boolean
   customerName?: boolean
   customerPhone?: boolean
   deviceBrand?: boolean
   deviceModel?: boolean
   problemAreas?: boolean
   notes?: boolean
+  preferredSlot?: boolean
   status?: boolean
+  cancelReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type RepairRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerName" | "customerPhone" | "deviceBrand" | "deviceModel" | "problemAreas" | "notes" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["repairRequest"]>
+export type RepairRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "kind" | "customerName" | "customerPhone" | "deviceBrand" | "deviceModel" | "problemAreas" | "notes" | "preferredSlot" | "status" | "cancelReason" | "createdAt" | "updatedAt", ExtArgs["result"]["repairRequest"]>
 
 export type $RepairRequestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RepairRequest"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    kind: $Enums.RepairKind
     customerName: string
     customerPhone: string
     deviceBrand: string
     deviceModel: string
     problemAreas: string[]
     notes: string | null
+    preferredSlot: string | null
     status: $Enums.RepairRequestStatus
+    cancelReason: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["repairRequest"]>
@@ -916,13 +1001,16 @@ export interface Prisma__RepairRequestClient<T, Null = never, ExtArgs extends ru
  */
 export interface RepairRequestFieldRefs {
   readonly id: Prisma.FieldRef<"RepairRequest", 'String'>
+  readonly kind: Prisma.FieldRef<"RepairRequest", 'RepairKind'>
   readonly customerName: Prisma.FieldRef<"RepairRequest", 'String'>
   readonly customerPhone: Prisma.FieldRef<"RepairRequest", 'String'>
   readonly deviceBrand: Prisma.FieldRef<"RepairRequest", 'String'>
   readonly deviceModel: Prisma.FieldRef<"RepairRequest", 'String'>
   readonly problemAreas: Prisma.FieldRef<"RepairRequest", 'String[]'>
   readonly notes: Prisma.FieldRef<"RepairRequest", 'String'>
+  readonly preferredSlot: Prisma.FieldRef<"RepairRequest", 'String'>
   readonly status: Prisma.FieldRef<"RepairRequest", 'RepairRequestStatus'>
+  readonly cancelReason: Prisma.FieldRef<"RepairRequest", 'String'>
   readonly createdAt: Prisma.FieldRef<"RepairRequest", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"RepairRequest", 'DateTime'>
 }

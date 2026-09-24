@@ -1,4 +1,17 @@
-import { BatteryCharging, Camera, Globe, Plug, Smartphone, Volume2, type LucideIcon } from "lucide-react";
+import {
+  BatteryCharging,
+  Camera,
+  DatabaseBackup,
+  Globe,
+  Headphones,
+  Plug,
+  RefreshCcw,
+  Settings,
+  Smartphone,
+  UserCog,
+  Volume2,
+  type LucideIcon,
+} from "lucide-react";
 
 // Content grounded in well-established, publicly documented troubleshooting
 // knowledge (battery chemistry aging, carrier-lock vs. IMEI-blacklist,
@@ -19,6 +32,7 @@ export type RepairTopic = {
 };
 
 export const REPAIR_TOPIC_ORDER = ["ecran", "batterie", "connecteur", "camera", "son", "reseau"] as const;
+export const SOFTWARE_TOPIC_ORDER = ["logiciel-bloque", "mise-a-jour", "donnees", "compte-configuration"] as const;
 
 export const REPAIR_TOPICS: Record<string, RepairTopic> = {
   ecran: {
@@ -397,6 +411,141 @@ export const REPAIR_TOPICS: Record<string, RepairTopic> = {
             question: "Un iPhone financé par un opérateur peut-il être désimlocké avant la fin du remboursement ?",
             answer:
               "Généralement non — le verrouillage lié au financement reste actif tant que les conditions de l'opérateur ne sont pas remplies, indépendamment de tout service de déblocage tiers.",
+          },
+        ],
+      },
+    ],
+  },
+  "logiciel-bloque": {
+    slug: "logiciel-bloque",
+    title: "Téléphone bloqué, lent ou qui redémarre en boucle",
+    shortTitle: "Bloqué, lent ou en boucle",
+    cardDescription: "Téléphone figé sur le logo, très lent, qui plante ou redémarre sans arrêt.",
+    icon: RefreshCcw,
+    intro:
+      "La plupart de ces pannes sont logicielles : une mise à jour interrompue, une mémoire pleine, une application défaillante ou un système corrompu. Elles se règlent souvent sans changer de pièce — mais un redémarrage en boucle peut aussi venir d'une batterie usée, que nous vérifions d'abord.",
+    brands: [
+      {
+        brand: "Tous appareils",
+        entries: [
+          {
+            question: "Mon téléphone reste bloqué sur le logo au démarrage : est-ce grave ?",
+            answer:
+              "Le plus souvent, c'est le système qui n'arrive pas à se charger (mise à jour interrompue, fichiers corrompus). Une réinstallation du système règle généralement le problème ; nous essayons toujours de conserver vos données avant d'en arriver là.",
+          },
+          {
+            question: "Pourquoi mon téléphone devient-il très lent ?",
+            answer:
+              "Une mémoire presque pleine, des applications qui tournent en arrière-plan ou une batterie fatiguée (le système réduit alors les performances) sont les causes les plus fréquentes. Un diagnostic permet de savoir s'il suffit d'un nettoyage ou s'il faut changer la batterie.",
+          },
+          {
+            question: "Vais-je perdre mes données ?",
+            answer:
+              "Pas forcément. Nous tentons d'abord une réparation sans effacement ; si une réinitialisation est inévitable, nous vous prévenons avant et proposons une sauvegarde quand l'appareil le permet.",
+          },
+        ],
+      },
+    ],
+  },
+  "mise-a-jour": {
+    slug: "mise-a-jour",
+    title: "Mise à jour et réinstallation du système",
+    shortTitle: "Mise à jour / réinstallation",
+    cardDescription: "Mise à jour qui échoue, réinitialisation, réinstallation du logiciel d'origine.",
+    icon: Settings,
+    intro:
+      "Nous installons les mises à jour officielles, réinitialisons un appareil avant une revente, ou réinstallons le logiciel d'origine du fabricant quand le système est endommagé. Nous utilisons uniquement les versions officielles des fabricants.",
+    brands: [
+      {
+        brand: "Tous appareils",
+        entries: [
+          {
+            question: "La mise à jour échoue ou reste bloquée, que faire ?",
+            answer:
+              "C'est souvent un manque d'espace de stockage ou une batterie trop faible pendant l'installation. Si le téléphone ne démarre plus après une mise à jour interrompue, une réinstallation du système est généralement nécessaire.",
+          },
+          {
+            question: "Faut-il réinitialiser un téléphone avant de le vendre ?",
+            answer:
+              "Oui : sauvegardez vos données, déconnectez vos comptes (Google, Apple), puis réinitialisez. Sans déconnexion du compte, le nouvel utilisateur restera bloqué à l'activation.",
+          },
+        ],
+      },
+    ],
+  },
+  donnees: {
+    slug: "donnees",
+    title: "Récupération et transfert de données",
+    shortTitle: "Données : récupération & transfert",
+    cardDescription: "Photos, contacts, WhatsApp : sauvegarde, récupération et transfert vers un nouveau téléphone.",
+    icon: DatabaseBackup,
+    intro:
+      "Nous transférons vos photos, contacts et messageries vers un nouveau téléphone et aidons à récupérer des données depuis un appareil qui fonctionne encore. Sur un téléphone très endommagé, la récupération n'est pas toujours possible : nous vous le disons avant d'intervenir.",
+    brands: [
+      {
+        brand: "Tous appareils",
+        entries: [
+          {
+            question: "Pouvez-vous transférer mes données vers mon nouveau téléphone ?",
+            answer:
+              "Oui : contacts, photos, applications et, selon les cas, l'historique WhatsApp. Passer d'Android à iPhone (ou l'inverse) est possible mais certaines données ne suivent pas ; nous vous expliquons ce qui sera transféré.",
+          },
+          {
+            question: "Mon téléphone ne s'allume plus, mes photos sont-elles perdues ?",
+            answer:
+              "Si l'appareil peut être remis en marche (écran, batterie, connecteur), les données sont souvent intactes. Si elles étaient sauvegardées dans le cloud (Google Photos, iCloud), elles se retrouvent sur un autre appareil avec le même compte.",
+          },
+        ],
+      },
+    ],
+  },
+  "compte-configuration": {
+    slug: "compte-configuration",
+    title: "Compte et configuration",
+    shortTitle: "Compte & configuration",
+    cardDescription: "Création et récupération de compte Google / Apple, réglages, applications.",
+    icon: UserCog,
+    intro:
+      "Nous configurons votre téléphone (compte Google ou Apple, messagerie, applications, sauvegardes) et vous aidons à récupérer l'accès à votre propre compte. Pour un compte oublié, nous demandons une preuve d'achat : nous ne débloquons jamais un appareil dont la propriété n'est pas prouvée.",
+    brands: [
+      {
+        brand: "Tous appareils",
+        entries: [
+          {
+            question: "J'ai oublié le mot de passe de mon compte Google ou Apple, que faire ?",
+            answer:
+              "La récupération passe par les procédures officielles de Google ou Apple (numéro ou e-mail de secours, questions, délai de sécurité). Nous vous accompagnons dans ces démarches, sur présentation de la facture ou de la boîte portant l'IMEI de l'appareil.",
+          },
+          {
+            question: "Pouvez-vous enlever un compte d'un téléphone acheté d'occasion ?",
+            answer:
+              "Seulement si l'ancien propriétaire le retire lui-même ou si vous prouvez l'achat de l'appareil. Un téléphone verrouillé sur le compte de quelqu'un d'autre peut être volé : nous ne contournons pas ces protections.",
+          },
+        ],
+      },
+    ],
+  },
+  "consultation-en-ligne": {
+    slug: "consultation-en-ligne",
+    title: "Consultation en ligne",
+    shortTitle: "Consultation en ligne",
+    cardDescription: "Un conseil ou un premier diagnostic par WhatsApp (appel ou vidéo), sans vous déplacer.",
+    icon: Headphones,
+    intro:
+      "Un technicien vous rappelle sur WhatsApp à l'heure qui vous convient pour comprendre le problème, vous guider pas à pas ou vous conseiller avant un achat. Les conseils simples sont gratuits ; si une intervention est nécessaire, le tarif vous est annoncé avant de commencer.",
+    brands: [
+      {
+        brand: "Comment ça marche",
+        entries: [
+          {
+            question: "Comment se passe une consultation en ligne ?",
+            answer:
+              "Vous décrivez votre question et le moment qui vous arrange ; nous vous appelons sur WhatsApp (audio ou vidéo). Si le problème ne peut pas être réglé à distance, nous vous proposons un devis de réparation en boutique.",
+          },
+          {
+            question: "Est-ce payant ?",
+            answer:
+              "Un premier échange et les conseils simples sont gratuits. Une aide plus longue (configuration complète, transfert guidé…) peut être facturée : le prix vous est toujours annoncé et accepté avant.",
           },
         ],
       },

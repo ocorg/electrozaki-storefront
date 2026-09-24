@@ -12,6 +12,7 @@ const LIMITS = {
   contact: { max: 5, windowMinutes: 60 },
   repair: { max: 5, windowMinutes: 60 },
   promo: { max: 20, windowMinutes: 60 },
+  track: { max: 20, windowMinutes: 60 }, // repair tracking lookups / quote answers
 } as const;
 
 export type RateLimitBucket = keyof typeof LIMITS;

@@ -405,11 +405,28 @@ export type EnumAdvancePaymentStatusWithAggregatesFilter<$PrismaModel = never> =
   _max?: Prisma.NestedEnumAdvancePaymentStatusFilter<$PrismaModel>
 }
 
+export type EnumRepairKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.RepairKind | Prisma.EnumRepairKindFieldRefInput<$PrismaModel>
+  in?: $Enums.RepairKind[] | Prisma.ListEnumRepairKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RepairKind[] | Prisma.ListEnumRepairKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRepairKindFilter<$PrismaModel> | $Enums.RepairKind
+}
+
 export type EnumRepairRequestStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.RepairRequestStatus | Prisma.EnumRepairRequestStatusFieldRefInput<$PrismaModel>
   in?: $Enums.RepairRequestStatus[] | Prisma.ListEnumRepairRequestStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.RepairRequestStatus[] | Prisma.ListEnumRepairRequestStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumRepairRequestStatusFilter<$PrismaModel> | $Enums.RepairRequestStatus
+}
+
+export type EnumRepairKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RepairKind | Prisma.EnumRepairKindFieldRefInput<$PrismaModel>
+  in?: $Enums.RepairKind[] | Prisma.ListEnumRepairKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RepairKind[] | Prisma.ListEnumRepairKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRepairKindWithAggregatesFilter<$PrismaModel> | $Enums.RepairKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRepairKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRepairKindFilter<$PrismaModel>
 }
 
 export type EnumRepairRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -843,11 +860,28 @@ export type NestedEnumAdvancePaymentStatusWithAggregatesFilter<$PrismaModel = ne
   _max?: Prisma.NestedEnumAdvancePaymentStatusFilter<$PrismaModel>
 }
 
+export type NestedEnumRepairKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.RepairKind | Prisma.EnumRepairKindFieldRefInput<$PrismaModel>
+  in?: $Enums.RepairKind[] | Prisma.ListEnumRepairKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RepairKind[] | Prisma.ListEnumRepairKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRepairKindFilter<$PrismaModel> | $Enums.RepairKind
+}
+
 export type NestedEnumRepairRequestStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.RepairRequestStatus | Prisma.EnumRepairRequestStatusFieldRefInput<$PrismaModel>
   in?: $Enums.RepairRequestStatus[] | Prisma.ListEnumRepairRequestStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.RepairRequestStatus[] | Prisma.ListEnumRepairRequestStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumRepairRequestStatusFilter<$PrismaModel> | $Enums.RepairRequestStatus
+}
+
+export type NestedEnumRepairKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RepairKind | Prisma.EnumRepairKindFieldRefInput<$PrismaModel>
+  in?: $Enums.RepairKind[] | Prisma.ListEnumRepairKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RepairKind[] | Prisma.ListEnumRepairKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRepairKindWithAggregatesFilter<$PrismaModel> | $Enums.RepairKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRepairKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRepairKindFilter<$PrismaModel>
 }
 
 export type NestedEnumRepairRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
