@@ -68,7 +68,9 @@ export const ModelName = {
   RateLimitHit: 'RateLimitHit',
   RepairTracking: 'RepairTracking',
   LandingPage: 'LandingPage',
-  LandingPageProduct: 'LandingPageProduct'
+  LandingPageProduct: 'LandingPageProduct',
+  AnalyticsEvent: 'AnalyticsEvent',
+  BotHit: 'BotHit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -389,6 +391,34 @@ export const LandingPageProductScalarFieldEnum = {
 } as const
 
 export type LandingPageProductScalarFieldEnum = (typeof LandingPageProductScalarFieldEnum)[keyof typeof LandingPageProductScalarFieldEnum]
+
+
+export const AnalyticsEventScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  type: 'type',
+  path: 'path',
+  productId: 'productId',
+  value: 'value',
+  query: 'query',
+  results: 'results',
+  source: 'source',
+  device: 'device',
+  visitorHash: 'visitorHash',
+  loadMs: 'loadMs'
+} as const
+
+export type AnalyticsEventScalarFieldEnum = (typeof AnalyticsEventScalarFieldEnum)[keyof typeof AnalyticsEventScalarFieldEnum]
+
+
+export const BotHitScalarFieldEnum = {
+  day: 'day',
+  category: 'category',
+  name: 'name',
+  count: 'count'
+} as const
+
+export type BotHitScalarFieldEnum = (typeof BotHitScalarFieldEnum)[keyof typeof BotHitScalarFieldEnum]
 
 
 export const SortOrder = {

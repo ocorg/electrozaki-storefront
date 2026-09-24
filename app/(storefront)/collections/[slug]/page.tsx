@@ -4,6 +4,7 @@ import { getProductsByCategorySlug, getCategoryFilterOptions } from "@/lib/db/pu
 import { getCategoryBySlug } from "@/lib/db/categories";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { CatalogFilters, type FilterValues } from "@/components/storefront/CatalogFilters";
+import { SearchTracker } from "@/components/analytics/SearchTracker";
 
 // A 60s cache keeps pages fast; the ERP also asks for an immediate refresh
 // (/api/revalidate) whenever stock or presentation changes.
@@ -55,6 +56,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <h1 className="mb-6 text-2xl font-semibold sm:text-3xl">{category.name}</h1>
+      {filters.q && <SearchTracker query={filters.q} results={products.length} />}
 
       <div className="grid gap-8 md:grid-cols-[220px_1fr]">
         <aside>

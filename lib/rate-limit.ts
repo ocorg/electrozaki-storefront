@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { headers } from "next/headers";
 import { prisma } from "./db/client";
+import { recordBot } from "./bot-hits";
 
 // Caps how often one visitor can hit a public form, so a script can't flood
 // the order queue, fill the receipts bucket or guess promo codes. Counted
@@ -36,7 +37,10 @@ export async function allowRequest(bucket: RateLimitBucket): Promise<boolean> {
   const recent = await prisma.rateLimitHit.count({
     where: { bucket, keyHash, createdAt: { gte: since } },
   });
-  if (recent >= max) return false;
+  if (recent >= max) {
+    await recordBot("blocked", bucket); // shown in the ERP's "Bouclier"
+    return false;
+  }
 
   await prisma.rateLimitHit.create({ data: { bucket, keyHash } });
 

@@ -107,3 +107,13 @@ export type LandingPage = Prisma.LandingPageModel
  * 
  */
 export type LandingPageProduct = Prisma.LandingPageProductModel
+/**
+ * Model AnalyticsEvent
+ * 
+ */
+export type AnalyticsEvent = Prisma.AnalyticsEventModel
+/**
+ * Model BotHit
+ * 
+ */
+export type BotHit = Prisma.BotHitModel

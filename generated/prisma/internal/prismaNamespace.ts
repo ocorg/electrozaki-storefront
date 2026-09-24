@@ -414,7 +414,9 @@ export const ModelName = {
   RateLimitHit: 'RateLimitHit',
   RepairTracking: 'RepairTracking',
   LandingPage: 'LandingPage',
-  LandingPageProduct: 'LandingPageProduct'
+  LandingPageProduct: 'LandingPageProduct',
+  AnalyticsEvent: 'AnalyticsEvent',
+  BotHit: 'BotHit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -430,7 +432,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem" | "modelPhoto" | "rateLimitHit" | "repairTracking" | "landingPage" | "landingPageProduct"
+    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem" | "modelPhoto" | "rateLimitHit" | "repairTracking" | "landingPage" | "landingPageProduct" | "analyticsEvent" | "botHit"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1766,6 +1768,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AnalyticsEvent: {
+      payload: Prisma.$AnalyticsEventPayload<ExtArgs>
+      fields: Prisma.AnalyticsEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AnalyticsEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AnalyticsEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsEventPayload>
+        }
+        findFirst: {
+          args: Prisma.AnalyticsEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AnalyticsEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsEventPayload>
+        }
+        findMany: {
+          args: Prisma.AnalyticsEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsEventPayload>[]
+        }
+        create: {
+          args: Prisma.AnalyticsEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsEventPayload>
+        }
+        createMany: {
+          args: Prisma.AnalyticsEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AnalyticsEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsEventPayload>[]
+        }
+        delete: {
+          args: Prisma.AnalyticsEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsEventPayload>
+        }
+        update: {
+          args: Prisma.AnalyticsEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.AnalyticsEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AnalyticsEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AnalyticsEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.AnalyticsEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsEventPayload>
+        }
+        aggregate: {
+          args: Prisma.AnalyticsEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAnalyticsEvent>
+        }
+        groupBy: {
+          args: Prisma.AnalyticsEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AnalyticsEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AnalyticsEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AnalyticsEventCountAggregateOutputType> | number
+        }
+      }
+    }
+    BotHit: {
+      payload: Prisma.$BotHitPayload<ExtArgs>
+      fields: Prisma.BotHitFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BotHitFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BotHitPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BotHitFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BotHitPayload>
+        }
+        findFirst: {
+          args: Prisma.BotHitFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BotHitPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BotHitFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BotHitPayload>
+        }
+        findMany: {
+          args: Prisma.BotHitFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BotHitPayload>[]
+        }
+        create: {
+          args: Prisma.BotHitCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BotHitPayload>
+        }
+        createMany: {
+          args: Prisma.BotHitCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BotHitCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BotHitPayload>[]
+        }
+        delete: {
+          args: Prisma.BotHitDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BotHitPayload>
+        }
+        update: {
+          args: Prisma.BotHitUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BotHitPayload>
+        }
+        deleteMany: {
+          args: Prisma.BotHitDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BotHitUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BotHitUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BotHitPayload>[]
+        }
+        upsert: {
+          args: Prisma.BotHitUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BotHitPayload>
+        }
+        aggregate: {
+          args: Prisma.BotHitAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBotHit>
+        }
+        groupBy: {
+          args: Prisma.BotHitGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BotHitGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BotHitCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BotHitCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2107,6 +2257,34 @@ export const LandingPageProductScalarFieldEnum = {
 } as const
 
 export type LandingPageProductScalarFieldEnum = (typeof LandingPageProductScalarFieldEnum)[keyof typeof LandingPageProductScalarFieldEnum]
+
+
+export const AnalyticsEventScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  type: 'type',
+  path: 'path',
+  productId: 'productId',
+  value: 'value',
+  query: 'query',
+  results: 'results',
+  source: 'source',
+  device: 'device',
+  visitorHash: 'visitorHash',
+  loadMs: 'loadMs'
+} as const
+
+export type AnalyticsEventScalarFieldEnum = (typeof AnalyticsEventScalarFieldEnum)[keyof typeof AnalyticsEventScalarFieldEnum]
+
+
+export const BotHitScalarFieldEnum = {
+  day: 'day',
+  category: 'category',
+  name: 'name',
+  count: 'count'
+} as const
+
+export type BotHitScalarFieldEnum = (typeof BotHitScalarFieldEnum)[keyof typeof BotHitScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2555,6 +2733,8 @@ export type GlobalOmitConfig = {
   repairTracking?: Prisma.RepairTrackingOmit
   landingPage?: Prisma.LandingPageOmit
   landingPageProduct?: Prisma.LandingPageProductOmit
+  analyticsEvent?: Prisma.AnalyticsEventOmit
+  botHit?: Prisma.BotHitOmit
 }
 
 /* Types for Logging */

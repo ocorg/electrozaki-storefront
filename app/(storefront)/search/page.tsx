@@ -1,6 +1,7 @@
 import { searchProducts } from "@/lib/db/public-products";
 import type { Metadata } from "next";
 import { ProductCard } from "@/components/storefront/ProductCard";
+import { SearchTracker } from "@/components/analytics/SearchTracker";
 
 export const metadata: Metadata = { title: "Recherche" };
 
@@ -31,6 +32,7 @@ export default async function SearchPage({ searchParams }: Props) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <h1 className="mb-6 text-2xl font-semibold sm:text-3xl">{title}</h1>
+      {query && <SearchTracker query={query} results={results.length} />}
 
       {!query && !hasFilters ? (
         <p className="text-neutral-600">Utilisez la barre de recherche pour trouver un produit.</p>
