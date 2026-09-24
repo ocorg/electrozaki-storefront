@@ -1423,5 +1423,1430 @@
   "lng": -9.230554,
   "label": "Safi, Pachalik de Safi, Province de Safi, Marrakech-Safi, Maroc"
  },
- "souiria Guedima, SAFI, Maroc": null
+ "souiria Guedima, SAFI, Maroc": null,
+ "souiria Guedima, Maroc": null,
+ "souiria Guedima (REG SAFI), Maroc": null,
+ "Jorf El Melha, Maroc": {
+  "lat": 34.488696,
+  "lng": -5.509151,
+  "label": "Jorf El Melha, Pachalik de Jorf El Melha, Province de Sidi Kacem, Rabat-Salé-Kénitra, 16003, Maroc"
+ },
+ "Ain Beida, Maroc": {
+  "lat": 34.9876064,
+  "lng": -5.5284144,
+  "label": "Aïn Béida, Caïdat de Moqrissat, Cercle de Moqrissat, Province de Ouezzane, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Mokrisset, Maroc": {
+  "lat": 34.923522,
+  "lng": -5.349211,
+  "label": "Moqrisset, Caïdat de Moqrissat, Cercle de Moqrissat, Province de Ouezzane, Tanger-Tétouan-Al Hoceïma, 91152, Maroc"
+ },
+ "Oulad Ayad, Maroc": {
+  "lat": 32.2032127,
+  "lng": -6.7988693,
+  "label": "Oulad Ayad, Pachalik de Oulad Ayad, Province de Fquih Ben Saleh, Béni Mellal-Khénifra, 23402, Maroc"
+ },
+ "AIN ATIQ, Maroc": {
+  "lat": 33.5934829,
+  "lng": -7.6560354,
+  "label": "Rue Ain Atiq, Val d'Anfa, Arrondissement d'Anfa, Préfecture d'arrondissements de Casablanca-Anfa, Casablanca, Pachalik de Casablanca, Préfecture de Casablanca, Casablanca-Settat, 20170, Maroc"
+ },
+ "Moulay Bousselham, Maroc": {
+  "lat": 34.878009,
+  "lng": -6.294076,
+  "label": "Moulay Bousselham, caïdat de Moulay Bousselham, Cercle de Lalla Mimouna, Province de Kenitra, Rabat-Salé-Kénitra, Maroc"
+ },
+ "Khenichet, Maroc": {
+  "lat": 34.438,
+  "lng": -5.687,
+  "label": "Khenichet, Khenichet Centre, Khnichet, caïdat de Khenichet, Cercle d'Ouargha, Province de Sidi Kacem, Rabat-Salé-Kénitra, 16102, Maroc"
+ },
+ "Zoumi, Ouazzane, Maroc": null,
+ "Teroual, Ouazzane, Maroc": null,
+ "Teroual, Maroc": {
+  "lat": 34.674777,
+  "lng": -5.271722,
+  "label": "Teroual, Caïdat de Teroual, Cercle d'Al Ouahda, Province de Ouezzane, Tanger-Tétouan-Al Hoceïma, 16252, Maroc"
+ },
+ "Ain Dfali, Ouazzane, Maroc": null,
+ "Ain Dfali, Maroc": {
+  "lat": 34.6070257,
+  "lng": -5.5629739,
+  "label": "Ain Dfali, Caïdat d'Aïn Dfali, Cercle de Tilal Al Gharb, Province de Sidi Kacem, Rabat-Salé-Kénitra, 16052, Maroc"
+ },
+ "Masmouda, Ouazzane, Maroc": {
+  "lat": 34.786229,
+  "lng": -5.707764,
+  "label": "Masmouda, Caïdat de Mzefroune, Cercle de Ouazzane, Province de Ouezzane, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Stehat, Chefchaouen, Maroc": {
+  "lat": 35.345994,
+  "lng": -4.956989,
+  "label": "Stehat, Caïdat de Bou Ahmed, Cercle de Bou Ahmed, Province de Chefchaouen, Tanger-Tétouan-Al Hoceïma, 91003, Maroc"
+ },
+ "agadir, Maroc": {
+  "lat": 30.4205162,
+  "lng": -9.5838532,
+  "label": "Agadir, Pachalik d'Agadir, Préfecture d'Agadir Ida-Outanane, Souss-Massa, Maroc"
+ },
+ "Temsia, agadir, Maroc": {
+  "lat": 30.3652567,
+  "lng": -9.4150466,
+  "label": "Temsia, Centre Temsia, Temsia, caïdat de Temsia, cercle d'Aït Melloul, Préfecture d'Inezgane-Aït Melloul, Souss-Massa, 86602, Maroc"
+ },
+ "Tamraght, Maroc": {
+  "lat": 30.513951,
+  "lng": -9.677378,
+  "label": "Tamraght, Aourir, caïdat d'Aourir, cercle d'Agadir-Atlantique, Préfecture d'Agadir Ida-Outanane, Souss-Massa, 80750, Maroc"
+ },
+ "Had bouhssoussen, Maroc": {
+  "lat": 33.1479105,
+  "lng": -6.0779289,
+  "label": "Had Bouhssoussen, caïdat de Moulay Bouazza, Cercle d'Aguelmous, Province de Khénifra, Béni Mellal-Khénifra, 54402, Maroc"
+ },
+ "Moulay bouazza khenifra, Maroc": {
+  "lat": 33.226,
+  "lng": -6.199,
+  "label": "Moulay Bouazza, Quartier Administratif, Moulay Bouazza, caïdat de Moulay Bouazza, Cercle d'Aguelmous, Province de Khénifra, Béni Mellal-Khénifra, 54403, Maroc"
+ },
+ "Tagzert, Maroc": {
+  "lat": 35.2896099,
+  "lng": -5.575675,
+  "label": "Tagzert, Bni Arouss, caïdat de Bni Aârouss, cercle de Moulay Abdeslam-Ben Mchich, Province de Larache, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Oulad M barek, Beni Mellal, Maroc": {
+  "lat": 32.2817629,
+  "lng": -6.4511097,
+  "label": "Oulad M'Barek, caïdat d'Ouled M'Barek, cercle de Béni-Mellal, Province de Beni Mellal, Béni Mellal-Khénifra, 23452, Maroc"
+ },
+ "Tanougha, Beni Mellal, Maroc": {
+  "lat": 32.4411086,
+  "lng": -6.0907911,
+  "label": "Tanougha, caïdat de Taghzirt, cercle de El Ksiba, Province de Beni Mellal, Béni Mellal-Khénifra, 23674, Maroc"
+ },
+ "Foum Oudi, Maroc": {
+  "lat": 32.2513198,
+  "lng": -6.4252517,
+  "label": "Foum Oudi, caïdat d'Ouled M'Barek, cercle de Béni-Mellal, Province de Beni Mellal, Béni Mellal-Khénifra, 23006, Maroc"
+ },
+ "Ikhourbane, Maroc": {
+  "lat": 30.3379797,
+  "lng": -9.4091338,
+  "label": "Ikhourbane, Temsia, caïdat de Temsia, cercle d'Aït Melloul, Préfecture d'Inezgane-Aït Melloul, Souss-Massa, 86600, Maroc"
+ },
+ "Zag, Maroc": {
+  "lat": 28.022026,
+  "lng": -9.294609,
+  "label": "Zag, Pachalik de Zag, Province Assa-Zag, Guelmim-Oued Noun, 81306, Maroc"
+ },
+ "El Ouatia, Maroc": {
+  "lat": 28.4977644,
+  "lng": -11.3319395,
+  "label": "El Ouatia, Pachalik de El Ouatia, Province de Tan-Tan, Guelmim-Oued Noun, 82103, Maroc"
+ },
+ "Tan, Maroc": {
+  "lat": 28.4347456,
+  "lng": -11.0886496,
+  "label": "Maroc Telecom, Avenue Hassan 2, Tan-Tan, Pachalik de Tan Tan, Province de Tan-Tan, Guelmim-Oued Noun, 82004, Maroc"
+ },
+ "Port of Tan, Tan, Maroc": null,
+ "Port of Tan, Maroc": null,
+ "Tan, Port of Tan, Maroc": null,
+ "Port of Tan-Tan, Maroc": null,
+ "oulad oujih, Maroc": {
+  "lat": 34.2566052,
+  "lng": -6.6076997,
+  "label": "Oulad Oujih, Rue Al Mojahid Mohamed, Kenitra, Maghreb Al Arabi, Kénitra, Pachalik de Kenitra, Province de Kenitra, Rabat-Salé-Kénitra, 14090, Maroc"
+ },
+ "Lalla Mimouna, Maroc": {
+  "lat": 34.848871,
+  "lng": -6.069173,
+  "label": "Lalla Mimouna, Caïdat de Lalla Mimouna, Cercle de Lalla Mimouna, Province de Kenitra, Rabat-Salé-Kénitra, 14152, Maroc"
+ },
+ "Dlalha, Maroc": null,
+ "Mers El Kheir, Maroc": {
+  "lat": 33.8745842,
+  "lng": -6.9078166,
+  "label": "Mers El Kheir, Caïdat de Mers El Kheir, Cercle de Témara, Préfecture de Skhirate-Témara, Rabat-Salé-Kénitra, Maroc"
+ },
+ "Sidi Yahya Zaer, Maroc": {
+  "lat": 33.8262331,
+  "lng": -6.9039822,
+  "label": "Sidi Yahya Zaer, Caïdat de Sidi Yahya Zaer, Cercle de Ain El Aouda, Préfecture de Skhirate-Témara, Rabat-Salé-Kénitra, Maroc"
+ },
+ "Skhour Rehamna, Maroc": {
+  "lat": 32.4825225,
+  "lng": -7.9153639,
+  "label": "Skhour Rehamna, Hay Al Massira, Skhour Rhamna, caïdat de Skhour, Cercle de Rehamna, Province de Rhamna, Marrakech-Safi, 43402, Maroc"
+ },
+ "Amizmiz, Maroc": {
+  "lat": 31.2171012,
+  "lng": -8.2332754,
+  "label": "Amizmiz, Pachalik d'Amizmiz, Province d'Al Haouz, Marrakech-Safi, Maroc"
+ },
+ "El Hanchane, Maroc": {
+  "lat": 31.5240699,
+  "lng": -9.4353881,
+  "label": "El Hanchane, Pachalik de El Hanchane, Province d'Essaouira, Marrakech-Safi, 44253, Maroc"
+ },
+ "tata, Maroc": {
+  "lat": 29.746392,
+  "lng": -7.9696051,
+  "label": "Tata, Pachalik de Tata, Province de Tata, Souss-Massa, Maroc"
+ },
+ "Akka, tata, Maroc": {
+  "lat": 29.391861,
+  "lng": -8.256762,
+  "label": "Akka, Pachalik d'Akka, Province de Tata, Souss-Massa, Maroc"
+ },
+ "Tagmout, tata, Maroc": {
+  "lat": 29.897841,
+  "lng": -8.2374989,
+  "label": "Tagmout, caïdat d' Taghmout, Cercle de Tata, Province de Tata, Souss-Massa, Maroc"
+ },
+ "Issafen, tata, Maroc": {
+  "lat": 29.8556903,
+  "lng": -8.5297249,
+  "label": "Issafen, caïdat d'Issafen, Cercle de Tata, Province de Tata, Souss-Massa, 84052, Maroc"
+ },
+ "Fam El Hisn, tata, Maroc": {
+  "lat": 29.013582,
+  "lng": -8.886818,
+  "label": "Fam El Hisn, Pachalik de Fam El Hisn, Province de Tata, Souss-Massa, Maroc"
+ },
+ "Fam El Hisn, Maroc": {
+  "lat": 29.013582,
+  "lng": -8.886818,
+  "label": "Fam El Hisn, Pachalik de Fam El Hisn, Province de Tata, Souss-Massa, Maroc"
+ },
+ "tata, Fam El Hisn, Maroc": null,
+ "Fam El Hisn-tata, Maroc": {
+  "lat": 29.013582,
+  "lng": -8.886818,
+  "label": "Fam El Hisn, Pachalik de Fam El Hisn, Province de Tata, Souss-Massa, Maroc"
+ },
+ "MASSA, Maroc": {
+  "lat": 29.972463,
+  "lng": -9.6409,
+  "label": "Massa, caïdat de Massa, cercle de Belfaa-Massa, Province de Chtouka-Aït Baha, Souss-Massa, Maroc"
+ },
+ "Kariat Arkman‎, Nador, Maroc": {
+  "lat": 35.1032431,
+  "lng": -2.7389833,
+  "label": "Kariat Arekmane, Arekmane, caïdat de Kabdana, Cercle de Louta, Province de Nador, Oriental, 62352, Maroc"
+ },
+ "Had Hrara, SAFI, Maroc": {
+  "lat": 32.4220966,
+  "lng": -9.1756315,
+  "label": "caïdat de Had Hrara, cercle de Hrara, Province de Safi, Marrakech-Safi, 46006, Maroc"
+ },
+ "Sidi Zouine, Maroc": {
+  "lat": 31.6640197,
+  "lng": -8.3505003,
+  "label": "Sidi Zouine, Centre Sidi Zouine, Sid Zouine, Caïdat de Sid Zouine, Cercle de Loudaya, Préfecture de Marrakech, Marrakech-Safi, 40202, Maroc"
+ },
+ "Ouarzazate, Maroc": {
+  "lat": 30.920193,
+  "lng": -6.910923,
+  "label": "Ouarzazate, Pachalik d'Ouarzazate, Province d'Ouarzazate, Drâa-Tafilalet, Maroc"
+ },
+ "Skoura, Ouarzazate, Maroc": {
+  "lat": 31.060412,
+  "lng": -6.55755,
+  "label": "Skoura, Skoura Ahl El Oust, caïdat de Skoura, cercle d'Ouarzazate, Province d'Ouarzazate, Drâa-Tafilalet, 45502, Maroc"
+ },
+ "Region Al hoceima, Maroc": null,
+ "Bni hdifa, Region Al hoceima, Maroc": null,
+ "Bni hdifa, Maroc": {
+  "lat": 35.5703688,
+  "lng": -5.3464008,
+  "label": "Avenue Bni Hdifa, Coëlma, Médina, Tétouan, Pachalik de Tétouan, Province de Tétouan, Tanger-Tétouan-Al Hoceïma, 93003, Maroc"
+ },
+ "Bab Marzouka, Taza, Maroc": {
+  "lat": 34.2107551,
+  "lng": -4.1443026,
+  "label": "Bab Marzouka, Centre bab marzouka, Taza, Bab Marzouka, caïdat de Bab Marzouka, Cercle de Taza, Province de Taza, Fès-Meknès, 35004, Maroc"
+ },
+ "taza, Maroc": {
+  "lat": 34.230155,
+  "lng": -4.010104,
+  "label": "Taza, Pachalik du Taza, Province de Taza, Fès-Meknès, Maroc"
+ },
+ "Aknoul, taza, Maroc": {
+  "lat": 34.65602,
+  "lng": -3.865259,
+  "label": "Aknoul, Pachalik D'Aknoul, Province de Taza, Fès-Meknès, 35054, Maroc"
+ },
+ "Hatane, Khouribga, Maroc": null,
+ "Hatane, Maroc": null,
+ "Khouribga, Hatane, Maroc": null,
+ "Hatane-Khouribga, Maroc": null,
+ "sidi allal tazi, Maroc": {
+  "lat": 34.52185,
+  "lng": -6.323673,
+  "label": "Sidi Allal Tazi, caïdat de Sidi Allal Tazi, Cercle de Souk Tlet El Gharb, Province de Kenitra, Rabat-Salé-Kénitra, Maroc"
+ },
+ "Tiddas, Maroc": {
+  "lat": 33.566538,
+  "lng": -6.265945,
+  "label": "Tiddas, caïdat de Tiddas, Cercle d'Oulmes, Province de Khémisset, Rabat-Salé-Kénitra, 15352, Maroc"
+ },
+ "Ain Johra, Maroc": {
+  "lat": 34.0137928,
+  "lng": -6.3434578,
+  "label": "Ain Johra-Sidi Boukhalkhal, caïdat de Ain Johra-Boukhalkhal, cercle de Tiflet, Province de Khémisset, Rabat-Salé-Kénitra, Maroc"
+ },
+ "Maâziz, Maroc": {
+  "lat": 33.6680618,
+  "lng": -6.3207189,
+  "label": "Maaziz, caïdat de Maaziz, Cercle d'Oulmes, Province de Khémisset, Rabat-Salé-Kénitra, 15053, Maroc"
+ },
+ "Tīdās, Khemisset, Maroc": null,
+ "Tīdās, Maroc": {
+  "lat": 34.0689347,
+  "lng": -6.7692413,
+  "label": "Rue Tidas, Secteur Nahda Laayayda, Layayda, Salé, Pachalik de Salé, Préfecture de Salé, Rabat-Salé-Kénitra, 11016, Maroc"
+ },
+ "ksar el kebir, Maroc": {
+  "lat": 34.999218,
+  "lng": -5.898724,
+  "label": "Ksar el-Kebir, Pachalik de Ksar El Kebir, Province de Larache, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Laouamra, ksar el kebir, Maroc": null,
+ "Laouamra, Maroc": {
+  "lat": 35.067151,
+  "lng": -6.088657,
+  "label": "Laouamra, caïdat de Laouamra, Cercle de Loukous, Province de Larache, Tanger-Tétouan-Al Hoceïma, 92052, Maroc"
+ },
+ "Khemis Sahel, Maroc": {
+  "lat": 35.255385,
+  "lng": -6.080232,
+  "label": "Khemis Sahel, caïdat de Khemis Sahel, cercle de Oued El Makhazine, Province de Larache, Tanger-Tétouan-Al Hoceïma, 92102, Maroc"
+ },
+ "Krimda, Maroc": {
+  "lat": 35.2752949,
+  "lng": -6.0746536,
+  "label": "Krimda, Khemis Sahel, caïdat de Khemis Sahel, cercle de Oued El Makhazine, Province de Larache, Tanger-Tétouan-Al Hoceïma, 92102, Maroc"
+ },
+ "Mellal, Maroc": {
+  "lat": 32.6407498,
+  "lng": -6.207105,
+  "label": "Béni Mellal-Khénifra, Maroc"
+ },
+ "Sidi Aissa, Mellal, Maroc": {
+  "lat": 32.3441519,
+  "lng": -6.6555527,
+  "label": "Sidi Aissa Ben Ali, caïdat de Sidi Aissa, cercle de Bni Moussa, Province de Fquih Ben Saleh, Béni Mellal-Khénifra, 23574, Maroc"
+ },
+ "Ouled Moussa, Beni Mellal, Maroc": {
+  "lat": 32.2954135,
+  "lng": -6.6668126,
+  "label": "Ouled Bourahmoune, caïdat de Bni Moussa, cercle de Bni Moussa, Province de Fquih Ben Saleh, Béni Mellal-Khénifra, Maroc"
+ },
+ "Oulad Said, Beni Mellal, Maroc": {
+  "lat": 32.5966861,
+  "lng": -6.4460928,
+  "label": "Oulad Said l'Oued, caïdat d'Ouled Saïd Loued, cercle de Kasba Tadla, Province de Beni Mellal, Béni Mellal-Khénifra, Maroc"
+ },
+ "beni mellal, Maroc": {
+  "lat": 32.334193,
+  "lng": -6.353335,
+  "label": "Beni Mellal, Pachalik de Beni Mellal, Province de Beni Mellal, Béni Mellal-Khénifra, Maroc"
+ },
+ "ighram laalam, beni mellal, Maroc": null,
+ "ighram laalam, Maroc": null,
+ "beni mellal, ighram laalam, Maroc": null,
+ "ighram laalam-beni mellal, Maroc": null,
+ "Zaouiat Cheikh, Maroc": {
+  "lat": 32.6441708,
+  "lng": -5.916589,
+  "label": "Zaouiat Cheikh, Pachalik de Zaouiat Cheikh, Province de Beni Mellal, Béni Mellal-Khénifra, 23700, Maroc"
+ },
+ "Ait Ali, Maroc": {
+  "lat": 31.4890522,
+  "lng": -5.95435,
+  "label": "Ait Sedrate Jbel El Soufla, caïdat d'Aït Sedrate Jbel, Cercle de Boulmane-Dadès, Province de Tinghir, Drâa-Tafilalet, Maroc"
+ },
+ "KHENIFRA, Maroc": {
+  "lat": 32.9357718,
+  "lng": -5.6696504,
+  "label": "Khenifra, Pachalik de Khenifra, Province de Khénifra, Béni Mellal-Khénifra, Maroc"
+ },
+ "Lehri, KHENIFRA, Maroc": {
+  "lat": 32.8312556,
+  "lng": -5.5928037,
+  "label": "Lehri, Caïdat de Lehri-Aguelmam, Cercle de Khenifra, Province de Khénifra, Béni Mellal-Khénifra, 54000, Maroc"
+ },
+ "El Kebab, KHENIFRA, Maroc": {
+  "lat": 32.7417947,
+  "lng": -5.5239629,
+  "label": "El Kebab, Quartier Administratif EL KBAB, El Kbab, caïdat de El Kbab, cercle de El Kbab, Province de Khénifra, Béni Mellal-Khénifra, 54203, Maroc"
+ },
+ "El Borj, KHENIFRA, Maroc": {
+  "lat": 33.0344104,
+  "lng": -5.5908867,
+  "label": "El Borj, Caïdat de Moha Ou Hammou Zayani, Cercle de Khenifra, Province de Khénifra, Béni Mellal-Khénifra, Maroc"
+ },
+ "Ouaoumana, Maroc": {
+  "lat": 32.711134,
+  "lng": -5.806639,
+  "label": "Ouaoumana, caïdat de Ait Ishaq, cercle de El Kbab, Province de Khénifra, Béni Mellal-Khénifra, 54102, Maroc"
+ },
+ "Ait ishaq, Maroc": {
+  "lat": 32.7630212,
+  "lng": -5.7261667,
+  "label": "Aït Ishaq, caïdat de Ait Ishaq, cercle de El Kbab, Province de Khénifra, Béni Mellal-Khénifra, 54103, Maroc"
+ },
+ "Ait ishaK, Maroc": {
+  "lat": 32.7596253,
+  "lng": -5.7245637,
+  "label": "Ait Ishak, Hay Essaada AIT ISHAK, Khenifra, Aït Ishaq, caïdat de Ait Ishaq, cercle de El Kbab, Province de Khénifra, Béni Mellal-Khénifra, 54103, Maroc"
+ },
+ "Tighassaline ville, Maroc": null,
+ "Aguelmous, Maroc": {
+  "lat": 33.1575774,
+  "lng": -5.8472009,
+  "label": "Aguelmouss, caïdat de Aguelmous, Cercle d'Aguelmous, Province de Khénifra, Béni Mellal-Khénifra, 54052, Maroc"
+ },
+ "Bounouar, Maroc": {
+  "lat": 29.7311954,
+  "lng": -9.9113246,
+  "label": "Sidi Bounouar, Tnine Aglou, caïdat d'Aglou, Cercle de Tiznit, Province de Tiznit, Souss-Massa, Maroc"
+ },
+ "HATTANE, Maroc": {
+  "lat": 32.8406383,
+  "lng": -6.8046283,
+  "label": "Hattane, Pachalik de Hattane, Province de Khouribga, Béni Mellal-Khénifra, 25302, Maroc"
+ },
+ "Adouz, Maroc": {
+  "lat": 35.2508061,
+  "lng": -4.9246216,
+  "label": "Adouz, Bni Bouzra, Caïdat de Bou Ahmed, Cercle de Bou Ahmed, Province de Chefchaouen, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Foum El Anceur, Maroc": {
+  "lat": 32.348889,
+  "lng": -6.2396925,
+  "label": "Foum El Anceur, caïdat de Foum El Ansar, cercle de Béni-Mellal, Province de Beni Mellal, Béni Mellal-Khénifra, 23252, Maroc"
+ },
+ "FERYATA, Maroc": {
+  "lat": 32.4086768,
+  "lng": -6.229487,
+  "label": "collège feryata, Avenue Houmane El Fettouaki, Faryata, Taghzirt, caïdat de Taghzirt, cercle de El Ksiba, Province de Beni Mellal, Béni Mellal-Khénifra, 23652, Maroc"
+ },
+ "Foum Zaouia, Maroc": null,
+ "ksba tadla, Maroc": null,
+ "Al kamoun, ksba tadla, Maroc": null,
+ "Al kamoun, Maroc": {
+  "lat": 32.5643667,
+  "lng": -6.2806178,
+  "label": "Al Kamoun, Guettaya, caïdat d'Aït Rbaa, cercle de Kasba Tadla, Province de Beni Mellal, Béni Mellal-Khénifra, 23352, Maroc"
+ },
+ "Jerf El Melha, Maroc": null,
+ "Zemamra, Maroc": {
+  "lat": 32.6161958,
+  "lng": -8.7043575,
+  "label": "Zemamra, Pachalik de Khemis zmamra, Province de Sidi Bennour, Casablanca-Settat, Maroc"
+ },
+ "Azemmour, Maroc": {
+  "lat": 33.2749828,
+  "lng": -8.3432522,
+  "label": "Azemmour, RP3449, Chaabat Lahouala, Oulad Rahmoune, caïdat de Oulad Rahmoune, Cercle d'Azemmour, Province d'El Jadida, Casablanca-Settat, 24100, Maroc"
+ },
+ "Bir Jdid, Maroc": {
+  "lat": 33.37377,
+  "lng": -7.998016,
+  "label": "Bir Jdid, Pachalik de Bir Jdid, Province d'El Jadida, Casablanca-Settat, Maroc"
+ },
+ "El Jorf Lasfar, Maroc": null,
+ "Moulay Abdallah Amghar, Maroc": {
+  "lat": 33.1977386,
+  "lng": -8.5892651,
+  "label": "Moulay Abdallah Amghar, Avenue Mohamed V, Lot. Saniat Al Arab, Moulay Abdellah Amghar, caïdat de Oulad Bouaziz-Chamalia, Cercle d'El Jadida, Province d'El Jadida, Casablanca-Settat, 24003, Maroc"
+ },
+ "El Aouamra, Maroc": null,
+ "Laarache, Maroc": null,
+ "Oulad Bourahma, Maroc": {
+  "lat": 34.2966735,
+  "lng": -6.4254817,
+  "label": "Oulad Bourahma, Ameur Seflia, caïdat de Ameur Seflia, Cercle de Kenitra-Banlieue, Province de Kenitra, Rabat-Salé-Kénitra, Maroc"
+ },
+ "kenitra, Maroc": {
+  "lat": 34.26457,
+  "lng": -6.570169,
+  "label": "Kénitra, Pachalik de Kenitra, Province de Kenitra, Rabat-Salé-Kénitra, Maroc"
+ },
+ "Zone Franche, kenitra, Maroc": null,
+ "Zone Franche, Maroc": {
+  "lat": 35.7177722,
+  "lng": -5.9187258,
+  "label": "Zone Franche de Tanger, Ibn Batouta, Gueznaïa, Pachalik de Gueznaïa, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Zone Franche (kenitra), Maroc": null,
+ "Ghafsai, Maroc": {
+  "lat": 34.628041,
+  "lng": -4.910857,
+  "label": "Ghafsai, Pachalik de Ghafsai, Province de Taounate, Fès-Meknès, 34103, Maroc"
+ },
+ "SIDI AADI, Maroc": null,
+ "chichaoua, Maroc": {
+  "lat": 31.5463197,
+  "lng": -8.7602644,
+  "label": "Chichaoua, Pachalik de Chichaoua, Province de Chichaoua, Marrakech-Safi, Maroc"
+ },
+ "Mejjat, chichaoua, Maroc": null,
+ "Mejjat, Maroc": {
+  "lat": 33.8244059,
+  "lng": -5.5213078,
+  "label": "Zone Industrielle Mejjat, Majjate, Caïdat de Majjate, Cercle de Meknès-Banlieue, Prefecture de Meknès, Fès-Meknès, Maroc"
+ },
+ "chichaoua, Mejjat, Maroc": null,
+ "Mejjat-chichaoua, Maroc": null,
+ "Ain Tekki, Maroc": {
+  "lat": 33.6613893,
+  "lng": -7.3503061,
+  "label": "Aïn Tekki, Bni Yakhlef, Pachalik de Bni Yakhlef, Préfecture de Mohammédia, Casablanca-Settat, Maroc"
+ },
+ "OULAD ABBOU, settat, Maroc": {
+  "lat": 33.1147464,
+  "lng": -7.9314943,
+  "label": "Oulad Abbou, Quartier Administratif, Oulad Abbou, Pachalik de Oulad Abbou, Province de Berrechid, Casablanca-Settat, 26452, Maroc"
+ },
+ "AIN LEUH, Maroc": {
+  "lat": 33.292125,
+  "lng": -5.338439,
+  "label": "Aïn Leuh, caïdat de Ain Leuh, cercle d'Azrou, Province d'Ifrane, Fès-Meknès, 53052, Maroc"
+ },
+ "Souihla, Maroc": {
+  "lat": 31.616187,
+  "lng": -8.215424,
+  "label": "Souihla, caïdat de Loudaya, Cercle de Loudaya, Préfecture de Marrakech, Marrakech-Safi, Maroc"
+ },
+ "El Haj Kaddour, Maroc": {
+  "lat": 33.828,
+  "lng": -5.425,
+  "label": "El Hadj Kaddour, Centre haj kaddour, Sidi Slimane Moul Al Kifane, Caïdat de Majjate, Cercle de Meknès-Banlieue, Prefecture de Meknès, Fès-Meknès, 50102, Maroc"
+ },
+ "Boulemane, Maroc": {
+  "lat": 33.3637958,
+  "lng": -4.729575,
+  "label": "Boulemane, Pachalik de Boulemane, Province de Boulemane, Fès-Meknès, Maroc"
+ },
+ "Tin Mansour, Maroc": {
+  "lat": 30.1179461,
+  "lng": -9.5530669,
+  "label": "Tin Mansour, Inchaden, caïdat de Belfaa, cercle de Belfaa-Massa, Province de Chtouka-Aït Baha, Souss-Massa, Maroc"
+ },
+ "Arba Aounate, Maroc": null,
+ "AIN BNI MATHAR, Maroc": {
+  "lat": 34.013156,
+  "lng": -2.023083,
+  "label": "Ain Bni Mathar, Pachalik de Ain Bni Mathar, Province de Jerada, Oriental, Maroc"
+ },
+ "Tikiouine, Maroc": {
+  "lat": 30.3787422,
+  "lng": -9.5047697,
+  "label": "Tikiouine, Agadir, Pachalik d'Agadir, Préfecture d'Agadir Ida-Outanane, Souss-Massa, 80652, Maroc"
+ },
+ "Chellalat Mohammedia, Maroc": null,
+ "Zouada, Maroc": {
+  "lat": 35.047012,
+  "lng": -6.058477,
+  "label": "Zouada, caïdat de Sidi Slama, Cercle de Loukous, Province de Larache, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Arbaoua, Maroc": {
+  "lat": 34.9134851,
+  "lng": -5.932567,
+  "label": "Arbaoua, Caïdat de Arbaoua, Cercle Souk Arbaa El Gharb, Province de Kenitra, Rabat-Salé-Kénitra, 14102, Maroc"
+ },
+ "Sidi el Aidi, Maroc": {
+  "lat": 33.1225681,
+  "lng": -7.6242148,
+  "label": "Sidi el Aïdi, caïdat de Mzamza, Cercle de Settat, Province de Settat, Casablanca-Settat, 26100, Maroc"
+ },
+ "DAR GUEDDARI, Maroc": {
+  "lat": 34.4208162,
+  "lng": -6.0941702,
+  "label": "Dar Gueddari, Pachalik Dar Gueddari, Province de Sidi Kacem, Rabat-Salé-Kénitra, 16002, Maroc"
+ },
+ "Tagadirt, Agadir, Maroc": {
+  "lat": 30.4121385,
+  "lng": -9.590158,
+  "label": "Pâtisserie Tagadirt, Boulevard de la Résistance شارع المقاومة, Battoire, Agadir, Pachalik d'Agadir, Préfecture d'Agadir Ida-Outanane, Souss-Massa, 80004, Maroc"
+ },
+ "Tadouaret, Agadir, Maroc": {
+  "lat": 30.3867741,
+  "lng": -9.4112769,
+  "label": "Tadouaret, Drargua, caïdat de Drargua, Cercle d'Agadir-Banlieue, Préfecture d'Agadir Ida-Outanane, Souss-Massa, 86600, Maroc"
+ },
+ "Leqliaa, Taddart, Maroc": null,
+ "Leqliaa, Maroc": null,
+ "Taddart, Leqliaa, Maroc": null,
+ "Leqliaa - Taddart, Maroc": null,
+ "taounate, Maroc": {
+  "lat": 34.538476,
+  "lng": -4.635994,
+  "label": "Taounate, pachalik du Taounate, Province de Taounate, Fès-Meknès, Maroc"
+ },
+ "ain mediouna, taounate, Maroc": {
+  "lat": 34.498382,
+  "lng": -4.5485391,
+  "label": "Ain Mediouna, Centre Ain mediouna Quartier Administratif Ouled Abdellah, Taounate, Ain Mediouna, Caïdat d’Ain mediouna, Cercle de Taounate, Province de Taounate, Fès-Meknès, 34003, Maroc"
+ },
+ "ain aicha, taounate, Maroc": {
+  "lat": 34.4622282,
+  "lng": -4.6889345,
+  "label": "Ain Aicha, Administratif AIN AICHA, Ain Aicha, Taounate, Aïn Aïcha, Caïdat d’Ain Aicha, Cercle de Tissa, Province de Taounate, Fès-Meknès, 34252, Maroc"
+ },
+ "zrizer, taounate, Maroc": {
+  "lat": 34.5878543,
+  "lng": -4.6198888,
+  "label": "Zrizer, caïdat de Bouhouda, Cercle de Taounate, Province de Taounate, Fès-Meknès, Maroc"
+ },
+ "Ain Sbit, Maroc": {
+  "lat": 33.4889213,
+  "lng": -6.444602,
+  "label": "Ain Sbit, caïdat de Marchouch, Cercle de Rommani, Province de Khémisset, Rabat-Salé-Kénitra, 15152, Maroc"
+ },
+ "MERCHOUCH, Maroc": {
+  "lat": 33.6121613,
+  "lng": -6.7099455,
+  "label": "ICARDA Research Station - Merchouch, Marchouch, caïdat de Marchouch, Cercle de Rommani, Province de Khémisset, Rabat-Salé-Kénitra, Maroc"
+ },
+ "AZILAL, Maroc": {
+  "lat": 31.959295,
+  "lng": -6.570991,
+  "label": "Azilal, Pachalik d'Azilal, Province d'Azilal, Béni Mellal-Khénifra, Maroc"
+ },
+ "TANANTE, AZILAL, Maroc": null,
+ "TANANTE, Maroc": null,
+ "AZILAL, TANANTE, Maroc": null,
+ "TANANTE-AZILAL, Maroc": null,
+ "Birkouate, Maroc": null,
+ "Moulay Yaâcoub, Maroc": {
+  "lat": 32.6060421,
+  "lng": -5.5872793,
+  "label": "Moulay Yaâcoub, Sidi Yahya Ou Saad, caïdat de El Kbab, cercle de El Kbab, Province de Khénifra, Béni Mellal-Khénifra, Maroc"
+ },
+ "sidi boujida, Maroc": {
+  "lat": 34.0690138,
+  "lng": -4.9672801,
+  "label": "Sidi Boujida, Fès-Médina, Arrondissement de Fès-Médina, Fès, Pachalik du Fes, Préfecture de Fès, Fès-Meknès, 30204, Maroc"
+ },
+ "Oulad Tayeb, Maroc": {
+  "lat": 33.959838,
+  "lng": -4.99562,
+  "label": "Oulad Tayeb, Pachalik d'Oulad Tayeb, Préfecture de Fès, Fès-Meknès, Maroc"
+ },
+ "Ain Chkef, Maroc": {
+  "lat": 33.9646801,
+  "lng": -5.0876587,
+  "label": "Ain Chkef, caïdat de Ain Chkef, Cercle de Moulay Yacoub, Province de Moulay Yacoub, Fès-Meknès, Maroc"
+ },
+ "Ouled Khlifa, Maroc": null,
+ "LOUDAYA, Maroc": {
+  "lat": 31.6448217,
+  "lng": -8.2780466,
+  "label": "Loudaya, caïdat de Loudaya, Cercle de Loudaya, Préfecture de Marrakech, Marrakech-Safi, 40253, Maroc"
+ },
+ "Tassoultante, Maroc": {
+  "lat": 31.5445753,
+  "lng": -7.9821674,
+  "label": "Tasoultante, caïdat de Tasoultante, cercle de Saada, Préfecture de Marrakech, Marrakech-Safi, 40065, Maroc"
+ },
+ "Tameslouht, Maroc": {
+  "lat": 31.495084,
+  "lng": -8.098377,
+  "label": "Tameslouht, caïdat de Tameslouhte, Cercle de Tahannaout, Province d'Al Haouz, Marrakech-Safi, 42312, Maroc"
+ },
+ "OURIKA, Maroc": {
+  "lat": 31.3780274,
+  "lng": -7.8048323,
+  "label": "Ourika, caïdat d'Ourika, Cercle de Tahannaout, Province d'Al Haouz, Marrakech-Safi, Maroc"
+ },
+ "Sidi Moussa, OURIKA, Maroc": {
+  "lat": 31.5367386,
+  "lng": -7.9684534,
+  "label": "Sidi moussa, Route de l'Ourika, Douar Mousa, Tasoultante, caïdat de Tasoultante, cercle de Saada, Préfecture de Marrakech, Marrakech-Safi, 40065, Maroc"
+ },
+ "Gueznaia, Tanger, Maroc": {
+  "lat": 35.703352,
+  "lng": -5.887293,
+  "label": "Gueznaïa, Pachalik de Gueznaïa, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "bougdour, Maroc": {
+  "lat": 35.6701849,
+  "lng": -5.8726176,
+  "label": "Bougdour, Hjar Ennhal, Caïdat de Hjar Ennhal, Cercle de Tanger, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, 90102, Maroc"
+ },
+ "TANGER, bougdour, Maroc": {
+  "lat": 35.6543961,
+  "lng": -5.872409,
+  "label": "Autoroute Port Tanger Med - Rabat, Kanouat, Douar Zehirou, Hjar Ennhal, Caïdat de Hjar Ennhal, Cercle de Tanger, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "tanger, Maroc": {
+  "lat": 35.7696302,
+  "lng": -5.8033522,
+  "label": "Tanger, Pachalik de Tanger, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "AIN DALIA, tanger, Maroc": {
+  "lat": 35.66685,
+  "lng": -5.833869,
+  "label": "Aïn Dalia, Laaouama, Caïdat de Laaouama, Cercle de Tanger, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Chraka, Tanger, Maroc": {
+  "lat": 35.6850808,
+  "lng": -5.9027268,
+  "label": "Chraka, Hjar Ennhal, Caïdat de Hjar Ennhal, Cercle de Tanger, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, 90102, Maroc"
+ },
+ "chaouia, Maroc": {
+  "lat": 35.6630844,
+  "lng": -5.7655263,
+  "label": "Chaouia, Laaouama, Caïdat de Laaouama, Cercle de Tanger, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "TANGER, chaouia, Maroc": {
+  "lat": 35.673623,
+  "lng": -5.7805126,
+  "label": "Autoroute Port Tanger Med - Rabat, Marj el Ghibe, Chaouia, Laaouama, Caïdat de Laaouama, Cercle de Tanger, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "tamchat, Maroc": {
+  "lat": 34.9138852,
+  "lng": -4.1290255,
+  "label": "Tamchat, RP5207, Taghzout, Zouaiat sidi Abdelkader, Caïdat de Bni Hadifa, Cercle de Bni Ouriaghel Algharbia, Province d'Al Hoceïma, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "TAGANTE, Maroc": {
+  "lat": 29.1283828,
+  "lng": -9.7799066,
+  "label": "Tagant, caïdat de Bouizakarne, cercle de Bouizakarne, Province de Guelmim, Guelmim-Oued Noun, 81052, Maroc"
+ },
+ "Moulay Idriss Zerhoun, Maroc": {
+  "lat": 34.055188,
+  "lng": -5.525518,
+  "label": "Moulay Idriss Zarhoun, Pachalik de Moulay Driss Zerhoun, Prefecture de Meknès, Fès-Meknès, Maroc"
+ },
+ "BOUYAFAR, Maroc": {
+  "lat": 35.2543349,
+  "lng": -3.1148749,
+  "label": "Beni Boughafer, Iaazzanène, Caïdat Iaazzanene, Cercle de Guelaia, Province de Nador, Oriental, 62022, Maroc"
+ },
+ "Sidi Bousberr, Maroc": null,
+ "ouazzane, Maroc": {
+  "lat": 34.796757,
+  "lng": -5.578493,
+  "label": "Ouazzane, Pachalik de Ouazzane, Province de Ouezzane, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "LAMJAARA, ouazzane, Maroc": null,
+ "LAMJAARA, Maroc": {
+  "lat": 34.6194885,
+  "lng": -5.3102186,
+  "label": "Lamjaara, Caïdat de Lamjaara, Cercle d'Al Ouahda, Province de Ouezzane, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "BRIKCHA, ouazzane, Maroc": null,
+ "BRIKCHA, Maroc": {
+  "lat": 34.965241,
+  "lng": -5.566101,
+  "label": "Brikcha, Caïdat de Brikcha, Cercle de Moqrissat, Province de Ouezzane, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Beni Quolla, ouazzane, Maroc": {
+  "lat": 34.7305897,
+  "lng": -5.5476635,
+  "label": "Guitar Palace Chambres d'hôtes-Béni Quolla, RN13, Bni Quolla, Caïdat de Bni Quolla, Cercle de Ouazzane, Province de Ouezzane, Tanger-Tétouan-Al Hoceïma, 16036, Maroc"
+ },
+ "Mzefroune, ouazzane, Maroc": {
+  "lat": 34.8533123,
+  "lng": -5.7245611,
+  "label": "Mzefroune, Caïdat de Mzefroune, Cercle de Ouazzane, Province de Ouezzane, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Sidi Elmoukhtar, Chichaoua, Maroc": null,
+ "Sidi Elmoukhtar, Maroc": null,
+ "Chichaoua, Sidi Elmoukhtar, Maroc": null,
+ "Sidi Elmoukhtar - Chichaoua, Maroc": null,
+ "Ouled El Ghadbane, Maroc": null,
+ "Had kourt, Maroc": {
+  "lat": 34.615129,
+  "lng": -5.736023,
+  "label": "Had Kourt, Pachalik de Had Kourt, Province de Sidi Kacem, Rabat-Salé-Kénitra, 16053, Maroc"
+ },
+ "berkan, Maroc": {
+  "lat": 34.9266755,
+  "lng": -2.3294087,
+  "label": "Berkane, Pachalik de Berkane, Province de Berkane, Oriental, Maroc"
+ },
+ "Madagh, berkan, Maroc": {
+  "lat": 35.0084565,
+  "lng": -2.3375306,
+  "label": "Madagh, Madagh Centre, Berkane, Madagh, Caïdat de Madagh, Cercle d'Ahfir, Province de Berkane, Oriental, 63303, Maroc"
+ },
+ "Laatamna, Maroc": {
+  "lat": 31.9157636,
+  "lng": -7.3561847,
+  "label": "Laatamna, caïdat de Dzouz, Cercle de El Attaouia, Province d'El Kelâat Es-Sraghna, Marrakech-Safi, Maroc"
+ },
+ "Sebt ben sassi, Maroc": null,
+ "AIT BAHA, Maroc": {
+  "lat": 30.070334,
+  "lng": -9.154578,
+  "label": "Ait Baha, Pachalik d'Ait Baha, Province de Chtouka-Aït Baha, Souss-Massa, Maroc"
+ },
+ "sefrou, Maroc": {
+  "lat": 33.824898,
+  "lng": -4.833336,
+  "label": "Sefrou, Pachalik de Sefrou, Province de Sefrou, Fès-Meknès, Maroc"
+ },
+ "Ribate El Kheir, sefrou, Maroc": {
+  "lat": 33.8154579,
+  "lng": -4.4068912,
+  "label": "Ahermoumou, Pachalik de Ribate El Kheir, Province de Sefrou, Fès-Meknès, 31352, Maroc"
+ },
+ "El Menzale, sefrou, Maroc": null,
+ "El Menzale, Maroc": null,
+ "sefrou, El Menzale, Maroc": null,
+ "El Menzale-sefrou, Maroc": null,
+ "Tizi Ouasli, Maroc": {
+  "lat": 34.7461941,
+  "lng": -3.7277943,
+  "label": "Tizi Ouzli, Caïdat de Tizi Ousli, Cercle d’Aknoul, Province de Taza, Fès-Meknès, 35352, Maroc"
+ },
+ "MSOUN taza, Maroc": {
+  "lat": 34.5854881,
+  "lng": -3.7737497,
+  "label": "Oued Msoun, Jbarna, Caïdat d’Aknoul, Cercle d’Aknoul, Province de Taza, Fès-Meknès, Maroc"
+ },
+ "Akhfennir, Maroc": {
+  "lat": 27.9330926,
+  "lng": -11.963037,
+  "label": "Akhfennir, Caïdat d'Akhfennir, cercle de Tarfaya, Province de Tarfaya, Maroc"
+ },
+ "Gfifat, oulad teima, Maroc": null,
+ "Gfifat, Maroc": {
+  "lat": 30.3319174,
+  "lng": -9.2583884,
+  "label": "Lagfifat, caïdat d'Ain Chaib, cercle d'Ouled Teima, Province de Taroudant, Souss-Massa, Maroc"
+ },
+ "HOUARA, Maroc": {
+  "lat": 35.6328133,
+  "lng": -5.967679,
+  "label": "Houara, Gueznaïa, Pachalik de Gueznaïa, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Oulad Dahou, HOUARA, Maroc": null,
+ "Oulad Dahou, Maroc": {
+  "lat": 30.3637692,
+  "lng": -9.3210488,
+  "label": "Oulad Dahou, caïdat de Temsia, cercle d'Aït Melloul, Préfecture d'Inezgane-Aït Melloul, Souss-Massa, Maroc"
+ },
+ "HOUARA, Oulad Dahou, Maroc": null,
+ "Oulad Dahou-HOUARA, Maroc": null,
+ "AZROU, Maroc": {
+  "lat": 35.13024,
+  "lng": -3.544397,
+  "label": "Azrou, Talilit, Caïdat de Talilit, Cercle du Rif Sud, Province de Driouch, Oriental, 62452, Maroc"
+ },
+ "TIMAHDITE, AZROU, Maroc": {
+  "lat": 33.238277,
+  "lng": -5.060916,
+  "label": "Timhadit, Caïdat de Timahdite, cercle d'Azrou, Province d'Ifrane, Fès-Meknès, Maroc"
+ },
+ "TIMAHDITE, Maroc": {
+  "lat": 33.238277,
+  "lng": -5.060916,
+  "label": "Timhadit, Caïdat de Timahdite, cercle d'Azrou, Province d'Ifrane, Fès-Meknès, Maroc"
+ },
+ "AZROU, TIMAHDITE, Maroc": {
+  "lat": 33.2339099,
+  "lng": -5.0583236,
+  "label": "Credit Agricole du Maroc, RN13, Timhadit, Caïdat de Timahdite, cercle d'Azrou, Province d'Ifrane, Fès-Meknès, 53104, Maroc"
+ },
+ "TIMAHDITE-AZROU, Maroc": {
+  "lat": 33.2339099,
+  "lng": -5.0583236,
+  "label": "Credit Agricole du Maroc, RN13, Timhadit, Caïdat de Timahdite, cercle d'Azrou, Province d'Ifrane, Fès-Meknès, 53104, Maroc"
+ },
+ "AGOURAY, Maroc": {
+  "lat": 33.8697667,
+  "lng": -5.5755147,
+  "label": "Ista Rte Agouray, Avenue Mohammed VI, Al mensour, Meknès, Pachalik de Meknes, Prefecture de Meknès, Fès-Meknès, 50015, Maroc"
+ },
+ "Lalla Takerkoust, Maroc": {
+  "lat": 31.3610902,
+  "lng": -8.1336521,
+  "label": "Lalla Takerkoust, RP2009, Lalla Takarkoust, caïdat de Ouazguita, cercle d'Amizmiz, Province d'Al Haouz, Marrakech-Safi, 42202, Maroc"
+ },
+ "Oulad yahya, Marrakech, Maroc": null,
+ "Oulad yahya, Maroc": {
+  "lat": 35.331349,
+  "lng": -5.969125,
+  "label": "Oulad Yahya, Sidi Lyamani, caïdat de Sidi Lyamani, cercle d'Assilah, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, 90054, Maroc"
+ },
+ "Marrakech, Oulad yahya, Maroc": null,
+ "Oulad yahya-Marrakech, Maroc": null,
+ "Chrifia, Marrakech, Maroc": {
+  "lat": 31.5732882,
+  "lng": -8.0176512,
+  "label": "Chrifia, RN7, Tasoultante, caïdat de Tasoultante, cercle de Saada, Préfecture de Marrakech, Marrakech-Safi, 40054, Maroc"
+ },
+ "Sidi Abdellah Ghiat, Maroc": {
+  "lat": 31.5106075,
+  "lng": -7.8332957,
+  "label": "caïdat de Sidi Abdellah Ghiat, Cercle d'Aït Ourir, Province d'Al Haouz, Marrakech-Safi, 42272, Maroc"
+ },
+ "Ait Ben Haddou, Maroc": {
+  "lat": 31.0451536,
+  "lng": -7.1309706,
+  "label": "Aït Ben Haddou, Ait Zineb, caïdat de Amerzgane, Cercle d'Amerzgane, Province d'Ouarzazate, Drâa-Tafilalet, 45100, Maroc"
+ },
+ "TALSINNT, Maroc": null,
+ "Aouama, Tanger, Maroc": {
+  "lat": 35.7261824,
+  "lng": -5.8038898,
+  "label": "Pharmacie Al Aouama Al Gharbia صيدلية العوامة الغربية, Avenue Al Quds, arrondissement de Bni Makada, Tanger, Pachalik de Tanger, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, 90000, Maroc"
+ },
+ "Ras El Ain Rehamena, Tamelelt, Maroc": null,
+ "Ras El Ain Rehamena, Maroc": null,
+ "Tamelelt, Ras El Ain Rehamena, Maroc": null,
+ "Ras El Ain Rehamena- Tamelelt, Maroc": null,
+ "Tlauh, Tamelelt, Maroc": null,
+ "Tlauh, Maroc": {
+  "lat": 31.8048268,
+  "lng": -7.6084016,
+  "label": "Tlauh, Caïdat de Ras El Aïn, Cercle de Sidi Bou Othmane, Province de Rhamna, Marrakech-Safi, Maroc"
+ },
+ "EL AIOUN SIDI MELLOUK, Maroc": {
+  "lat": 34.578344,
+  "lng": -2.502961,
+  "label": "Al Aioun, Pachalik de El Aïoun Sidi Mellouk, Province de Taourirt, Oriental, 65452, Maroc"
+ },
+ "Bir Tam Tam, Maroc": {
+  "lat": 33.9789487,
+  "lng": -4.6459933,
+  "label": "Bir Tamtam, caïdat Ras Tabouda, cercle de El Menzel, Province de Sefrou, Fès-Meknès, 31152, Maroc"
+ },
+ "Ras Tabouda, Maroc": {
+  "lat": 34.004978,
+  "lng": -4.714224,
+  "label": "Ras Tabouda, caïdat Ras Tabouda, cercle de El Menzel, Province de Sefrou, Fès-Meknès, 31302, Maroc"
+ },
+ "Zaouia Bougrine, Maroc": null,
+ "taroudant, Maroc": {
+  "lat": 30.470651,
+  "lng": -8.877922,
+  "label": "Taroudant, Pachalik de Taroudant, Province de Taroudant, Souss-Massa, Maroc"
+ },
+ "El houmer, taroudant, Maroc": null,
+ "El houmer, Maroc": null,
+ "taroudant, El houmer, Maroc": null,
+ "El houmer-taroudant, Maroc": null,
+ "Oulad Terna, Maroc": {
+  "lat": 30.4378849,
+  "lng": -8.8488696,
+  "label": "Oulad Terna, Sidi Borja, caïdat de Tazemmourt, Cercle de Taroudant, Province de Taroudant, Souss-Massa, 83003, Maroc"
+ },
+ "TAROUDANT, Maroc": {
+  "lat": 30.470651,
+  "lng": -8.877922,
+  "label": "Taroudant, Pachalik de Taroudant, Province de Taroudant, Souss-Massa, Maroc"
+ },
+ "Ouled Abbou, TAROUDANT, Maroc": null,
+ "Ouled Abbou, Maroc": {
+  "lat": 32.7181009,
+  "lng": -8.3100194,
+  "label": "Ouled Abbou, Oulad Si Bouhya, caïdat de Lmechrek, Cercle de Sidi Bennour, Province de Sidi Bennour, Casablanca-Settat, Maroc"
+ },
+ "TAROUDANT, Ouled Abbou, Maroc": null,
+ "Ouled Abbou-TAROUDANT, Maroc": null,
+ "Oulad Aissa, TAROUDANT, Maroc": {
+  "lat": 30.5576112,
+  "lng": -8.6138495,
+  "label": "Ouled Aissa, Caïdat d'Igli, Cercle d'Oulad Berhil, Province de Taroudant, Souss-Massa, Maroc"
+ },
+ "Tazemmourt, taroudant, Maroc": {
+  "lat": 30.4078449,
+  "lng": -8.8283479,
+  "label": "Tazemmourt, caïdat de Tazemmourt, Cercle de Taroudant, Province de Taroudant, Souss-Massa, Maroc"
+ },
+ "tamaloukt, taroudant, Maroc": {
+  "lat": 30.6074957,
+  "lng": -8.8390841,
+  "label": "Tamaloukt, Tamaloukte, Caïdat de Tamaloukte, Cercle de Taroudant, Province de Taroudant, Souss-Massa, Maroc"
+ },
+ "nouail, taroudant, Maroc": null,
+ "nouail, Maroc": {
+  "lat": 34.0519185,
+  "lng": -4.990094,
+  "label": "Bab Jdid Nouail, Rue Azilal, Mellah, Fes Jdid فاس الجديد, Méchouar Fès Jdid, Préfecture de Fès, Fès-Meknès, 30040, Maroc"
+ },
+ "taroudant, nouail, Maroc": null,
+ "nouail-taroudant, Maroc": null,
+ "oulad mhela, taroudant, Maroc": null,
+ "oulad mhela, Maroc": null,
+ "taroudant, oulad mhela, Maroc": null,
+ "oulad mhela-taroudant, Maroc": null,
+ "El boura, taroudant, Maroc": null,
+ "El boura, Maroc": null,
+ "taroudant, El boura, Maroc": null,
+ "El boura-taroudant, Maroc": null,
+ "Oulad brahim, taroudant, Maroc": null,
+ "Oulad brahim, Maroc": {
+  "lat": 33.1737934,
+  "lng": -8.4944272,
+  "label": "Oulad Brahim, Moulay Abdellah Amghar, caïdat de Oulad Bouaziz-Chamalia, Cercle d'El Jadida, Province d'El Jadida, Casablanca-Settat, Maroc"
+ },
+ "taroudant, Oulad brahim, Maroc": null,
+ "Oulad brahim-taroudant, Maroc": null,
+ "Sidi moussa lhamri, TAROUDANT, Maroc": {
+  "lat": 30.4725744,
+  "lng": -9.1583383,
+  "label": "Sidi Moussa Lhamri, caïdat de Sidi Moussa Lhamri, cercle d'Ouled Teima, Province de Taroudant, Souss-Massa, Maroc"
+ },
+ "Ahmar laglalcha, taroudant, Maroc": {
+  "lat": 30.452901,
+  "lng": -8.982032,
+  "label": "Ahmar Laglalcha, caïdat d'Ahmar, Cercle de Taroudant, Province de Taroudant, Souss-Massa, Maroc"
+ },
+ "TATA, Maroc": {
+  "lat": 29.746392,
+  "lng": -7.9696051,
+  "label": "Tata, Pachalik de Tata, Province de Tata, Souss-Massa, Maroc"
+ },
+ "IGHREM, TATA, Maroc": null,
+ "IGHREM, Maroc": {
+  "lat": 30.8828668,
+  "lng": -8.102688,
+  "label": "Ighrem, Ouneine, Caïdat de Tafingoult, Cercle d'Oulad Berhil, Province de Taroudant, Souss-Massa, Maroc"
+ },
+ "TATA, IGHREM, Maroc": null,
+ "IGHREM-TATA, Maroc": null,
+ "ASJENN, ouazzane, Maroc": null,
+ "ASJENN, Maroc": null,
+ "ouazzane, ASJENN, Maroc": null,
+ "ASJENN-ouazzane, Maroc": null,
+ "TAFOUGHALT, Maroc": {
+  "lat": 34.8055488,
+  "lng": -2.411397,
+  "label": "Tafoughalt, Caïdat de Tafoughalt, Cercle d'Aklim, Province de Berkane, Oriental, Maroc"
+ },
+ "OUJDA, Maroc": {
+  "lat": 34.677874,
+  "lng": -1.929306,
+  "label": "Oujda, Pachalik d'Oujda, Préfecture d'Oujda-Angad, Oriental, Maroc"
+ },
+ "AIN SFA, OUJDA, Maroc": {
+  "lat": 34.7521334,
+  "lng": -2.1432566,
+  "label": "Ain Sfa, Caïdat d'Aïn Sfa, Cercle d'Oujda-Banlieue nord, Préfecture d'Oujda-Angad, Oriental, 60005, Maroc"
+ },
+ "Bouhouda, Taounate, Maroc": {
+  "lat": 34.5927886,
+  "lng": -4.5497867,
+  "label": "Bouhouda, quartier administratif Sebt Metioua, Taounate, Bouhouda, caïdat de Bouhouda, Cercle de Taounate, Province de Taounate, Fès-Meknès, 34006, Maroc"
+ },
+ "Tahar Souk, Taounate, Maroc": {
+  "lat": 34.6514395,
+  "lng": -4.2794149,
+  "label": "Tahar Es Souk, Administratif, Thar Es-Souk, pachalik du Tahar Souk, Cercle de Taounate, Province de Taounate, Fès-Meknès, 34152, Maroc"
+ },
+ "bouaadl, Taounate, Maroc": null,
+ "bouaadl, taounat, Maroc": null,
+ "bouaadl, Maroc": null,
+ "taounat, bouaadl, Maroc": null,
+ "bouaadl-taounat, Maroc": null,
+ "Ouled azem, Taounate, Maroc": null,
+ "Ouled azem, taounat, Maroc": null,
+ "Ouled azem, Maroc": null,
+ "taounat, Ouled azem, Maroc": null,
+ "Ouled azem-taounat, Maroc": null,
+ "Timezgana, Taounate, Maroc": {
+  "lat": 34.580215,
+  "lng": -4.72859,
+  "label": "Timezgana, caïdat de Sidi El Mokhfi, Cercle de Ghafsai, Province de Taounate, Fès-Meknès, Maroc"
+ },
+ "Imouzzer Marmoucha, Maroc": {
+  "lat": 33.470015,
+  "lng": -4.294914,
+  "label": "Imouzzer Marmoucha, Pachalik de Imouzzer Marmoucha, Province de Boulemane, Fès-Meknès, 33152, Maroc"
+ },
+ "MEZRAOUA, Taounate, Maroc": {
+  "lat": 34.5247457,
+  "lng": -4.7348812,
+  "label": "Mezraoua, caïdat de Mezraoua, Cercle de Taounate, Province de Taounate, Fès-Meknès, Maroc"
+ },
+ "Ait Yaazem, meknes, Maroc": {
+  "lat": 33.73255,
+  "lng": -5.579042,
+  "label": "Ait Yaazem, Caïdat de Ait Yaazem, Cercle de Agourai, Province d'El Hajeb, Fès-Meknès, Maroc"
+ },
+ "Ourtzagh, Taounate, Maroc": {
+  "lat": 34.535163,
+  "lng": -4.968373,
+  "label": "Ourtzagh, caïdat d’Ourtzagh, Cercle de Ghafsai, Province de Taounate, Fès-Meknès, 34044, Maroc"
+ },
+ "oualidia, Maroc": {
+  "lat": 32.7314358,
+  "lng": -9.0340271,
+  "label": "Loualidia, caïdat de L’Oualidia, cercle de Zemamra, Province de Sidi Bennour, Casablanca-Settat, 24252, Maroc"
+ },
+ "Kasbat ayir, oualidia, Maroc": null,
+ "Kasbat ayir, Maroc": {
+  "lat": 32.7036913,
+  "lng": -9.0657432,
+  "label": "Kasbat Ayir, Ayir, Caïdat de Souk Ayir, cercle de Hrara, Province de Safi, Marrakech-Safi, 24250, Maroc"
+ },
+ "Amerzgane, Maroc": {
+  "lat": 31.044795,
+  "lng": -7.211094,
+  "label": "Amerzgane, caïdat de Amerzgane, Cercle d'Amerzgane, Province d'Ouarzazate, Drâa-Tafilalet, 45102, Maroc"
+ },
+ "Imini, Ouarzazate, Maroc": {
+  "lat": 31.0615887,
+  "lng": -7.2518527,
+  "label": "Imini Hotel, RN9, Tagenite, Amerzgane, caïdat de Amerzgane, Cercle d'Amerzgane, Province d'Ouarzazate, Drâa-Tafilalet, 45102, Maroc"
+ },
+ "dakhla, Maroc": {
+  "lat": 23.6940663,
+  "lng": -15.9431274,
+  "label": "Dakhla, Pachalik de Dakhla, Dakhla-Oued Ed-Dahab, Maroc"
+ },
+ "LAMHIRIZ, dakhla, Maroc": {
+  "lat": 22.1974146,
+  "lng": -16.7666339,
+  "label": "Lamhiriz, Bir Gandouz, Caïdat de Bir Gandouz, Cercle de Bir Gandouz, Province d'Aousserd, Dakhla-Oued Ed-Dahab, Maroc"
+ },
+ "LAMHIRIZ, Maroc": {
+  "lat": 22.1974146,
+  "lng": -16.7666339,
+  "label": "Lamhiriz, Bir Gandouz, Caïdat de Bir Gandouz, Cercle de Bir Gandouz, Province d'Aousserd, Dakhla-Oued Ed-Dahab, Maroc"
+ },
+ "dakhla, LAMHIRIZ, Maroc": null,
+ "LAMHIRIZ-dakhla, Maroc": {
+  "lat": 22.1974146,
+  "lng": -16.7666339,
+  "label": "Lamhiriz, Bir Gandouz, Caïdat de Bir Gandouz, Cercle de Bir Gandouz, Province d'Aousserd, Dakhla-Oued Ed-Dahab, Maroc"
+ },
+ "FES, Maroc": {
+  "lat": 34.0346534,
+  "lng": -5.0161926,
+  "label": "Fès, Pachalik du Fes, Préfecture de Fès, Fès-Meknès, Maroc"
+ },
+ "AIN SMEN, FES, Maroc": {
+  "lat": 34.0171691,
+  "lng": -5.0185556,
+  "label": "Rond-Point Ain Smen, Arrondissement de Zouagha, Fès, Pachalik du Fes, Préfecture de Fès, Fès-Meknès, Maroc"
+ },
+ "Imintanuot, Maroc": null,
+ "Idouirane, Imintanuot, Maroc": null,
+ "Idouirane, Maroc": null,
+ "Imintanuot, Idouirane, Maroc": null,
+ "Idouirane-Imintanuot, Maroc": null,
+ "Tamait Izder, agadir, Maroc": null,
+ "Tamait Izder, Maroc": null,
+ "agadir, Tamait Izder, Maroc": null,
+ "Tamait Izder-agadir, Maroc": null,
+ "zagora, Maroc": {
+  "lat": 30.3279053,
+  "lng": -5.8369957,
+  "label": "Zagora, Pachalik de Zagora, Province de Zagora, Drâa-Tafilalet, 49500, Maroc"
+ },
+ "Tinzouline, zagora, Maroc": {
+  "lat": 30.5051133,
+  "lng": -6.100842,
+  "label": "Tinzouline, Caïdat de Tinzouline, Cercle de Zagora, Province de Zagora, Drâa-Tafilalet, Maroc"
+ },
+ "BEN ZOLI, Maroc": null,
+ "Tagounite, Maroc": {
+  "lat": 29.978887,
+  "lng": -5.5832329,
+  "label": "Tagounite, Caïdat de Tagounite, Cercle de Zagora, Province de Zagora, Drâa-Tafilalet, Maroc"
+ },
+ "Ain el Mediour, taroudant, Maroc": {
+  "lat": 30.4140439,
+  "lng": -8.8989911,
+  "label": "Ain el Mediour, Machraa El Ain, caïdat de Machraa El Ain, cercle d'Ouled Teima, Province de Taroudant, Souss-Massa, Maroc"
+ },
+ "Ouled Mssaad, Maroc": null,
+ "Oulad Othmane, Maroc": {
+  "lat": 32.1162794,
+  "lng": -1.2325551,
+  "label": "Rue Oulad Othmane, Mellah Oudaghir, Ksar Oudaghir Ait Addi, Figuig, Pachalik de Figuig, Province de Figuig, Oriental, 61001, Maroc"
+ },
+ "Oulad Yahya Lagraire, Maroc": null,
+ "Tinnegza, Maroc": null,
+ "Ouled Moqaddem, Maroc": null,
+ "Aït Attab, Maroc": {
+  "lat": 32.111,
+  "lng": -6.709,
+  "label": "Ait Attab, Centre Ait Attab. Quartier Administratif MOULAY AISSA BEN DRISS, Azilal, Moulay Aissa Ben Driss, caïdat d'Aït Aatab, cercle de Bzou, Province d'Azilal, Béni Mellal-Khénifra, 22102, Maroc"
+ },
+ "Oulad Aissa, el jadida, Maroc": {
+  "lat": 33.2594934,
+  "lng": -8.5101726,
+  "label": "Rue Oulad Aissa, Lot. El Fath, 1er Arrondissement, pachalik d'El Jadida, Province d'El Jadida, Casablanca-Settat, 24010, Maroc"
+ },
+ "BRADIA, Maroc": {
+  "lat": 32.4206518,
+  "lng": -6.5072251,
+  "label": "Had Bradia, caïdat de Bradia, cercle de Fquih Ben Salah, Province de Fquih Ben Saleh, Béni Mellal-Khénifra, Maroc"
+ },
+ "Souk El Had Des Bradia, Maroc": null,
+ "Ouzoud, Maroc": {
+  "lat": 32.0153547,
+  "lng": -6.7192297,
+  "label": "Cascades d'Ouzoud, RR304, Ouzoud, Ait Taguella, caïdat de Tanant, cercle de Bzou, Province d'Azilal, Béni Mellal-Khénifra, Maroc"
+ },
+ "HOUARA, Tanger, Maroc": {
+  "lat": 35.6328133,
+  "lng": -5.967679,
+  "label": "Houara, Gueznaïa, Pachalik de Gueznaïa, Préfecture de Tanger-Assilah, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "MEHARZA, Tanger, Maroc": {
+  "lat": 35.383156,
+  "lng": -5.442289,
+  "label": "El Meharsa, Zinat, caidat de Bni Karrich, Cercle de Tétouan, Province de Tétouan, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "EL MNBAR, Tanger, Maroc": null,
+ "EL MNBAR, Maroc": null,
+ "Tanger, EL MNBAR, Maroc": null,
+ "EL MNBAR-Tanger, Maroc": null,
+ "AIN BELLOUT, Tanger, Maroc": null,
+ "AIN BELLOUT, Maroc": null,
+ "Tanger, AIN BELLOUT, Maroc": null,
+ "AIN BELLOUT-Tanger, Maroc": null,
+ "Agouim, Maroc": {
+  "lat": 31.1563929,
+  "lng": -7.4617715,
+  "label": "Agouim, Ighrem N'Ougdal, Caïdat de Ighrem N'Ougdal, Cercle d'Amerzgane, Province d'Ouarzazate, Drâa-Tafilalet, Maroc"
+ },
+ "Ighrem N Ougdal, Maroc": {
+  "lat": 31.228184,
+  "lng": -7.423589,
+  "label": "Ighrem N'Ougdal, Caïdat de Ighrem N'Ougdal, Cercle d'Amerzgane, Province d'Ouarzazate, Drâa-Tafilalet, 45253, Maroc"
+ },
+ "Tarmigt, Maroc": {
+  "lat": 30.8530592,
+  "lng": -6.9358869,
+  "label": "Tarmigt, caïdat de Ahl Ouarzazate, cercle d'Ouarzazate, Province d'Ouarzazate, Drâa-Tafilalet, Maroc"
+ },
+ "Ain jiri, Maroc": null,
+ "Tlata Loulad Fini, Maroc": null,
+ "Tnine Beni Meskine, Maroc": null,
+ "Aghbalou N serdan, Maroc": null,
+ "Itzer, zaida, Maroc": null,
+ "Itzer, Maroc": {
+  "lat": 32.879137,
+  "lng": -5.054056,
+  "label": "Itzer, Caïdat d'Itzer, Cercle de Midelt, Province de Midelt, Drâa-Tafilalet, 54252, Maroc"
+ },
+ "Zoualeth Dkhissa, Maroc": {
+  "lat": 33.9368935,
+  "lng": -5.4651351,
+  "label": "mosquée zoualeth, RP7036, Dkhissa, caïdat de Dkhissa, Cercle de Meknès-Banlieue, Prefecture de Meknès, Fès-Meknès, 50045, Maroc"
+ },
+ "Ras El Ma Fes, Maroc": {
+  "lat": 33.9892376,
+  "lng": -5.1073314,
+  "label": "Ras El Ma, RR716, Ras El Ma, Ain Chkef, caïdat de Ain Chkef, Cercle de Moulay Yacoub, Province de Moulay Yacoub, Fès-Meknès, Maroc"
+ },
+ "Tassaout, Maroc": {
+  "lat": 31.4595232,
+  "lng": -6.5818955,
+  "label": "Tassaout, Imi N'Oulaoune, caïdat de Moghrane, cercle d'Ouarzazate, Province d'Ouarzazate, Drâa-Tafilalet, Maroc"
+ },
+ "Oued Jdida, Maroc": {
+  "lat": 33.924289,
+  "lng": -5.3691,
+  "label": "Oued Jdida, caïdat de M’Haya, Cercle de Meknès-Banlieue, Prefecture de Meknès, Fès-Meknès, Maroc"
+ },
+ "Ouled Slim Khrarib, Maroc": null,
+ "Aghbala, beni mellal, Maroc": {
+  "lat": 32.3360127,
+  "lng": -6.3565055,
+  "label": "Rue Aghbala, Beni Mellal, Pachalik de Beni Mellal, Province de Beni Mellal, Béni Mellal-Khénifra, 23010, Maroc"
+ },
+ "Tala Youssef, Al Hoceima, Maroc": {
+  "lat": 35.2303016,
+  "lng": -3.9713002,
+  "label": "Tala Youssef, Izemmouren, Caïdat d’Izemmouren, Cercle de Bni Ouriaghel Algharbia, Province d'Al Hoceïma, Tanger-Tétouan-Al Hoceïma, 32002, Maroc"
+ },
+ "Oulad Jerrar, Maroc": {
+  "lat": 29.5749705,
+  "lng": -9.6588089,
+  "label": "caïdat d'Oulad Jerrar, Cercle de Tiznit, Province de Tiznit, Souss-Massa, 85003, Maroc"
+ },
+ "Taghjijt, Maroc": {
+  "lat": 29.0607261,
+  "lng": -9.4233205,
+  "label": "Taghjijt, caïdat de Taghjijt, cercle de Bouizakarne, Province de Guelmim, Guelmim-Oued Noun, Maroc"
+ },
+ "Toundoute, Maroc": {
+  "lat": 31.266118,
+  "lng": -6.589762,
+  "label": "Toundoute, caïdat de Moghrane, cercle d'Ouarzazate, Province d'Ouarzazate, Drâa-Tafilalet, 45852, Maroc"
+ },
+ "Ouargui, Maroc": {
+  "lat": 31.8343177,
+  "lng": -7.2016463,
+  "label": "Ouargui, Caïdat de Ouargui, Cercle de El Attaouia, Province d'El Kelâat Es-Sraghna, Marrakech-Safi, Maroc"
+ },
+ "Bourouta, Maroc": {
+  "lat": 31.7737835,
+  "lng": -7.2101853,
+  "label": "Bourouta, Bouya Omar, Caïdat de Ouargui, Cercle de El Attaouia, Province d'El Kelâat Es-Sraghna, Marrakech-Safi, Maroc"
+ },
+ "Bouderbala, El Hajeb, Maroc": null,
+ "Ouled Tayeb, Maroc": {
+  "lat": 33.959838,
+  "lng": -4.99562,
+  "label": "Oulad Tayeb, Pachalik d'Oulad Tayeb, Préfecture de Fès, Fès-Meknès, Maroc"
+ },
+ "Boukidarn, Maroc": null,
+ "Bouzerktoun, Maroc": {
+  "lat": 31.6437334,
+  "lng": -9.6764012,
+  "label": "Cimetière de Moulay Bouzerktoun, Moulay Bouzarqtoune, caïdat d'Aquermoud, Cercle d'Essaouira, Province d'Essaouira, Marrakech-Safi, Maroc"
+ },
+ "Aït Iaaza, Maroc": {
+  "lat": 30.5064594,
+  "lng": -8.7911541,
+  "label": "Ait Iaaza, Pachalik d'Ait Iaaza, Province de Taroudant, Souss-Massa, 83200, Maroc"
+ },
+ "Dar Bouazza, Maroc": {
+  "lat": 33.5215831,
+  "lng": -7.8164369,
+  "label": "Dar Bouazza, Pachalik de Dar Bouazza, Province de Nouaceur, Casablanca-Settat, Maroc"
+ },
+ "Tit Mellil, Maroc": {
+  "lat": 33.551412,
+  "lng": -7.483552,
+  "label": "Tit Mellil, Pachalik de Tit Mellil, Province de Médiouna, Casablanca-Settat, Maroc"
+ },
+ "Kasba Tadla, Maroc": {
+  "lat": 32.602894,
+  "lng": -6.269706,
+  "label": "Kasba Tadla, Pachalik de Kasba Tadla, Province de Beni Mellal, Béni Mellal-Khénifra, Maroc"
+ },
+ "Oulmès, Maroc": {
+  "lat": 33.425509,
+  "lng": -6.004488,
+  "label": "Oulmes, caïdat de Oulemes, Cercle d'Oulmes, Province de Khémisset, Rabat-Salé-Kénitra, 15102, Maroc"
+ },
+ "Kelaat M'Gouna, Maroc": {
+  "lat": 31.2201797,
+  "lng": -6.1406983,
+  "label": "Kelaat M'Gouna, RN10, Kalaat M'Gouna, caïdat de Souk Lakhmis, Pachalik de Kalaat M'Gouna, Province de Tinghir, Drâa-Tafilalet, 45200, Maroc"
+ },
+ "El Aioun Sidi Mellouk, Maroc": {
+  "lat": 34.578344,
+  "lng": -2.502961,
+  "label": "Al Aioun, Pachalik de El Aïoun Sidi Mellouk, Province de Taourirt, Oriental, 65452, Maroc"
+ },
+ "M'Hamid El Ghizlane, Maroc": {
+  "lat": 29.8273291,
+  "lng": -5.7238782,
+  "label": "M'Hamid El Ghizlane, caïdat de M'Hamid, Cercle de Zagora, Province de Zagora, Drâa-Tafilalet, Maroc"
+ },
+ "Er-Rich, Maroc": {
+  "lat": 32.25677,
+  "lng": -4.498189,
+  "label": "Er-Rich, Pachalik d'Er-Rich, Province de Midelt, Drâa-Tafilalet, 52400, Maroc"
+ },
+ "Tinejdad, Maroc": {
+  "lat": 31.510201,
+  "lng": -5.03382,
+  "label": "Tinejdad, Pachalik de Tinejdad, Province d'Errachidia, Drâa-Tafilalet, Maroc"
+ },
+ "Sidi Rahal Chatai, Maroc": {
+  "lat": 33.4406279,
+  "lng": -7.9655641,
+  "label": "Sidi Rahal Chatai, Pachalik de Sidi Rahal Chatai, Province de Berrechid, Casablanca-Settat, 26175, Maroc"
+ },
+ "Souk El Arbaa, Maroc": {
+  "lat": 34.6765226,
+  "lng": -5.992617,
+  "label": "Souk El Arba Du Gharb, Pachalik de Souk El Arba Du Gharb, Province de Kenitra, Rabat-Salé-Kénitra, Maroc"
+ },
+ "Anza, Agadir, Maroc": {
+  "lat": 30.4520064,
+  "lng": -9.6590808,
+  "label": "Anza, Agadir, Pachalik d'Agadir, Préfecture d'Agadir Ida-Outanane, Souss-Massa, Maroc"
+ },
+ "Zaida, Maroc": {
+  "lat": 32.8016336,
+  "lng": -4.9689587,
+  "label": "Zaïda, Caïdat d'Itzer, Cercle de Midelt, Province de Midelt, Drâa-Tafilalet, Maroc"
+ },
+ "Tarfaya, Maroc": {
+  "lat": 27.9401204,
+  "lng": -12.9249934,
+  "label": "Tarfaya, Pachalik de Tarfaya, Province de Tarfaya, Maroc"
+ },
+ "Karia Ba Mohamed, Maroc": {
+  "lat": 34.364056,
+  "lng": -5.214573,
+  "label": "Karia Ba Mohamed, pachalik du Karia, Province de Taounate, Fès-Meknès, 34052, Maroc"
+ },
+ "Beddouza, Maroc": {
+  "lat": 32.541766,
+  "lng": -9.278065,
+  "label": "El Beddouza, caïdat de Ouled Zid, cercle de Hrara, Province de Safi, Marrakech-Safi, Maroc"
+ },
+ "Foum El Hisn, Maroc": {
+  "lat": 29.013582,
+  "lng": -8.886818,
+  "label": "Fam El Hisn, Pachalik de Fam El Hisn, Province de Tata, Souss-Massa, Maroc"
+ },
+ "Hattane, Maroc": {
+  "lat": 32.8406383,
+  "lng": -6.8046283,
+  "label": "Hattane, Pachalik de Hattane, Province de Khouribga, Béni Mellal-Khénifra, 25302, Maroc"
+ },
+ "Ighram Laalam, Maroc": null,
+ "Tighassaline, Maroc": {
+  "lat": 32.7830802,
+  "lng": -5.6528302,
+  "label": "Tighassaline, caïdat de Tighssaline, cercle de El Kbab, Province de Khénifra, Béni Mellal-Khénifra, 54003, Maroc"
+ },
+ "Jorf Lasfar, Maroc": {
+  "lat": 33.1100029,
+  "lng": -8.6311468,
+  "label": "Centrale Thermique de Jorf Lasfar, Oulad Zaid, Moulay Abdellah Amghar, caïdat de Oulad Bouaziz-Chamalia, Cercle d'El Jadida, Province d'El Jadida, Casablanca-Settat, Maroc"
+ },
+ "Aounate, Maroc": {
+  "lat": 32.6130434,
+  "lng": -8.2230741,
+  "label": "souk Had Aounate, Metrane, caïdat de Metrane, Cercle de Sidi Bennour, Province de Sidi Bennour, Casablanca-Settat, Maroc"
+ },
+ "Chellalat, Maroc": null,
+ "Lqliaa, Maroc": {
+  "lat": 30.29865,
+  "lng": -9.4620176,
+  "label": "Lqliaa, Pachalik de Lqliâa, Préfecture d'Inezgane-Aït Melloul, Souss-Massa, 86356, Maroc"
+ },
+ "El Menzel, Maroc": {
+  "lat": 35.52257,
+  "lng": -5.64823,
+  "label": "El Manzla, Bni Harchen, Jbel Lahbib, Cercle de Jebala دائرة جبالة, Province de Tétouan, Tanger-Tétouan-Al Hoceïma, Maroc"
+ },
+ "Timahdite, Maroc": {
+  "lat": 33.238277,
+  "lng": -5.060916,
+  "label": "Timhadit, Caïdat de Timahdite, cercle d'Azrou, Province d'Ifrane, Fès-Meknès, Maroc"
+ },
+ "Ouled Yahya, Maroc": {
+  "lat": 35.187227,
+  "lng": -5.976779,
+  "label": "Ouled Yahya, Rissana Janoubia, caïdat de Rissana, cercle de Oued El Makhazine, Province de Larache, Tanger-Tétouan-Al Hoceïma, 92252, Maroc"
+ },
+ "Talsint, Maroc": {
+  "lat": 32.535512,
+  "lng": -3.439467,
+  "label": "Talsint, Caidat de Talsint, Cercle de Talsint, Province de Figuig, Oriental, 61252, Maroc"
+ },
+ "Igherm, Maroc": {
+  "lat": 30.089004,
+  "lng": -8.460942,
+  "label": "Irherm, Pachalik d'Igherm, Province de Taroudant, Souss-Massa, 83254, Maroc"
+ },
+ "Tinighza, Maroc": null,
+ "Bradia, Maroc": {
+  "lat": 32.4206518,
+  "lng": -6.5072251,
+  "label": "Had Bradia, caïdat de Bradia, cercle de Fquih Ben Salah, Province de Fquih Ben Saleh, Béni Mellal-Khénifra, Maroc"
+ }
 }

@@ -89,6 +89,26 @@ async function geocode(query) {
   return result;
 }
 
+// Ameex spellings that OpenStreetMap knows under another name (checked by hand).
+const SPELLING = {
+  "Kasbah Tadla": "Kasba Tadla", "Tinjdad": "Tinejdad", "Kalaat MGouna": "Kelaat M'Gouna",
+  "Dar Bouaza": "Dar Bouazza", "Tit Melil": "Tit Mellil", "Laarache": "Larache",
+  "Souk Elarbaa Du Gharb": "Souk El Arbaa", "El Jorf Lasfar": "Jorf Lasfar", "Terfaya": "Tarfaya",
+  "Laayoun Cherqia": "El Aioun Sidi Mellouk", "Mhamid Lghezlane": "M'Hamid El Ghizlane",
+  "Chellalat Mohammedia": "Chellalat", "Karia Be Mohammed": "Karia Ba Mohamed",
+  "Khmiss Zemamera": "Zemamra", "Tighassaline ville": "Tighassaline", "TIMAHDITE-AZROU": "Timahdite",
+  "Amzmiz": "Amizmiz", "Ait Laaza": "Aït Iaaza", "Arba Aounate": "Aounate", "Errich": "Er-Rich",
+  "Oulmas": "Oulmès", "Zayda": "Zaida", "TALSINNT": "Talsint", "Boukidaren": "Boukidarn",
+  "ighram laalam-beni mellal": "Ighram Laalam", "Hatane-Khouribga": "Hattane",
+  "El Menzale-sefrou": "El Menzel", "Souk El Had Des Bradia": "Bradia", "Anza - Taddart": "Anza, Agadir",
+  "Leqliaa - Taddart": "Lqliaa", "cap beddouza": "Beddouza", "Oulad Ettayeb": "Ouled Tayeb",
+  "Sidi Rehal-casa": "Sidi Rahal Chatai", "Bouderbala": "Bouderbala, El Hajeb",
+  "Port of Tan-Tan": "El Ouatia", "Kalaat Mgouna": "Kelaat M'Gouna", "Tinnegza": "Tinighza",
+  "IGHREM-TATA": "Igherm", "Fam El Hisn-tata": "Foum El Hisn", "Jerf El Melha": "Jorf El Melha",
+  "Mejjat-chichaoua": "Mejjat", "Oulad yahya-Marrakech": "Ouled Yahya", "Zaouiet Bouzarktoune": "Bouzerktoun",
+  "Kasbah tadla": "Kasba Tadla",
+};
+
 const REGION_ALIASES = { hociema: "Al Hoceima", kacem: "Sidi Kacem", mohamedia: "Mohammedia", taounat: "Taounate", casa: "Casablanca" };
 const tidy = (s) => s.replace(/\s+/g, " ").replace(/^[\s-]+|[\s-]+$/g, "").trim();
 
@@ -117,6 +137,7 @@ function candidates(raw) {
     q.unshift(`${parts[0]}, ${hint}`);
   }
   q.push(raw);
+  if (SPELLING[raw]) q.unshift(SPELLING[raw]);
   return { queries: [...new Set(q.map((s) => `${s}, Maroc`))], hint };
 }
 
