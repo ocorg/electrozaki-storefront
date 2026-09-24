@@ -94,6 +94,7 @@ export default async function ProductPage({ params }: Props) {
     name: product.name,
     brand: product.brand,
     conditionLabel: CONDITION_LABEL[product.condition] ?? product.condition,
+    grade: product.condition,
     isPhone: product.isPhone,
     availability: product.availability,
     recommendedSalePrice: product.recommendedSalePrice.toString(),

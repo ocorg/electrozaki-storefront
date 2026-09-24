@@ -162,6 +162,7 @@ export type ProductFilters = {
   storage?: string; // e.g. "128GB" (phones)
   subcategory?: string; // child category slug (accessories)
   compatibleWith?: string; // phone modelKey (accessories)
+  q?: string; // words to find in the name, brand or category (search box)
 };
 
 function buildFilterConditions(filters?: ProductFilters): Array<Record<string, unknown>> {
@@ -180,6 +181,16 @@ function buildFilterConditions(filters?: ProductFilters): Array<Record<string, u
     });
   }
   if (filters?.storage) and.push({ tags: { has: filters.storage.toLowerCase() } });
+  // Every word must appear somewhere: "coque 13" finds "Coque iPhone 13".
+  for (const word of (filters?.q ?? "").trim().split(/\s+/).filter((w) => w.length > 0).slice(0, 6)) {
+    and.push({
+      OR: [
+        { name: { contains: word, mode: "insensitive" } },
+        { brand: { contains: word, mode: "insensitive" } },
+        { category: { name: { contains: word, mode: "insensitive" } } },
+      ],
+    });
+  }
   if (filters?.subcategory) and.push({ category: { slug: filters.subcategory } });
   if (filters?.compatibleWith) {
     and.push({ compatibleWithPhones: { some: { compatibleWith: { modelKey: filters.compatibleWith, published: true } } } });

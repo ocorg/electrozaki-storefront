@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { ConditionDashboard, type ConditionData } from "@/components/storefront/ConditionDashboard";
 import { Select } from "@/components/ui/Select";
+import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
 
 export type VariantData = ConditionData & {
   id: string;
@@ -27,6 +28,8 @@ export type ProductVariantExperienceData = {
   name: string;
   brand: string | null;
   conditionLabel: string;
+  /** grade code (NEUF, TRES_BON, BON, PIECES_REMPLACEES) */
+  grade: string;
   isPhone: boolean;
   availability: "IN_STOCK" | "OUT_OF_STOCK" | "COMING_SOON" | "DISCONTINUED";
   recommendedSalePrice: string;
@@ -56,7 +59,12 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
 
-  const hasColorVariants = variants.some((v) => v.color);
+  // Used phones: every unit differs → colour, battery range, then pick a unit.
+  // New phones keep the colour / storage swatches.
+  const unitMode = product.isPhone && product.grade !== "NEUF" && variants.length > 0;
+  const [unitColor, setUnitColor] = useState("all");
+  const [unitBattery, setUnitBattery] = useState<BatteryRange>("all");
+  const hasColorVariants = !unitMode && variants.some((v) => v.color);
   const hasStorageVariants = variants.some((v) => v.storageLabel);
 
   const distinctColors = useMemo(
@@ -84,7 +92,17 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
   const [selectedStorage, setSelectedStorage] = useState<string | null>(
     selectedColor ? (storagesForColor(selectedColor).find((s) => !comboDisabled(selectedColor, s)) ?? storagesForColor(selectedColor)[0] ?? null) : null
   );
-  const [selectedVariantId, setSelectedVariantId] = useState<string | undefined>(variants[0]?.id);
+  const [selectedVariantId, setSelectedVariantId] = useState<string | undefined>(
+    unitMode ? matchUnits(variants, "all", "all")[0]?.id ?? variants[0]?.id : variants[0]?.id
+  );
+
+  // Changing a filter keeps the selection on a unit that matches it.
+  function applyUnitFilters(color: string, battery: BatteryRange) {
+    setUnitColor(color);
+    setUnitBattery(battery);
+    const matches = matchUnits(variants, color, battery);
+    if (!matches.some((u) => u.id === selectedVariantId)) setSelectedVariantId(matches[0]?.id);
+  }
 
   function handleSelectColor(color: string) {
     setSelectedColor(color);
@@ -252,7 +270,19 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
               </div>
             )}
 
-            {!hasColorVariants && variants.length > 0 && (
+            {unitMode && (
+              <UnitPicker
+                units={variants}
+                color={unitColor}
+                battery={unitBattery}
+                selectedId={selectedVariantId}
+                onColor={(c) => applyUnitFilters(c, "all")}
+                onBattery={(b) => applyUnitFilters(unitColor, b)}
+                onSelect={setSelectedVariantId}
+              />
+            )}
+
+            {!unitMode && !hasColorVariants && variants.length > 0 && (
               <Select
                 value={selectedVariantId}
                 onChange={(e) => setSelectedVariantId(e.target.value)}
@@ -268,14 +298,16 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
             )}
 
             <div className="flex items-center gap-3">
-              <input
-                type="number"
-                min={1}
-                max={maxQuantity}
-                value={Math.min(quantity, maxQuantity)}
-                onChange={(e) => setQuantity(Math.min(maxQuantity, Math.max(1, Number(e.target.value))))}
-                className="min-h-11 w-20 rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
-              />
+              {!unitMode && (
+                <input
+                  type="number"
+                  min={1}
+                  max={maxQuantity}
+                  value={Math.min(quantity, maxQuantity)}
+                  onChange={(e) => setQuantity(Math.min(maxQuantity, Math.max(1, Number(e.target.value))))}
+                  className="min-h-11 w-20 rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
+                />
+              )}
               <Button onClick={handleAdd} disabled={variantOutOfStock} className="flex-1">
                 {variantOutOfStock ? (
                   "Épuisé"

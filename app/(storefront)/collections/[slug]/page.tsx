@@ -40,6 +40,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   // Only the filters that belong to this kind of category are applied.
   const filters = {
     brand: str(filterParams.brand),
+    q: str(filterParams.q),
     maxPrice: int(filterParams.maxPrice),
     condition: phones ? str(filterParams.condition) : undefined,
     minBatteryHealth: phones ? int(filterParams.minBattery) : undefined,

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { Search } from "lucide-react";
 import { Button, AnchorButton } from "@/components/ui/Button";
 import { cardClasses } from "@/components/ui/Card";
 import type { CategoryFilterOptions } from "@/lib/db/public-products";
@@ -29,6 +30,7 @@ export type FilterValues = {
   storage?: string;
   type?: string;
   fits?: string;
+  q?: string;
 };
 
 type Props = {
@@ -80,6 +82,21 @@ export function CatalogFilters({ options, basePath, defaults }: Props) {
 
   return (
     <form ref={formRef} method="get" className={cardClasses("space-y-5 p-4")}>
+      <div>
+        <Label>Rechercher</Label>
+        <div className="relative">
+          <Search size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <input
+            type="search"
+            name="q"
+            defaultValue={defaults.q ?? ""}
+            maxLength={60}
+            enterKeyHint="search"
+            placeholder={options.kind === "phones" ? "Ex : iPhone 13, A54…" : "Ex : coque iPhone 13…"}
+            className={`${fieldClass} pl-9`}
+          />
+        </div>
+      </div>
       {options.kind === "phones" ? (
         <>
           <FilterSelect name="brand" label="Marque" value={defaults.brand} items={brands} all="Toutes marques" onChange={submit} />
