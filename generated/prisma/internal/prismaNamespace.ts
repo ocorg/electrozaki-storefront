@@ -2138,6 +2138,8 @@ export const RepairRequestScalarFieldEnum = {
   preferredSlot: 'preferredSlot',
   status: 'status',
   cancelReason: 'cancelReason',
+  ref: 'ref',
+  repairRef: 'repairRef',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -27,6 +27,9 @@ const CONSULT_STEPS = [
   { key: "recupere", label: "Clôturée" },
 ];
 
+// Website requests start one step earlier, before the device is dropped off.
+const REQUEST_STEP = { key: "demande_recue", label: "Demande reçue — nous vous contactons" };
+
 export function TrackingForm({ initialRef }: { initialRef: string }) {
   const [ref, setRef] = useState(initialRef);
   const [phone, setPhone] = useState("");
@@ -60,7 +63,8 @@ export function TrackingForm({ initialRef }: { initialRef: string }) {
     else setError(r.error);
   }
 
-  const steps = repair?.kind === "CONSULTATION" ? CONSULT_STEPS : REPAIR_STEPS;
+  const base = repair?.kind === "CONSULTATION" ? CONSULT_STEPS : REPAIR_STEPS;
+  const steps = repair?.requestRef ? [REQUEST_STEP, ...base] : base;
   // The quote step only appears when there was a quote.
   const shown = steps.filter((s) => s.key !== "devis_envoye" || repair?.quoteAmount !== null);
   const current = shown.findIndex((s) => s.key === repair?.status);
@@ -71,7 +75,7 @@ export function TrackingForm({ initialRef }: { initialRef: string }) {
         <input
           type="text"
           required
-          placeholder="Numéro de réparation (ex : REP-0142)"
+          placeholder="N° de demande ou de réparation (DEM-… ou REP-…)"
           value={ref}
           onChange={(e) => setRef(e.target.value.toUpperCase())}
           className={`${inputClass} font-mono`}
@@ -94,7 +98,9 @@ export function TrackingForm({ initialRef }: { initialRef: string }) {
       {repair && (
         <div className={cardClasses("space-y-5 p-6")}>
           <div>
-            <p className="font-mono text-sm text-neutral-500">{repair.ref}</p>
+            <p className="font-mono text-sm text-neutral-500">
+              {repair.requestRef && repair.requestRef !== repair.ref ? `${repair.requestRef} → ${repair.ref}` : repair.ref}
+            </p>
             <p className="text-lg font-semibold">{repair.device}</p>
           </div>
 

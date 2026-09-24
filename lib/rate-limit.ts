@@ -53,5 +53,30 @@ export async function allowRequest(bucket: RateLimitBucket): Promise<boolean> {
   return true;
 }
 
+// Repair tracking: someone who knows a customer's phone could try ticket
+// numbers one after the other (REP numbers follow each other). After 5
+// wrong numbers for one phone in 24 h, that phone can't be looked up for
+// the rest of the day — whatever connection the attempts come from.
+const PHONE_FAILURES = { max: 5, windowHours: 24 };
+
+function phoneKey(phone: string): string {
+  const salt = process.env.RECEIPT_SIGNING_SECRET ?? "";
+  return createHash("sha256").update(`${salt}:phone:${phone.replace(/\D/g, "").slice(-9)}`).digest("hex").slice(0, 32);
+}
+
+export async function trackingPhoneLocked(phone: string): Promise<boolean> {
+  const since = new Date(Date.now() - PHONE_FAILURES.windowHours * 60 * 60_000);
+  const failures = await prisma.rateLimitHit.count({
+    where: { bucket: "track_phone", keyHash: phoneKey(phone), createdAt: { gte: since } },
+  });
+  if (failures < PHONE_FAILURES.max) return false;
+  await recordBot("blocked", "track_phone");
+  return true;
+}
+
+export async function recordTrackingFailure(phone: string): Promise<void> {
+  await prisma.rateLimitHit.create({ data: { bucket: "track_phone", keyHash: phoneKey(phone) } });
+}
+
 export const RATE_LIMIT_MESSAGE =
   "Trop de tentatives. Merci de réessayer dans une heure ou de nous écrire sur WhatsApp.";

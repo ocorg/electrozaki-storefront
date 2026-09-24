@@ -46,7 +46,7 @@ type RepairRequestInput = {
   notes?: string;
 };
 
-type Result = { ok: true } | { ok: false; error: string };
+type Result = { ok: true; ref: string } | { ok: false; error: string };
 
 export async function submitRepairRequest(input: RepairRequestInput): Promise<Result> {
   if (!(await allowRequest("repair"))) return { ok: false, error: RATE_LIMIT_MESSAGE };
@@ -56,6 +56,6 @@ export async function submitRepairRequest(input: RepairRequestInput): Promise<Re
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Champs invalides." };
   }
 
-  await createRepairRequest(parsed.data);
-  return { ok: true };
+  const request = await createRepairRequest(parsed.data);
+  return { ok: true, ref: request.ref };
 }

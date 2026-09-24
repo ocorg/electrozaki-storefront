@@ -35,6 +35,8 @@ export type RepairRequestMinAggregateOutputType = {
   preferredSlot: string | null
   status: $Enums.RepairRequestStatus | null
   cancelReason: string | null
+  ref: string | null
+  repairRef: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +52,8 @@ export type RepairRequestMaxAggregateOutputType = {
   preferredSlot: string | null
   status: $Enums.RepairRequestStatus | null
   cancelReason: string | null
+  ref: string | null
+  repairRef: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -66,6 +70,8 @@ export type RepairRequestCountAggregateOutputType = {
   preferredSlot: number
   status: number
   cancelReason: number
+  ref: number
+  repairRef: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -83,6 +89,8 @@ export type RepairRequestMinAggregateInputType = {
   preferredSlot?: true
   status?: true
   cancelReason?: true
+  ref?: true
+  repairRef?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -98,6 +106,8 @@ export type RepairRequestMaxAggregateInputType = {
   preferredSlot?: true
   status?: true
   cancelReason?: true
+  ref?: true
+  repairRef?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -114,6 +124,8 @@ export type RepairRequestCountAggregateInputType = {
   preferredSlot?: true
   status?: true
   cancelReason?: true
+  ref?: true
+  repairRef?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -203,6 +215,8 @@ export type RepairRequestGroupByOutputType = {
   preferredSlot: string | null
   status: $Enums.RepairRequestStatus
   cancelReason: string | null
+  ref: string
+  repairRef: string | null
   createdAt: Date
   updatedAt: Date
   _count: RepairRequestCountAggregateOutputType | null
@@ -240,6 +254,8 @@ export type RepairRequestWhereInput = {
   preferredSlot?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
   status?: Prisma.EnumRepairRequestStatusFilter<"RepairRequest"> | $Enums.RepairRequestStatus
   cancelReason?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
+  ref?: Prisma.StringFilter<"RepairRequest"> | string
+  repairRef?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RepairRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RepairRequest"> | Date | string
 }
@@ -256,12 +272,15 @@ export type RepairRequestOrderByWithRelationInput = {
   preferredSlot?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   cancelReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  ref?: Prisma.SortOrder
+  repairRef?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type RepairRequestWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  ref?: string
   AND?: Prisma.RepairRequestWhereInput | Prisma.RepairRequestWhereInput[]
   OR?: Prisma.RepairRequestWhereInput[]
   NOT?: Prisma.RepairRequestWhereInput | Prisma.RepairRequestWhereInput[]
@@ -275,9 +294,10 @@ export type RepairRequestWhereUniqueInput = Prisma.AtLeast<{
   preferredSlot?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
   status?: Prisma.EnumRepairRequestStatusFilter<"RepairRequest"> | $Enums.RepairRequestStatus
   cancelReason?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
+  repairRef?: Prisma.StringNullableFilter<"RepairRequest"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RepairRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RepairRequest"> | Date | string
-}, "id">
+}, "id" | "ref">
 
 export type RepairRequestOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -291,6 +311,8 @@ export type RepairRequestOrderByWithAggregationInput = {
   preferredSlot?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   cancelReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  ref?: Prisma.SortOrder
+  repairRef?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.RepairRequestCountOrderByAggregateInput
@@ -313,6 +335,8 @@ export type RepairRequestScalarWhereWithAggregatesInput = {
   preferredSlot?: Prisma.StringNullableWithAggregatesFilter<"RepairRequest"> | string | null
   status?: Prisma.EnumRepairRequestStatusWithAggregatesFilter<"RepairRequest"> | $Enums.RepairRequestStatus
   cancelReason?: Prisma.StringNullableWithAggregatesFilter<"RepairRequest"> | string | null
+  ref?: Prisma.StringWithAggregatesFilter<"RepairRequest"> | string
+  repairRef?: Prisma.StringNullableWithAggregatesFilter<"RepairRequest"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RepairRequest"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"RepairRequest"> | Date | string
 }
@@ -329,6 +353,8 @@ export type RepairRequestCreateInput = {
   preferredSlot?: string | null
   status?: $Enums.RepairRequestStatus
   cancelReason?: string | null
+  ref: string
+  repairRef?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -345,6 +371,8 @@ export type RepairRequestUncheckedCreateInput = {
   preferredSlot?: string | null
   status?: $Enums.RepairRequestStatus
   cancelReason?: string | null
+  ref: string
+  repairRef?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -361,6 +389,8 @@ export type RepairRequestUpdateInput = {
   preferredSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumRepairRequestStatusFieldUpdateOperationsInput | $Enums.RepairRequestStatus
   cancelReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  repairRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -377,6 +407,8 @@ export type RepairRequestUncheckedUpdateInput = {
   preferredSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumRepairRequestStatusFieldUpdateOperationsInput | $Enums.RepairRequestStatus
   cancelReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  repairRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -393,6 +425,8 @@ export type RepairRequestCreateManyInput = {
   preferredSlot?: string | null
   status?: $Enums.RepairRequestStatus
   cancelReason?: string | null
+  ref: string
+  repairRef?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -409,6 +443,8 @@ export type RepairRequestUpdateManyMutationInput = {
   preferredSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumRepairRequestStatusFieldUpdateOperationsInput | $Enums.RepairRequestStatus
   cancelReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  repairRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -425,6 +461,8 @@ export type RepairRequestUncheckedUpdateManyInput = {
   preferredSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumRepairRequestStatusFieldUpdateOperationsInput | $Enums.RepairRequestStatus
   cancelReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  repairRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -441,6 +479,8 @@ export type RepairRequestCountOrderByAggregateInput = {
   preferredSlot?: Prisma.SortOrder
   status?: Prisma.SortOrder
   cancelReason?: Prisma.SortOrder
+  ref?: Prisma.SortOrder
+  repairRef?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -456,6 +496,8 @@ export type RepairRequestMaxOrderByAggregateInput = {
   preferredSlot?: Prisma.SortOrder
   status?: Prisma.SortOrder
   cancelReason?: Prisma.SortOrder
+  ref?: Prisma.SortOrder
+  repairRef?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -471,6 +513,8 @@ export type RepairRequestMinOrderByAggregateInput = {
   preferredSlot?: Prisma.SortOrder
   status?: Prisma.SortOrder
   cancelReason?: Prisma.SortOrder
+  ref?: Prisma.SortOrder
+  repairRef?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -506,6 +550,8 @@ export type RepairRequestSelect<ExtArgs extends runtime.Types.Extensions.Interna
   preferredSlot?: boolean
   status?: boolean
   cancelReason?: boolean
+  ref?: boolean
+  repairRef?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["repairRequest"]>
@@ -522,6 +568,8 @@ export type RepairRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   preferredSlot?: boolean
   status?: boolean
   cancelReason?: boolean
+  ref?: boolean
+  repairRef?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["repairRequest"]>
@@ -538,6 +586,8 @@ export type RepairRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   preferredSlot?: boolean
   status?: boolean
   cancelReason?: boolean
+  ref?: boolean
+  repairRef?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["repairRequest"]>
@@ -554,11 +604,13 @@ export type RepairRequestSelectScalar = {
   preferredSlot?: boolean
   status?: boolean
   cancelReason?: boolean
+  ref?: boolean
+  repairRef?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type RepairRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "kind" | "customerName" | "customerPhone" | "deviceBrand" | "deviceModel" | "problemAreas" | "notes" | "preferredSlot" | "status" | "cancelReason" | "createdAt" | "updatedAt", ExtArgs["result"]["repairRequest"]>
+export type RepairRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "kind" | "customerName" | "customerPhone" | "deviceBrand" | "deviceModel" | "problemAreas" | "notes" | "preferredSlot" | "status" | "cancelReason" | "ref" | "repairRef" | "createdAt" | "updatedAt", ExtArgs["result"]["repairRequest"]>
 
 export type $RepairRequestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RepairRequest"
@@ -575,6 +627,8 @@ export type $RepairRequestPayload<ExtArgs extends runtime.Types.Extensions.Inter
     preferredSlot: string | null
     status: $Enums.RepairRequestStatus
     cancelReason: string | null
+    ref: string
+    repairRef: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["repairRequest"]>
@@ -1011,6 +1065,8 @@ export interface RepairRequestFieldRefs {
   readonly preferredSlot: Prisma.FieldRef<"RepairRequest", 'String'>
   readonly status: Prisma.FieldRef<"RepairRequest", 'RepairRequestStatus'>
   readonly cancelReason: Prisma.FieldRef<"RepairRequest", 'String'>
+  readonly ref: Prisma.FieldRef<"RepairRequest", 'String'>
+  readonly repairRef: Prisma.FieldRef<"RepairRequest", 'String'>
   readonly createdAt: Prisma.FieldRef<"RepairRequest", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"RepairRequest", 'DateTime'>
 }

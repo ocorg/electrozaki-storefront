@@ -13,7 +13,8 @@ type Props = { searchParams: Promise<{ ref?: string }> };
 
 export default async function RepairTrackingPage({ searchParams }: Props) {
   const { ref } = await searchParams;
-  const initialRef = typeof ref === "string" && /^REP-\d{1,8}$/i.test(ref) ? ref.toUpperCase() : "";
+  const initialRef =
+    typeof ref === "string" && /^(REP-\d{1,8}|DEM-[A-Z0-9]{6})$/i.test(ref) ? ref.toUpperCase() : "";
 
   return (
     <div className="mx-auto max-w-lg px-4 py-12">
@@ -22,7 +23,8 @@ export default async function RepairTrackingPage({ searchParams }: Props) {
       </Link>
       <h1 className="text-2xl font-bold sm:text-3xl">Suivre ma réparation</h1>
       <p className="mt-2 text-neutral-600">
-        Entrez le numéro inscrit sur votre bon de dépôt et le téléphone donné en boutique.
+        Entrez votre numéro de demande (DEM-…, reçu en ligne) ou de réparation (REP-…, sur votre bon de
+        dépôt), avec le téléphone que vous nous avez donné.
       </p>
       <div className="mt-6">
         <TrackingForm initialRef={initialRef} />

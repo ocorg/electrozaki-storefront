@@ -28,7 +28,7 @@ export function RepairDiagnostic() {
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState<string | null>(null);
 
   const isConsult = kind === "CONSULTATION";
 
@@ -62,7 +62,7 @@ export function RepairDiagnostic() {
       setError(result.error);
       return;
     }
-    setDone(true);
+    setDone(result.ref);
   }
 
   if (done) {
@@ -70,7 +70,12 @@ export function RepairDiagnostic() {
       <div className={cardClasses("mt-8 p-6 text-center")}>
         <CheckCircle2 size={28} className="mx-auto text-green-600" />
         <p className="mt-2 text-lg font-bold">Demande envoyée</p>
-        <p className="mt-2 text-sm text-neutral-600">
+        <div className="mx-auto mt-4 max-w-xs rounded-xl border border-gold/50 bg-gold/5 p-4">
+          <p className="text-xs uppercase tracking-wide text-neutral-500">Votre numéro de demande</p>
+          <p className="mt-1 select-all font-mono text-2xl font-bold tracking-wider">{done}</p>
+          <p className="mt-1 text-xs text-neutral-500">Notez-le : avec votre téléphone, il permet de suivre votre demande.</p>
+        </div>
+        <p className="mt-4 text-sm text-neutral-600">
           {isConsult
             ? "Nous vous contactons pour fixer l'heure de la consultation. "
             : "Nous vous répondons rapidement avec une estimation. "}
@@ -81,8 +86,11 @@ export function RepairDiagnostic() {
           >
             WhatsApp
           </a>
-          . Une fois votre appareil déposé, vous pourrez suivre la réparation sur{" "}
-          <Link href="/reparation/suivi" className="font-medium underline decoration-gold decoration-2 underline-offset-2">
+          . Suivez votre demande, puis votre réparation, sur{" "}
+          <Link
+            href={`/reparation/suivi?ref=${encodeURIComponent(done)}`}
+            className="font-medium underline decoration-gold decoration-2 underline-offset-2"
+          >
             la page de suivi
           </Link>
           .
