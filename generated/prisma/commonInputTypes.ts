@@ -346,13 +346,6 @@ export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
 }
 
-export type EnumOrderRequestStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.OrderRequestStatus | Prisma.EnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel> | $Enums.OrderRequestStatus
-}
-
 export type DateTimeNullableFilter<$PrismaModel = never> = {
   equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
   in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -364,21 +357,18 @@ export type DateTimeNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
 }
 
+export type EnumOrderRequestStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderRequestStatus | Prisma.EnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel> | $Enums.OrderRequestStatus
+}
+
 export type EnumAdvancePaymentStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.AdvancePaymentStatus | Prisma.EnumAdvancePaymentStatusFieldRefInput<$PrismaModel>
   in?: $Enums.AdvancePaymentStatus[] | Prisma.ListEnumAdvancePaymentStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.AdvancePaymentStatus[] | Prisma.ListEnumAdvancePaymentStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumAdvancePaymentStatusFilter<$PrismaModel> | $Enums.AdvancePaymentStatus
-}
-
-export type EnumOrderRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.OrderRequestStatus | Prisma.EnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumOrderRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderRequestStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel>
 }
 
 export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -393,6 +383,16 @@ export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type EnumOrderRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderRequestStatus | Prisma.EnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderRequestStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel>
 }
 
 export type EnumAdvancePaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -784,13 +784,6 @@ export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
 }
 
-export type NestedEnumOrderRequestStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.OrderRequestStatus | Prisma.EnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel> | $Enums.OrderRequestStatus
-}
-
 export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
   equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
   in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -802,21 +795,18 @@ export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
 }
 
+export type NestedEnumOrderRequestStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderRequestStatus | Prisma.EnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel> | $Enums.OrderRequestStatus
+}
+
 export type NestedEnumAdvancePaymentStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.AdvancePaymentStatus | Prisma.EnumAdvancePaymentStatusFieldRefInput<$PrismaModel>
   in?: $Enums.AdvancePaymentStatus[] | Prisma.ListEnumAdvancePaymentStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.AdvancePaymentStatus[] | Prisma.ListEnumAdvancePaymentStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumAdvancePaymentStatusFilter<$PrismaModel> | $Enums.AdvancePaymentStatus
-}
-
-export type NestedEnumOrderRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.OrderRequestStatus | Prisma.EnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumOrderRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderRequestStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel>
 }
 
 export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -831,6 +821,16 @@ export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumOrderRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderRequestStatus | Prisma.EnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderRequestStatus[] | Prisma.ListEnumOrderRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderRequestStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderRequestStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumAdvancePaymentStatusWithAggregatesFilter<$PrismaModel = never> = {

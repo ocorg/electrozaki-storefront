@@ -10,6 +10,8 @@ import { submitOrderRequest, confirmWhatsAppOpened, applyPromoCode } from "./act
 import { ReceiptUpload, type UploadedReceipt } from "@/components/cart/ReceiptUpload";
 import { AnchorButton, Button } from "@/components/ui/Button";
 import { StepProgress } from "@/components/ui/StepProgress";
+import { DeliveryPicker } from "@/components/cart/DeliveryPicker";
+import { findCity } from "@/lib/delivery";
 
 type Confirmation = { orderRequestId: string; whatsappUrl: string };
 
@@ -28,6 +30,7 @@ export default function CartPage() {
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [deliveryAddress, setDeliveryAddress] = useState("");
+  const [deliveryCity, setDeliveryCity] = useState<string | null>(null);
   const [notes, setNotes] = useState("");
 
   const [receipt, setReceipt] = useState<UploadedReceipt | null>(null);
@@ -46,7 +49,9 @@ export default function CartPage() {
 
   const requiresAdvance = useMemo(() => items.some((item) => item.isPhone), [items]);
   const discountAmount = appliedPromo?.discountAmount ?? 0;
-  const discountedTotal = Math.max(0, totalPrice - discountAmount);
+  // Display only — the server recomputes the fee from the city at submission.
+  const deliveryFee = findCity(deliveryCity)?.fee ?? 0;
+  const discountedTotal = Math.max(0, totalPrice - discountAmount) + deliveryFee;
 
   async function handleApplyPromo() {
     setPromoError(null);
@@ -71,6 +76,7 @@ export default function CartPage() {
       customerName,
       customerPhone,
       deliveryAddress,
+      deliveryCity: deliveryCity ?? "",
       notes: notes || undefined,
       receipt: receipt ?? undefined,
       dataConsentAccepted,
@@ -237,6 +243,10 @@ export default function CartPage() {
                 <span>-{formatMAD(discountAmount)}</span>
               </div>
             )}
+            <div className="flex justify-between text-sm text-neutral-600">
+              <span>Livraison{deliveryCity ? ` (${deliveryCity})` : ""}</span>
+              <span>{deliveryCity ? formatMAD(deliveryFee) : "calculée à l'étape suivante"}</span>
+            </div>
             <div className="flex justify-between text-lg font-semibold">
               <span>Total estimé</span>
               <span>{formatMAD(discountedTotal)}</span>
@@ -268,9 +278,10 @@ export default function CartPage() {
             onChange={(e) => setCustomerPhone(e.target.value)}
             className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
           />
+          <DeliveryPicker value={deliveryCity} onChangeAction={setDeliveryCity} />
           <textarea
             required
-            placeholder="Adresse complète de livraison"
+            placeholder="Adresse de livraison (quartier, rue, numéro, repère…)"
             value={deliveryAddress}
             onChange={(e) => setDeliveryAddress(e.target.value)}
             rows={3}
@@ -284,11 +295,6 @@ export default function CartPage() {
             className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
           />
 
-          <p className="rounded-lg bg-neutral-50 px-3 py-2 text-xs text-neutral-600">
-            Frais de livraison calculés selon votre zone — confirmés par WhatsApp après votre
-            commande.
-          </p>
-
           <div className="flex gap-2">
             <Button type="button" variant="outline" onClick={() => setStep(0)} className="flex-1">
               Retour
@@ -298,6 +304,7 @@ export default function CartPage() {
               disabled={
                 !customerName.trim() ||
                 !customerPhone.trim() ||
+                !deliveryCity ||
                 deliveryAddress.trim().length < 10
               }
               onClick={() => setStep(2)}
@@ -312,6 +319,20 @@ export default function CartPage() {
       {/* ── Step 2: payment (dynamic) ───────────────────────────────── */}
       {step === 2 && (
         <div className="space-y-4">
+          <div className="space-y-1 rounded-xl border border-black/10 p-4 text-sm">
+            <div className="flex justify-between text-neutral-600">
+              <span>Articles{discountAmount > 0 ? " (après réduction)" : ""}</span>
+              <span>{formatMAD(Math.max(0, totalPrice - discountAmount))}</span>
+            </div>
+            <div className="flex justify-between text-neutral-600">
+              <span>Livraison ({deliveryCity})</span>
+              <span>{formatMAD(deliveryFee)}</span>
+            </div>
+            <div className="flex justify-between border-t border-black/10 pt-1 text-base font-semibold">
+              <span>Total</span>
+              <span>{formatMAD(discountedTotal)}</span>
+            </div>
+          </div>
           {requiresAdvance ? (
             <>
               <div className="rounded-xl border border-gold/40 bg-gold/5 p-4">

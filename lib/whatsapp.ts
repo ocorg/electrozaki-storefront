@@ -1,3 +1,4 @@
+import { frenchDay } from "@/lib/delivery";
 // Same number already used across the current Shopify theme's CTAs.
 const WHATSAPP_NUMBER = "212667654430";
 
@@ -14,6 +15,7 @@ type OrderContext = {
   requiresAdvance: boolean;
   receiptUploaded: boolean;
   discountAmount?: number;
+  delivery?: { city: string; fee: number; estimate: string | null; unavailable: boolean };
 };
 
 export function buildWhatsAppOrderLink(
@@ -32,7 +34,8 @@ export function buildWhatsAppOrderLink(
 
   const subtotal = lines.reduce((sum, l) => sum + l.price * l.quantity, 0);
   const discountAmount = context?.discountAmount ?? 0;
-  const total = Math.max(0, subtotal - discountAmount);
+  const deliveryFee = context?.delivery?.fee ?? 0;
+  const total = Math.max(0, subtotal - discountAmount) + deliveryFee;
 
   const messageParts = [
     `Bonjour, je souhaite commander (${customerName})${context?.reference ? ` — réf. ${context.reference}` : ""} :`,
@@ -43,10 +46,20 @@ export function buildWhatsAppOrderLink(
     messageParts.push(`Sous-total : ${subtotal} MAD`);
     messageParts.push(`Réduction : -${discountAmount} MAD`);
   }
+  if (context?.delivery) {
+    messageParts.push(`Livraison (${context.delivery.city}) : ${deliveryFee} MAD`);
+  }
   messageParts.push(`Total estimé : ${total} MAD`);
 
   if (context?.deliveryAddress) {
-    messageParts.push(`Adresse de livraison : ${context.deliveryAddress}`);
+    messageParts.push(
+      `Adresse de livraison : ${context.delivery ? `${context.delivery.city} — ` : ""}${context.deliveryAddress}`
+    );
+  }
+  if (context?.delivery?.unavailable) {
+    messageParts.push("⚠️ Ameex ne dessert pas cette localité : merci de me proposer une solution de livraison.");
+  } else if (context?.delivery?.estimate) {
+    messageParts.push(`Livraison estimée : ${frenchDay(context.delivery.estimate)}`);
   }
 
   if (context?.requiresAdvance) {
