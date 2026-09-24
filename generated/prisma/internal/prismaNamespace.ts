@@ -1871,6 +1871,7 @@ export const ProductVariantScalarFieldEnum = {
   productId: 'productId',
   name: 'name',
   priceOverride: 'priceOverride',
+  compareAtPrice: 'compareAtPrice',
   skuOrRef: 'skuOrRef',
   erpRef: 'erpRef',
   color: 'color',
