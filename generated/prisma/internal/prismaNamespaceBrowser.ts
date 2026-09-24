@@ -66,7 +66,9 @@ export const ModelName = {
   BundleItem: 'BundleItem',
   ModelPhoto: 'ModelPhoto',
   RateLimitHit: 'RateLimitHit',
-  RepairTracking: 'RepairTracking'
+  RepairTracking: 'RepairTracking',
+  LandingPage: 'LandingPage',
+  LandingPageProduct: 'LandingPageProduct'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -219,6 +221,7 @@ export const OrderRequestScalarFieldEnum = {
   dataConsentAccepted: 'dataConsentAccepted',
   promoCodeId: 'promoCodeId',
   discountAmount: 'discountAmount',
+  landingPageId: 'landingPageId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -353,6 +356,38 @@ export const RepairTrackingScalarFieldEnum = {
 } as const
 
 export type RepairTrackingScalarFieldEnum = (typeof RepairTrackingScalarFieldEnum)[keyof typeof RepairTrackingScalarFieldEnum]
+
+
+export const LandingPageScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  subtitle: 'subtitle',
+  body: 'body',
+  bannerUrl: 'bannerUrl',
+  theme: 'theme',
+  categoryId: 'categoryId',
+  discountType: 'discountType',
+  discountValue: 'discountValue',
+  promoCodeId: 'promoCodeId',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  active: 'active',
+  views: 'views',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LandingPageScalarFieldEnum = (typeof LandingPageScalarFieldEnum)[keyof typeof LandingPageScalarFieldEnum]
+
+
+export const LandingPageProductScalarFieldEnum = {
+  landingPageId: 'landingPageId',
+  productId: 'productId',
+  sortOrder: 'sortOrder'
+} as const
+
+export type LandingPageProductScalarFieldEnum = (typeof LandingPageProductScalarFieldEnum)[keyof typeof LandingPageProductScalarFieldEnum]
 
 
 export const SortOrder = {

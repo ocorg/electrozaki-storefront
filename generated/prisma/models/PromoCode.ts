@@ -285,6 +285,7 @@ export type PromoCodeWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"PromoCode"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PromoCode"> | Date | string
   orderRequests?: Prisma.OrderRequestListRelationFilter
+  landingPages?: Prisma.LandingPageListRelationFilter
 }
 
 export type PromoCodeOrderByWithRelationInput = {
@@ -301,6 +302,7 @@ export type PromoCodeOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   orderRequests?: Prisma.OrderRequestOrderByRelationAggregateInput
+  landingPages?: Prisma.LandingPageOrderByRelationAggregateInput
 }
 
 export type PromoCodeWhereUniqueInput = Prisma.AtLeast<{
@@ -320,6 +322,7 @@ export type PromoCodeWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"PromoCode"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PromoCode"> | Date | string
   orderRequests?: Prisma.OrderRequestListRelationFilter
+  landingPages?: Prisma.LandingPageListRelationFilter
 }, "id" | "code">
 
 export type PromoCodeOrderByWithAggregationInput = {
@@ -374,6 +377,7 @@ export type PromoCodeCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   orderRequests?: Prisma.OrderRequestCreateNestedManyWithoutPromoCodeInput
+  landingPages?: Prisma.LandingPageCreateNestedManyWithoutPromoCodeInput
 }
 
 export type PromoCodeUncheckedCreateInput = {
@@ -390,6 +394,7 @@ export type PromoCodeUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   orderRequests?: Prisma.OrderRequestUncheckedCreateNestedManyWithoutPromoCodeInput
+  landingPages?: Prisma.LandingPageUncheckedCreateNestedManyWithoutPromoCodeInput
 }
 
 export type PromoCodeUpdateInput = {
@@ -406,6 +411,7 @@ export type PromoCodeUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderRequests?: Prisma.OrderRequestUpdateManyWithoutPromoCodeNestedInput
+  landingPages?: Prisma.LandingPageUpdateManyWithoutPromoCodeNestedInput
 }
 
 export type PromoCodeUncheckedUpdateInput = {
@@ -422,6 +428,7 @@ export type PromoCodeUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderRequests?: Prisma.OrderRequestUncheckedUpdateManyWithoutPromoCodeNestedInput
+  landingPages?: Prisma.LandingPageUncheckedUpdateManyWithoutPromoCodeNestedInput
 }
 
 export type PromoCodeCreateManyInput = {
@@ -553,6 +560,22 @@ export type EnumPromoCodeTypeFieldUpdateOperationsInput = {
   set?: $Enums.PromoCodeType
 }
 
+export type PromoCodeCreateNestedOneWithoutLandingPagesInput = {
+  create?: Prisma.XOR<Prisma.PromoCodeCreateWithoutLandingPagesInput, Prisma.PromoCodeUncheckedCreateWithoutLandingPagesInput>
+  connectOrCreate?: Prisma.PromoCodeCreateOrConnectWithoutLandingPagesInput
+  connect?: Prisma.PromoCodeWhereUniqueInput
+}
+
+export type PromoCodeUpdateOneWithoutLandingPagesNestedInput = {
+  create?: Prisma.XOR<Prisma.PromoCodeCreateWithoutLandingPagesInput, Prisma.PromoCodeUncheckedCreateWithoutLandingPagesInput>
+  connectOrCreate?: Prisma.PromoCodeCreateOrConnectWithoutLandingPagesInput
+  upsert?: Prisma.PromoCodeUpsertWithoutLandingPagesInput
+  disconnect?: Prisma.PromoCodeWhereInput | boolean
+  delete?: Prisma.PromoCodeWhereInput | boolean
+  connect?: Prisma.PromoCodeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PromoCodeUpdateToOneWithWhereWithoutLandingPagesInput, Prisma.PromoCodeUpdateWithoutLandingPagesInput>, Prisma.PromoCodeUncheckedUpdateWithoutLandingPagesInput>
+}
+
 export type PromoCodeCreateWithoutOrderRequestsInput = {
   id?: string
   code: string
@@ -566,6 +589,7 @@ export type PromoCodeCreateWithoutOrderRequestsInput = {
   minOrderAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  landingPages?: Prisma.LandingPageCreateNestedManyWithoutPromoCodeInput
 }
 
 export type PromoCodeUncheckedCreateWithoutOrderRequestsInput = {
@@ -581,6 +605,7 @@ export type PromoCodeUncheckedCreateWithoutOrderRequestsInput = {
   minOrderAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  landingPages?: Prisma.LandingPageUncheckedCreateNestedManyWithoutPromoCodeInput
 }
 
 export type PromoCodeCreateOrConnectWithoutOrderRequestsInput = {
@@ -612,6 +637,7 @@ export type PromoCodeUpdateWithoutOrderRequestsInput = {
   minOrderAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  landingPages?: Prisma.LandingPageUpdateManyWithoutPromoCodeNestedInput
 }
 
 export type PromoCodeUncheckedUpdateWithoutOrderRequestsInput = {
@@ -627,6 +653,87 @@ export type PromoCodeUncheckedUpdateWithoutOrderRequestsInput = {
   minOrderAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  landingPages?: Prisma.LandingPageUncheckedUpdateManyWithoutPromoCodeNestedInput
+}
+
+export type PromoCodeCreateWithoutLandingPagesInput = {
+  id?: string
+  code: string
+  type: $Enums.PromoCodeType
+  value: runtime.Decimal | runtime.DecimalJsLike | number | string
+  active?: boolean
+  startsAt?: Date | string | null
+  expiresAt?: Date | string | null
+  maxRedemptions?: number | null
+  redemptionCount?: number
+  minOrderAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orderRequests?: Prisma.OrderRequestCreateNestedManyWithoutPromoCodeInput
+}
+
+export type PromoCodeUncheckedCreateWithoutLandingPagesInput = {
+  id?: string
+  code: string
+  type: $Enums.PromoCodeType
+  value: runtime.Decimal | runtime.DecimalJsLike | number | string
+  active?: boolean
+  startsAt?: Date | string | null
+  expiresAt?: Date | string | null
+  maxRedemptions?: number | null
+  redemptionCount?: number
+  minOrderAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orderRequests?: Prisma.OrderRequestUncheckedCreateNestedManyWithoutPromoCodeInput
+}
+
+export type PromoCodeCreateOrConnectWithoutLandingPagesInput = {
+  where: Prisma.PromoCodeWhereUniqueInput
+  create: Prisma.XOR<Prisma.PromoCodeCreateWithoutLandingPagesInput, Prisma.PromoCodeUncheckedCreateWithoutLandingPagesInput>
+}
+
+export type PromoCodeUpsertWithoutLandingPagesInput = {
+  update: Prisma.XOR<Prisma.PromoCodeUpdateWithoutLandingPagesInput, Prisma.PromoCodeUncheckedUpdateWithoutLandingPagesInput>
+  create: Prisma.XOR<Prisma.PromoCodeCreateWithoutLandingPagesInput, Prisma.PromoCodeUncheckedCreateWithoutLandingPagesInput>
+  where?: Prisma.PromoCodeWhereInput
+}
+
+export type PromoCodeUpdateToOneWithWhereWithoutLandingPagesInput = {
+  where?: Prisma.PromoCodeWhereInput
+  data: Prisma.XOR<Prisma.PromoCodeUpdateWithoutLandingPagesInput, Prisma.PromoCodeUncheckedUpdateWithoutLandingPagesInput>
+}
+
+export type PromoCodeUpdateWithoutLandingPagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumPromoCodeTypeFieldUpdateOperationsInput | $Enums.PromoCodeType
+  value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxRedemptions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  redemptionCount?: Prisma.IntFieldUpdateOperationsInput | number
+  minOrderAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orderRequests?: Prisma.OrderRequestUpdateManyWithoutPromoCodeNestedInput
+}
+
+export type PromoCodeUncheckedUpdateWithoutLandingPagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumPromoCodeTypeFieldUpdateOperationsInput | $Enums.PromoCodeType
+  value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxRedemptions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  redemptionCount?: Prisma.IntFieldUpdateOperationsInput | number
+  minOrderAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orderRequests?: Prisma.OrderRequestUncheckedUpdateManyWithoutPromoCodeNestedInput
 }
 
 
@@ -636,10 +743,12 @@ export type PromoCodeUncheckedUpdateWithoutOrderRequestsInput = {
 
 export type PromoCodeCountOutputType = {
   orderRequests: number
+  landingPages: number
 }
 
 export type PromoCodeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderRequests?: boolean | PromoCodeCountOutputTypeCountOrderRequestsArgs
+  landingPages?: boolean | PromoCodeCountOutputTypeCountLandingPagesArgs
 }
 
 /**
@@ -659,6 +768,13 @@ export type PromoCodeCountOutputTypeCountOrderRequestsArgs<ExtArgs extends runti
   where?: Prisma.OrderRequestWhereInput
 }
 
+/**
+ * PromoCodeCountOutputType without action
+ */
+export type PromoCodeCountOutputTypeCountLandingPagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LandingPageWhereInput
+}
+
 
 export type PromoCodeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -674,6 +790,7 @@ export type PromoCodeSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   createdAt?: boolean
   updatedAt?: boolean
   orderRequests?: boolean | Prisma.PromoCode$orderRequestsArgs<ExtArgs>
+  landingPages?: boolean | Prisma.PromoCode$landingPagesArgs<ExtArgs>
   _count?: boolean | Prisma.PromoCodeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["promoCode"]>
 
@@ -725,6 +842,7 @@ export type PromoCodeSelectScalar = {
 export type PromoCodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "type" | "value" | "active" | "startsAt" | "expiresAt" | "maxRedemptions" | "redemptionCount" | "minOrderAmount" | "createdAt" | "updatedAt", ExtArgs["result"]["promoCode"]>
 export type PromoCodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderRequests?: boolean | Prisma.PromoCode$orderRequestsArgs<ExtArgs>
+  landingPages?: boolean | Prisma.PromoCode$landingPagesArgs<ExtArgs>
   _count?: boolean | Prisma.PromoCodeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PromoCodeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -734,6 +852,7 @@ export type $PromoCodePayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "PromoCode"
   objects: {
     orderRequests: Prisma.$OrderRequestPayload<ExtArgs>[]
+    landingPages: Prisma.$LandingPagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1143,6 +1262,7 @@ readonly fields: PromoCodeFieldRefs;
 export interface Prisma__PromoCodeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   orderRequests<T extends Prisma.PromoCode$orderRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PromoCode$orderRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  landingPages<T extends Prisma.PromoCode$landingPagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PromoCode$landingPagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LandingPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1598,6 +1718,30 @@ export type PromoCode$orderRequestsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.OrderRequestScalarFieldEnum | Prisma.OrderRequestScalarFieldEnum[]
+}
+
+/**
+ * PromoCode.landingPages
+ */
+export type PromoCode$landingPagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LandingPage
+   */
+  select?: Prisma.LandingPageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LandingPage
+   */
+  omit?: Prisma.LandingPageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LandingPageInclude<ExtArgs> | null
+  where?: Prisma.LandingPageWhereInput
+  orderBy?: Prisma.LandingPageOrderByWithRelationInput | Prisma.LandingPageOrderByWithRelationInput[]
+  cursor?: Prisma.LandingPageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LandingPageScalarFieldEnum | Prisma.LandingPageScalarFieldEnum[]
 }
 
 /**

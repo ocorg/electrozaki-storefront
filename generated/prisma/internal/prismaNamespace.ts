@@ -412,7 +412,9 @@ export const ModelName = {
   BundleItem: 'BundleItem',
   ModelPhoto: 'ModelPhoto',
   RateLimitHit: 'RateLimitHit',
-  RepairTracking: 'RepairTracking'
+  RepairTracking: 'RepairTracking',
+  LandingPage: 'LandingPage',
+  LandingPageProduct: 'LandingPageProduct'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -428,7 +430,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem" | "modelPhoto" | "rateLimitHit" | "repairTracking"
+    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem" | "modelPhoto" | "rateLimitHit" | "repairTracking" | "landingPage" | "landingPageProduct"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1616,6 +1618,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LandingPage: {
+      payload: Prisma.$LandingPagePayload<ExtArgs>
+      fields: Prisma.LandingPageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LandingPageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LandingPageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPagePayload>
+        }
+        findFirst: {
+          args: Prisma.LandingPageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LandingPageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPagePayload>
+        }
+        findMany: {
+          args: Prisma.LandingPageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPagePayload>[]
+        }
+        create: {
+          args: Prisma.LandingPageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPagePayload>
+        }
+        createMany: {
+          args: Prisma.LandingPageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LandingPageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPagePayload>[]
+        }
+        delete: {
+          args: Prisma.LandingPageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPagePayload>
+        }
+        update: {
+          args: Prisma.LandingPageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPagePayload>
+        }
+        deleteMany: {
+          args: Prisma.LandingPageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LandingPageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LandingPageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPagePayload>[]
+        }
+        upsert: {
+          args: Prisma.LandingPageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPagePayload>
+        }
+        aggregate: {
+          args: Prisma.LandingPageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLandingPage>
+        }
+        groupBy: {
+          args: Prisma.LandingPageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LandingPageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LandingPageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LandingPageCountAggregateOutputType> | number
+        }
+      }
+    }
+    LandingPageProduct: {
+      payload: Prisma.$LandingPageProductPayload<ExtArgs>
+      fields: Prisma.LandingPageProductFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LandingPageProductFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPageProductPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LandingPageProductFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPageProductPayload>
+        }
+        findFirst: {
+          args: Prisma.LandingPageProductFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPageProductPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LandingPageProductFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPageProductPayload>
+        }
+        findMany: {
+          args: Prisma.LandingPageProductFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPageProductPayload>[]
+        }
+        create: {
+          args: Prisma.LandingPageProductCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPageProductPayload>
+        }
+        createMany: {
+          args: Prisma.LandingPageProductCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LandingPageProductCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPageProductPayload>[]
+        }
+        delete: {
+          args: Prisma.LandingPageProductDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPageProductPayload>
+        }
+        update: {
+          args: Prisma.LandingPageProductUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPageProductPayload>
+        }
+        deleteMany: {
+          args: Prisma.LandingPageProductDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LandingPageProductUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LandingPageProductUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPageProductPayload>[]
+        }
+        upsert: {
+          args: Prisma.LandingPageProductUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandingPageProductPayload>
+        }
+        aggregate: {
+          args: Prisma.LandingPageProductAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLandingPageProduct>
+        }
+        groupBy: {
+          args: Prisma.LandingPageProductGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LandingPageProductGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LandingPageProductCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LandingPageProductCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1789,6 +1939,7 @@ export const OrderRequestScalarFieldEnum = {
   dataConsentAccepted: 'dataConsentAccepted',
   promoCodeId: 'promoCodeId',
   discountAmount: 'discountAmount',
+  landingPageId: 'landingPageId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1923,6 +2074,38 @@ export const RepairTrackingScalarFieldEnum = {
 } as const
 
 export type RepairTrackingScalarFieldEnum = (typeof RepairTrackingScalarFieldEnum)[keyof typeof RepairTrackingScalarFieldEnum]
+
+
+export const LandingPageScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  subtitle: 'subtitle',
+  body: 'body',
+  bannerUrl: 'bannerUrl',
+  theme: 'theme',
+  categoryId: 'categoryId',
+  discountType: 'discountType',
+  discountValue: 'discountValue',
+  promoCodeId: 'promoCodeId',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  active: 'active',
+  views: 'views',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LandingPageScalarFieldEnum = (typeof LandingPageScalarFieldEnum)[keyof typeof LandingPageScalarFieldEnum]
+
+
+export const LandingPageProductScalarFieldEnum = {
+  landingPageId: 'landingPageId',
+  productId: 'productId',
+  sortOrder: 'sortOrder'
+} as const
+
+export type LandingPageProductScalarFieldEnum = (typeof LandingPageProductScalarFieldEnum)[keyof typeof LandingPageProductScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2176,6 +2359,20 @@ export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'LandingTheme'
+ */
+export type EnumLandingThemeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LandingTheme'>
+    
+
+
+/**
+ * Reference to a field of type 'LandingTheme[]'
+ */
+export type ListEnumLandingThemeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LandingTheme[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2355,6 +2552,8 @@ export type GlobalOmitConfig = {
   modelPhoto?: Prisma.ModelPhotoOmit
   rateLimitHit?: Prisma.RateLimitHitOmit
   repairTracking?: Prisma.RepairTrackingOmit
+  landingPage?: Prisma.LandingPageOmit
+  landingPageProduct?: Prisma.LandingPageProductOmit
 }
 
 /* Types for Logging */

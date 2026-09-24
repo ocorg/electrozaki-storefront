@@ -59,6 +59,7 @@ export type OrderRequestMinAggregateOutputType = {
   dataConsentAccepted: boolean | null
   promoCodeId: string | null
   discountAmount: runtime.Decimal | null
+  landingPageId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -84,6 +85,7 @@ export type OrderRequestMaxAggregateOutputType = {
   dataConsentAccepted: boolean | null
   promoCodeId: string | null
   discountAmount: runtime.Decimal | null
+  landingPageId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -109,6 +111,7 @@ export type OrderRequestCountAggregateOutputType = {
   dataConsentAccepted: number
   promoCodeId: number
   discountAmount: number
+  landingPageId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -148,6 +151,7 @@ export type OrderRequestMinAggregateInputType = {
   dataConsentAccepted?: true
   promoCodeId?: true
   discountAmount?: true
+  landingPageId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -173,6 +177,7 @@ export type OrderRequestMaxAggregateInputType = {
   dataConsentAccepted?: true
   promoCodeId?: true
   discountAmount?: true
+  landingPageId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -198,6 +203,7 @@ export type OrderRequestCountAggregateInputType = {
   dataConsentAccepted?: true
   promoCodeId?: true
   discountAmount?: true
+  landingPageId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -310,6 +316,7 @@ export type OrderRequestGroupByOutputType = {
   dataConsentAccepted: boolean
   promoCodeId: string | null
   discountAmount: runtime.Decimal
+  landingPageId: string | null
   createdAt: Date
   updatedAt: Date
   _count: OrderRequestCountAggregateOutputType | null
@@ -358,10 +365,12 @@ export type OrderRequestWhereInput = {
   dataConsentAccepted?: Prisma.BoolFilter<"OrderRequest"> | boolean
   promoCodeId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   discountAmount?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   createdAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
   promoCode?: Prisma.XOR<Prisma.PromoCodeNullableScalarRelationFilter, Prisma.PromoCodeWhereInput> | null
   items?: Prisma.OrderRequestItemListRelationFilter
+  landingPage?: Prisma.XOR<Prisma.LandingPageNullableScalarRelationFilter, Prisma.LandingPageWhereInput> | null
 }
 
 export type OrderRequestOrderByWithRelationInput = {
@@ -385,10 +394,12 @@ export type OrderRequestOrderByWithRelationInput = {
   dataConsentAccepted?: Prisma.SortOrder
   promoCodeId?: Prisma.SortOrderInput | Prisma.SortOrder
   discountAmount?: Prisma.SortOrder
+  landingPageId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   promoCode?: Prisma.PromoCodeOrderByWithRelationInput
   items?: Prisma.OrderRequestItemOrderByRelationAggregateInput
+  landingPage?: Prisma.LandingPageOrderByWithRelationInput
 }
 
 export type OrderRequestWhereUniqueInput = Prisma.AtLeast<{
@@ -415,10 +426,12 @@ export type OrderRequestWhereUniqueInput = Prisma.AtLeast<{
   dataConsentAccepted?: Prisma.BoolFilter<"OrderRequest"> | boolean
   promoCodeId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   discountAmount?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   createdAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
   promoCode?: Prisma.XOR<Prisma.PromoCodeNullableScalarRelationFilter, Prisma.PromoCodeWhereInput> | null
   items?: Prisma.OrderRequestItemListRelationFilter
+  landingPage?: Prisma.XOR<Prisma.LandingPageNullableScalarRelationFilter, Prisma.LandingPageWhereInput> | null
 }, "id">
 
 export type OrderRequestOrderByWithAggregationInput = {
@@ -442,6 +455,7 @@ export type OrderRequestOrderByWithAggregationInput = {
   dataConsentAccepted?: Prisma.SortOrder
   promoCodeId?: Prisma.SortOrderInput | Prisma.SortOrder
   discountAmount?: Prisma.SortOrder
+  landingPageId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.OrderRequestCountOrderByAggregateInput
@@ -475,6 +489,7 @@ export type OrderRequestScalarWhereWithAggregatesInput = {
   dataConsentAccepted?: Prisma.BoolWithAggregatesFilter<"OrderRequest"> | boolean
   promoCodeId?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
   discountAmount?: Prisma.DecimalWithAggregatesFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"OrderRequest"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"OrderRequest"> | Date | string
 }
@@ -503,6 +518,7 @@ export type OrderRequestCreateInput = {
   updatedAt?: Date | string
   promoCode?: Prisma.PromoCodeCreateNestedOneWithoutOrderRequestsInput
   items?: Prisma.OrderRequestItemCreateNestedManyWithoutOrderRequestInput
+  landingPage?: Prisma.LandingPageCreateNestedOneWithoutOrdersInput
 }
 
 export type OrderRequestUncheckedCreateInput = {
@@ -526,6 +542,7 @@ export type OrderRequestUncheckedCreateInput = {
   dataConsentAccepted?: boolean
   promoCodeId?: string | null
   discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutOrderRequestInput
@@ -555,6 +572,7 @@ export type OrderRequestUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   promoCode?: Prisma.PromoCodeUpdateOneWithoutOrderRequestsNestedInput
   items?: Prisma.OrderRequestItemUpdateManyWithoutOrderRequestNestedInput
+  landingPage?: Prisma.LandingPageUpdateOneWithoutOrdersNestedInput
 }
 
 export type OrderRequestUncheckedUpdateInput = {
@@ -578,6 +596,7 @@ export type OrderRequestUncheckedUpdateInput = {
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promoCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutOrderRequestNestedInput
@@ -604,6 +623,7 @@ export type OrderRequestCreateManyInput = {
   dataConsentAccepted?: boolean
   promoCodeId?: string | null
   discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -653,6 +673,7 @@ export type OrderRequestUncheckedUpdateManyInput = {
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promoCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -678,6 +699,7 @@ export type OrderRequestCountOrderByAggregateInput = {
   dataConsentAccepted?: Prisma.SortOrder
   promoCodeId?: Prisma.SortOrder
   discountAmount?: Prisma.SortOrder
+  landingPageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -709,6 +731,7 @@ export type OrderRequestMaxOrderByAggregateInput = {
   dataConsentAccepted?: Prisma.SortOrder
   promoCodeId?: Prisma.SortOrder
   discountAmount?: Prisma.SortOrder
+  landingPageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -734,6 +757,7 @@ export type OrderRequestMinOrderByAggregateInput = {
   dataConsentAccepted?: Prisma.SortOrder
   promoCodeId?: Prisma.SortOrder
   discountAmount?: Prisma.SortOrder
+  landingPageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -827,6 +851,48 @@ export type OrderRequestUncheckedUpdateManyWithoutPromoCodeNestedInput = {
   deleteMany?: Prisma.OrderRequestScalarWhereInput | Prisma.OrderRequestScalarWhereInput[]
 }
 
+export type OrderRequestCreateNestedManyWithoutLandingPageInput = {
+  create?: Prisma.XOR<Prisma.OrderRequestCreateWithoutLandingPageInput, Prisma.OrderRequestUncheckedCreateWithoutLandingPageInput> | Prisma.OrderRequestCreateWithoutLandingPageInput[] | Prisma.OrderRequestUncheckedCreateWithoutLandingPageInput[]
+  connectOrCreate?: Prisma.OrderRequestCreateOrConnectWithoutLandingPageInput | Prisma.OrderRequestCreateOrConnectWithoutLandingPageInput[]
+  createMany?: Prisma.OrderRequestCreateManyLandingPageInputEnvelope
+  connect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+}
+
+export type OrderRequestUncheckedCreateNestedManyWithoutLandingPageInput = {
+  create?: Prisma.XOR<Prisma.OrderRequestCreateWithoutLandingPageInput, Prisma.OrderRequestUncheckedCreateWithoutLandingPageInput> | Prisma.OrderRequestCreateWithoutLandingPageInput[] | Prisma.OrderRequestUncheckedCreateWithoutLandingPageInput[]
+  connectOrCreate?: Prisma.OrderRequestCreateOrConnectWithoutLandingPageInput | Prisma.OrderRequestCreateOrConnectWithoutLandingPageInput[]
+  createMany?: Prisma.OrderRequestCreateManyLandingPageInputEnvelope
+  connect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+}
+
+export type OrderRequestUpdateManyWithoutLandingPageNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderRequestCreateWithoutLandingPageInput, Prisma.OrderRequestUncheckedCreateWithoutLandingPageInput> | Prisma.OrderRequestCreateWithoutLandingPageInput[] | Prisma.OrderRequestUncheckedCreateWithoutLandingPageInput[]
+  connectOrCreate?: Prisma.OrderRequestCreateOrConnectWithoutLandingPageInput | Prisma.OrderRequestCreateOrConnectWithoutLandingPageInput[]
+  upsert?: Prisma.OrderRequestUpsertWithWhereUniqueWithoutLandingPageInput | Prisma.OrderRequestUpsertWithWhereUniqueWithoutLandingPageInput[]
+  createMany?: Prisma.OrderRequestCreateManyLandingPageInputEnvelope
+  set?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  disconnect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  delete?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  connect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  update?: Prisma.OrderRequestUpdateWithWhereUniqueWithoutLandingPageInput | Prisma.OrderRequestUpdateWithWhereUniqueWithoutLandingPageInput[]
+  updateMany?: Prisma.OrderRequestUpdateManyWithWhereWithoutLandingPageInput | Prisma.OrderRequestUpdateManyWithWhereWithoutLandingPageInput[]
+  deleteMany?: Prisma.OrderRequestScalarWhereInput | Prisma.OrderRequestScalarWhereInput[]
+}
+
+export type OrderRequestUncheckedUpdateManyWithoutLandingPageNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderRequestCreateWithoutLandingPageInput, Prisma.OrderRequestUncheckedCreateWithoutLandingPageInput> | Prisma.OrderRequestCreateWithoutLandingPageInput[] | Prisma.OrderRequestUncheckedCreateWithoutLandingPageInput[]
+  connectOrCreate?: Prisma.OrderRequestCreateOrConnectWithoutLandingPageInput | Prisma.OrderRequestCreateOrConnectWithoutLandingPageInput[]
+  upsert?: Prisma.OrderRequestUpsertWithWhereUniqueWithoutLandingPageInput | Prisma.OrderRequestUpsertWithWhereUniqueWithoutLandingPageInput[]
+  createMany?: Prisma.OrderRequestCreateManyLandingPageInputEnvelope
+  set?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  disconnect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  delete?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  connect?: Prisma.OrderRequestWhereUniqueInput | Prisma.OrderRequestWhereUniqueInput[]
+  update?: Prisma.OrderRequestUpdateWithWhereUniqueWithoutLandingPageInput | Prisma.OrderRequestUpdateWithWhereUniqueWithoutLandingPageInput[]
+  updateMany?: Prisma.OrderRequestUpdateManyWithWhereWithoutLandingPageInput | Prisma.OrderRequestUpdateManyWithWhereWithoutLandingPageInput[]
+  deleteMany?: Prisma.OrderRequestScalarWhereInput | Prisma.OrderRequestScalarWhereInput[]
+}
+
 export type OrderRequestCreateWithoutItemsInput = {
   id?: string
   customerName: string
@@ -850,6 +916,7 @@ export type OrderRequestCreateWithoutItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   promoCode?: Prisma.PromoCodeCreateNestedOneWithoutOrderRequestsInput
+  landingPage?: Prisma.LandingPageCreateNestedOneWithoutOrdersInput
 }
 
 export type OrderRequestUncheckedCreateWithoutItemsInput = {
@@ -873,6 +940,7 @@ export type OrderRequestUncheckedCreateWithoutItemsInput = {
   dataConsentAccepted?: boolean
   promoCodeId?: string | null
   discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -916,6 +984,7 @@ export type OrderRequestUpdateWithoutItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   promoCode?: Prisma.PromoCodeUpdateOneWithoutOrderRequestsNestedInput
+  landingPage?: Prisma.LandingPageUpdateOneWithoutOrdersNestedInput
 }
 
 export type OrderRequestUncheckedUpdateWithoutItemsInput = {
@@ -939,6 +1008,7 @@ export type OrderRequestUncheckedUpdateWithoutItemsInput = {
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promoCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -966,6 +1036,7 @@ export type OrderRequestCreateWithoutPromoCodeInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.OrderRequestItemCreateNestedManyWithoutOrderRequestInput
+  landingPage?: Prisma.LandingPageCreateNestedOneWithoutOrdersInput
 }
 
 export type OrderRequestUncheckedCreateWithoutPromoCodeInput = {
@@ -988,6 +1059,7 @@ export type OrderRequestUncheckedCreateWithoutPromoCodeInput = {
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
   discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutOrderRequestInput
@@ -1043,8 +1115,87 @@ export type OrderRequestScalarWhereInput = {
   dataConsentAccepted?: Prisma.BoolFilter<"OrderRequest"> | boolean
   promoCodeId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   discountAmount?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
   createdAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OrderRequest"> | Date | string
+}
+
+export type OrderRequestCreateWithoutLandingPageInput = {
+  id?: string
+  customerName: string
+  customerPhone: string
+  deliveryAddress?: string | null
+  deliveryCity?: string | null
+  deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryEstimate?: Date | string | null
+  deliveryUnavailable?: boolean
+  status?: $Enums.OrderRequestStatus
+  totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Date | string | null
+  notes?: string | null
+  requiresAdvance?: boolean
+  advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptKey?: string | null
+  receiptUrl?: string | null
+  receiptUploadedAt?: Date | string | null
+  dataConsentAccepted?: boolean
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  promoCode?: Prisma.PromoCodeCreateNestedOneWithoutOrderRequestsInput
+  items?: Prisma.OrderRequestItemCreateNestedManyWithoutOrderRequestInput
+}
+
+export type OrderRequestUncheckedCreateWithoutLandingPageInput = {
+  id?: string
+  customerName: string
+  customerPhone: string
+  deliveryAddress?: string | null
+  deliveryCity?: string | null
+  deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryEstimate?: Date | string | null
+  deliveryUnavailable?: boolean
+  status?: $Enums.OrderRequestStatus
+  totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Date | string | null
+  notes?: string | null
+  requiresAdvance?: boolean
+  advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptKey?: string | null
+  receiptUrl?: string | null
+  receiptUploadedAt?: Date | string | null
+  dataConsentAccepted?: boolean
+  promoCodeId?: string | null
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutOrderRequestInput
+}
+
+export type OrderRequestCreateOrConnectWithoutLandingPageInput = {
+  where: Prisma.OrderRequestWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderRequestCreateWithoutLandingPageInput, Prisma.OrderRequestUncheckedCreateWithoutLandingPageInput>
+}
+
+export type OrderRequestCreateManyLandingPageInputEnvelope = {
+  data: Prisma.OrderRequestCreateManyLandingPageInput | Prisma.OrderRequestCreateManyLandingPageInput[]
+  skipDuplicates?: boolean
+}
+
+export type OrderRequestUpsertWithWhereUniqueWithoutLandingPageInput = {
+  where: Prisma.OrderRequestWhereUniqueInput
+  update: Prisma.XOR<Prisma.OrderRequestUpdateWithoutLandingPageInput, Prisma.OrderRequestUncheckedUpdateWithoutLandingPageInput>
+  create: Prisma.XOR<Prisma.OrderRequestCreateWithoutLandingPageInput, Prisma.OrderRequestUncheckedCreateWithoutLandingPageInput>
+}
+
+export type OrderRequestUpdateWithWhereUniqueWithoutLandingPageInput = {
+  where: Prisma.OrderRequestWhereUniqueInput
+  data: Prisma.XOR<Prisma.OrderRequestUpdateWithoutLandingPageInput, Prisma.OrderRequestUncheckedUpdateWithoutLandingPageInput>
+}
+
+export type OrderRequestUpdateManyWithWhereWithoutLandingPageInput = {
+  where: Prisma.OrderRequestScalarWhereInput
+  data: Prisma.XOR<Prisma.OrderRequestUpdateManyMutationInput, Prisma.OrderRequestUncheckedUpdateManyWithoutLandingPageInput>
 }
 
 export type OrderRequestCreateManyPromoCodeInput = {
@@ -1067,6 +1218,7 @@ export type OrderRequestCreateManyPromoCodeInput = {
   receiptUploadedAt?: Date | string | null
   dataConsentAccepted?: boolean
   discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1094,6 +1246,7 @@ export type OrderRequestUpdateWithoutPromoCodeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderRequestItemUpdateManyWithoutOrderRequestNestedInput
+  landingPage?: Prisma.LandingPageUpdateOneWithoutOrdersNestedInput
 }
 
 export type OrderRequestUncheckedUpdateWithoutPromoCodeInput = {
@@ -1116,6 +1269,7 @@ export type OrderRequestUncheckedUpdateWithoutPromoCodeInput = {
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutOrderRequestNestedInput
@@ -1140,6 +1294,109 @@ export type OrderRequestUncheckedUpdateManyWithoutPromoCodeInput = {
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OrderRequestCreateManyLandingPageInput = {
+  id?: string
+  customerName: string
+  customerPhone: string
+  deliveryAddress?: string | null
+  deliveryCity?: string | null
+  deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryEstimate?: Date | string | null
+  deliveryUnavailable?: boolean
+  status?: $Enums.OrderRequestStatus
+  totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Date | string | null
+  notes?: string | null
+  requiresAdvance?: boolean
+  advancePaymentStatus?: $Enums.AdvancePaymentStatus
+  receiptKey?: string | null
+  receiptUrl?: string | null
+  receiptUploadedAt?: Date | string | null
+  dataConsentAccepted?: boolean
+  promoCodeId?: string | null
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type OrderRequestUpdateWithoutLandingPageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  promoCode?: Prisma.PromoCodeUpdateOneWithoutOrderRequestsNestedInput
+  items?: Prisma.OrderRequestItemUpdateManyWithoutOrderRequestNestedInput
+}
+
+export type OrderRequestUncheckedUpdateWithoutLandingPageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  promoCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutOrderRequestNestedInput
+}
+
+export type OrderRequestUncheckedUpdateManyWithoutLandingPageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresAdvance?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advancePaymentStatus?: Prisma.EnumAdvancePaymentStatusFieldUpdateOperationsInput | $Enums.AdvancePaymentStatus
+  receiptKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptUploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataConsentAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  promoCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1197,10 +1454,12 @@ export type OrderRequestSelect<ExtArgs extends runtime.Types.Extensions.Internal
   dataConsentAccepted?: boolean
   promoCodeId?: boolean
   discountAmount?: boolean
+  landingPageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
   items?: boolean | Prisma.OrderRequest$itemsArgs<ExtArgs>
+  landingPage?: boolean | Prisma.OrderRequest$landingPageArgs<ExtArgs>
   _count?: boolean | Prisma.OrderRequestCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["orderRequest"]>
 
@@ -1225,9 +1484,11 @@ export type OrderRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   dataConsentAccepted?: boolean
   promoCodeId?: boolean
   discountAmount?: boolean
+  landingPageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
+  landingPage?: boolean | Prisma.OrderRequest$landingPageArgs<ExtArgs>
 }, ExtArgs["result"]["orderRequest"]>
 
 export type OrderRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1251,9 +1512,11 @@ export type OrderRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   dataConsentAccepted?: boolean
   promoCodeId?: boolean
   discountAmount?: boolean
+  landingPageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
+  landingPage?: boolean | Prisma.OrderRequest$landingPageArgs<ExtArgs>
 }, ExtArgs["result"]["orderRequest"]>
 
 export type OrderRequestSelectScalar = {
@@ -1277,21 +1540,25 @@ export type OrderRequestSelectScalar = {
   dataConsentAccepted?: boolean
   promoCodeId?: boolean
   discountAmount?: boolean
+  landingPageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OrderRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerName" | "customerPhone" | "deliveryAddress" | "deliveryCity" | "deliveryFee" | "deliveryEstimate" | "deliveryUnavailable" | "status" | "totalEstimate" | "whatsappOpenedAt" | "notes" | "requiresAdvance" | "advancePaymentStatus" | "receiptKey" | "receiptUrl" | "receiptUploadedAt" | "dataConsentAccepted" | "promoCodeId" | "discountAmount" | "createdAt" | "updatedAt", ExtArgs["result"]["orderRequest"]>
+export type OrderRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerName" | "customerPhone" | "deliveryAddress" | "deliveryCity" | "deliveryFee" | "deliveryEstimate" | "deliveryUnavailable" | "status" | "totalEstimate" | "whatsappOpenedAt" | "notes" | "requiresAdvance" | "advancePaymentStatus" | "receiptKey" | "receiptUrl" | "receiptUploadedAt" | "dataConsentAccepted" | "promoCodeId" | "discountAmount" | "landingPageId" | "createdAt" | "updatedAt", ExtArgs["result"]["orderRequest"]>
 export type OrderRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
   items?: boolean | Prisma.OrderRequest$itemsArgs<ExtArgs>
+  landingPage?: boolean | Prisma.OrderRequest$landingPageArgs<ExtArgs>
   _count?: boolean | Prisma.OrderRequestCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrderRequestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
+  landingPage?: boolean | Prisma.OrderRequest$landingPageArgs<ExtArgs>
 }
 export type OrderRequestIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
+  landingPage?: boolean | Prisma.OrderRequest$landingPageArgs<ExtArgs>
 }
 
 export type $OrderRequestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1299,6 +1566,7 @@ export type $OrderRequestPayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     promoCode: Prisma.$PromoCodePayload<ExtArgs> | null
     items: Prisma.$OrderRequestItemPayload<ExtArgs>[]
+    landingPage: Prisma.$LandingPagePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1321,6 +1589,7 @@ export type $OrderRequestPayload<ExtArgs extends runtime.Types.Extensions.Intern
     dataConsentAccepted: boolean
     promoCodeId: string | null
     discountAmount: runtime.Decimal
+    landingPageId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["orderRequest"]>
@@ -1719,6 +1988,7 @@ export interface Prisma__OrderRequestClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   promoCode<T extends Prisma.OrderRequest$promoCodeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderRequest$promoCodeArgs<ExtArgs>>): Prisma.Prisma__PromoCodeClient<runtime.Types.Result.GetResult<Prisma.$PromoCodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.OrderRequest$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderRequest$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderRequestItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  landingPage<T extends Prisma.OrderRequest$landingPageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderRequest$landingPageArgs<ExtArgs>>): Prisma.Prisma__LandingPageClient<runtime.Types.Result.GetResult<Prisma.$LandingPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1768,6 +2038,7 @@ export interface OrderRequestFieldRefs {
   readonly dataConsentAccepted: Prisma.FieldRef<"OrderRequest", 'Boolean'>
   readonly promoCodeId: Prisma.FieldRef<"OrderRequest", 'String'>
   readonly discountAmount: Prisma.FieldRef<"OrderRequest", 'Decimal'>
+  readonly landingPageId: Prisma.FieldRef<"OrderRequest", 'String'>
   readonly createdAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
 }
@@ -2211,6 +2482,25 @@ export type OrderRequest$itemsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.OrderRequestItemScalarFieldEnum | Prisma.OrderRequestItemScalarFieldEnum[]
+}
+
+/**
+ * OrderRequest.landingPage
+ */
+export type OrderRequest$landingPageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LandingPage
+   */
+  select?: Prisma.LandingPageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LandingPage
+   */
+  omit?: Prisma.LandingPageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LandingPageInclude<ExtArgs> | null
+  where?: Prisma.LandingPageWhereInput
 }
 
 /**

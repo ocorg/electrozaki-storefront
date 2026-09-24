@@ -97,3 +97,13 @@ export type RateLimitHit = Prisma.RateLimitHitModel
  * 
  */
 export type RepairTracking = Prisma.RepairTrackingModel
+/**
+ * Model LandingPage
+ * 
+ */
+export type LandingPage = Prisma.LandingPageModel
+/**
+ * Model LandingPageProduct
+ * 
+ */
+export type LandingPageProduct = Prisma.LandingPageProductModel
