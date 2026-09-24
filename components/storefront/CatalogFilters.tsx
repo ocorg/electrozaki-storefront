@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Button, AnchorButton } from "@/components/ui/Button";
 import { cardClasses } from "@/components/ui/Card";
 import type { CategoryFilterOptions } from "@/lib/db/public-products";
+import { Select } from "@/components/ui/Select";
 
 const CONDITIONS = [
   { value: "", label: "Tous états" },
@@ -58,14 +59,14 @@ function FilterSelect({ name, label, value, items, all, onChange }: {
   return (
     <div>
       <Label>{label}</Label>
-      <select name={name} defaultValue={value ?? ""} onChange={onChange} className={fieldClass}>
+      <Select name={name} defaultValue={value ?? ""} onChange={onChange} className={fieldClass}>
         {all && <option value="">{all}</option>}
         {items.map((i) => (
           <option key={i.value} value={i.value}>
             {i.label}
           </option>
         ))}
-      </select>
+      </Select>
     </div>
   );
 }

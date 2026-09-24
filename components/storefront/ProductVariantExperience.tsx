@@ -8,6 +8,7 @@ import { formatMAD } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { ConditionDashboard, type ConditionData } from "@/components/storefront/ConditionDashboard";
+import { Select } from "@/components/ui/Select";
 
 export type VariantData = ConditionData & {
   id: string;
@@ -252,7 +253,7 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
             )}
 
             {!hasColorVariants && variants.length > 0 && (
-              <select
+              <Select
                 value={selectedVariantId}
                 onChange={(e) => setSelectedVariantId(e.target.value)}
                 className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
@@ -263,7 +264,7 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
                     {v.stockQuantity <= 0 ? " — épuisé" : ""}
                   </option>
                 ))}
-              </select>
+              </Select>
             )}
 
             <div className="flex items-center gap-3">

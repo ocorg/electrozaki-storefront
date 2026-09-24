@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import { Select } from "@/components/ui/Select";
 
 type Phone = { id: string; name: string };
 
@@ -19,7 +20,7 @@ export function CompatibilitySelector({ allPhones, compatiblePhoneIds }: Props) 
   return (
     <Card className="mt-4 p-4">
       <p className="text-sm font-semibold">Vérifiez la compatibilité</p>
-      <select
+      <Select
         value={selectedId}
         onChange={(e) => setSelectedId(e.target.value)}
         className="mt-2 min-h-11 w-full rounded-lg border border-black/15 px-2 text-sm focus:border-gold focus:outline-none"
@@ -30,7 +31,7 @@ export function CompatibilitySelector({ allPhones, compatiblePhoneIds }: Props) 
             {p.name}
           </option>
         ))}
-      </select>
+      </Select>
 
       {result === "yes" && (
         <p className="mt-3 flex items-center gap-2 rounded-lg bg-green-50 px-3 py-2 text-sm text-green-800">
