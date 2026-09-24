@@ -16,6 +16,7 @@ type OrderRequestInput = {
   // Locked in at submission time — see the schema comment on OrderRequest.
   promoCodeId?: string;
   discountAmount?: number;
+  delivery: { city: string; fee: number; estimate: string | null; unavailable: boolean };
 };
 
 export class PromoExhaustedError extends Error {}
@@ -26,7 +27,8 @@ export class PromoExhaustedError extends Error {}
 export async function createOrderRequest(input: OrderRequestInput) {
   const subtotal = input.lines.reduce((sum, l) => sum + l.unitPrice * l.quantity, 0);
   const discountAmount = input.discountAmount ?? 0;
-  const totalEstimate = Math.max(0, subtotal - discountAmount);
+  // The promo applies to the goods only; delivery is added on top.
+  const totalEstimate = Math.max(0, subtotal - discountAmount) + input.delivery.fee;
 
   // Phase-2 payment status: only meaningful when the order actually
   // requires the advance.
@@ -59,6 +61,10 @@ export async function createOrderRequest(input: OrderRequestInput) {
         customerName: input.customerName,
         customerPhone: input.customerPhone,
         deliveryAddress: input.deliveryAddress,
+        deliveryCity: input.delivery.city,
+        deliveryFee: input.delivery.fee,
+        deliveryEstimate: input.delivery.estimate ? new Date(`${input.delivery.estimate}T00:00:00Z`) : null,
+        deliveryUnavailable: input.delivery.unavailable,
         notes: input.notes,
         totalEstimate,
         requiresAdvance: input.requiresAdvance,

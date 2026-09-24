@@ -7,6 +7,7 @@ import { priceCart, type CartLineInput } from "@/lib/db/cart-pricing";
 import { validatePromoCode, type PromoValidationResult } from "@/lib/db/promo-codes";
 import { allowRequest, RATE_LIMIT_MESSAGE } from "@/lib/rate-limit";
 import { buildWhatsAppOrderLink } from "@/lib/whatsapp";
+import { findCity, estimateDelivery } from "@/lib/delivery";
 
 type SubmitInput = {
   // Only product/variant ids, quantities and the gift/pack markers are read
@@ -15,6 +16,8 @@ type SubmitInput = {
   customerName: string;
   customerPhone: string;
   deliveryAddress: string;
+  // Name picked from the Ameex list — the fee and date are looked up here.
+  deliveryCity: string;
   notes?: string;
   receipt?: { key: string; token: string };
   dataConsentAccepted: boolean;
@@ -43,6 +46,16 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
 
   const cart = await priceCart(input.items);
   if (!cart.ok) return { ok: false, error: cart.error };
+
+  const city = findCity(String(input.deliveryCity ?? ""));
+  if (!city) return { ok: false, error: "Merci de choisir votre ville de livraison dans la liste." };
+  const estimate = estimateDelivery(city);
+  const delivery = {
+    city: city.name,
+    fee: city.fee,
+    estimate: estimate.deliverable ? estimate.deliveryDate : null,
+    unavailable: !estimate.deliverable,
+  };
 
   let promoCodeId: string | undefined;
   let discountAmount = 0;
@@ -87,6 +100,7 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
       promoCodeId,
       discountAmount,
       lines: cart.lines,
+      delivery,
     });
   } catch (err) {
     if (err instanceof PromoExhaustedError) {
@@ -109,6 +123,7 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
       requiresAdvance: parsed.data.requiresAdvance,
       receiptUploaded: Boolean(parsed.data.receiptKey),
       discountAmount,
+      delivery,
     }
   );
 
