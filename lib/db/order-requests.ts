@@ -17,6 +17,7 @@ type OrderRequestInput = {
   promoCodeId?: string;
   discountAmount?: number;
   delivery: { city: string; fee: number; estimate: string | null; unavailable: boolean };
+  landingPageId?: string;
 };
 
 export class PromoExhaustedError extends Error {}
@@ -65,6 +66,7 @@ export async function createOrderRequest(input: OrderRequestInput) {
         deliveryFee: input.delivery.fee,
         deliveryEstimate: input.delivery.estimate ? new Date(`${input.delivery.estimate}T00:00:00Z`) : null,
         deliveryUnavailable: input.delivery.unavailable,
+        landingPageId: input.landingPageId,
         notes: input.notes,
         totalEstimate,
         requiresAdvance: input.requiresAdvance,

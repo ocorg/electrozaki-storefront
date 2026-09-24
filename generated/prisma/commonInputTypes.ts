@@ -483,6 +483,40 @@ export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBigIntFilter<$PrismaModel>
 }
 
+export type EnumLandingThemeFilter<$PrismaModel = never> = {
+  equals?: $Enums.LandingTheme | Prisma.EnumLandingThemeFieldRefInput<$PrismaModel>
+  in?: $Enums.LandingTheme[] | Prisma.ListEnumLandingThemeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LandingTheme[] | Prisma.ListEnumLandingThemeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLandingThemeFilter<$PrismaModel> | $Enums.LandingTheme
+}
+
+export type EnumPromoCodeTypeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromoCodeType | Prisma.EnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPromoCodeTypeNullableFilter<$PrismaModel> | $Enums.PromoCodeType | null
+}
+
+export type EnumLandingThemeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LandingTheme | Prisma.EnumLandingThemeFieldRefInput<$PrismaModel>
+  in?: $Enums.LandingTheme[] | Prisma.ListEnumLandingThemeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LandingTheme[] | Prisma.ListEnumLandingThemeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLandingThemeWithAggregatesFilter<$PrismaModel> | $Enums.LandingTheme
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLandingThemeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLandingThemeFilter<$PrismaModel>
+}
+
+export type EnumPromoCodeTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromoCodeType | Prisma.EnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPromoCodeTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.PromoCodeType | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPromoCodeTypeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPromoCodeTypeNullableFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -936,6 +970,40 @@ export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedBigIntFilter<$PrismaModel>
   _min?: Prisma.NestedBigIntFilter<$PrismaModel>
   _max?: Prisma.NestedBigIntFilter<$PrismaModel>
+}
+
+export type NestedEnumLandingThemeFilter<$PrismaModel = never> = {
+  equals?: $Enums.LandingTheme | Prisma.EnumLandingThemeFieldRefInput<$PrismaModel>
+  in?: $Enums.LandingTheme[] | Prisma.ListEnumLandingThemeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LandingTheme[] | Prisma.ListEnumLandingThemeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLandingThemeFilter<$PrismaModel> | $Enums.LandingTheme
+}
+
+export type NestedEnumPromoCodeTypeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromoCodeType | Prisma.EnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPromoCodeTypeNullableFilter<$PrismaModel> | $Enums.PromoCodeType | null
+}
+
+export type NestedEnumLandingThemeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LandingTheme | Prisma.EnumLandingThemeFieldRefInput<$PrismaModel>
+  in?: $Enums.LandingTheme[] | Prisma.ListEnumLandingThemeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LandingTheme[] | Prisma.ListEnumLandingThemeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLandingThemeWithAggregatesFilter<$PrismaModel> | $Enums.LandingTheme
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLandingThemeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLandingThemeFilter<$PrismaModel>
+}
+
+export type NestedEnumPromoCodeTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromoCodeType | Prisma.EnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PromoCodeType[] | Prisma.ListEnumPromoCodeTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPromoCodeTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.PromoCodeType | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPromoCodeTypeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPromoCodeTypeNullableFilter<$PrismaModel>
 }
 
 

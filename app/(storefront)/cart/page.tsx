@@ -147,7 +147,7 @@ export default function CartPage() {
           <ul className="divide-y divide-black/10 border-y border-black/10">
             {items.map((item) => (
               <li
-                key={`${item.productId}-${item.variantId ?? ""}-${item.isGift ? "g" : ""}-${item.bundleId ?? ""}`}
+                key={`${item.productId}-${item.variantId ?? ""}-${item.isGift ? "g" : ""}-${item.bundleId ?? ""}-${item.landingId ?? ""}`}
                 className="flex items-center gap-4 py-4"
               >
                 <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-neutral-50">

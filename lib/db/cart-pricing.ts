@@ -1,6 +1,7 @@
 import { AvailabilityStatus } from "@/generated/prisma/enums";
 import { allocateBundlePrices } from "@/lib/bundle-pricing";
 import { prisma } from "./client";
+import { landingStatus, landingPrice, landingProductIds } from "./landing";
 
 // ─────────────────────────────────────────────────────────────────────────
 // The ONLY source of truth for what an order costs. The browser's cart
@@ -16,6 +17,8 @@ export type CartLineInput = {
   quantity: number;
   isGift?: boolean;
   bundleId?: string;
+  /** added from a promo page (/offres/…): gets that page's price while it is live */
+  landingId?: string;
 };
 
 export type PricedLine = {
@@ -31,7 +34,7 @@ export type PricedLine = {
 };
 
 export type PricedCart =
-  | { ok: true; lines: PricedLine[]; subtotal: number; requiresAdvance: boolean }
+  | { ok: true; lines: PricedLine[]; subtotal: number; requiresAdvance: boolean; landingPageId?: string }
   | { ok: false; error: string };
 
 const MAX_LINES = 30;
@@ -51,6 +54,7 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
     quantity: Number(l.quantity),
     isGift: l.isGift === true,
     bundleId: l.bundleId ? String(l.bundleId) : undefined,
+    landingId: l.landingId ? String(l.landingId) : undefined,
   }));
   if (lines.some((l) => !l.productId || !Number.isInteger(l.quantity) || l.quantity < 1 || l.quantity > MAX_QTY)) {
     return fail("Quantité invalide dans le panier.");
@@ -117,17 +121,35 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
     return { product, variant, normalPrice };
   }
 
+  // ── Promo pages used by this cart: must be live, and offer the product ──
+  const landingIds = [...new Set(lines.filter((l) => l.landingId && !l.isGift && !l.bundleId).map((l) => l.landingId!))];
+  const landings = new Map<string, { title: string; price: (normal: number) => number; offers: Set<string> }>();
+  for (const id of landingIds) {
+    const page = await prisma.landingPage.findUnique({
+      where: { id },
+      select: { title: true, active: true, startsAt: true, endsAt: true, discountType: true, discountValue: true },
+    });
+    if (!page || landingStatus(page) !== "live") {
+      return fail(`L'offre « ${page?.title ?? "promo"} » est terminée : retirez l'article de votre panier puis ajoutez-le à nouveau depuis la boutique.`);
+    }
+    landings.set(id, { title: page.title, price: (n) => landingPrice(page, n), offers: new Set(await landingProductIds(id)) });
+  }
+
   // ── Regular lines ──
   for (const line of lines.filter((l) => !l.isGift && !l.bundleId)) {
     const r = resolveLine(line);
     if ("error" in r) return fail(r.error!);
+    const landing = line.landingId ? landings.get(line.landingId) : undefined;
+    if (landing && !landing.offers.has(r.product.id)) {
+      return fail(`« ${r.product.name} » ne fait plus partie de l'offre « ${landing.title} ». Retirez-le du panier.`);
+    }
     priced.push({
       productId: r.product.id,
       variantId: r.variant?.id,
       unitRef: r.variant?.erpRef ?? undefined,
-      productName: r.product.name,
+      productName: landing ? `${r.product.name} (offre ${landing.title})` : r.product.name,
       variantName: r.variant?.name,
-      unitPrice: r.normalPrice,
+      unitPrice: landing ? landing.price(r.normalPrice) : r.normalPrice,
       quantity: line.quantity,
       isGift: false,
     });
@@ -221,5 +243,5 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
 
   const subtotal = priced.reduce((sum, l) => sum + l.unitPrice * l.quantity, 0);
   const requiresAdvance = priced.some((l) => !l.isGift && byId.get(l.productId)?.isPhone);
-  return { ok: true, lines: priced, subtotal, requiresAdvance };
+  return { ok: true, lines: priced, subtotal, requiresAdvance, landingPageId: landingIds[0] };
 }

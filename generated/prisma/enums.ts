@@ -84,3 +84,13 @@ export const PromoCodeType = {
 } as const
 
 export type PromoCodeType = (typeof PromoCodeType)[keyof typeof PromoCodeType]
+
+
+export const LandingTheme = {
+  GOLD: 'GOLD',
+  INK: 'INK',
+  OCEAN: 'OCEAN',
+  CORAL: 'CORAL'
+} as const
+
+export type LandingTheme = (typeof LandingTheme)[keyof typeof LandingTheme]

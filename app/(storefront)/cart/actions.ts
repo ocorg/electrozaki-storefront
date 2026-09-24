@@ -101,6 +101,7 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
       discountAmount,
       lines: cart.lines,
       delivery,
+      landingPageId: cart.landingPageId,
     });
   } catch (err) {
     if (err instanceof PromoExhaustedError) {
