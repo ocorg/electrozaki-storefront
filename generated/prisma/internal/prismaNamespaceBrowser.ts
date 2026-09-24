@@ -65,7 +65,8 @@ export const ModelName = {
   Bundle: 'Bundle',
   BundleItem: 'BundleItem',
   ModelPhoto: 'ModelPhoto',
-  RateLimitHit: 'RateLimitHit'
+  RateLimitHit: 'RateLimitHit',
+  RepairTracking: 'RepairTracking'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -255,13 +256,16 @@ export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnu
 
 export const RepairRequestScalarFieldEnum = {
   id: 'id',
+  kind: 'kind',
   customerName: 'customerName',
   customerPhone: 'customerPhone',
   deviceBrand: 'deviceBrand',
   deviceModel: 'deviceModel',
   problemAreas: 'problemAreas',
   notes: 'notes',
+  preferredSlot: 'preferredSlot',
   status: 'status',
+  cancelReason: 'cancelReason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -331,6 +335,24 @@ export const RateLimitHitScalarFieldEnum = {
 } as const
 
 export type RateLimitHitScalarFieldEnum = (typeof RateLimitHitScalarFieldEnum)[keyof typeof RateLimitHitScalarFieldEnum]
+
+
+export const RepairTrackingScalarFieldEnum = {
+  ref: 'ref',
+  phoneHash: 'phoneHash',
+  kind: 'kind',
+  status: 'status',
+  device: 'device',
+  quoteAmount: 'quoteAmount',
+  quoteSentAt: 'quoteSentAt',
+  quoteDecision: 'quoteDecision',
+  quoteDecidedAt: 'quoteDecidedAt',
+  decisionApplied: 'decisionApplied',
+  cancelled: 'cancelled',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RepairTrackingScalarFieldEnum = (typeof RepairTrackingScalarFieldEnum)[keyof typeof RepairTrackingScalarFieldEnum]
 
 
 export const SortOrder = {

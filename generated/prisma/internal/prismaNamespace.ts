@@ -411,7 +411,8 @@ export const ModelName = {
   Bundle: 'Bundle',
   BundleItem: 'BundleItem',
   ModelPhoto: 'ModelPhoto',
-  RateLimitHit: 'RateLimitHit'
+  RateLimitHit: 'RateLimitHit',
+  RepairTracking: 'RepairTracking'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -427,7 +428,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem" | "modelPhoto" | "rateLimitHit"
+    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem" | "modelPhoto" | "rateLimitHit" | "repairTracking"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1541,6 +1542,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RepairTracking: {
+      payload: Prisma.$RepairTrackingPayload<ExtArgs>
+      fields: Prisma.RepairTrackingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RepairTrackingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairTrackingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RepairTrackingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairTrackingPayload>
+        }
+        findFirst: {
+          args: Prisma.RepairTrackingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairTrackingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RepairTrackingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairTrackingPayload>
+        }
+        findMany: {
+          args: Prisma.RepairTrackingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairTrackingPayload>[]
+        }
+        create: {
+          args: Prisma.RepairTrackingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairTrackingPayload>
+        }
+        createMany: {
+          args: Prisma.RepairTrackingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RepairTrackingCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairTrackingPayload>[]
+        }
+        delete: {
+          args: Prisma.RepairTrackingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairTrackingPayload>
+        }
+        update: {
+          args: Prisma.RepairTrackingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairTrackingPayload>
+        }
+        deleteMany: {
+          args: Prisma.RepairTrackingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RepairTrackingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RepairTrackingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairTrackingPayload>[]
+        }
+        upsert: {
+          args: Prisma.RepairTrackingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairTrackingPayload>
+        }
+        aggregate: {
+          args: Prisma.RepairTrackingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRepairTracking>
+        }
+        groupBy: {
+          args: Prisma.RepairTrackingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairTrackingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RepairTrackingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairTrackingCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1751,13 +1826,16 @@ export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnu
 
 export const RepairRequestScalarFieldEnum = {
   id: 'id',
+  kind: 'kind',
   customerName: 'customerName',
   customerPhone: 'customerPhone',
   deviceBrand: 'deviceBrand',
   deviceModel: 'deviceModel',
   problemAreas: 'problemAreas',
   notes: 'notes',
+  preferredSlot: 'preferredSlot',
   status: 'status',
+  cancelReason: 'cancelReason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1827,6 +1905,24 @@ export const RateLimitHitScalarFieldEnum = {
 } as const
 
 export type RateLimitHitScalarFieldEnum = (typeof RateLimitHitScalarFieldEnum)[keyof typeof RateLimitHitScalarFieldEnum]
+
+
+export const RepairTrackingScalarFieldEnum = {
+  ref: 'ref',
+  phoneHash: 'phoneHash',
+  kind: 'kind',
+  status: 'status',
+  device: 'device',
+  quoteAmount: 'quoteAmount',
+  quoteSentAt: 'quoteSentAt',
+  quoteDecision: 'quoteDecision',
+  quoteDecidedAt: 'quoteDecidedAt',
+  decisionApplied: 'decisionApplied',
+  cancelled: 'cancelled',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RepairTrackingScalarFieldEnum = (typeof RepairTrackingScalarFieldEnum)[keyof typeof RepairTrackingScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2020,6 +2116,20 @@ export type EnumAdvancePaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputT
  * Reference to a field of type 'AdvancePaymentStatus[]'
  */
 export type ListEnumAdvancePaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdvancePaymentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RepairKind'
+ */
+export type EnumRepairKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RepairKind'>
+    
+
+
+/**
+ * Reference to a field of type 'RepairKind[]'
+ */
+export type ListEnumRepairKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RepairKind[]'>
     
 
 
@@ -2244,6 +2354,7 @@ export type GlobalOmitConfig = {
   bundleItem?: Prisma.BundleItemOmit
   modelPhoto?: Prisma.ModelPhotoOmit
   rateLimitHit?: Prisma.RateLimitHitOmit
+  repairTracking?: Prisma.RepairTrackingOmit
 }
 
 /* Types for Logging */
