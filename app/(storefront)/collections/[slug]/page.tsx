@@ -41,6 +41,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   const filters = {
     brand: str(filterParams.brand),
     q: str(filterParams.q),
+    promo: filterParams.promo === "1" || undefined,
     maxPrice: int(filterParams.maxPrice),
     condition: phones ? str(filterParams.condition) : undefined,
     minBatteryHealth: phones ? int(filterParams.minBattery) : undefined,

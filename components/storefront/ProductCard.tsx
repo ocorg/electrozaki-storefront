@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ImageOff } from "lucide-react";
-import { formatMAD, discountPercent } from "@/lib/format";
+import { formatMAD, savingOf } from "@/lib/format";
 import { CONDITION_LABEL } from "@/lib/conditions";
 import type { PublicProduct } from "@/lib/db/public-products";
 import { interactiveCardClasses } from "@/components/ui/Card";
@@ -15,10 +15,11 @@ export function ProductCard({ product }: { product: PublicProduct }) {
   // Used phones are sold unit by unit at different prices: show the lowest.
   const unitPrices = new Set(product.variants.filter((v) => v.stockQuantity > 0 && v.priceOverride).map((v) => v.priceOverride!.toString()));
   const fromPrice = unitPrices.size > 1;
-  const percentOff = discountPercent(
-    product.recommendedSalePrice.toString(),
-    product.compareAtPrice?.toString()
-  );
+  // The card's price is the cheapest unit; its promo (if any) is on the
+  // product. Other units may have their own promo: say so with "Promo".
+  const saving = savingOf(product.recommendedSalePrice.toString(), product.compareAtPrice?.toString());
+  const unitPromo =
+    saving === null && product.variants.some((v) => v.stockQuantity > 0 && v.compareAtPrice !== null);
 
   return (
     <Link
@@ -45,9 +46,9 @@ export function ProductCard({ product }: { product: PublicProduct }) {
             {isComingSoon ? "Bientôt disponible" : "Épuisé"}
           </span>
         )}
-        {percentOff !== null && (
+        {(saving !== null || unitPromo) && (
           <span className="absolute right-2 top-2 rounded-full bg-red-600 px-2.5 py-1 text-xs font-bold text-white">
-            -{percentOff}%
+            {saving !== null ? `-${formatMAD(saving)}` : "Promo"}
           </span>
         )}
       </div>
@@ -63,7 +64,7 @@ export function ProductCard({ product }: { product: PublicProduct }) {
           <span className="rounded-lg bg-ink px-2 py-1 text-sm font-bold text-gold">
             {formatMAD(product.recommendedSalePrice.toString())}
           </span>
-          {product.compareAtPrice && (
+          {saving !== null && product.compareAtPrice && (
             <span className="text-sm text-neutral-500 line-through">
               {formatMAD(product.compareAtPrice.toString())}
             </span>

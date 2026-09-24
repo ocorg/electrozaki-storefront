@@ -4,7 +4,6 @@ import Link from "next/link";
 import { getProductBySlug } from "@/lib/db/public-products";
 import { getCompatibilityTargetPhones } from "@/lib/db/compatibility";
 import { getActiveBundlesForProduct } from "@/lib/db/bundles";
-import { discountPercent } from "@/lib/format";
 import { CompatibilitySelector } from "@/components/storefront/CompatibilitySelector";
 import { GiftPicker } from "@/components/storefront/GiftPicker";
 import { BundleOffer, type BundleOfferData } from "@/components/storefront/BundleOffer";
@@ -62,10 +61,6 @@ export default async function ProductPage({ params }: Props) {
   const specs = (product.specs ?? {}) as Record<string, string>;
   const cover = product.images[0];
   const giftOptions = product.compatibleAccessories.filter((c) => c.isGiftOption);
-  const percentOff = discountPercent(
-    product.recommendedSalePrice.toString(),
-    product.compareAtPrice?.toString()
-  );
 
   // Prisma Decimal fields (and the whole product/variant shape generally)
   // can't cross the Server -> Client boundary as-is — serialize before
@@ -74,6 +69,7 @@ export default async function ProductPage({ params }: Props) {
     id: v.id,
     name: v.name,
     priceOverride: v.priceOverride ? v.priceOverride.toString() : null,
+    compareAtPrice: v.compareAtPrice ? v.compareAtPrice.toString() : null,
     color: v.color,
     storageLabel: v.storageLabel,
     imageUrl: v.imageUrl,
@@ -99,7 +95,6 @@ export default async function ProductPage({ params }: Props) {
     availability: product.availability,
     recommendedSalePrice: product.recommendedSalePrice.toString(),
     compareAtPrice: product.compareAtPrice?.toString() ?? null,
-    percentOff,
     description: product.description,
     hasDefects: product.hasDefects,
     transparencyNotes: product.transparencyNotes,

@@ -4,7 +4,7 @@ import { useMemo, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { Check, ImageOff, ShoppingBag } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
-import { formatMAD } from "@/lib/format";
+import { formatMAD, savingOf } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { ConditionDashboard, type ConditionData } from "@/components/storefront/ConditionDashboard";
@@ -15,6 +15,8 @@ export type VariantData = ConditionData & {
   id: string;
   name: string;
   priceOverride: string | null;
+  /** price before the ERP promo on this unit, null = no promo */
+  compareAtPrice: string | null;
   color: string | null;
   storageLabel: string | null;
   imageUrl: string | null;
@@ -34,7 +36,6 @@ export type ProductVariantExperienceData = {
   availability: "IN_STOCK" | "OUT_OF_STOCK" | "COMING_SOON" | "DISCONTINUED";
   recommendedSalePrice: string;
   compareAtPrice: string | null;
-  percentOff: number | null;
   description: string | null;
   hasDefects: boolean;
   transparencyNotes: string | null;
@@ -121,6 +122,9 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
   }
 
   const price = Number(selectedVariant?.priceOverride ?? product.recommendedSalePrice);
+  // A unit with its own price carries its own promo; otherwise the product's applies.
+  const wasPrice = selectedVariant?.priceOverride ? selectedVariant.compareAtPrice : product.compareAtPrice;
+  const saving = savingOf(price, wasPrice);
   const displayImage = selectedVariant?.imageUrl
     ? { url: selectedVariant.imageUrl, altText: product.name }
     : coverImage;
@@ -188,10 +192,12 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
           <span className="rounded-lg bg-ink px-3 py-1.5 text-xl font-bold text-gold">
             {formatMAD(price)}
           </span>
-          {product.compareAtPrice && (
-            <span className="text-neutral-500 line-through">{formatMAD(product.compareAtPrice)}</span>
+          {saving !== null && wasPrice && (
+            <>
+              <span className="text-neutral-500 line-through">{formatMAD(wasPrice)}</span>
+              <Badge tone="sale">-{formatMAD(saving)}</Badge>
+            </>
           )}
-          {product.percentOff !== null && <Badge tone="sale">-{product.percentOff}%</Badge>}
         </div>
 
         <div className="mt-3 flex flex-wrap gap-2">

@@ -44,6 +44,7 @@ const PUBLIC_PRODUCT_SELECT = {
       id: true,
       name: true,
       priceOverride: true,
+      compareAtPrice: true,
       skuOrRef: true,
       color: true,
       storageLabel: true,
@@ -123,6 +124,7 @@ export interface PublicProduct {
     id: string;
     name: string;
     priceOverride: { toString(): string } | null;
+    compareAtPrice: { toString(): string } | null;
     skuOrRef: string | null;
     color: string | null;
     storageLabel: string | null;
@@ -163,6 +165,15 @@ export type ProductFilters = {
   subcategory?: string; // child category slug (accessories)
   compatibleWith?: string; // phone modelKey (accessories)
   q?: string; // words to find in the name, brand or category (search box)
+  promo?: boolean; // only products (or units) with a promo price
+};
+
+// On promo: a "was" price on the product, or on a unit still in stock.
+const ON_PROMO = {
+  OR: [
+    { compareAtPrice: { not: null } },
+    { variants: { some: { compareAtPrice: { not: null }, stockQuantity: { gt: 0 } } } },
+  ],
 };
 
 function buildFilterConditions(filters?: ProductFilters): Array<Record<string, unknown>> {
@@ -191,6 +202,7 @@ function buildFilterConditions(filters?: ProductFilters): Array<Record<string, u
       ],
     });
   }
+  if (filters?.promo) and.push(ON_PROMO);
   if (filters?.subcategory) and.push({ category: { slug: filters.subcategory } });
   if (filters?.compatibleWith) {
     and.push({ compatibleWithPhones: { some: { compatibleWith: { modelKey: filters.compatibleWith, published: true } } } });
@@ -299,6 +311,7 @@ export async function getFeaturedProducts(limit = 8): Promise<PublicProduct[]> {
 
 export type CategoryFilterOptions = {
   kind: "phones" | "accessories";
+  hasPromos: boolean; // show the "En promo" filter only when there is something to find
   brands: string[];
   storages: string[];
   subcategories: { slug: string; name: string }[];
@@ -315,8 +328,17 @@ export async function getCategoryFilterOptions(categorySlug: string): Promise<Ca
     where: { slug: categorySlug },
     select: { id: true, children: { select: { id: true, slug: true, name: true }, orderBy: { sortOrder: "asc" } } },
   });
-  if (!category) return { kind: "accessories", brands: [], storages: [], subcategories: [], phoneModels: [] };
+  if (!category) return { kind: "accessories", hasPromos: false, brands: [], storages: [], subcategories: [], phoneModels: [] };
   const ids = [category.id, ...category.children.map((c) => c.id)];
+  const hasPromos =
+    (await prisma.product.count({
+      where: {
+        AND: [
+          { categoryId: { in: ids }, published: true, availability: { not: AvailabilityStatus.DISCONTINUED } },
+          ON_PROMO,
+        ],
+      },
+    })) > 0;
 
   const products = await prisma.product.findMany({
     where: { categoryId: { in: ids }, published: true, availability: { not: AvailabilityStatus.DISCONTINUED } },
@@ -332,7 +354,7 @@ export async function getCategoryFilterOptions(categorySlug: string): Promise<Ca
     const storages = [...new Set(products.flatMap((p) => p.tags.filter((t) => STORAGE_RE.test(t))))]
       .sort((a, b) => storageSize(a) - storageSize(b))
       .map((t) => t.toUpperCase());
-    return { kind, brands, storages, subcategories: [], phoneModels: [] };
+    return { kind, hasPromos, brands, storages, subcategories: [], phoneModels: [] };
   }
 
   const used = new Set(products.map((p) => p.categoryId));
@@ -353,5 +375,5 @@ export async function getCategoryFilterOptions(categorySlug: string): Promise<Ca
     models.set(phone.modelKey, name);
   }
   const phoneModels = [...models].map(([key, name]) => ({ key, name })).sort((a, b) => a.name.localeCompare(b.name));
-  return { kind, brands, storages: [], subcategories, phoneModels };
+  return { kind, hasPromos, brands, storages: [], subcategories, phoneModels };
 }

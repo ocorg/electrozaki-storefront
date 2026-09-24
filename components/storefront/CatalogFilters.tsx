@@ -31,6 +31,7 @@ export type FilterValues = {
   type?: string;
   fits?: string;
   q?: string;
+  promo?: string;
 };
 
 type Props = {
@@ -97,6 +98,19 @@ export function CatalogFilters({ options, basePath, defaults }: Props) {
           />
         </div>
       </div>
+      {options.hasPromos && (
+        <label className="flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3 text-sm font-medium text-red-700">
+          <input
+            type="checkbox"
+            name="promo"
+            value="1"
+            defaultChecked={defaults.promo === "1"}
+            onChange={submit}
+            className="h-4 w-4 accent-red-600"
+          />
+          En promo uniquement
+        </label>
+      )}
       {options.kind === "phones" ? (
         <>
           <FilterSelect name="brand" label="Marque" value={defaults.brand} items={brands} all="Toutes marques" onChange={submit} />

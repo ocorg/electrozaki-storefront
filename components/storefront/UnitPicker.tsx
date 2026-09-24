@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { BatteryFull, Check } from "lucide-react";
-import { formatMAD } from "@/lib/format";
+import { formatMAD, savingOf } from "@/lib/format";
 import { swatch } from "@/lib/colors";
 import type { VariantData } from "@/components/storefront/ProductVariantExperience";
 
@@ -137,6 +137,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
               const on = u.id === selectedId;
               const parts = partsOf(u);
               const b = u.batteryHealthPercent;
+              const saving = savingOf(u.priceOverride, u.compareAtPrice);
               return (
                 <button
                   key={u.id}
@@ -172,7 +173,17 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                   <span className={`mt-2 block text-xs ${parts.length ? "text-amber-800" : "text-green-700"}`}>
                     {parts.length ? parts.join(" · ") : "Pièces d'origine"}
                   </span>
-                  <span className="mt-2 block text-lg font-bold">{formatMAD(Number(u.priceOverride ?? 0))}</span>
+                  <span className="mt-2 flex flex-wrap items-baseline gap-x-2">
+                    <span className="text-lg font-bold">{formatMAD(Number(u.priceOverride ?? 0))}</span>
+                    {saving !== null && u.compareAtPrice && (
+                      <>
+                        <span className="text-sm text-neutral-500 line-through">{formatMAD(u.compareAtPrice)}</span>
+                        <span className="rounded-full bg-red-600 px-2 py-0.5 text-xs font-bold text-white">
+                          -{formatMAD(saving)}
+                        </span>
+                      </>
+                    )}
+                  </span>
                 </button>
               );
             })}
