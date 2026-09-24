@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category = await getCategoryBySlug(slug);
   if (!category) return {};
   return {
-    title: `${category.name} — Electro Zaki`,
+    title: category.name,
     description: `Découvrez notre sélection ${category.name.toLowerCase()} chez Electro Zaki, Meknès.`,
   };
 }

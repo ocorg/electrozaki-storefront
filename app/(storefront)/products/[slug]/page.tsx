@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await getProductBySlug(slug);
   if (!product) return {};
   return {
-    title: product.metaTitle ?? `${product.name} — Electro Zaki`,
+    title: product.metaTitle ?? product.name,
     description: product.metaDescription ?? product.description ?? undefined,
   };
 }

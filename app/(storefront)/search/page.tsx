@@ -1,5 +1,8 @@
 import { searchProducts } from "@/lib/db/public-products";
+import type { Metadata } from "next";
 import { ProductCard } from "@/components/storefront/ProductCard";
+
+export const metadata: Metadata = { title: "Recherche" };
 
 // Next.js 16: searchParams is also a Promise, same as params.
 type Props = {

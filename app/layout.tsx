@@ -10,7 +10,11 @@ import "./globals.css";
 const manrope = Manrope({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Electro Zaki — Téléphones et accessoires à Meknès",
+  // Every page's tab reads "Page | Electro Zaki" (pages give only their own name).
+  title: {
+    default: "Electro Zaki | Téléphones et accessoires à Meknès",
+    template: "%s | Electro Zaki",
+  },
   description:
     "Téléphones neufs et bon occasion, accessoires, et réparation à Meknès. Commandez directement sur WhatsApp.",
 };

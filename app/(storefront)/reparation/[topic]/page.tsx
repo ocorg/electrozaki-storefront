@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = REPAIR_TOPICS[topic];
   if (!data) return {};
   return {
-    title: `${data.title} — Questions fréquentes — Electro Zaki`,
+    title: `${data.title} | Questions fréquentes`,
     description: data.intro,
   };
 }

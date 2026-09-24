@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, Search, ShoppingBag, X } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
 
@@ -17,8 +18,14 @@ export function Header({ categories }: { categories: Category[] }) {
   return (
     <header className="sticky top-0 z-50 border-b border-black/10 bg-white/95 shadow-sm backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
-        <Link href="/" className="text-xl font-extrabold tracking-tight">
-          ELECTRO <span className="text-gold">ZAKI</span>
+        <Link href="/" className="flex items-center gap-2.5 text-xl font-extrabold tracking-tight" aria-label="Electro Zaki — accueil">
+          {/* The mark's Z is white: it sits on an ink tile to stay visible on the white header. */}
+          <span className="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-ink p-1.5">
+            <Image src="/logo-mark.png" alt="" width={28} height={28} priority className="h-full w-full object-contain" />
+          </span>
+          <span className="hidden sm:inline">
+            ELECTRO <span className="text-gold">ZAKI</span>
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">

@@ -4,7 +4,7 @@ import { ChevronLeft } from "lucide-react";
 import { TrackingForm } from "./TrackingForm";
 
 export const metadata: Metadata = {
-  title: "Suivi de réparation — Electro Zaki",
+  title: "Suivi de réparation",
   description: "Suivez l'avancement de votre réparation Electro Zaki et validez votre devis en ligne.",
   robots: { index: false },
 };

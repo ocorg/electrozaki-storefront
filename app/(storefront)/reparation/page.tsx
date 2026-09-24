@@ -9,7 +9,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { REPAIR_TOPIC_ORDER, REPAIR_TOPICS, SOFTWARE_TOPIC_ORDER, type RepairTopic } from "@/lib/repair-faq";
 
 export const metadata: Metadata = {
-  title: "Réparation — Electro Zaki",
+  title: "Réparation",
   description:
     "Réparation de téléphones à Meknès : écran, batterie, port de charge, problèmes logiciels, récupération de données et consultation en ligne. Devis gratuit, suivi en ligne.",
 };

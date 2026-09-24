@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = await getLandingPage(slug);
   if (!data) return {};
   return {
-    title: `${data.page.title} — Electro Zaki`,
+    title: data.page.title,
     description: data.page.subtitle ?? undefined,
     openGraph: data.page.bannerUrl ? { images: [data.page.bannerUrl] } : undefined,
   };
