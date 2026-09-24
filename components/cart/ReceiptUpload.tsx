@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { CheckCircle2, Upload } from "lucide-react";
 import { uploadReceipt } from "@/app/(storefront)/cart/actions";
+import { compressImage } from "@/lib/compress-image";
 
 // The private object key plus the server's signature over it — the order
 // action only accepts a receipt it can prove this server stored.
@@ -24,9 +25,14 @@ export function ReceiptUpload({ onUploadedAction }: Props) {
     setStatus("uploading");
     setError(null);
 
-    const formData = new FormData();
-    formData.set("receipt", file);
-    const result = await uploadReceipt(formData);
+    let result: Awaited<ReturnType<typeof uploadReceipt>>;
+    try {
+      const formData = new FormData();
+      formData.set("receipt", await compressImage(file));
+      result = await uploadReceipt(formData);
+    } catch {
+      result = { ok: false, error: "L'envoi a échoué. Réessayez avec une photo plus légère ou une capture d'écran du reçu." };
+    }
 
     if (!result.ok) {
       setStatus("error");

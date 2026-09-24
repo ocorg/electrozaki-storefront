@@ -16,6 +16,12 @@ function r2RemotePattern(): { protocol: "https"; hostname: string }[] {
 }
 
 const nextConfig: NextConfig = {
+  // Receipt photos are shrunk in the browser first (lib/compress-image.ts);
+  // this is the safety net when that isn't possible. Matches the 5 MB cap
+  // in lib/storage.ts, plus room for the form encoding.
+  experimental: {
+    serverActions: { bodySizeLimit: "6mb" },
+  },
   images: {
     remotePatterns: [
       // Seed/demo images only — safe to remove once real product photos
