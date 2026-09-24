@@ -38,25 +38,37 @@ function sign(key: string): string {
 // True only for a key this server stored and signed — the order form can't
 // attach an arbitrary link or someone else's receipt.
 export function verifyReceiptToken(key: string, token: string): boolean {
-  if (!/^receipts\/[\w-]+\.webp$/.test(key)) return false;
+  if (!/^receipts\/[\w-]+\.(webp|pdf)$/.test(key)) return false;
   const expected = Buffer.from(sign(key));
   const given = Buffer.from(token);
   return expected.length === given.length && timingSafeEqual(expected, given);
 }
 
-// Re-encodes to WebP (which also rejects anything that isn't really an
-// image, whatever its declared type) and stores it in the private bucket.
+// Images are re-encoded to WebP (which also rejects anything that isn't
+// really an image, whatever its declared type); PDFs (bank-app transfer
+// receipts) are kept as they are, once their content is checked to really
+// be a PDF. Both go to the private bucket.
 export async function uploadReceiptImage(file: File): Promise<UploadReceiptResult> {
   if (file.size > MAX_BYTES) {
     return { ok: false, error: "Fichier trop volumineux (5 Mo maximum)." };
   }
-  if (!file.type.startsWith("image/")) {
-    return { ok: false, error: "Le fichier doit être une image." };
+  const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
+  if (!isPdf && !file.type.startsWith("image/")) {
+    return { ok: false, error: "Le reçu doit être une photo (JPG, PNG) ou un PDF." };
   }
 
   const bucket = process.env.R2_RECEIPTS_BUCKET;
   if (!bucket || !process.env.R2_ACCOUNT_ID) {
     return { ok: false, error: "Le stockage des reçus n'est pas configuré." };
+  }
+
+  if (isPdf) {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    // The declared type proves nothing: a real PDF starts with "%PDF-".
+    if (buffer.subarray(0, 5).toString("latin1") !== "%PDF-") {
+      return { ok: false, error: "Ce fichier n'est pas un PDF valide." };
+    }
+    return store(bucket, buffer, "pdf", "application/pdf");
   }
 
   let outputBuffer: Buffer;
@@ -72,21 +84,17 @@ export async function uploadReceiptImage(file: File): Promise<UploadReceiptResul
       .webp({ quality: RECEIPT_PRESET.quality })
       .toBuffer();
   } catch {
-    return { ok: false, error: "Image illisible. Essayez une photo JPG ou PNG." };
+    return { ok: false, error: "Image illisible. Essayez une photo JPG ou PNG, ou le PDF du virement." };
   }
+  return store(bucket, outputBuffer, "webp", "image/webp");
+}
 
+async function store(bucket: string, body: Buffer, ext: "webp" | "pdf", contentType: string): Promise<UploadReceiptResult> {
   try {
-    const key = `receipts/${Date.now()}-${crypto.randomUUID()}.webp`;
-    await r2Client.send(
-      new PutObjectCommand({
-        Bucket: bucket,
-        Key: key,
-        Body: outputBuffer,
-        ContentType: "image/webp",
-      })
-    );
+    const key = `receipts/${Date.now()}-${crypto.randomUUID()}.${ext}`;
+    await r2Client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body, ContentType: contentType }));
     return { ok: true, key, token: sign(key) };
   } catch {
-    return { ok: false, error: "Échec de l'envoi de l'image. Réessayez." };
+    return { ok: false, error: "Échec de l'envoi du reçu. Réessayez." };
   }
 }

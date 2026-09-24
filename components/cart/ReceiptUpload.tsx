@@ -49,8 +49,7 @@ export function ReceiptUpload({ onUploadedAction }: Props) {
       <input
         ref={inputRef}
         type="file"
-        accept="image/*"
-        capture="environment"
+        accept="image/*,application/pdf,.pdf"
         onChange={handleChange}
         className="hidden"
         id="receipt-upload"
@@ -75,9 +74,9 @@ export function ReceiptUpload({ onUploadedAction }: Props) {
           <>
             <Upload size={30} className="text-neutral-400" />
             <p className="mt-2 text-sm font-medium">
-              Déposez votre reçu ou appuyez pour prendre une photo
+              Déposez votre reçu : photo, capture d&apos;écran ou PDF du virement
             </p>
-            <p className="mt-1 text-xs text-neutral-500">JPG, PNG — 5 Mo maximum</p>
+            <p className="mt-1 text-xs text-neutral-500">JPG, PNG ou PDF — 5 Mo maximum</p>
           </>
         )}
       </label>
