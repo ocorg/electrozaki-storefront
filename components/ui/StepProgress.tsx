@@ -11,7 +11,7 @@ export function StepProgress({
 }) {
   return (
     <div className="mb-4 flex items-center justify-between">
-      <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">
+      <p className="font-mono text-xs font-semibold uppercase tracking-wider text-neutral-500">
         Étape {step} / {total}
       </p>
       {onBack && (

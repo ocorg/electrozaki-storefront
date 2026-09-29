@@ -1,6 +1,7 @@
 import { frenchDay } from "@/lib/delivery";
+import { SHOP } from "@/lib/site";
 // Same number already used across the current Shopify theme's CTAs.
-const WHATSAPP_NUMBER = "212667654430";
+const WHATSAPP_NUMBER = SHOP.whatsappNumber;
 
 type CartLine = {
   productName: string;

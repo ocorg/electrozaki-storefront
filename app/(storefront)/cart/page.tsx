@@ -3,12 +3,12 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { CheckCircle2, Tag, X } from "lucide-react";
+import { CheckCircle2, ShoppingBag, Tag, X } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
 import { formatMAD } from "@/lib/format";
 import { submitOrderRequest, confirmWhatsAppOpened, applyPromoCode } from "./actions";
 import { ReceiptUpload, type UploadedReceipt } from "@/components/cart/ReceiptUpload";
-import { AnchorButton, Button } from "@/components/ui/Button";
+import { AnchorButton, Button, LinkButton } from "@/components/ui/Button";
 import { StepProgress } from "@/components/ui/StepProgress";
 import { DeliveryPicker } from "@/components/cart/DeliveryPicker";
 import { findCity } from "@/lib/delivery";
@@ -124,13 +124,22 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="mx-auto max-w-lg px-4 py-16 text-center">
-        <h1 className="text-2xl font-semibold">Votre panier est vide</h1>
-        <Link
-          href="/"
-          className="mt-4 inline-block font-medium text-neutral-900 underline decoration-gold decoration-2 underline-offset-2"
-        >
-          Continuer mes achats
+      <div className="mx-auto flex max-w-lg flex-col items-center px-4 py-20 text-center">
+        <span className="flex h-20 w-20 items-center justify-center rounded-[30%] bg-white ring-1 ring-ink/10">
+          <ShoppingBag size={34} className="text-ink" aria-hidden />
+        </span>
+        <h1 className="font-display mt-6 text-4xl font-extrabold text-ink">Votre panier est vide</h1>
+        <p className="mt-3 text-neutral-600">Un téléphone, une coque, un chargeur ? Tout est en rayon.</p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <LinkButton href="/collections/telephones" variant="accent">
+            Voir les téléphones
+          </LinkButton>
+          <LinkButton href="/collections/accessoires" variant="outline">
+            Accessoires
+          </LinkButton>
+        </div>
+        <Link href="/" className="mt-5 text-sm font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">
+          Retour à l&apos;accueil
         </Link>
       </div>
     );
@@ -180,14 +189,14 @@ export default function CartPage() {
                     onChange={(e) =>
                       updateQuantity(item, Math.min(20, Math.max(1, Number(e.target.value))))
                     }
-                    className="min-h-11 w-16 rounded-lg border border-black/15 px-2 text-center focus:border-gold focus:outline-none"
+                    className="min-h-11 w-16 rounded-lg border border-black/15 px-2 text-center focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
                   />
                 )}
                 <button
                   type="button"
                   onClick={() => removeItem(item)}
                   aria-label={`Retirer ${item.productName}`}
-                  className="flex h-11 w-11 items-center justify-center rounded-full text-neutral-400 hover:bg-neutral-100 hover:text-ink"
+                  className="flex h-11 w-11 items-center justify-center rounded-full text-neutral-500 hover:bg-neutral-100 hover:text-ink"
                 >
                   <X size={18} />
                 </button>
@@ -216,7 +225,7 @@ export default function CartPage() {
                 placeholder="Code promo"
                 value={promoInput}
                 onChange={(e) => setPromoInput(e.target.value)}
-                className="min-h-11 flex-1 rounded-lg border border-black/15 px-3 uppercase focus:border-gold focus:outline-none"
+                className="min-h-11 flex-1 rounded-lg border border-black/15 px-3 uppercase focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
               />
               <Button
                 type="button"
@@ -268,7 +277,7 @@ export default function CartPage() {
             placeholder="Nom complet"
             value={customerName}
             onChange={(e) => setCustomerName(e.target.value)}
-            className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
+            className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
           />
           <input
             type="tel"
@@ -276,7 +285,7 @@ export default function CartPage() {
             placeholder="Numéro de téléphone (ex: 06XXXXXXXX)"
             value={customerPhone}
             onChange={(e) => setCustomerPhone(e.target.value)}
-            className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
+            className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
           />
           <DeliveryPicker value={deliveryCity} onChangeAction={setDeliveryCity} />
           <textarea
@@ -285,14 +294,14 @@ export default function CartPage() {
             value={deliveryAddress}
             onChange={(e) => setDeliveryAddress(e.target.value)}
             rows={3}
-            className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
+            className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
           />
           <textarea
             placeholder="Notes (optionnel)"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={2}
-            className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
+            className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
           />
 
           <div className="flex gap-2">

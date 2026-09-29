@@ -57,7 +57,7 @@ export function GiftPicker({ giftOptions }: { giftOptions: GiftOption[] }) {
   return (
     <div className={cardClasses("mt-4 p-4")}>
       <p className="flex items-center gap-2 text-sm font-semibold">
-        <Gift size={16} className="text-gold" />
+        <Gift size={16} className="text-gold-deep" />
         Cadeau offert à l&apos;achat
       </p>
       <p className="mt-1 text-sm text-neutral-600">

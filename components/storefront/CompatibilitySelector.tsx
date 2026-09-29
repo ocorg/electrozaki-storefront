@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Select } from "@/components/ui/Select";
+import { WHATSAPP_URL } from "@/lib/site";
 
 type Phone = { id: string; name: string };
 
@@ -23,7 +24,7 @@ export function CompatibilitySelector({ allPhones, compatiblePhoneIds }: Props) 
       <Select
         value={selectedId}
         onChange={(e) => setSelectedId(e.target.value)}
-        className="mt-2 min-h-11 w-full rounded-lg border border-black/15 px-2 text-sm focus:border-gold focus:outline-none"
+        className="mt-2 min-h-11 w-full rounded-lg border border-black/15 px-2 text-sm focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
       >
         <option value="">Choisissez votre téléphone</option>
         {allPhones.map((p) => (
@@ -45,7 +46,7 @@ export function CompatibilitySelector({ allPhones, compatiblePhoneIds }: Props) 
         <p className="mt-3 rounded-lg bg-gold/10 px-3 py-2 text-sm text-neutral-700">
           Compatibilité non confirmée pour ce modèle — écrivez-nous sur{" "}
           <a
-            href="https://wa.me/212667654430"
+            href={WHATSAPP_URL}
             className="font-medium text-neutral-900 underline decoration-gold decoration-2 underline-offset-2"
           >
             WhatsApp

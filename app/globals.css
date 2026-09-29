@@ -1,62 +1,188 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Design tokens ─────────────────────────────────────────────────────
+   Electro Zaki = "la vitrine": a dark glass display counter (ink) lit by
+   brass (gold), on warm shop paper. Every colour used by components is a
+   token here — `bg-ink`, `text-gold-deep`, `bg-paper`… — never a hex in a
+   component (except the WhatsApp green, which is WhatsApp's, not ours).
 
-  /* Brand tokens — single source of truth for the ink/gold palette so
-     components reference `bg-ink` / `text-gold` instead of hex literals. */
-  --color-ink: #121212;
+   Contrast (WCAG 2.2, measured):
+   - gold #c8922a on white: 2.76:1 → fills, icons on dark and large display
+     type on ink ONLY. Never text on a light surface.
+   - gold-deep #8a6212 on white 5.5:1, on paper 5.0:1 → gold text on light.
+   - gold on ink #111013: 6.8:1 · ink on gold: 6.8:1.
+   - neutral-500 #6f685d on paper 5.0:1 (smallest allowed secondary text).
+   - neutral-400 is 2.4:1: icons / disabled / decoration only. */
+@theme {
+  --color-ink: #111013;
+  --color-ink-2: #1b1a1e;
+  --color-ink-3: #26242a;
   --color-ink-foreground: #ffffff;
   --color-gold: #c8922a;
-  --color-gold-foreground: #121212;
+  --color-gold-bright: #e6b555;
+  --color-gold-deep: #8a6212;
+  --color-gold-foreground: #111013;
+  --color-paper: #f7f4ee;
+  --color-paper-2: #efe9df;
+  --color-signal: #1f7a45;
+  --color-whatsapp: #25d366;
+
+  /* Warm neutrals — the stock grey scale tinted toward the paper, so greys
+     don't look blue/cold next to brass. 500+ passes AA on paper and white. */
+  --color-neutral-50: #faf8f4;
+  --color-neutral-100: #f2eee6;
+  --color-neutral-200: #e4ded3;
+  --color-neutral-300: #d1c9bb;
+  --color-neutral-400: #a69d8e;
+  --color-neutral-500: #6f685d;
+  --color-neutral-600: #57514a;
+  --color-neutral-700: #433e38;
+  --color-neutral-800: #2c2925;
+  --color-neutral-900: #1b1916;
+  --color-neutral-950: #0f0e0c;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-notif: notif-in 0.6s var(--ease-out-quint) both;
+  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(var(--float-rot, 0deg)); }
+    50% { transform: translateY(-10px) rotate(var(--float-rot, 0deg)); }
+  }
+  @keyframes notif-in {
+    from { opacity: 0; transform: translateY(-14px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgb(37 211 102 / 0.55); }
+    50% { box-shadow: 0 0 0 6px rgb(37 211 102 / 0); }
+  }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-ink: var(--color-ink);
-  --color-ink-foreground: var(--color-ink-foreground);
-  --color-gold: var(--color-gold);
-  --color-gold-foreground: var(--color-gold-foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* The site has no dark-mode design: every surface is explicitly paper,
+   white or ink, so tokens stay fixed whatever the device's colour scheme. */
+:root {
+  color-scheme: light;
+  --focus: var(--color-gold-deep);
 }
 
-/* This site has no dark-mode design of its own — every surface is
-   explicitly light. Brand tokens stay fixed across color schemes so a
-   device with dark mode on can't silently shift ink/gold surfaces. */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 7rem; /* anchors (#trouver, #diagnostic) clear the sticky header */
+  -webkit-tap-highlight-color: transparent;
+}
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-paper);
+  color: var(--color-neutral-900);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ── Animation convention ──────────────────────────────────────────────
-   Reusable, CSS-only building blocks: `.reveal` for scroll-triggered
-   fade-ins (paired with components/ui/Reveal.tsx), `.animate-in` for
-   conditionally-rendered popovers/modals entering via @starting-style
-   (no extra JS state machine needed). Both collapse to an instant,
-   motion-free state under prefers-reduced-motion. */
-
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity 0.5s ease-out var(--reveal-delay, 0ms),
-    transform 0.5s ease-out var(--reveal-delay, 0ms);
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
 }
 
-.reveal-visible {
-  opacity: 1;
-  transform: translateY(0);
+/* One visible, consistent keyboard focus everywhere (there was none). Dark
+   sections flip it to the bright gold via `.on-dark`. */
+:focus-visible {
+  outline: 2.5px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.on-dark {
+  --focus: var(--color-gold-bright);
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Type helpers ────────────────────────────────────────────────────── */
+.font-display {
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
+
+/* Prices, battery %, counts: display face with tabular digits, so
+   numbers line up and read like a device readout. */
+.readout {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* ── Surfaces ────────────────────────────────────────────────────────── */
+
+/* Faint circuit-board traces on dark sections — "electronics" read at a
+   glance, without a stock photo. Pure CSS/SVG, ~600 bytes. */
+.pcb {
+  background-color: var(--color-ink);
+  background-image:
+    radial-gradient(ellipse 60% 50% at 70% 30%, rgb(200 146 42 / 0.16), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' fill='none' stroke='%23c8922a' stroke-opacity='.10' stroke-width='1.2'%3E%3Cpath d='M0 40h40l20 20h40l20-20h40M0 120h60l20-20h80M40 0v20l20 20M120 160v-30l-20-20H80M140 0v40'/%3E%3Ccircle cx='40' cy='20' r='3'/%3E%3Ccircle cx='100' cy='60' r='3'/%3E%3Ccircle cx='80' cy='100' r='3'/%3E%3Ccircle cx='140' cy='40' r='3'/%3E%3Ccircle cx='120' cy='130' r='3'/%3E%3C/svg%3E");
+}
+
+/* Hides a scrollbar while keeping the element scrollable (carousels). */
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Brass shine sweeping across a card on hover (product cards, tiles). */
+.shine {
+  position: relative;
+  isolation: isolate;
+}
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.55) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 0.9s var(--ease-out-quint);
+}
+.group:hover .shine::after,
+.shine:hover::after {
+  transform: translateX(120%);
+}
+
+/* ── Animation convention ──────────────────────────────────────────────
+   `.reveal` (+ components/ui/Reveal.tsx) fades sections in on scroll;
+   `.animate-in` animates conditionally-rendered popovers via
+   @starting-style. Content is only hidden when scripting is on, so no-JS
+   visitors and crawlers that don't run JS still see everything. Both are
+   instant under prefers-reduced-motion. */
+@media (scripting: enabled) {
   .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.7s var(--ease-out-quint) var(--reveal-delay, 0ms),
+      transform 0.7s var(--ease-out-quint) var(--reveal-delay, 0ms);
+  }
+  .reveal-visible {
     opacity: 1;
     transform: none;
-    transition: none;
   }
 }
 
@@ -76,8 +202,63 @@ body {
   }
 }
 
+/* Cracked screen that heals (repair hero): the cracks draw in, then fade
+   as the gold "réparé" check appears. */
+.crack path {
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: crack-draw 7s var(--ease-out-quint) infinite;
+  /* Negative delays: the loop starts already cracked, never on a blank screen. */
+  animation-delay: -1.2s;
+}
+.crack path:nth-child(2) { animation-delay: -1.12s; }
+.crack path:nth-child(3) { animation-delay: -1.04s; }
+.crack path:nth-child(4) { animation-delay: -0.96s; }
+.crack path:nth-child(5) { animation-delay: -0.88s; }
+@keyframes crack-draw {
+  0% { stroke-dashoffset: 220; opacity: 1; }
+  10% { stroke-dashoffset: 0; opacity: 1; }
+  50% { stroke-dashoffset: 0; opacity: 1; }
+  56%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+.heal {
+  animation: heal 7s var(--ease-out-quint) infinite;
+  animation-delay: -1.2s;
+}
+@keyframes heal {
+  0%, 52% { opacity: 0; transform: scale(0.6); }
+  60%, 97% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+.scan-line {
+  animation: scan 7s linear infinite;
+  animation-delay: -1.2s;
+}
+@keyframes scan {
+  0%, 16% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  48% { transform: translateY(420px); opacity: 1; }
+  50%, 100% { transform: translateY(420px); opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-in {
-    transition: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .crack path {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  .heal {
+    opacity: 1;
+    transform: none;
   }
 }

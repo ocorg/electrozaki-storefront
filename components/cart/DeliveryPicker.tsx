@@ -61,7 +61,7 @@ export function DeliveryPicker({ value, onChangeAction }: Props) {
       {city ? (
         <div className="flex items-center justify-between gap-2 rounded-lg border border-gold/60 bg-gold/5 px-3 py-2">
           <span className="flex items-center gap-2 font-medium">
-            <MapPin size={16} className="text-gold" />
+            <MapPin size={16} className="text-gold-deep" />
             {city.name}
           </span>
           <button
@@ -90,7 +90,7 @@ export function DeliveryPicker({ value, onChangeAction }: Props) {
                 setOpen(true);
               }}
               onFocus={() => setOpen(true)}
-              className="min-h-11 w-full rounded-lg border border-black/15 pl-9 pr-3 focus:border-gold focus:outline-none"
+              className="min-h-11 w-full rounded-lg border border-black/15 pl-9 pr-3 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
             />
           </div>
           {open && query.trim() && (
@@ -158,7 +158,7 @@ export function DeliveryPicker({ value, onChangeAction }: Props) {
                   passage.
                 </p>
               )}
-              <p className="text-xs text-neutral-400">Délai indicatif (24 à 30 h après l&apos;enlèvement), hors imprévus du transporteur.</p>
+              <p className="text-xs text-neutral-500">Délai indicatif (24 à 30 h après l&apos;enlèvement), hors imprévus du transporteur.</p>
             </div>
           ) : (
             <div className="flex gap-2 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">

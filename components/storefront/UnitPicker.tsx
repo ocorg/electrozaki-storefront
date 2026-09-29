@@ -59,8 +59,8 @@ function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; chi
       type="button"
       onClick={onClick}
       aria-pressed={on}
-      className={`inline-flex min-h-9 items-center gap-2 rounded-full border px-3 text-sm transition-colors ${
-        on ? "border-gold bg-gold/10 font-medium text-ink" : "border-black/15 text-neutral-700 hover:border-gold"
+      className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm transition-colors ${
+        on ? "border-gold-deep bg-gold/15 font-semibold text-ink" : "border-ink/15 bg-white text-neutral-800 hover:border-ink/40"
       }`}
     >
       {children}
@@ -90,15 +90,15 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
     <div className="space-y-4">
       {colors.length > 1 && (
         <div>
-          <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500">1. Couleur</p>
+          <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">1. Couleur</p>
           <div className="flex flex-wrap gap-2">
             <Chip on={color === "all"} onClick={() => onColor("all")}>
-              Toutes <span className="text-neutral-400">{inStock.length}</span>
+              Toutes <span className="text-neutral-500">{inStock.length}</span>
             </Chip>
             {colors.map(([c, n]) => (
               <Chip key={c} on={color === c} onClick={() => onColor(c)}>
                 <span className="h-4 w-4 rounded-full border border-black/15" style={{ background: swatch(c) }} aria-hidden />
-                {c} <span className="text-neutral-400">{n}</span>
+                {c} <span className="text-neutral-500">{n}</span>
               </Chip>
             ))}
           </div>
@@ -107,16 +107,16 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
 
       {ranges.length > 1 && (
         <div>
-          <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+          <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
             {colors.length > 1 ? "2. " : ""}Batterie
           </p>
           <div className="flex flex-wrap gap-2">
             <Chip on={battery === "all"} onClick={() => onBattery("all")}>
-              Toutes <span className="text-neutral-400">{byColor.length}</span>
+              Toutes <span className="text-neutral-500">{byColor.length}</span>
             </Chip>
             {ranges.map((r) => (
               <Chip key={r.key} on={battery === r.key} onClick={() => onBattery(r.key)}>
-                {r.label} <span className="text-neutral-400">{r.count}</span>
+                {r.label} <span className="text-neutral-500">{r.count}</span>
               </Chip>
             ))}
           </div>
@@ -124,7 +124,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
       )}
 
       <div>
-        <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+        <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
           {matching.length} téléphone{matching.length > 1 ? "s" : ""} disponible{matching.length > 1 ? "s" : ""} — choisissez le vôtre
         </p>
         {matching.length === 0 ? (
@@ -145,12 +145,12 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                   role="radio"
                   aria-checked={on}
                   onClick={() => onSelect(u.id)}
-                  className={`relative rounded-xl border p-3 text-left transition-colors ${
-                    on ? "border-gold bg-gold/5 ring-2 ring-gold/30" : "border-black/10 bg-white hover:border-gold"
+                  className={`relative rounded-2xl border p-3.5 text-left transition-all ${
+                    on ? "border-gold-deep bg-gold/[0.06] ring-2 ring-gold/40" : "border-ink/10 bg-white hover:border-ink/30"
                   }`}
                 >
                   {on && (
-                    <span className="absolute right-2.5 top-2.5 flex h-5 w-5 items-center justify-center rounded-full bg-gold text-white">
+                    <span className="absolute right-2.5 top-2.5 flex h-5 w-5 items-center justify-center rounded-full bg-gold text-ink">
                       <Check size={13} />
                     </span>
                   )}
@@ -174,7 +174,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                     {parts.length ? parts.join(" · ") : "Pièces d'origine"}
                   </span>
                   <span className="mt-2 flex flex-wrap items-baseline gap-x-2">
-                    <span className="text-lg font-bold">{formatMAD(Number(u.priceOverride ?? 0))}</span>
+                    <span className="readout text-lg font-bold">{formatMAD(Number(u.priceOverride ?? 0))}</span>
                     {saving !== null && u.compareAtPrice && (
                       <>
                         <span className="text-sm text-neutral-500 line-through">{formatMAD(u.compareAtPrice)}</span>

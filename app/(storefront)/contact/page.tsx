@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { submitContactMessage } from "./actions";
 import { Button } from "@/components/ui/Button";
+import { WHATSAPP_URL } from "@/lib/site";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -42,7 +43,7 @@ export default function ContactPage() {
         <h1 className="mt-3 text-2xl font-bold">Message envoyé</h1>
         <p className="mt-3 text-neutral-600">
           Nous vous répondrons rapidement. Pour une réponse immédiate, contactez-nous sur{" "}
-          <a href="https://wa.me/212667654430" className="font-semibold text-neutral-900 underline decoration-[#25D366] decoration-2 underline-offset-2">
+          <a href={WHATSAPP_URL} className="font-semibold text-neutral-900 underline decoration-whatsapp decoration-2 underline-offset-2">
             WhatsApp
           </a>
           .
@@ -56,7 +57,7 @@ export default function ContactPage() {
       <h1 className="text-2xl font-bold sm:text-3xl">Contactez-nous</h1>
       <p className="mt-3 text-neutral-600">
         Pour une réponse rapide, préférez{" "}
-        <a href="https://wa.me/212667654430" className="font-semibold text-neutral-900 underline decoration-[#25D366] decoration-2 underline-offset-2">
+        <a href={WHATSAPP_URL} className="font-semibold text-neutral-900 underline decoration-whatsapp decoration-2 underline-offset-2">
           WhatsApp
         </a>
         . Sinon, écrivez-nous ici.
@@ -69,21 +70,21 @@ export default function ContactPage() {
           placeholder="Nom"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="min-h-11 w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
+          className="min-h-11 w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
         />
         <input
           type="tel"
           placeholder="Téléphone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className="min-h-11 w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
+          className="min-h-11 w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
         />
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="min-h-11 w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
+          className="min-h-11 w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
         />
         <p className="-mt-2 text-xs text-neutral-500">
           Indiquez au moins l&apos;un des deux, pour qu&apos;on puisse vous répondre.
@@ -94,7 +95,7 @@ export default function ContactPage() {
           placeholder="Votre message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
+          className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
         />
 
         {error && <p className="text-sm text-red-600">{error}</p>}

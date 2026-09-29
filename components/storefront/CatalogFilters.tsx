@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { Search } from "lucide-react";
+import { useId, useRef, useState } from "react";
+import { Search, SlidersHorizontal, X } from "lucide-react";
 import { Button, AnchorButton } from "@/components/ui/Button";
 import { cardClasses } from "@/components/ui/Card";
 import type { CategoryFilterOptions } from "@/lib/db/public-products";
@@ -32,7 +32,15 @@ export type FilterValues = {
   fits?: string;
   q?: string;
   promo?: string;
+  sort?: string;
+  page?: string;
 };
+
+export const SORTS = [
+  { value: "", label: "Nouveautés" },
+  { value: "prix-asc", label: "Prix croissant" },
+  { value: "prix-desc", label: "Prix décroissant" },
+];
 
 type Props = {
   options: CategoryFilterOptions;
@@ -41,11 +49,11 @@ type Props = {
 };
 
 const fieldClass =
-  "min-h-11 w-full rounded-lg border border-black/15 px-2 text-sm focus:border-gold focus:outline-none";
+  "min-h-11 w-full rounded-xl border border-ink/15 bg-white px-3 text-sm text-ink focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30";
 
-function Label({ children }: { children: React.ReactNode }) {
+function Label({ children, htmlFor }: { children: React.ReactNode; htmlFor?: string }) {
   return (
-    <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-neutral-500">
+    <label htmlFor={htmlFor} className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
       {children}
     </label>
   );
@@ -59,10 +67,11 @@ function FilterSelect({ name, label, value, items, all, onChange }: {
   all?: string;
   onChange: () => void;
 }) {
+  const id = useId();
   return (
     <div>
-      <Label>{label}</Label>
-      <Select name={name} defaultValue={value ?? ""} onChange={onChange} className={fieldClass}>
+      <Label htmlFor={id}>{label}</Label>
+      <Select id={id} name={name} defaultValue={value ?? ""} onChange={onChange} className={fieldClass}>
         {all && <option value="">{all}</option>}
         {items.map((i) => (
           <option key={i.value} value={i.value}>
@@ -80,14 +89,44 @@ export function CatalogFilters({ options, basePath, defaults }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const submit = () => formRef.current?.requestSubmit();
   const brands = options.brands.map((b) => ({ value: b, label: b }));
+  const [open, setOpen] = useState(false);
+  const searchId = useId();
+  const priceId = useId();
+  const active = (["brand", "condition", "minBattery", "maxPrice", "storage", "type", "fits", "q", "promo"] as const).filter(
+    (k) => Boolean(defaults[k])
+  ).length;
 
   return (
-    <form ref={formRef} method="get" className={cardClasses("space-y-5 p-4")}>
+    <>
+    <button
+      type="button"
+      onClick={() => setOpen((v) => !v)}
+      aria-expanded={open}
+      aria-controls="filtres"
+      className="flex min-h-12 w-full items-center justify-between rounded-2xl bg-white px-4 text-sm font-semibold text-ink ring-1 ring-ink/10 md:hidden"
+    >
+      <span className="flex items-center gap-2">
+        <SlidersHorizontal size={17} aria-hidden /> Filtrer et trier
+        {active > 0 && (
+          <span className="rounded-full bg-gold px-2 py-0.5 text-xs font-bold text-ink">{active}</span>
+        )}
+      </span>
+      {open ? <X size={18} aria-hidden /> : <span aria-hidden className="text-neutral-500">+</span>}
+    </button>
+    <form
+      id="filtres"
+      ref={formRef}
+      method="get"
+      aria-label="Filtres"
+      className={cardClasses(`mt-3 space-y-5 p-5 md:sticky md:top-28 md:mt-0 md:block ${open ? "block" : "hidden"}`)}
+    >
+      <FilterSelect name="sort" label="Trier par" value={defaults.sort} items={SORTS} onChange={submit} />
       <div>
-        <Label>Rechercher</Label>
+        <Label htmlFor={searchId}>Rechercher</Label>
         <div className="relative">
-          <Search size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <Search size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
           <input
+            id={searchId}
             type="search"
             name="q"
             defaultValue={defaults.q ?? ""}
@@ -99,7 +138,7 @@ export function CatalogFilters({ options, basePath, defaults }: Props) {
         </div>
       </div>
       {options.hasPromos && (
-        <label className="flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3 text-sm font-medium text-red-700">
+        <label className="flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 text-sm font-semibold text-red-700">
           <input
             type="checkbox"
             name="promo"
@@ -156,9 +195,11 @@ export function CatalogFilters({ options, basePath, defaults }: Props) {
       )}
 
       <div>
-        <Label>Budget max (MAD)</Label>
+        <Label htmlFor={priceId}>Budget max (DH)</Label>
         <input
+          id={priceId}
           type="number"
+          inputMode="numeric"
           name="maxPrice"
           min={0}
           placeholder={options.kind === "phones" ? "Ex: 4000" : "Ex: 150"}
@@ -176,5 +217,6 @@ export function CatalogFilters({ options, basePath, defaults }: Props) {
         </AnchorButton>
       </div>
     </form>
+    </>
   );
 }

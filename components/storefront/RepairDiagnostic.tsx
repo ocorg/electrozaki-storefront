@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/Button";
 import { cardClasses } from "@/components/ui/Card";
 import { StepProgress } from "@/components/ui/StepProgress";
 import { PROBLEMS, REPAIR_KINDS, type RepairKind } from "@/lib/repair-problems";
+import { WHATSAPP_URL } from "@/lib/site";
 
 const BRANDS = ["Apple", "Samsung", "Xiaomi", "Huawei", "Autre"];
 
 const inputClass =
-  "min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none";
+  "min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30";
 
 // Four short steps, one decision each: what kind of help → which device →
 // what's wrong (or, for a consultation, the question and a time) → contact.
@@ -67,7 +68,7 @@ export function RepairDiagnostic() {
 
   if (done) {
     return (
-      <div className={cardClasses("mt-8 p-6 text-center")}>
+      <div className={cardClasses("p-6 text-center")}>
         <CheckCircle2 size={28} className="mx-auto text-green-600" />
         <p className="mt-2 text-lg font-bold">Demande envoyée</p>
         <div className="mx-auto mt-4 max-w-xs rounded-xl border border-gold/50 bg-gold/5 p-4">
@@ -81,7 +82,7 @@ export function RepairDiagnostic() {
             : "Nous vous répondons rapidement avec une estimation. "}
           Pour une réponse immédiate, écrivez-nous sur{" "}
           <a
-            href="https://wa.me/212667654430"
+            href={WHATSAPP_URL}
             className="font-medium text-neutral-900 underline decoration-gold decoration-2 underline-offset-2"
           >
             WhatsApp
@@ -102,7 +103,7 @@ export function RepairDiagnostic() {
   // Step 0 — what kind of help.
   if (step === 0 || !kind) {
     return (
-      <div className={cardClasses("mt-8 p-6")}>
+      <div className={cardClasses("p-6")}>
         <StepProgress step={1} total={4} />
         <p className="mb-4 font-medium">De quoi avez-vous besoin ?</p>
         <div className="grid gap-3 sm:grid-cols-3">
@@ -115,7 +116,7 @@ export function RepairDiagnostic() {
                 kind === k.kind ? "border-gold bg-gold/5" : "border-neutral-300"
               }`}
             >
-              <k.icon size={22} className="text-gold" />
+              <k.icon size={22} className="text-gold-deep" />
               <p className="mt-2 text-sm font-semibold">{k.label}</p>
               <p className="mt-1 text-xs text-neutral-500">{k.description}</p>
             </button>
@@ -128,7 +129,7 @@ export function RepairDiagnostic() {
   // Step 1 — which device (optional for a consultation).
   if (step === 1) {
     return (
-      <div className={cardClasses("mt-8 p-6")}>
+      <div className={cardClasses("p-6")}>
         <StepProgress step={2} total={4} />
         <p className="mb-4 font-medium">
           Quel est votre appareil ?{isConsult && <span className="text-sm font-normal text-neutral-500"> (facultatif)</span>}
@@ -176,7 +177,7 @@ export function RepairDiagnostic() {
   // Step 2 — what's wrong, or the consultation's subject and a time.
   if (step === 2) {
     return (
-      <div className={cardClasses("mt-8 p-6")}>
+      <div className={cardClasses("p-6")}>
         <StepProgress step={3} total={4} />
         {isConsult ? (
           <div className="space-y-4">
@@ -187,7 +188,7 @@ export function RepairDiagnostic() {
               onChange={(e) => setNotes(e.target.value)}
               rows={4}
               maxLength={500}
-              className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
+              className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
             />
             <input
               type="text"
@@ -217,7 +218,7 @@ export function RepairDiagnostic() {
                       isSelected ? "border-gold bg-gold/5" : "border-neutral-300 hover:border-gold"
                     }`}
                   >
-                    <p.icon size={22} className={`mx-auto ${isSelected ? "text-gold" : "text-neutral-600"}`} />
+                    <p.icon size={22} className={`mx-auto ${isSelected ? "text-gold-deep" : "text-neutral-600"}`} />
                     <p className="mt-1.5 text-xs font-medium">{p.label}</p>
                   </button>
                 );
@@ -250,7 +251,7 @@ export function RepairDiagnostic() {
 
   // Step 3 — contact details.
   return (
-    <form onSubmit={handleSubmit} className={cardClasses("mt-8 space-y-4 p-6")}>
+    <form onSubmit={handleSubmit} className={cardClasses("space-y-4 p-6")}>
       <StepProgress step={4} total={4} />
       <p className="mb-2 font-medium">Vos coordonnées</p>
       <input
@@ -277,7 +278,7 @@ export function RepairDiagnostic() {
           onChange={(e) => setNotes(e.target.value)}
           rows={3}
           maxLength={500}
-          className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold focus:outline-none"
+          className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
         />
       )}
       {error && <p className="text-sm text-red-600">{error}</p>}

@@ -366,11 +366,34 @@ export async function suggestProducts(query: string, take = 6): Promise<{ items:
   };
 }
 
-export async function getFeaturedProducts(limit = 8): Promise<PublicProduct[]> {
+// In stock, newest first — photographed products ahead of the rest, so a
+// shop-window shelf leads with real photos.
+export async function getFeaturedProducts(
+  limit = 8,
+  where: { isPhone?: boolean } = {}
+): Promise<PublicProduct[]> {
   return prisma.product.findMany({
-    where: { availability: AvailabilityStatus.IN_STOCK, published: true },
+    where: { availability: AvailabilityStatus.IN_STOCK, published: true, ...where },
     select: PUBLIC_PRODUCT_SELECT,
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ images: { _count: "desc" } }, { createdAt: "desc" }],
+    take: limit,
+  });
+}
+
+/** Other products from the same aisle, for "Dans le même rayon" on a product page. */
+export async function getRelatedProducts(
+  product: { id: string; category: { id: string } },
+  limit = 4
+): Promise<PublicProduct[]> {
+  return prisma.product.findMany({
+    where: {
+      published: true,
+      availability: AvailabilityStatus.IN_STOCK,
+      categoryId: product.category.id,
+      id: { not: product.id },
+    },
+    select: PUBLIC_PRODUCT_SELECT,
+    orderBy: [{ images: { _count: "desc" } }, { createdAt: "desc" }],
     take: limit,
   });
 }

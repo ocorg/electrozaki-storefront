@@ -200,7 +200,7 @@ export function Select({ value, defaultValue, onChange, children, className = ""
                   } ${i === active && !o.disabled ? "bg-gold/10" : ""} ${isSel ? "font-semibold" : ""}`}
                 >
                   <span className="flex-1">{o.label}</span>
-                  {isSel && <Check size={16} className="shrink-0 text-gold" />}
+                  {isSel && <Check size={16} className="shrink-0 text-gold-deep" />}
                 </div>
               );
             })}

@@ -2,11 +2,15 @@
 
 import { useMemo, useState, type ReactNode } from "react";
 import Image from "next/image";
-import { Check, ImageOff, ShoppingBag } from "lucide-react";
+import { Check, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
 import { formatMAD, savingOf } from "@/lib/format";
+import { swatch } from "@/lib/colors";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { ProductVisual } from "@/components/storefront/ProductVisual";
+import { GradeMeter } from "@/components/storefront/GradeMeter";
+import { whatsappLink } from "@/lib/site";
 import { ConditionDashboard, type ConditionData } from "@/components/storefront/ConditionDashboard";
 import { Select } from "@/components/ui/Select";
 import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
@@ -45,7 +49,8 @@ export type ProductVariantExperienceData = {
 type Props = {
   product: ProductVariantExperienceData;
   variants: VariantData[];
-  coverImage: { url: string; altText: string | null } | null;
+  images: { url: string; altText: string | null }[];
+  categorySlug: string;
   children?: ReactNode; // static content (specs/compatibility/gift/bundle) rendered after the transparency block
 };
 
@@ -55,7 +60,9 @@ function pick<T>(variantValue: T | null | undefined, productValue: T): T {
   return variantValue === null || variantValue === undefined ? productValue : variantValue;
 }
 
-export function ProductVariantExperience({ product, variants, coverImage, children }: Props) {
+export function ProductVariantExperience({ product, variants, images, categorySlug, children }: Props) {
+  const [imageIndex, setImageIndex] = useState(0);
+  const coverImage = images[imageIndex] ?? images[0] ?? null;
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
@@ -162,71 +169,105 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
     setTimeout(() => setJustAdded(false), 1500);
   }
 
+  const inStock = product.availability === "IN_STOCK";
+  const usedPhone = product.isPhone && product.grade !== "NEUF";
+  const unitsInStock = variants.filter((v) => v.stockQuantity > 0).length;
+
   return (
     <>
-      <div className="relative aspect-square overflow-hidden rounded-xl bg-neutral-50 shadow-sm">
-        {displayImage ? (
-          <Image
-            src={displayImage.url}
-            alt={displayImage.altText ?? product.name}
-            fill
-            className="object-contain p-6"
-            sizes="(min-width: 768px) 40vw, 90vw"
+      {/* ── Gallery ── */}
+      <div className="md:sticky md:top-28 md:self-start">
+        <div className="group relative aspect-square overflow-hidden rounded-[2rem] border border-ink/[0.07] bg-white shadow-[0_30px_60px_-40px_rgb(17_16_19/0.5)]">
+          <ProductVisual
+            image={displayImage}
+            name={product.name}
+            brand={product.brand}
+            categorySlug={categorySlug}
+            isPhone={product.isPhone}
             priority
+            size="large"
+            sizes="(min-width: 1280px) 620px, (min-width: 768px) 50vw, 100vw"
           />
-        ) : (
-          <div className="flex h-full flex-col items-center justify-center gap-2 text-neutral-400">
-            <ImageOff size={28} />
-            <span className="text-sm">Image à venir</span>
+          {saving !== null && (
+            <span className="readout absolute left-4 top-4 z-[3] rounded-full bg-red-600 px-3 py-1.5 text-sm font-bold text-white">
+              −{formatMAD(saving)}
+            </span>
+          )}
+        </div>
+        {images.length > 1 && !selectedVariant?.imageUrl && (
+          <div className="mt-3 flex gap-2 overflow-x-auto pb-1 scrollbar-none" role="group" aria-label="Photos">
+            {images.map((img, i) => (
+              <button
+                key={img.url}
+                type="button"
+                onClick={() => setImageIndex(i)}
+                aria-label={`Photo ${i + 1}`}
+                aria-pressed={i === imageIndex}
+                className={`relative h-20 w-20 flex-none overflow-hidden rounded-2xl border-2 bg-white transition-colors ${
+                  i === imageIndex ? "border-ink" : "border-transparent hover:border-ink/20"
+                }`}
+              >
+                <Image src={img.url} alt="" fill sizes="80px" className="object-contain p-1.5" />
+              </button>
+            ))}
           </div>
         )}
       </div>
 
+      {/* ── Details ── */}
       <div>
         {product.brand && (
-          <p className="text-sm uppercase tracking-wide text-neutral-500">{product.brand}</p>
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-gold-deep">{product.brand}</p>
         )}
-        <h1 className="text-2xl font-semibold sm:text-3xl">{product.name}</h1>
+        <h1 className="font-display mt-2 text-[2.2rem] font-extrabold leading-[1.02] text-ink sm:text-5xl">{product.name}</h1>
 
-        <div className="mt-3 flex items-baseline gap-3">
-          <span className="rounded-lg bg-ink px-3 py-1.5 text-xl font-bold text-gold">
-            {formatMAD(price)}
+        <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+          {product.isPhone ? <GradeMeter grade={product.grade} size="md" /> : <Badge>{product.conditionLabel}</Badge>}
+          <span className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-700">
+            <span
+              aria-hidden
+              className={`h-2 w-2 rounded-full ${inStock && !variantOutOfStock ? "bg-signal shadow-[0_0_0_4px_rgb(31_122_69/0.15)]" : "bg-neutral-400"}`}
+            />
+            {inStock && !variantOutOfStock
+              ? unitMode
+                ? `${unitsInStock} unité${unitsInStock > 1 ? "s" : ""} en stock`
+                : "En stock à Meknès"
+              : product.availability === "COMING_SOON"
+                ? "Bientôt disponible"
+                : "Indisponible"}
           </span>
+        </div>
+
+        <div className="mt-6 flex flex-wrap items-end gap-x-3 gap-y-1">
+          <p className="readout text-[2.6rem] font-bold leading-none text-ink">{formatMAD(price)}</p>
           {saving !== null && wasPrice && (
-            <>
-              <span className="text-neutral-500 line-through">{formatMAD(wasPrice)}</span>
-              <Badge tone="sale">-{formatMAD(saving)}</Badge>
-            </>
+            <p className="readout pb-1 text-lg text-neutral-500 line-through">{formatMAD(wasPrice)}</p>
           )}
         </div>
-
-        <div className="mt-3 flex flex-wrap gap-2">
-          <Badge>{product.conditionLabel}</Badge>
-        </div>
+        {unitMode && unitsInStock > 1 && (
+          <p className="mt-1.5 text-sm text-neutral-600">Prix du téléphone sélectionné ci-dessous.</p>
+        )}
 
         <ConditionDashboard {...condition} />
 
-        {product.description && <p className="mt-4 text-neutral-700">{product.description}</p>}
-
         {hasDefects && transparencyNotes && (
-          <div className="mt-4 rounded-xl border border-gold/40 bg-gold/5 p-4">
-            <p className="text-sm font-semibold">Transparence</p>
-            <p className="mt-1 text-sm text-neutral-700">{transparencyNotes}</p>
+          <div className="mt-4 rounded-[1.25rem] border border-amber-300 bg-amber-50 p-4">
+            <p className="text-sm font-bold text-amber-900">Transparence</p>
+            <p className="mt-1 text-sm text-amber-900">{transparencyNotes}</p>
           </div>
         )}
 
-        {children}
-
-        {product.availability === "IN_STOCK" ? (
-          <div className="mt-6 space-y-3">
+        {inStock ? (
+          <div className="mt-7 space-y-5">
             {hasColorVariants && (
-              <div>
-                <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500">
-                  Couleur
-                </p>
+              <fieldset>
+                <legend className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
+                  Couleur{selectedColor ? ` · ${selectedColor}` : ""}
+                </legend>
                 <div className="flex flex-wrap gap-2">
                   {distinctColors.map((color) => {
-                    const fullyOut = storagesForColor(color).every((s) => comboDisabled(color, s)) &&
+                    const fullyOut =
+                      storagesForColor(color).every((s) => comboDisabled(color, s)) &&
                       (!hasStorageVariants ? comboDisabled(color, null) : true);
                     return (
                       <button
@@ -234,25 +275,23 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
                         type="button"
                         onClick={() => handleSelectColor(color)}
                         disabled={fullyOut}
-                        className={`min-h-9 rounded-lg border px-3 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
-                          selectedColor === color
-                            ? "border-gold bg-gold/10 font-medium text-ink"
-                            : "border-black/15 text-neutral-700 hover:border-gold"
+                        aria-pressed={selectedColor === color}
+                        className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
+                          selectedColor === color ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
                         }`}
                       >
+                        <span aria-hidden className="h-4 w-4 rounded-full border border-ink/15" style={{ background: swatch(color) }} />
                         {color}
                       </button>
                     );
                   })}
                 </div>
-              </div>
+              </fieldset>
             )}
 
             {hasColorVariants && hasStorageVariants && selectedColor && (
-              <div>
-                <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500">
-                  Stockage
-                </p>
+              <fieldset>
+                <legend className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">Stockage</legend>
                 <div className="flex flex-wrap gap-2">
                   {storagesForColor(selectedColor).map((storage) => {
                     const disabled = comboDisabled(selectedColor, storage);
@@ -262,10 +301,9 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
                         type="button"
                         onClick={() => setSelectedStorage(storage)}
                         disabled={disabled}
-                        className={`min-h-9 rounded-lg border px-3 text-sm transition-colors disabled:cursor-not-allowed disabled:text-neutral-400 disabled:line-through disabled:opacity-60 ${
-                          selectedStorage === storage
-                            ? "border-gold bg-gold/10 font-medium text-ink"
-                            : "border-black/15 text-neutral-700 hover:border-gold"
+                        aria-pressed={selectedStorage === storage}
+                        className={`readout min-h-11 rounded-full border px-4 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:text-neutral-500 disabled:line-through disabled:opacity-60 ${
+                          selectedStorage === storage ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
                         }`}
                       >
                         {storage}
@@ -273,7 +311,7 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
                     );
                   })}
                 </div>
-              </div>
+              </fieldset>
             )}
 
             {unitMode && (
@@ -290,9 +328,10 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
 
             {!unitMode && !hasColorVariants && variants.length > 0 && (
               <Select
+                aria-label="Choisir une version"
                 value={selectedVariantId}
                 onChange={(e) => setSelectedVariantId(e.target.value)}
-                className="min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
+                className="min-h-12 w-full rounded-2xl border border-ink/15 px-4 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
               >
                 {variants.map((v) => (
                   <option key={v.id} value={v.id} disabled={v.stockQuantity <= 0}>
@@ -303,39 +342,98 @@ export function ProductVariantExperience({ product, variants, coverImage, childr
               </Select>
             )}
 
-            <div className="flex items-center gap-3">
-              {!unitMode && (
-                <input
-                  type="number"
-                  min={1}
-                  max={maxQuantity}
-                  value={Math.min(quantity, maxQuantity)}
-                  onChange={(e) => setQuantity(Math.min(maxQuantity, Math.max(1, Number(e.target.value))))}
-                  className="min-h-11 w-20 rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none"
-                />
+            <div className="flex items-stretch gap-3">
+              {!unitMode && maxQuantity > 1 && (
+                <div className="flex items-center rounded-full border border-ink/15 bg-white" role="group" aria-label="Quantité">
+                  <button
+                    type="button"
+                    aria-label="Retirer un"
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    disabled={quantity <= 1}
+                    className="flex h-14 w-11 items-center justify-center rounded-l-full text-ink disabled:text-neutral-400"
+                  >
+                    <Minus size={16} />
+                  </button>
+                  <output aria-live="polite" className="readout w-6 text-center text-base font-bold">
+                    {Math.min(quantity, maxQuantity)}
+                  </output>
+                  <button
+                    type="button"
+                    aria-label="Ajouter un"
+                    onClick={() => setQuantity((q) => Math.min(maxQuantity, q + 1))}
+                    disabled={quantity >= maxQuantity}
+                    className="flex h-14 w-11 items-center justify-center rounded-r-full text-ink disabled:text-neutral-400"
+                  >
+                    <Plus size={16} />
+                  </button>
+                </div>
               )}
-              <Button onClick={handleAdd} disabled={variantOutOfStock} className="flex-1">
+              <Button onClick={handleAdd} disabled={variantOutOfStock} variant="accent" size="lg" className="flex-1">
                 {variantOutOfStock ? (
                   "Épuisé"
                 ) : justAdded ? (
                   <>
-                    <Check size={18} /> Ajouté
+                    <Check size={19} aria-hidden /> Ajouté au panier
                   </>
                 ) : (
                   <>
-                    <ShoppingBag size={18} /> Ajouter au panier
+                    <ShoppingBag size={19} aria-hidden /> Ajouter au panier
                   </>
                 )}
               </Button>
             </div>
+            <span role="status" className="sr-only">
+              {justAdded ? `${product.name} ajouté au panier` : ""}
+            </span>
+
+            <a
+              href={whatsappLink(
+                `Bonjour, une question sur : ${product.name}${selectedVariant?.name ? ` (${selectedVariant.name})` : ""}`
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-12 items-center justify-center gap-2 rounded-full border border-whatsapp/60 bg-whatsapp/10 text-sm font-semibold text-ink transition-colors hover:bg-whatsapp/20"
+            >
+              <MessageCircle size={18} aria-hidden /> Une question sur {product.isPhone ? "ce téléphone" : "cet article"} ?
+            </a>
           </div>
         ) : (
-          <p className="mt-6 rounded-lg bg-black/5 px-4 py-3 text-sm text-neutral-600">
-            {product.availability === "COMING_SOON"
-              ? "Bientôt disponible — contactez-nous sur WhatsApp pour être prévenu."
-              : "Actuellement indisponible."}
-          </p>
+          <div className="mt-7 rounded-[1.25rem] bg-ink/[0.05] p-5 text-sm text-neutral-700">
+            <p className="font-semibold text-ink">
+              {product.availability === "COMING_SOON" ? "Bientôt disponible." : "Actuellement indisponible."}
+            </p>
+            <a
+              href={whatsappLink(`Bonjour, je voudrais être prévenu(e) pour : ${product.name}`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-block font-semibold text-ink underline decoration-whatsapp decoration-2 underline-offset-4"
+            >
+              Être prévenu sur WhatsApp
+            </a>
+          </div>
         )}
+
+        <ul className="mt-6 grid gap-2 text-sm text-neutral-700 sm:grid-cols-3">
+          {[
+            { icon: ShieldCheck, text: usedPhone ? "Garantie incluse" : "Vérifié avant la vente" },
+            { icon: Truck, text: "Livraison partout au Maroc" },
+            { icon: Store, text: "Boutique à Meknès" },
+          ].map((t) => (
+            <li key={t.text} className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2.5 ring-1 ring-ink/[0.06]">
+              <t.icon size={17} aria-hidden className="flex-none text-gold-deep" />
+              {t.text}
+            </li>
+          ))}
+        </ul>
+
+        {product.description && (
+          <div className="mt-8">
+            <h2 className="font-display text-xl font-bold text-ink">Description</h2>
+            <p className="mt-2 leading-relaxed text-neutral-700">{product.description}</p>
+          </div>
+        )}
+
+        {children}
       </div>
     </>
   );

@@ -2,8 +2,9 @@ import { searchProducts } from "@/lib/db/public-products";
 import type { Metadata } from "next";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { SearchTracker } from "@/components/analytics/SearchTracker";
+import { WHATSAPP_URL } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Recherche" };
+export const metadata: Metadata = { title: "Recherche", robots: { index: false, follow: true } };
 
 // Next.js 16: searchParams is also a Promise, same as params.
 type Props = {
@@ -39,7 +40,7 @@ export default async function SearchPage({ searchParams }: Props) {
       ) : results.length === 0 ? (
         <p className="text-neutral-600">
           Aucun résultat. Essayez un autre terme, ou{" "}
-          <a href="https://wa.me/212667654430" className="font-semibold text-neutral-900 underline decoration-[#25D366] decoration-2 underline-offset-2">
+          <a href={WHATSAPP_URL} className="font-semibold text-neutral-900 underline decoration-whatsapp decoration-2 underline-offset-2">
             contactez-nous sur WhatsApp
           </a>
           .

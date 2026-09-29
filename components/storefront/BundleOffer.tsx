@@ -70,7 +70,7 @@ export function BundleOffer({ bundles }: { bundles: BundleOfferData[] }) {
         return (
           <div key={bundle.id} className={cardClasses("p-4")}>
             <p className="flex items-center gap-2 text-sm font-semibold">
-              <Gift size={16} className="text-gold" />
+              <Gift size={16} className="text-gold-deep" />
               {bundle.name}
             </p>
             {bundle.description && (

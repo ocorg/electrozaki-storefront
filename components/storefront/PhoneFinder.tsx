@@ -6,10 +6,10 @@ import { cardClasses } from "@/components/ui/Card";
 import { StepProgress } from "@/components/ui/StepProgress";
 
 const BUDGETS = [
-  { label: "Moins de 2 000 MAD", maxPrice: 2000 },
-  { label: "2 000 – 4 000 MAD", maxPrice: 4000 },
-  { label: "4 000 – 7 000 MAD", maxPrice: 7000 },
-  { label: "Plus de 7 000 MAD", maxPrice: undefined },
+  { label: "Moins de 2 000 DH", maxPrice: 2000 },
+  { label: "2 000 – 4 000 DH", maxPrice: 4000 },
+  { label: "4 000 – 7 000 DH", maxPrice: 7000 },
+  { label: "Plus de 7 000 DH", maxPrice: undefined },
 ] as const;
 
 // `tag` matches Product.tags — matches only start appearing once products
@@ -78,10 +78,10 @@ export function PhoneFinder() {
   if (brand) params.set("brand", brand);
 
   return (
-    <div className={cardClasses("mt-8 p-6 text-center")}>
-      <p className="font-medium">Merci ! Voici nos suggestions.</p>
-      <AnchorButton href={`/search?${params.toString()}`} variant="accent" className="mt-4">
-        Voir les résultats
+    <div className={cardClasses("p-6 text-center sm:p-8")}>
+      <p className="font-display text-xl font-bold">Merci ! Voici nos suggestions.</p>
+      <AnchorButton href={`/search?${params.toString()}`} variant="accent" className="mt-5">
+        Voir les téléphones proposés
       </AnchorButton>
       <button
         type="button"
@@ -91,7 +91,7 @@ export function PhoneFinder() {
           setUsage(null);
           setBrand(null);
         }}
-        className="mt-3 block w-full text-sm text-neutral-500 underline"
+        className="mt-3 block min-h-11 w-full text-sm font-medium text-neutral-600 underline underline-offset-4 hover:text-ink"
       >
         Recommencer
       </button>
@@ -111,9 +111,14 @@ function FinderStep({
   children: React.ReactNode;
 }) {
   return (
-    <div className={cardClasses("mt-8 p-6")}>
+    <div className={cardClasses("p-6 sm:p-8")}>
       <StepProgress step={step} total={3} onBack={onBack} />
-      <p className="mb-4 font-medium">{question}</p>
+      <div aria-hidden className="-mt-2 mb-5 flex gap-1.5">
+        {[1, 2, 3].map((n) => (
+          <span key={n} className={`h-1 flex-1 rounded-full transition-colors duration-500 ${n <= step ? "bg-gold" : "bg-ink/10"}`} />
+        ))}
+      </div>
+      <p className="font-display mb-5 text-xl font-bold text-ink">{question}</p>
       {children}
     </div>
   );
@@ -133,9 +138,10 @@ function OptionGrid({
           key={label}
           type="button"
           onClick={() => onSelect(label)}
-          className="min-h-11 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-left text-sm shadow-sm transition-colors hover:border-gold hover:bg-gold/5"
+          className="group flex min-h-14 items-center justify-between rounded-2xl border border-ink/10 bg-white px-4 py-3 text-left text-[15px] font-semibold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:border-gold hover:bg-gold/5 active:scale-[0.98]"
         >
           {label}
+          <span aria-hidden className="text-neutral-400 transition-transform group-hover:translate-x-0.5 group-hover:text-gold-deep">→</span>
         </button>
       ))}
     </div>

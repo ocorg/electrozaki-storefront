@@ -1,11 +1,13 @@
+// "4 000 DH" — how prices are said and written in Morocco (and how the ERP's
+// unit names already read: "… · 4000 DH"). The fr-MA currency format gave
+// "4.000 MAD", which French-speaking customers read as four (dot) zero.
+// Thousands use a no-break space so a price never wraps across lines.
+const GROUPED = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 });
+
 export function formatMAD(amount: number | string): string {
   const value = typeof amount === "string" ? parseFloat(amount) : amount;
   if (Number.isNaN(value)) return "";
-  return new Intl.NumberFormat("fr-MA", {
-    style: "currency",
-    currency: "MAD",
-    maximumFractionDigits: 0,
-  }).format(value);
+  return `${GROUPED.format(value).replace(/[\s ]/g, " ")} DH`;
 }
 
 // DH saved, or null (not 0) when there's nothing to advertise — a

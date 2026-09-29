@@ -7,9 +7,10 @@ import { cardClasses } from "@/components/ui/Card";
 import { formatMAD } from "@/lib/format";
 import type { TrackedRepair } from "@/lib/repair-tracking";
 import { lookupRepair, answerQuote } from "./actions";
+import { WHATSAPP_URL } from "@/lib/site";
 
 const inputClass =
-  "min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold focus:outline-none";
+  "min-h-11 w-full rounded-lg border border-black/15 px-3 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30";
 
 // Steps shown to the customer (ERP status codes → plain words).
 const REPAIR_STEPS = [
@@ -118,11 +119,11 @@ export function TrackingForm({ initialRef }: { initialRef: string }) {
                     {done ? (
                       <CheckCircle2 size={20} className="text-green-600" />
                     ) : now ? (
-                      <Circle size={20} className="fill-gold text-gold" />
+                      <Circle size={20} className="fill-gold text-gold-deep" />
                     ) : (
                       <Circle size={20} className="text-neutral-300" />
                     )}
-                    <span className={now ? "font-semibold" : done ? "text-neutral-600" : "text-neutral-400"}>{s.label}</span>
+                    <span className={now ? "font-semibold" : done ? "text-neutral-600" : "text-neutral-500"}>{s.label}</span>
                   </li>
                 );
               })}
@@ -160,7 +161,7 @@ export function TrackingForm({ initialRef }: { initialRef: string }) {
             </p>
           )}
 
-          <AnchorButton href="https://wa.me/212667654430" variant="outline" className="w-full">
+          <AnchorButton href={WHATSAPP_URL} variant="outline" className="w-full">
             Une question ? Écrivez-nous sur WhatsApp
           </AnchorButton>
         </div>
