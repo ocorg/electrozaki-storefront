@@ -78,11 +78,11 @@ export default async function OfferPage({ params }: Props) {
               </div>
             )}
             <a href="#produits" className="inline-flex min-h-11 items-center rounded-lg px-5 font-semibold text-white" style={{ background: theme.accent }}>
-              Voir les {products.length} article{products.length > 1 ? "s" : ""}
+              Voir {products.length > 1 ? "les articles" : "l'article"} de l&apos;offre
             </a>
           </div>
           {page.bannerUrl && (
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
+            <div className="relative aspect-4/3 w-full overflow-hidden rounded-2xl">
               <Image src={page.bannerUrl} alt={page.title} fill priority className="object-cover" sizes="(min-width: 768px) 50vw, 100vw" />
             </div>
           )}

@@ -6,7 +6,7 @@ import { getProductsByCategorySlug, getCategoryFilterOptions } from "@/lib/db/pu
 import { getCategoryBySlug } from "@/lib/db/categories";
 import { getAisles } from "@/lib/db/storefront";
 import { ProductCard } from "@/components/storefront/ProductCard";
-import { CatalogFilters, type FilterValues } from "@/components/storefront/CatalogFilters";
+import { CatalogBar, type FilterValues } from "@/components/storefront/CatalogBar";
 import { DeviceArt } from "@/components/storefront/DeviceArt";
 import { Pagination } from "@/components/storefront/Pagination";
 import { SearchTracker } from "@/components/analytics/SearchTracker";
@@ -101,7 +101,9 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   const groupSlug = category.parent?.slug ?? slug;
   const siblings = aisles.filter((a) => a.parentSlug === groupSlug);
   const current = aisles.find((a) => a.slug === slug);
-  const total = current?.count ?? siblings.reduce((n, a) => n + a.count, 0);
+  // How much stock there is stays private; what it costs is the useful part.
+  const prices = (current ? [current] : siblings).map((a) => a.fromPrice).filter((p): p is number => p !== null);
+  const fromPrice = prices.length ? Math.min(...prices) : null;
   const filtered = Object.values(filters).some(Boolean);
 
   const crumbs = [
@@ -123,10 +125,14 @@ export default async function CollectionPage({ params, searchParams }: Props) {
           </div>
           <div className="hidden items-center gap-4 md:flex">
             <DeviceArt kind={artFor(slug, category.name)} className="h-28 w-28 text-ink" />
-            <p className="readout text-right">
-              <span className="block text-5xl font-bold text-ink">{total}</span>
-              <span className="text-sm text-neutral-600">article{total > 1 ? "s" : ""}</span>
-            </p>
+            {fromPrice !== null && (
+              <p className="text-right">
+                <span className="block font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-600">
+                  À partir de
+                </span>
+                <span className="readout mt-1 block text-5xl font-bold text-ink">{formatMAD(fromPrice)}</span>
+              </p>
+            )}
           </div>
         </div>
 
@@ -158,7 +164,6 @@ export default async function CollectionPage({ params, searchParams }: Props) {
                         <DeviceArt kind={artFor(a.slug, a.name)} className={`h-6 w-6 ${on ? "text-white" : "text-ink"}`} />
                       </span>
                       {a.name}
-                      <span className={`readout text-xs ${on ? "text-gold" : "text-neutral-500"}`}>{a.count}</span>
                     </Link>
                   </li>
                 );
@@ -168,27 +173,18 @@ export default async function CollectionPage({ params, searchParams }: Props) {
         )}
       </section>
 
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:py-10">
+      <div className="mx-auto max-w-7xl px-4 pb-8 sm:pb-10">
         {filters.q && <SearchTracker query={filters.q} results={all.length} />}
 
-        <div className="grid gap-6 md:grid-cols-[250px_1fr] lg:gap-10">
-          <aside>
-            <CatalogFilters options={options} basePath={`/collections/${slug}`} defaults={filterParams} />
-          </aside>
+        <CatalogBar options={options} basePath={`/collections/${slug}`} defaults={filterParams} />
 
+        <div className="pt-6 sm:pt-8">
           <div>
-            <p className="mb-4 text-sm text-neutral-600" aria-live="polite">
-              <span className="readout font-semibold text-ink">{all.length}</span> résultat{all.length > 1 ? "s" : ""}
-              {filtered ? " pour ces filtres" : ""}
-              {pageCount > 1 && ` · page ${page} sur ${pageCount}`}
-              {all.length > 0 && (
-                <>
-                  {" "}
-                  · dès{" "}
-                  <span className="readout font-semibold text-ink">{formatMAD(Math.min(...all.map(price)))}</span>
-                </>
-              )}
-            </p>
+            {pageCount > 1 && (
+              <p className="sr-only" aria-live="polite">
+                Page {page} sur {pageCount}
+              </p>
+            )}
             {products.length === 0 ? (
               <div className="flex flex-col items-center rounded-[1.75rem] border border-dashed border-ink/20 bg-white px-6 py-14 text-center">
                 <DeviceArt kind={artFor(slug, category.name)} className="h-24 w-24 text-neutral-400" />
@@ -211,7 +207,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
                 </AnchorButton>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
                 {products.map((product, i) => (
                   <ProductCard key={product.id} product={product} priority={i < 4} />
                 ))}

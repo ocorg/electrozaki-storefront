@@ -62,7 +62,7 @@ export default async function RepairTopicPage({ params }: Props) {
                 <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-gold-deep">
                   {section.brand}
                 </h3>
-                <div className="mt-3 divide-y divide-ink/[0.07] overflow-hidden rounded-[1.5rem] border border-ink/[0.07] bg-white">
+                <div className="mt-3 divide-y divide-ink/7 overflow-hidden rounded-[1.5rem] border border-ink/7 bg-white">
                   {section.entries.map((entry) => (
                     <details key={entry.question} className="group open:bg-paper/60">
                       <summary className="flex min-h-14 cursor-pointer list-none items-center px-5 py-4 font-semibold text-ink marker:content-none [&::-webkit-details-marker]:hidden">

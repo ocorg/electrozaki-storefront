@@ -1,5 +1,5 @@
-// No "use client": only client components import it (CatalogFilters,
-// CompatibilitySelector, ProductVariantExperience), which already put it in
+// No "use client": only client components import it (CompatibilitySelector,
+// ProductVariantExperience), which already put it in
 // the browser bundle — and a client entry would get "props must be
 // serializable" warnings for onChange.
 import React, { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
@@ -180,7 +180,7 @@ export function Select({ value, defaultValue, onChange, children, className = ""
             role="listbox"
             aria-label={ariaLabel}
             onKeyDown={onKey}
-            className="fixed z-[80] overflow-y-auto rounded-xl border border-black/10 bg-white py-1 shadow-xl"
+            className="fixed z-80 overflow-y-auto rounded-xl border border-black/10 bg-white py-1 shadow-xl"
             style={{ left: pos.left, top: pos.top, bottom: pos.bottom, width: pos.width, maxHeight: pos.maxHeight }}
           >
             {options.map((o, i) => {

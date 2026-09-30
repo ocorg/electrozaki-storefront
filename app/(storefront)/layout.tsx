@@ -16,7 +16,7 @@ export default async function StorefrontLayout({ children }: { children: ReactNo
     <CartProvider>
       <a
         href="#contenu"
-        className="sr-only z-[100] rounded-full bg-ink px-5 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        className="sr-only z-100 rounded-full bg-ink px-5 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
       >
         Aller au contenu
       </a>

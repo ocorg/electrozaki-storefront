@@ -112,11 +112,11 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
           </p>
           <div className="flex flex-wrap gap-2">
             <Chip on={battery === "all"} onClick={() => onBattery("all")}>
-              Toutes <span className="text-neutral-500">{byColor.length}</span>
+              Toutes
             </Chip>
             {ranges.map((r) => (
               <Chip key={r.key} on={battery === r.key} onClick={() => onBattery(r.key)}>
-                {r.label} <span className="text-neutral-500">{r.count}</span>
+                {r.label}
               </Chip>
             ))}
           </div>
@@ -125,7 +125,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
 
       <div>
         <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
-          {matching.length} téléphone{matching.length > 1 ? "s" : ""} disponible{matching.length > 1 ? "s" : ""} — choisissez le vôtre
+          Choisissez votre téléphone
         </p>
         {matching.length === 0 ? (
           <p className="rounded-lg bg-neutral-50 px-3 py-3 text-sm text-neutral-600">
@@ -146,7 +146,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                   aria-checked={on}
                   onClick={() => onSelect(u.id)}
                   className={`relative rounded-2xl border p-3.5 text-left transition-all ${
-                    on ? "border-gold-deep bg-gold/[0.06] ring-2 ring-gold/40" : "border-ink/10 bg-white hover:border-ink/30"
+                    on ? "border-gold-deep bg-gold/6 ring-2 ring-gold/40" : "border-ink/10 bg-white hover:border-ink/30"
                   }`}
                 >
                   {on && (

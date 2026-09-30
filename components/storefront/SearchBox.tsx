@@ -173,7 +173,7 @@ export function SearchBox({ className = "", placeholder = "Rechercher un télép
                       onMouseEnter={() => setActive(i)}
                       className={`flex items-center gap-3 px-3 py-2.5 transition-colors ${i === active ? "bg-gold/10" : "hover:bg-neutral-50"}`}
                     >
-                      <span className="relative flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-neutral-50">
+                      <span className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-neutral-50">
                         {p.image ? (
                           <Image src={p.image} alt="" fill sizes="56px" className="object-contain p-1" />
                         ) : (
@@ -185,7 +185,7 @@ export function SearchBox({ className = "", placeholder = "Rechercher un télép
                         <span className="block text-sm font-medium leading-snug text-neutral-900 line-clamp-2">{p.name}</span>
                         {p.isPhone && <span className="text-xs text-neutral-500">{CONDITION_LABEL[p.condition] ?? p.condition}</span>}
                       </span>
-                      <span className="flex-shrink-0 text-right">
+                      <span className="shrink-0 text-right">
                         {p.fromPrice && <span className="block text-[11px] text-neutral-500">dès</span>}
                         <span className="block text-sm font-bold text-ink">{formatMAD(p.price)}</span>
                         {p.compareAtPrice && <span className="block text-xs text-neutral-500 line-through">{formatMAD(p.compareAtPrice)}</span>}
@@ -199,7 +199,7 @@ export function SearchBox({ className = "", placeholder = "Rechercher un télép
                 onClick={goToResults}
                 className="w-full border-t border-black/10 px-4 py-3 text-sm font-semibold text-ink hover:bg-neutral-50"
               >
-                {total > items.length ? `Voir les ${total} résultats` : "Voir les résultats"} →
+                {total > items.length ? "Voir tous les résultats" : "Voir les résultats"} →
               </button>
             </>
           )}

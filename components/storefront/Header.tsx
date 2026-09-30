@@ -10,6 +10,7 @@ import { SearchBox } from "@/components/storefront/SearchBox";
 import { LiveClock } from "@/components/storefront/LiveClock";
 import { DeviceArt } from "@/components/storefront/DeviceArt";
 import { artFor } from "@/lib/category-art";
+import { formatMAD } from "@/lib/format";
 import type { AisleStat } from "@/lib/db/storefront";
 
 type Category = { id: string; name: string; slug: string };
@@ -124,7 +125,7 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
                     <ChevronDown size={15} className="transition-transform duration-300 group-hover/menu:rotate-180" aria-hidden />
                   </Link>
                   {/* Hover / keyboard-focus mega menu: every aisle with its drawing and count. */}
-                  <div className="invisible absolute left-1/2 top-full z-50 w-[560px] -translate-x-1/2 translate-y-2 pt-2 opacity-0 transition-all duration-300 ease-[var(--ease-out-quint)] group-focus-within/menu:visible group-focus-within/menu:translate-y-0 group-focus-within/menu:opacity-100 group-hover/menu:visible group-hover/menu:translate-y-0 group-hover/menu:opacity-100">
+                  <div className="invisible absolute left-1/2 top-full z-50 w-[560px] -translate-x-1/2 translate-y-2 pt-2 opacity-0 transition-all duration-300 ease-out-quint group-focus-within/menu:visible group-focus-within/menu:translate-y-0 group-focus-within/menu:opacity-100 group-hover/menu:visible group-hover/menu:translate-y-0 group-hover/menu:opacity-100">
                     <div className="grid grid-cols-2 gap-1 rounded-3xl border border-ink/10 bg-white p-2 shadow-[0_30px_60px_-25px_rgb(17_16_19/0.45)]">
                       {children.map((c) => (
                         <Link
@@ -137,9 +138,11 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
                           </span>
                           <span className="min-w-0">
                             <span className="block text-sm font-semibold text-ink">{c.name}</span>
-                            <span className="block text-xs text-neutral-500">
-                              {c.count} article{c.count > 1 ? "s" : ""}
-                            </span>
+                            {c.fromPrice !== null && (
+                              <span className="block text-xs text-neutral-500">
+                                dès <span className="readout font-semibold text-neutral-700">{formatMAD(c.fromPrice)}</span>
+                              </span>
+                            )}
                           </span>
                         </Link>
                       ))}

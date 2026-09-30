@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, MessageCircle, ShieldCheck, Truck, Wrench } from "lucide-react";
-import { getAisles, getBrands, getHomeShelves, getShowcasePhones, getStockTotals } from "@/lib/db/storefront";
+import { getAisles, getBrands, getHomeShelves, getShowcasePhones } from "@/lib/db/storefront";
 import { ProductCard } from "@/components/storefront/ProductCard";
+import { ControlCenter } from "@/components/storefront/ControlCenter";
 import { PhoneFinder } from "@/components/storefront/PhoneFinder";
 import { HeroPhone } from "@/components/storefront/HeroPhone";
 import { DeviceArt } from "@/components/storefront/DeviceArt";
@@ -43,12 +44,11 @@ const CHIP_POSITIONS = [
 ];
 
 export default async function HomePage() {
-  const [aisles, brands, showcase, shelves, totals] = await Promise.all([
+  const [aisles, brands, showcase, shelves] = await Promise.all([
     getAisles(),
     getBrands(),
     getShowcasePhones(6),
     getHomeShelves(),
-    getStockTotals(),
   ]);
 
   const phonesAisle = aisles.find((a) => a.slug === "telephones");
@@ -90,21 +90,7 @@ export default async function HomePage() {
               </LinkButton>
             </div>
 
-            <dl className="mt-12 grid max-w-lg grid-cols-3 gap-4 border-t border-white/10 pt-6">
-              {[
-                [totals.phones, "téléphones en rayon"],
-                [totals.accessories, "accessoires"],
-                [brands.length, "marques"],
-              ].map(([n, label]) => (
-                <div key={label}>
-                  <dt className="sr-only">{label}</dt>
-                  <dd>
-                    <span className="readout block text-3xl font-bold text-gold sm:text-4xl">{n}</span>
-                    <span className="mt-1 block text-sm text-neutral-300">{label}</span>
-                  </dd>
-                </div>
-              ))}
-            </dl>
+            <ControlCenter />
           </div>
 
           <div className="relative mx-auto w-full max-w-[640px] lg:h-[660px]">
@@ -172,18 +158,18 @@ export default async function HomePage() {
             <Reveal className="col-span-2 row-span-2">
               <Link
                 href="/collections/telephones"
-                className="on-dark group relative flex h-full min-h-[340px] flex-col overflow-hidden rounded-[1.75rem] bg-ink p-6 text-white transition-transform duration-500 ease-[var(--ease-out-quint)] hover:-translate-y-1 sm:p-8"
+                className="on-dark group relative flex h-full min-h-[340px] flex-col overflow-hidden rounded-[1.75rem] bg-ink p-6 text-white transition-transform duration-500 ease-out-quint hover:-translate-y-1 sm:p-8"
               >
                 <div aria-hidden className="absolute -right-10 -top-10 h-72 w-72 rounded-full bg-gold/25 blur-[70px]" />
                 {phonePhoto?.image && (
-                  <div className="absolute bottom-6 right-5 aspect-square w-[44%] max-w-[250px] rotate-6 overflow-hidden rounded-[1.4rem] bg-white p-2 shadow-[0_30px_60px_-20px_rgb(0_0_0/0.8)] ring-1 ring-white/20 transition-transform duration-700 ease-[var(--ease-spring)] group-hover:-translate-y-2 group-hover:rotate-2 sm:right-8">
+                  <div className="absolute bottom-6 right-5 aspect-square w-[44%] max-w-[250px] rotate-6 overflow-hidden rounded-[1.4rem] bg-white p-2 shadow-[0_30px_60px_-20px_rgb(0_0_0/0.8)] ring-1 ring-white/20 transition-transform duration-700 ease-spring group-hover:-translate-y-2 group-hover:rotate-2 sm:right-8">
                     <div className="relative h-full w-full">
                       <Image src={phonePhoto.image} alt="" fill sizes="250px" className="object-contain" />
                     </div>
                   </div>
                 )}
                 <p className="relative font-mono text-xs font-semibold uppercase tracking-[0.18em] text-gold">
-                  {phonesAisle.count} en rayon
+                  Vendus à l&apos;unité
                 </p>
                 <p className="font-display relative mt-3 max-w-[14rem] text-4xl font-extrabold leading-none sm:text-5xl">
                   {phonesAisle.name}
@@ -206,13 +192,13 @@ export default async function HomePage() {
             <Reveal key={a.slug} delayMs={(i % 4) * 70}>
               <Link
                 href={`/collections/${a.slug}`}
-                className="group flex h-full min-h-[164px] flex-col rounded-[1.5rem] border border-ink/[0.07] bg-white p-4 transition-[transform,box-shadow,border-color] duration-500 ease-[var(--ease-out-quint)] hover:-translate-y-1 hover:border-gold/40 hover:shadow-[0_24px_44px_-26px_rgb(17_16_19/0.45)] sm:p-5"
+                className="group flex h-full min-h-[164px] flex-col rounded-[1.5rem] border border-ink/7 bg-white p-4 transition-[transform,box-shadow,border-color] duration-500 ease-out-quint hover:-translate-y-1 hover:border-gold/40 hover:shadow-[0_24px_44px_-26px_rgb(17_16_19/0.45)] sm:p-5"
               >
                 <div className="flex items-start justify-between">
                   <span className="flex h-16 w-16 items-center justify-center rounded-[30%] bg-paper transition-colors duration-300 group-hover:bg-gold/15">
                     <DeviceArt
                       kind={artFor(a.slug, a.name)}
-                      className="h-12 w-12 text-ink transition-transform duration-500 ease-[var(--ease-spring)] group-hover:-rotate-6 group-hover:scale-110"
+                      className="h-12 w-12 text-ink transition-transform duration-500 ease-spring group-hover:-rotate-6 group-hover:scale-110"
                     />
                   </span>
                   <ArrowUpRight
@@ -222,19 +208,18 @@ export default async function HomePage() {
                   />
                 </div>
                 <p className="mt-auto pt-4 text-base font-bold leading-tight text-ink">{a.name}</p>
-                <p className="mt-1 flex flex-wrap items-baseline justify-between gap-x-2 text-xs text-neutral-500">
-                  <span>
-                    {a.count} article{a.count > 1 ? "s" : ""}
-                  </span>
-                  {a.fromPrice !== null && <span className="readout font-semibold text-neutral-800">dès {formatMAD(a.fromPrice)}</span>}
-                </p>
+                {a.fromPrice !== null && (
+                  <p className="mt-1 text-xs text-neutral-500">
+                    dès <span className="readout font-semibold text-neutral-800">{formatMAD(a.fromPrice)}</span>
+                  </p>
+                )}
               </Link>
             </Reveal>
           ))}
           <Reveal>
             <Link
               href="/reparation"
-              className="group flex h-full min-h-[164px] flex-col rounded-[1.5rem] bg-gold p-4 text-ink transition-transform duration-500 ease-[var(--ease-out-quint)] hover:-translate-y-1 sm:p-5"
+              className="group flex h-full min-h-[164px] flex-col rounded-[1.5rem] bg-gold p-4 text-ink transition-transform duration-500 ease-out-quint hover:-translate-y-1 sm:p-5"
             >
               <IconTile icon={Wrench} size={48} />
               <p className="mt-auto pt-4 text-base font-bold leading-tight">Réparation</p>
@@ -255,7 +240,7 @@ export default async function HomePage() {
               title="Les téléphones du moment."
               action={
                 <LinkButton href="/collections/telephones" variant="outline">
-                  Tous les téléphones{phonesAisle ? ` (${phonesAisle.count})` : ""} <ArrowRight size={16} aria-hidden />
+                  Tous les téléphones <ArrowRight size={16} aria-hidden />
                 </LinkButton>
               }
             />
@@ -294,7 +279,7 @@ export default async function HomePage() {
           </Reveal>
 
           <Reveal delayMs={120}>
-            <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6 backdrop-blur sm:p-8">
+            <div className="rounded-[1.75rem] border border-white/10 bg-white/4 p-6 backdrop-blur sm:p-8">
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-neutral-300">Nos 4 états</p>
               <ul className="mt-5 divide-y divide-white/10">
                 {(["NEUF", "TRES_BON", "BON", "PIECES_REMPLACEES"] as const).map((g) => (
@@ -380,7 +365,7 @@ export default async function HomePage() {
           <div className="on-dark relative overflow-hidden rounded-[2rem] bg-ink px-6 py-12 text-white sm:px-12 sm:py-16">
             <DeviceArt
               kind="phone"
-              className="pointer-events-none absolute -right-10 -top-6 h-[420px] w-[420px] rotate-12 text-white/[0.06] [--art-accent:rgb(200_146_42/0.25)]"
+              className="pointer-events-none absolute -right-10 -top-6 h-[420px] w-[420px] rotate-12 text-white/6 [--art-accent:rgb(200_146_42/0.25)]"
             />
             <div className="relative max-w-2xl">
               <SectionHeading
@@ -424,7 +409,7 @@ export default async function HomePage() {
       <section aria-label="Nos engagements" className="mx-auto max-w-7xl px-4 pt-20 sm:pt-28">
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {REASSURANCE.map((item, i) => (
-            <Reveal as="li" key={item.title} delayMs={i * 70} className="flex h-full items-start gap-4 rounded-[1.5rem] border border-ink/[0.07] bg-white p-5">
+            <Reveal as="li" key={item.title} delayMs={i * 70} className="flex h-full items-start gap-4 rounded-[1.5rem] border border-ink/7 bg-white p-5">
                 <IconTile icon={item.icon} size={46} />
                 <div>
                   <p className="font-bold text-ink">{item.title}</p>

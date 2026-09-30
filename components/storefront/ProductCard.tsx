@@ -25,12 +25,11 @@ export function ProductCard({ product, priority = false }: { product: PublicProd
   ].filter((b): b is number => b !== null);
   const bMin = batteries.length ? Math.min(...batteries) : null;
   const bMax = batteries.length ? Math.max(...batteries) : null;
-  const units = inStockUnits.length;
 
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group flex h-full w-full flex-col overflow-hidden rounded-[1.4rem] border border-ink/[0.07] bg-white shadow-[0_1px_2px_rgb(17_16_19/0.04)] transition-[transform,box-shadow,border-color] duration-500 ease-[var(--ease-out-quint)] hover:-translate-y-1.5 hover:border-gold/40 hover:shadow-[0_28px_50px_-26px_rgb(17_16_19/0.45)]"
+      className="group flex h-full w-full flex-col overflow-hidden rounded-[1.4rem] border border-ink/7 bg-white shadow-[0_1px_2px_rgb(17_16_19/0.04)] transition-[transform,box-shadow,border-color] duration-500 ease-out-quint hover:-translate-y-1.5 hover:border-gold/40 hover:shadow-[0_28px_50px_-26px_rgb(17_16_19/0.45)]"
     >
       <div className="shine relative m-1.5 mb-0 aspect-square overflow-hidden rounded-[1.1rem]">
         <ProductVisual
@@ -42,16 +41,14 @@ export function ProductCard({ product, priority = false }: { product: PublicProd
           priority={priority}
           sizes="(min-width: 1280px) 300px, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
         />
-        <div className="absolute inset-x-2 top-2 z-[3] flex items-start justify-between gap-2">
+        <div className="absolute inset-x-2 top-2 z-3 flex items-start justify-between gap-2">
           {isSoldOut || isComingSoon ? (
             <span className="rounded-full bg-ink/90 px-2.5 py-1 text-[11px] font-semibold text-white">
               {isComingSoon ? "Bientôt" : "Épuisé"}
             </span>
-          ) : product.isPhone && units > 1 ? (
-            <span className="rounded-full bg-white/90 px-2.5 py-1 font-mono text-[11px] font-semibold text-ink shadow-sm ring-1 ring-ink/5 backdrop-blur">
-              {units} en stock
-            </span>
           ) : (
+            // No stock badge: quantities are private, and used phones are
+            // sold one unit at a time, so "last one" would be on every card.
             <span />
           )}
           {(saving !== null || unitPromo) && (

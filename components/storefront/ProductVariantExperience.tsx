@@ -177,7 +177,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
     <>
       {/* ── Gallery ── */}
       <div className="md:sticky md:top-28 md:self-start">
-        <div className="group relative aspect-square overflow-hidden rounded-[2rem] border border-ink/[0.07] bg-white shadow-[0_30px_60px_-40px_rgb(17_16_19/0.5)]">
+        <div className="group relative aspect-square overflow-hidden rounded-[2rem] border border-ink/7 bg-white shadow-[0_30px_60px_-40px_rgb(17_16_19/0.5)]">
           <ProductVisual
             image={displayImage}
             name={product.name}
@@ -189,7 +189,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
             sizes="(min-width: 1280px) 620px, (min-width: 768px) 50vw, 100vw"
           />
           {saving !== null && (
-            <span className="readout absolute left-4 top-4 z-[3] rounded-full bg-red-600 px-3 py-1.5 text-sm font-bold text-white">
+            <span className="readout absolute left-4 top-4 z-3 rounded-full bg-red-600 px-3 py-1.5 text-sm font-bold text-white">
               −{formatMAD(saving)}
             </span>
           )}
@@ -229,9 +229,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
               className={`h-2 w-2 rounded-full ${inStock && !variantOutOfStock ? "bg-signal shadow-[0_0_0_4px_rgb(31_122_69/0.15)]" : "bg-neutral-400"}`}
             />
             {inStock && !variantOutOfStock
-              ? unitMode
-                ? `${unitsInStock} unité${unitsInStock > 1 ? "s" : ""} en stock`
-                : "En stock à Meknès"
+              ? "En stock à Meknès"
               : product.availability === "COMING_SOON"
                 ? "Bientôt disponible"
                 : "Indisponible"}
@@ -398,7 +396,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
             </a>
           </div>
         ) : (
-          <div className="mt-7 rounded-[1.25rem] bg-ink/[0.05] p-5 text-sm text-neutral-700">
+          <div className="mt-7 rounded-[1.25rem] bg-ink/5 p-5 text-sm text-neutral-700">
             <p className="font-semibold text-ink">
               {product.availability === "COMING_SOON" ? "Bientôt disponible." : "Actuellement indisponible."}
             </p>
@@ -419,7 +417,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
             { icon: Truck, text: "Livraison partout au Maroc" },
             { icon: Store, text: "Boutique à Meknès" },
           ].map((t) => (
-            <li key={t.text} className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2.5 ring-1 ring-ink/[0.06]">
+            <li key={t.text} className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2.5 ring-1 ring-ink/6">
               <t.icon size={17} aria-hidden className="flex-none text-gold-deep" />
               {t.text}
             </li>

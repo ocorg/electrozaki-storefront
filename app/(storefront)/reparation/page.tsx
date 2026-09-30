@@ -47,7 +47,7 @@ function ServiceGrid({ title, services, index }: { title: string; services: Repa
           <Reveal as="li" key={s.slug} delayMs={(index + i) * 40}>
             <Link
               href={`/reparation/${s.slug}`}
-              className="group flex h-full flex-col rounded-[1.5rem] border border-ink/[0.07] bg-white p-6 transition-[transform,box-shadow,border-color] duration-500 ease-[var(--ease-out-quint)] hover:-translate-y-1 hover:border-gold/40 hover:shadow-[0_24px_44px_-26px_rgb(17_16_19/0.45)]"
+              className="group flex h-full flex-col rounded-[1.5rem] border border-ink/7 bg-white p-6 transition-[transform,box-shadow,border-color] duration-500 ease-out-quint hover:-translate-y-1 hover:border-gold/40 hover:shadow-[0_24px_44px_-26px_rgb(17_16_19/0.45)]"
             >
               <div className="flex items-start justify-between">
                 <IconTile icon={s.icon} tone="gold" size={48} />

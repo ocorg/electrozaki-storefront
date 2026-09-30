@@ -61,7 +61,7 @@ export function Footer({ aisles }: { aisles: AisleStat[] }) {
       {/* Oversized wordmark bleeding off the bottom edge. */}
       <p
         aria-hidden
-        className="pointer-events-none mt-14 select-none whitespace-nowrap text-center font-display text-[18vw] font-extrabold leading-[0.78] tracking-[-0.05em] text-white/[0.05] md:text-[15vw]"
+        className="pointer-events-none mt-14 select-none whitespace-nowrap text-center font-display text-[18vw] font-extrabold leading-[0.78] tracking-[-0.05em] text-white/5 md:text-[15vw]"
       >
         ELECTRO ZAKI
       </p>

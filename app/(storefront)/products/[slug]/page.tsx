@@ -16,6 +16,7 @@ import {
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CONDITION_LABEL, CONDITION_SCHEMA } from "@/lib/conditions";
+import { MAX_QTY } from "@/lib/db/cart-pricing";
 import { formatMAD } from "@/lib/format";
 import { JsonLd } from "@/lib/json-ld";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
@@ -104,7 +105,10 @@ export default async function ProductPage({ params }: Props) {
     color: v.color,
     storageLabel: v.storageLabel,
     imageUrl: v.imageUrl,
-    stockQuantity: v.stockQuantity,
+    // Stock depth is private: the browser only needs "in stock" and the most
+    // one order line can take (the cart caps it at MAX_QTY server-side), so
+    // anything above that is sent as MAX_QTY — same behavior, nothing more.
+    stockQuantity: Math.min(v.stockQuantity, MAX_QTY),
     batteryHealthPercent: v.batteryHealthPercent,
     batteryGenuine: v.batteryGenuine,
     screenGenuine: v.screenGenuine,
@@ -187,7 +191,7 @@ export default async function ProductPage({ params }: Props) {
           {Object.keys(specs).length > 0 && (
             <div className="mt-8">
               <h2 className="font-display text-xl font-bold text-ink">Caractéristiques</h2>
-              <dl className="mt-3 divide-y divide-ink/[0.07] rounded-[1.25rem] bg-white px-5 ring-1 ring-ink/[0.07]">
+              <dl className="mt-3 divide-y divide-ink/7 rounded-[1.25rem] bg-white px-5 ring-1 ring-ink/7">
                 {Object.entries(specs).map(([key, value]) => (
                   <div key={key} className="flex justify-between gap-4 py-3 text-sm">
                     <dt className="text-neutral-600">{key}</dt>

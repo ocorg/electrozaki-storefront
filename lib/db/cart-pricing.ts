@@ -38,7 +38,7 @@ export type PricedCart =
   | { ok: false; error: string };
 
 const MAX_LINES = 30;
-const MAX_QTY = 20;
+export const MAX_QTY = 20;
 
 function fail(error: string): PricedCart {
   return { ok: false, error };

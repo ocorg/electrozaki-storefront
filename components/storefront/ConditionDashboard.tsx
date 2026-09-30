@@ -97,18 +97,18 @@ export function ConditionDashboard(props: ConditionData) {
   const verdict = level >= 85 ? "Excellente" : level >= 80 ? "Correcte" : "À surveiller";
 
   return (
-    <section aria-label="État de l'appareil" className="mt-6 overflow-hidden rounded-[1.5rem] border border-ink/[0.08] bg-white">
-      <p className="border-b border-ink/[0.06] px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
+    <section aria-label="État de l'appareil" className="mt-6 overflow-hidden rounded-[1.5rem] border border-ink/8 bg-white">
+      <p className="border-b border-ink/6 px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
         Fiche de l&apos;appareil
       </p>
       <div className={`grid ${battery !== null && tiles.length ? "sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]" : ""}`}>
         {battery !== null && (
-          <div className="flex flex-col justify-center gap-3 border-ink/[0.06] p-5 sm:border-r">
+          <div className="flex flex-col justify-center gap-3 border-ink/6 p-5 sm:border-r">
             <p className="text-sm font-semibold text-neutral-700">Santé de la batterie</p>
             <div className="flex items-center gap-3">
               <div aria-hidden className="relative flex h-12 flex-1 rounded-xl border-2 border-ink/70 p-1">
                 <span
-                  className={`h-full rounded-lg ${fill} transition-[width] duration-700 ease-[var(--ease-out-quint)]`}
+                  className={`h-full rounded-lg ${fill} transition-[width] duration-700 ease-out-quint`}
                   style={{ width: `${Math.max(6, Math.min(100, level))}%` }}
                 />
                 <span className="absolute -right-[7px] top-1/2 h-5 w-[5px] -translate-y-1/2 rounded-r-md bg-ink/70" />
@@ -125,7 +125,7 @@ export function ConditionDashboard(props: ConditionData) {
           </div>
         )}
         {tiles.length > 0 && (
-          <ul className="divide-y divide-ink/[0.06]">
+          <ul className="divide-y divide-ink/6">
             {tiles.map((tile) => (
               <li key={tile.label} className="flex items-center gap-3 px-5 py-3">
                 <tile.icon size={18} aria-hidden className="flex-none text-neutral-600" />

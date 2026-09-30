@@ -2,8 +2,12 @@ import { AvailabilityStatus } from "@/generated/prisma/enums";
 import { prisma } from "./client";
 import { getFeaturedProducts, type PublicProduct } from "./public-products";
 
-// Live numbers for the home page's shop front: what's on the shelves right
-// now, per aisle. Read-only, public fields only (no `internal` relation).
+// The home page's shop front: which aisles have something on sale, and from
+// what price. Read-only, public fields only (no `internal` relation).
+//
+// Stock quantities are the owner's private business figures: they're used
+// here to hide empty aisles and to order aisles, but no count is ever
+// returned — so none can reach a page, or the data sent to the browser.
 
 const ON_SALE = {
   published: true,
@@ -13,15 +17,14 @@ const ON_SALE = {
 export type AisleStat = {
   slug: string;
   name: string;
-  count: number;
   fromPrice: number | null;
   parentSlug: string | null;
 };
 
 /**
- * Every leaf category that actually has something on sale, with its item
- * count and cheapest price. Empty categories (created in the ERP but with
- * nothing published yet) are left out, so no tile lands on an empty page.
+ * Every leaf category that actually has something on sale, with its
+ * cheapest price. Empty categories (created in the ERP but with nothing
+ * published yet) are left out, so no tile lands on an empty page.
  */
 export async function getAisles(): Promise<AisleStat[]> {
   const [categories, groups] = await Promise.all([
@@ -60,7 +63,6 @@ export async function getAisles(): Promise<AisleStat[]> {
       return {
         slug: c.slug,
         name: c.name,
-        count: g._count._all,
         fromPrice: min ? Number(min.toString()) : null,
         parentSlug: c.parent?.slug ?? null,
       };
@@ -152,14 +154,6 @@ export async function getHomeShelves(): Promise<{ phones: PublicProduct[]; acces
   const [phones, accessories] = await Promise.all([
     getFeaturedProducts(8, { isPhone: true }),
     getFeaturedProducts(12, { isPhone: false }),
-  ]);
-  return { phones, accessories };
-}
-
-export async function getStockTotals(): Promise<{ phones: number; accessories: number }> {
-  const [phones, accessories] = await Promise.all([
-    prisma.product.count({ where: { ...ON_SALE, isPhone: true } }),
-    prisma.product.count({ where: { ...ON_SALE, isPhone: false } }),
   ]);
   return { phones, accessories };
 }
