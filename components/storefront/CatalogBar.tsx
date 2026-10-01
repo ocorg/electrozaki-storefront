@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
-import Link from "next/link";
 import Form from "next/form";
 import { ChevronDown, Search, SlidersHorizontal, X } from "lucide-react";
 import type { CategoryFilterOptions } from "@/lib/db/public-products";
-import { CONDITION_HINT, CONDITION_LABEL } from "@/lib/conditions";
+import Link from "@/components/i18n/Link";
+import { useLocalePath, useT } from "@/components/i18n/I18nProvider";
+import { categoryName } from "@/lib/i18n/labels";
 import { formatMAD } from "@/lib/format";
 import { artFor } from "@/lib/category-art";
 import { DeviceArt } from "@/components/storefront/DeviceArt";
@@ -29,11 +30,6 @@ type Key = keyof FilterValues;
 
 const GRADES = ["NEUF", "TRES_BON", "BON", "PIECES_REMPLACEES"] as const;
 const BATTERY_TIERS = ["90", "85", "80"] as const;
-const SORTS = [
-  { value: "", label: "Récents", aria: "Trier par nouveautés" },
-  { value: "prix-asc", label: "Prix ↑", aria: "Trier par prix croissant" },
-  { value: "prix-desc", label: "Prix ↓", aria: "Trier par prix décroissant" },
-];
 const BUDGETS = { phones: [1500, 2500, 3500, 5000, 8000], accessories: [50, 100, 200, 500] };
 // Everything a visitor can narrow by (sort and page are not "filters").
 const FILTER_KEYS: Key[] = ["q", "brand", "condition", "minBattery", "storage", "type", "fits", "maxPrice", "promo"];
@@ -75,8 +71,16 @@ function dropEmptyFields(form: HTMLFormElement) {
  * sort are plain links — instant, crawlable, and they work without JS.
  */
 export function CatalogBar({ options, basePath, defaults }: Props) {
+  const t = useT();
+  const withLocale = useLocalePath();
+  const action = withLocale(basePath);
   const phones = options.kind === "phones";
   const brands = uniqueBrands(options.brands);
+  const SORTS = [
+    { value: "", label: t.filters.sortNew, aria: t.filters.sortNewAria },
+    { value: "prix-asc", label: t.filters.sortAsc, aria: t.filters.sortAscAria },
+    { value: "prix-desc", label: t.filters.sortDesc, aria: t.filters.sortDescAria },
+  ];
   const sheetRef = useRef<HTMLDialogElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
 
@@ -118,17 +122,17 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
       case "q":
         return `« ${v} »`;
       case "condition":
-        return CONDITION_LABEL[v] ?? v;
+        return t.grades.label[v] ?? v;
       case "minBattery":
-        return `Batterie ${v} %+`;
+        return t.filters.batteryMin(v);
       case "maxPrice":
-        return `Jusqu'à ${formatMAD(Number(v))}`;
+        return t.filters.upTo(formatMAD(Number(v)));
       case "type":
-        return options.subcategories.find((s) => s.slug === v)?.name ?? v;
+        return categoryName(t, v, options.subcategories.find((s) => s.slug === v)?.name ?? v);
       case "fits":
-        return `Pour ${options.phoneModels.find((m) => m.key === v)?.name ?? v}`;
+        return t.filters.fits(options.phoneModels.find((m) => m.key === v)?.name ?? v);
       case "promo":
-        return "En promo";
+        return t.filters.onPromo;
       default:
         return v;
     }
@@ -148,7 +152,7 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
         <div className="flex items-center gap-2">
           <Form
             key={qs}
-            action={basePath}
+            action={action}
             scroll={false}
             onSubmit={(e) => dropEmptyFields(e.currentTarget)}
             className="min-w-0 flex-1"
@@ -158,9 +162,9 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
             {Object.entries(current).map(([k, v]) =>
               k === "q" ? null : <input key={k} type="hidden" name={k} value={v} />
             )}
-            <label className="group flex h-12 items-center gap-2.5 rounded-full bg-white pl-4 pr-1.5 ring-1 ring-ink/10 transition-shadow focus-within:ring-2 focus-within:ring-ink">
+            <label className="group flex h-12 items-center gap-2.5 rounded-full bg-white ps-4 pe-1.5 ring-1 ring-ink/10 transition-shadow focus-within:ring-2 focus-within:ring-ink">
               <Search size={18} className="flex-none text-neutral-500" aria-hidden />
-              <span className="sr-only">Rechercher dans ce rayon</span>
+              <span className="sr-only">{t.filters.searchLabel}</span>
               <input
                 key={current.q ?? ""}
                 type="search"
@@ -168,14 +172,14 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
                 defaultValue={current.q ?? ""}
                 maxLength={60}
                 enterKeyHint="search"
-                placeholder={phones ? "iPhone 13, A54, 128GB…" : "Coque iPhone 13, 20W…"}
+                placeholder={phones ? t.filters.searchPhones : t.filters.searchAccessories}
                 className="min-w-0 flex-1 bg-transparent text-[15px] text-ink placeholder:text-neutral-500 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
               />
               {current.q && (
                 <Link
                   href={href({ q: undefined })}
                   scroll={false}
-                  aria-label="Effacer la recherche"
+                  aria-label={t.filters.clearSearch}
                   className="flex h-9 w-9 flex-none items-center justify-center rounded-full text-neutral-500 hover:bg-paper hover:text-ink"
                 >
                   <X size={16} aria-hidden />
@@ -184,7 +188,7 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
             </label>
           </Form>
 
-          <nav aria-label="Trier" className="hidden h-12 flex-none items-center rounded-full bg-white p-1 ring-1 ring-ink/10 md:flex">
+          <nav aria-label={t.filters.sortNav} className="hidden h-12 flex-none items-center rounded-full bg-white p-1 ring-1 ring-ink/10 md:flex">
             {SORTS.map((s) => {
               const on = (current.sort ?? "") === s.value;
               return (
@@ -211,19 +215,19 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
             className="relative flex h-12 flex-none items-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-white transition-transform active:scale-[0.97] sm:px-5"
           >
             <SlidersHorizontal size={17} aria-hidden />
-            <span className="hidden sm:inline">Filtres</span>
-            <span className="sr-only sm:hidden">Filtres</span>
+            <span className="hidden sm:inline">{t.filters.filters}</span>
+            <span className="sr-only sm:hidden">{t.filters.filters}</span>
             {sheetCount > 0 && (
               <span className="readout flex h-5 min-w-5 items-center justify-center rounded-full bg-gold px-1 text-[11px] font-bold text-ink">
                 {sheetCount}
-                <span className="sr-only"> actifs</span>
+                <span className="sr-only"> {t.filters.active}</span>
               </span>
             )}
           </button>
         </div>
 
         {/* Quick chips: one tap on, one tap off. */}
-        <ul aria-label="Filtres rapides" className="-mx-4 mt-3 flex gap-2 overflow-x-auto px-4 pb-0.5 scrollbar-none">
+        <ul aria-label={t.filters.quick} className="-mx-4 mt-3 flex gap-2 overflow-x-auto px-4 pb-0.5 scrollbar-none">
           {phones
             ? GRADES.map((g) => {
                 const on = current.condition === g;
@@ -245,24 +249,24 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
           {options.hasPromos && (
             <li className="flex-none">
               <QuickChip href={toggle("promo", "1")} on={current.promo === "1"}>
-                <span aria-hidden className="h-2 w-2 rounded-full bg-red-600" /> En promo
+                <span aria-hidden className="h-2 w-2 rounded-full bg-red-600" /> {t.filters.onPromo}
               </QuickChip>
             </li>
           )}
         </ul>
 
         {pills.length > 0 && (
-          <ul aria-label="Filtres actifs" className="mt-2.5 flex flex-wrap items-center gap-1.5">
+          <ul aria-label={t.filters.activeList} className="mt-2.5 flex flex-wrap items-center gap-1.5">
             {pills.map((k) => (
               <li key={k}>
                 <Link
                   href={href({ [k]: undefined })}
                   scroll={false}
-                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-gold/15 pl-3 pr-2 text-[13px] font-semibold text-ink ring-1 ring-gold/40 transition-colors hover:bg-gold/25"
+                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-gold/15 ps-3 pe-2 text-[13px] font-semibold text-ink ring-1 ring-gold/40 transition-colors hover:bg-gold/25"
                 >
                   {labelFor(k, current[k]!)}
                   <X size={14} aria-hidden />
-                  <span className="sr-only">(retirer)</span>
+                  <span className="sr-only">{t.filters.remove}</span>
                 </Link>
               </li>
             ))}
@@ -272,7 +276,7 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
                 scroll={false}
                 className="inline-flex min-h-9 items-center px-2 text-[13px] font-semibold text-neutral-600 underline underline-offset-2 hover:text-ink"
               >
-                Tout effacer
+                {t.filters.clearAll}
               </Link>
             </li>
           </ul>
@@ -290,7 +294,7 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
       >
         <Form
           key={qs}
-          action={basePath}
+          action={action}
           scroll={false}
           onSubmit={(e) => {
             dropEmptyFields(e.currentTarget);
@@ -302,12 +306,12 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
             <span aria-hidden className="mx-auto mb-3 block h-1.5 w-10 rounded-full bg-ink/15 md:hidden" />
             <div className="flex items-center justify-between">
               <h2 id="sheet-title" className="font-display text-2xl font-extrabold text-ink">
-                Filtres
+                {t.filters.filters}
               </h2>
               <button
                 type="button"
                 onClick={() => sheetRef.current?.close()}
-                aria-label="Fermer"
+                aria-label={t.common.close}
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink ring-1 ring-ink/10 hover:ring-ink/30"
               >
                 <X size={18} aria-hidden />
@@ -318,7 +322,7 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
           <div className="min-h-0 flex-1 space-y-6 overflow-y-auto overscroll-contain px-5 pb-6">
             {current.q && <input type="hidden" name="q" value={current.q} />}
 
-            <Group title="Trier par">
+            <Group title={t.filters.sortBy}>
               <div className="grid grid-cols-3 gap-1 rounded-2xl bg-white p-1 ring-1 ring-ink/10">
                 {SORTS.map((s) => (
                   <label
@@ -336,36 +340,36 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
             {phones ? (
               <>
                 {brands.length > 1 && (
-                  <Group title="Marque">
-                    <Chips name="brand" all="Toutes" current={brandValue} items={brands.map((b) => ({ value: b, label: b }))} />
+                  <Group title={t.filters.brand}>
+                    <Chips name="brand" all={t.filters.allBrands} current={brandValue} items={brands.map((b) => ({ value: b, label: b }))} />
                   </Group>
                 )}
 
-                <Group title="État">
+                <Group title={t.filters.condition}>
                   <div className="divide-y divide-ink/6 overflow-hidden rounded-2xl bg-white ring-1 ring-ink/10">
                     <RadioRow name="condition" value="" checked={!current.condition}>
-                      <span className="text-sm font-semibold text-ink">Tous les états</span>
+                      <span className="text-sm font-semibold text-ink">{t.filters.allConditions}</span>
                     </RadioRow>
                     {GRADES.map((g) => (
                       <RadioRow key={g} name="condition" value={g} checked={current.condition === g}>
                         <GradeMeter grade={g} size="md" />
-                        <span className="mt-0.5 block text-xs text-neutral-600">{CONDITION_HINT[g]}</span>
+                        <span className="mt-0.5 block text-xs text-neutral-600">{t.grades.hint[g]}</span>
                       </RadioRow>
                     ))}
                   </div>
                 </Group>
 
-                <Group title="Santé de la batterie" hint="Téléphones d'occasion">
+                <Group title={t.filters.battery} hint={t.filters.batteryHint}>
                   <div className="grid grid-cols-4 gap-2">
-                    {["", ...BATTERY_TIERS].map((t) => (
+                    {["", ...BATTERY_TIERS].map((tier) => (
                       <label
-                        key={t || "all"}
+                        key={tier || "all"}
                         className="group flex min-h-22 cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl bg-white ring-1 ring-ink/10 transition-colors hover:ring-ink/30 has-checked:bg-ink has-checked:ring-ink has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ink"
                       >
-                        <input type="radio" name="minBattery" value={t} defaultChecked={(current.minBattery ?? "") === t} className="sr-only" />
-                        <Battery level={t ? Number(t) : null} />
+                        <input type="radio" name="minBattery" value={tier} defaultChecked={(current.minBattery ?? "") === tier} className="sr-only" />
+                        <Battery level={tier ? Number(tier) : null} />
                         <span className="readout text-xs font-semibold text-ink group-has-checked:text-white">
-                          {t ? `${t} %+` : "Toutes"}
+                          {tier ? <span dir="ltr">{tier} %+</span> : t.filters.anyBattery}
                         </span>
                       </label>
                     ))}
@@ -373,25 +377,25 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
                 </Group>
 
                 {options.storages.length > 1 && (
-                  <Group title="Stockage">
-                    <Chips name="storage" all="Tous" current={current.storage} items={options.storages.map((s) => ({ value: s, label: s }))} />
+                  <Group title={t.filters.storage}>
+                    <Chips name="storage" all={t.filters.anyStorage} current={current.storage} items={options.storages.map((s) => ({ value: s, label: s }))} />
                   </Group>
                 )}
               </>
             ) : (
               <>
                 {options.subcategories.length > 1 && (
-                  <Group title="Type">
+                  <Group title={t.filters.type}>
                     <Chips
                       name="type"
-                      all="Tout"
+                      all={t.filters.anyType}
                       current={current.type}
                       items={options.subcategories.map((s) => ({
                         value: s.slug,
                         label: (
                           <>
-                            <DeviceArt kind={artFor(s.slug, s.name)} className="-ml-1 h-6 w-6" />
-                            {s.name}
+                            <DeviceArt kind={artFor(s.slug, s.name)} className="-ms-1 h-6 w-6" />
+                            {categoryName(t, s.slug, s.name)}
                           </>
                         ),
                       }))}
@@ -400,38 +404,38 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
                 )}
 
                 {options.phoneModels.length > 0 && (
-                  <Group title="Compatible avec">
+                  <Group title={t.filters.compatible}>
                     <label className="relative block">
-                      <span className="sr-only">Modèle de téléphone</span>
+                      <span className="sr-only">{t.filters.phoneModel}</span>
                       <select
                         name="fits"
                         defaultValue={current.fits ?? ""}
-                        className="h-12 w-full appearance-none rounded-2xl bg-white pl-4 pr-10 text-[15px] font-semibold text-ink ring-1 ring-ink/10 focus:outline-2 focus:outline-offset-2 focus:outline-ink"
+                        className="h-12 w-full appearance-none rounded-2xl bg-white ps-4 pe-10 text-[15px] font-semibold text-ink ring-1 ring-ink/10 focus:outline-2 focus:outline-offset-2 focus:outline-ink"
                       >
-                        <option value="">Tous les téléphones</option>
+                        <option value="">{t.filters.anyPhone}</option>
                         {options.phoneModels.map((m) => (
                           <option key={m.key} value={m.key}>
                             {m.name}
                           </option>
                         ))}
                       </select>
-                      <ChevronDown size={18} aria-hidden className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500" />
+                      <ChevronDown size={18} aria-hidden className="pointer-events-none absolute inset-e-4 top-1/2 -translate-y-1/2 text-neutral-500" />
                     </label>
                   </Group>
                 )}
 
                 {brands.length > 1 && (
-                  <Group title="Marque">
-                    <Chips name="brand" all="Toutes" current={brandValue} items={brands.map((b) => ({ value: b, label: b }))} />
+                  <Group title={t.filters.brand}>
+                    <Chips name="brand" all={t.filters.allBrands} current={brandValue} items={brands.map((b) => ({ value: b, label: b }))} />
                   </Group>
                 )}
               </>
             )}
 
-            <Group title="Budget">
+            <Group title={t.filters.budget}>
               <Chips
                 name="maxPrice"
-                all="Tous les prix"
+                all={t.filters.anyPrice}
                 current={current.maxPrice}
                 items={[
                   ...budgets.map((b) => ({ value: String(b), label: <span className="readout">≤ {formatMAD(b)}</span> })),
@@ -446,8 +450,8 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
             {options.hasPromos && (
               <label className="group flex min-h-14 cursor-pointer items-center justify-between gap-4 rounded-2xl bg-white px-4 ring-1 ring-ink/10 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ink">
                 <span>
-                  <span className="block text-sm font-bold text-ink">En promo uniquement</span>
-                  <span className="block text-xs text-neutral-600">Les prix barrés du moment</span>
+                  <span className="block text-sm font-bold text-ink">{t.filters.promoOnly}</span>
+                  <span className="block text-xs text-neutral-600">{t.filters.promoOnlyHint}</span>
                 </span>
                 <input type="checkbox" name="promo" value="1" defaultChecked={current.promo === "1"} className="sr-only" />
                 {/* iOS-style switch, driven by the checkbox above */}
@@ -455,7 +459,7 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
                   aria-hidden
                   className="relative h-8 w-13 flex-none rounded-full bg-ink/15 transition-colors duration-300 group-has-checked:bg-signal"
                 >
-                  <span className="absolute left-1 top-1 h-6 w-6 rounded-full bg-white shadow-[0_2px_6px_rgb(0_0_0/0.25)] transition-transform duration-300 ease-spring group-has-checked:translate-x-5" />
+                  <span className="absolute inset-s-1 top-1 h-6 w-6 rounded-full bg-white shadow-[0_2px_6px_rgb(0_0_0/0.25)] transition-transform duration-300 ease-spring group-has-checked:translate-x-5 rtl:group-has-checked:-translate-x-5" />
                 </span>
               </label>
             )}
@@ -468,13 +472,13 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
               onClick={() => sheetRef.current?.close()}
               className="min-h-12 flex-none px-2 py-3 text-sm font-semibold text-neutral-600 underline underline-offset-2 hover:text-ink"
             >
-              Tout effacer
+              {t.filters.clearAll}
             </Link>
             <button
               type="submit"
               className="flex min-h-12 flex-1 items-center justify-center rounded-full bg-gold px-6 text-[15px] font-bold text-ink transition-transform active:scale-[0.98]"
             >
-              Afficher les résultats
+              {t.filters.show}
             </button>
           </div>
         </Form>
@@ -494,7 +498,7 @@ function QuickChip({ href, on, children }: { href: string; on: boolean; children
       }`}
     >
       {children}
-      {on && <X size={13} aria-hidden className="-mr-0.5 opacity-70" />}
+      {on && <X size={13} aria-hidden className="-me-0.5 opacity-70" />}
     </Link>
   );
 }
@@ -556,7 +560,7 @@ function RadioRow({ name, value, checked, children }: { name: string; value: str
 function Battery({ level }: { level: number | null }) {
   const fill = level === null ? "bg-transparent" : level >= 85 ? "bg-signal" : "bg-amber-500";
   return (
-    <span aria-hidden className="relative flex h-5 w-9 items-center rounded-[5px] p-0.5 ring-2 ring-ink/70 group-has-checked:ring-white/80">
+    <span aria-hidden dir="ltr" className="relative flex h-5 w-9 items-center rounded-[5px] p-0.5 ring-2 ring-ink/70 group-has-checked:ring-white/80">
       <span className={`h-full rounded-xs ${fill}`} style={{ width: level === null ? 0 : `${level}%` }} />
       <span className="absolute -right-1.25 top-1/2 h-2 w-0.75 -translate-y-1/2 rounded-r-sm bg-ink/70 group-has-checked:bg-white/80" />
       {level === null && <span className="readout absolute inset-0 flex items-center justify-center text-[10px] font-bold text-ink group-has-checked:text-white">∗</span>}

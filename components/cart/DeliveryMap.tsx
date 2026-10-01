@@ -7,12 +7,12 @@ import type { Map as LeafletMap, CircleMarker } from "leaflet";
 // Meknès, where parcels leave from — shown so the customer sees the trip.
 const MEKNES: [number, number] = [33.8935, -5.5473];
 
-type Props = { lat: number; lng: number; label: string };
+type Props = { lat: number; lng: number; label: string; ariaLabel: string };
 
 // A small OpenStreetMap view with a pin on the chosen destination, so a
 // customer can check it's the right place (several Moroccan localities share
 // a name). Leaflet touches `window`, so it's loaded only in the browser.
-export function DeliveryMap({ lat, lng, label }: Props) {
+export function DeliveryMap({ lat, lng, label, ariaLabel }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<LeafletMap | null>(null);
   const pinRef = useRef<CircleMarker | null>(null);
@@ -66,7 +66,8 @@ export function DeliveryMap({ lat, lng, label }: Props) {
       ref={containerRef}
       className="h-56 w-full overflow-hidden rounded-xl border border-black/10 bg-neutral-100"
       role="img"
-      aria-label={`Carte : ${label}`}
+      aria-label={ariaLabel}
+      dir="ltr"
     />
   );
 }

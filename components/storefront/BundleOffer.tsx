@@ -8,6 +8,7 @@ import { formatMAD } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { cardClasses } from "@/components/ui/Card";
 import { allocateBundlePrices } from "@/lib/bundle-pricing";
+import { useT } from "@/components/i18n/I18nProvider";
 
 // Plain, JSON-serializable shape — Prisma's Decimal instances (bundlePrice,
 // recommendedSalePrice) can't cross the Server -> Client Component boundary
@@ -32,6 +33,7 @@ export type BundleOfferData = {
 };
 
 export function BundleOffer({ bundles }: { bundles: BundleOfferData[] }) {
+  const t = useT();
   const { addItem } = useCart();
   const [addedBundleId, setAddedBundleId] = useState<string | null>(null);
 
@@ -55,7 +57,7 @@ export function BundleOffer({ bundles }: { bundles: BundleOfferData[] }) {
             addItem(
               {
                 productId: item.product.id,
-                productName: `${item.product.name} (pack ${bundle.name})`,
+                productName: `${item.product.name} ${t.bundle.packSuffix(bundle.name)}`,
                 price: unitPrices[index],
                 image: item.product.images[0]?.url,
                 isPhone: item.product.isPhone,
@@ -99,14 +101,14 @@ export function BundleOffer({ bundles }: { bundles: BundleOfferData[] }) {
               ))}
             </ul>
 
-            <div className="mt-3 flex items-baseline gap-2">
+            <div className="mt-3 flex flex-wrap items-baseline gap-2">
               <span className="rounded-lg bg-ink px-2.5 py-1 text-base font-bold text-gold">
                 {formatMAD(bundlePrice)}
               </span>
               <span className="text-sm text-neutral-500 line-through">{formatMAD(normalTotal)}</span>
               {savings > 0 && (
                 <span className="text-sm font-medium text-green-700">
-                  Économisez {formatMAD(savings)}
+                  {t.bundle.save(formatMAD(savings))}
                 </span>
               )}
             </div>
@@ -120,10 +122,10 @@ export function BundleOffer({ bundles }: { bundles: BundleOfferData[] }) {
             >
               {isAdded ? (
                 <>
-                  <Check size={18} /> Pack ajouté
+                  <Check size={18} /> {t.bundle.added}
                 </>
               ) : (
-                "Ajouter le pack au panier"
+                t.bundle.add
               )}
             </Button>
           </div>

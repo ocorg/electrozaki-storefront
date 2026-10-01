@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { Camera, Flashlight } from "lucide-react";
+import Link from "@/components/i18n/Link";
+import { useT } from "@/components/i18n/I18nProvider";
 import { formatMAD } from "@/lib/format";
-import { CONDITION_LABEL } from "@/lib/conditions";
 import type { ShowcasePhone } from "@/lib/db/storefront";
 import { useMeknesClock } from "@/components/storefront/LiveClock";
 
@@ -17,15 +17,16 @@ import { useMeknesClock } from "@/components/storefront/LiveClock";
 const EVERY_MS = 3400;
 
 function Notification({ phone, dimmed = false }: { phone: ShowcasePhone; dimmed?: boolean }) {
+  const t = useT();
   const detail = [
-    CONDITION_LABEL[phone.condition] ?? phone.condition,
-    phone.battery !== null && phone.condition !== "NEUF" ? `batt. ${phone.battery} %` : null,
+    t.grades.label[phone.condition] ?? phone.condition,
+    phone.battery !== null && phone.condition !== "NEUF" ? t.hero.battShort(phone.battery) : null,
   ]
     .filter(Boolean)
     .join(" · ");
   return (
     <span
-      className={`flex items-center gap-3 rounded-[1.1rem] border border-white/10 bg-[#2b2620]/95 p-3 text-left backdrop-blur-xl ${dimmed ? "" : "shadow-[0_10px_30px_-10px_rgb(0_0_0/0.6)]"}`}
+      className={`flex items-center gap-3 rounded-[1.1rem] border border-white/10 bg-[#2b2620]/95 p-3 text-start backdrop-blur-xl ${dimmed ? "" : "shadow-[0_10px_30px_-10px_rgb(0_0_0/0.6)]"}`}
     >
       <span className="relative flex h-11 w-11 flex-none items-center justify-center overflow-hidden rounded-[30%] bg-white">
         {phone.image ? (
@@ -37,13 +38,13 @@ function Notification({ phone, dimmed = false }: { phone: ShowcasePhone; dimmed?
       <span className="min-w-0 flex-1">
         <span className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-white/60">
           <span>Electro Zaki</span>
-          <span className="normal-case tracking-normal">en stock</span>
+          <span className="normal-case tracking-normal">{t.hero.inStock}</span>
         </span>
         <span className="block truncate text-[13px] font-bold text-white">{phone.name}</span>
         <span className="flex items-center justify-between gap-2 text-[11px] text-white/75">
           <span className="truncate">{detail}</span>
           <span className="readout flex-none font-bold text-gold-bright">
-            {phone.fromPrice ? "dès " : ""}
+            {phone.fromPrice ? `${t.common.from} ` : ""}
             {formatMAD(phone.price)}
           </span>
         </span>
@@ -53,6 +54,7 @@ function Notification({ phone, dimmed = false }: { phone: ShowcasePhone; dimmed?
 }
 
 export function HeroPhone({ phones }: { phones: ShowcasePhone[] }) {
+  const t = useT();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const time = useMeknesClock("time");
@@ -89,7 +91,7 @@ export function HeroPhone({ phones }: { phones: ShowcasePhone[] }) {
               <p className="font-display text-[64px] font-bold leading-none tracking-tight sm:text-[72px]">
                 {time || " "}
               </p>
-              <p className="mt-1 text-[11px] font-medium text-white/60">Meknès · Electro Zaki</p>
+              <p className="mt-1 text-[11px] font-medium text-white/60">{t.hero.lockCaption}</p>
             </div>
 
             {/* Wallpaper: the brand mark, faint. */}

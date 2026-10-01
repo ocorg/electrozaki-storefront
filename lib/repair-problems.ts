@@ -20,35 +20,33 @@ import {
 // in step.
 export type RepairKind = "HARDWARE" | "SOFTWARE" | "CONSULTATION";
 
-export const REPAIR_KINDS: { kind: RepairKind; label: string; description: string; icon: LucideIcon }[] = [
-  { kind: "HARDWARE", label: "Réparation matérielle", description: "Écran, batterie, port de charge, caméra, son…", icon: Wrench },
-  { kind: "SOFTWARE", label: "Problème logiciel", description: "Bloqué, lent, mise à jour, données, compte…", icon: Monitor },
-  { kind: "CONSULTATION", label: "Consultation en ligne", description: "Un conseil ou un diagnostic à distance, par WhatsApp ou appel vidéo.", icon: Headphones },
+// The words shown for each kind and problem are in the dictionaries
+// (t.repairKinds, t.repairProblems), keyed the same way.
+export const REPAIR_KINDS: { kind: RepairKind; icon: LucideIcon }[] = [
+  { kind: "HARDWARE", icon: Wrench },
+  { kind: "SOFTWARE", icon: Monitor },
+  { kind: "CONSULTATION", icon: Headphones },
 ];
 
-export type RepairProblem = { key: string; label: string; icon: LucideIcon };
+export type RepairProblem = { key: string; icon: LucideIcon };
 
 export const PROBLEMS: Record<RepairKind, RepairProblem[]> = {
   HARDWARE: [
-    { key: "ecran", label: "Écran", icon: Smartphone },
-    { key: "batterie", label: "Batterie", icon: BatteryCharging },
-    { key: "camera", label: "Appareil photo", icon: Camera },
-    { key: "connecteur", label: "Port de charge", icon: Plug },
-    { key: "son", label: "Son / Micro", icon: Volume2 },
-    { key: "reseau", label: "Désimlockage réseau", icon: Globe },
-    { key: "autre_materiel", label: "Autre panne", icon: Wrench },
+    { key: "ecran", icon: Smartphone },
+    { key: "batterie", icon: BatteryCharging },
+    { key: "camera", icon: Camera },
+    { key: "connecteur", icon: Plug },
+    { key: "son", icon: Volume2 },
+    { key: "reseau", icon: Globe },
+    { key: "autre_materiel", icon: Wrench },
   ],
   SOFTWARE: [
-    { key: "systeme_bloque", label: "Bloqué, lent ou redémarre en boucle", icon: RefreshCcw },
-    { key: "mise_a_jour", label: "Mise à jour / réinstallation", icon: Settings },
-    { key: "donnees", label: "Récupération & transfert de données", icon: DatabaseBackup },
-    { key: "compte_config", label: "Compte & configuration", icon: Smartphone },
+    { key: "systeme_bloque", icon: RefreshCcw },
+    { key: "mise_a_jour", icon: Settings },
+    { key: "donnees", icon: DatabaseBackup },
+    { key: "compte_config", icon: Smartphone },
   ],
-  CONSULTATION: [{ key: "consultation", label: "Consultation / diagnostic à distance", icon: Headphones }],
+  CONSULTATION: [{ key: "consultation", icon: Headphones }],
 };
 
 export const ALL_PROBLEM_KEYS = Object.values(PROBLEMS).flat().map((p) => p.key);
-
-export function problemLabel(key: string): string {
-  return Object.values(PROBLEMS).flat().find((p) => p.key === key)?.label ?? key;
-}

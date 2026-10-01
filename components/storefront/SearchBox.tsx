@@ -1,21 +1,24 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ImageOff, Loader2, Search, X } from "lucide-react";
 import { formatMAD } from "@/lib/format";
-import { CONDITION_LABEL } from "@/lib/conditions";
+import { useLocalePath, useT } from "@/components/i18n/I18nProvider";
 import type { SearchSuggestion } from "@/lib/db/public-products";
 import { WHATSAPP_URL } from "@/lib/site";
 
 // Header search with live product suggestions as the customer types; Enter
 // (or "Voir les N résultats") opens the full results page.
-export function SearchBox({ className = "", placeholder = "Rechercher un téléphone, un accessoire..." }: {
+export function SearchBox({ className = "", placeholder }: {
   className?: string;
   placeholder?: string;
 }) {
+  const t = useT();
+  const s = t.searchBox;
+  const withLocale = useLocalePath();
   const router = useRouter();
   const listId = useId();
   const box = useRef<HTMLDivElement>(null);
@@ -64,7 +67,7 @@ export function SearchBox({ className = "", placeholder = "Rechercher un télép
   function goToResults() {
     if (!query) return;
     setOpen(false);
-    router.push(`/search?q=${encodeURIComponent(query)}`);
+    router.push(withLocale(`/search?q=${encodeURIComponent(query)}`));
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
@@ -79,7 +82,7 @@ export function SearchBox({ className = "", placeholder = "Rechercher un télép
       e.preventDefault();
       if (active >= 0 && items[active]) {
         setOpen(false);
-        router.push(`/products/${items[active].slug}`);
+        router.push(withLocale(`/products/${items[active].slug}`));
       } else goToResults();
     } else if (e.key === "Escape") {
       setOpen(false);
@@ -109,7 +112,7 @@ export function SearchBox({ className = "", placeholder = "Rechercher un télép
             }}
             onFocus={() => setOpen(true)}
             onKeyDown={onKeyDown}
-            placeholder={placeholder}
+            placeholder={placeholder ?? t.common.searchPlaceholder}
             autoComplete="off"
             enterKeyHint="search"
             maxLength={60}
@@ -117,19 +120,19 @@ export function SearchBox({ className = "", placeholder = "Rechercher un télép
             aria-expanded={showPanel}
             aria-controls={listId}
             aria-autocomplete="list"
-            aria-label="Rechercher un produit"
+            aria-label={s.label}
             aria-activedescendant={showPanel && active >= 0 && items[active] ? `${listId}-${active}` : undefined}
-            className="min-h-11 w-full rounded-l-full border border-r-0 border-ink/15 bg-white pl-4 pr-9 text-[15px] text-ink placeholder:text-neutral-500 sm:text-sm focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30 [&::-webkit-search-cancel-button]:hidden"
+            className="min-h-11 w-full rounded-s-full border border-e-0 border-ink/15 bg-white ps-4 pe-9 text-[15px] text-ink placeholder:text-neutral-500 sm:text-sm focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30 [&::-webkit-search-cancel-button]:hidden"
           />
           {q && (
             <button
               type="button"
-              aria-label="Effacer"
+              aria-label={s.clear}
               onClick={() => {
                 setQ("");
                 setItems([]);
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-neutral-500 hover:text-ink"
+              className="absolute inset-e-2 top-1/2 -translate-y-1/2 p-1 text-neutral-500 hover:text-ink"
             >
               <X size={16} />
             </button>
@@ -137,8 +140,8 @@ export function SearchBox({ className = "", placeholder = "Rechercher un télép
         </div>
         <button
           type="submit"
-          aria-label="Rechercher"
-          className="flex min-h-11 min-w-12 items-center justify-center rounded-r-full border border-ink bg-ink pr-1 text-white transition-colors hover:bg-ink-3"
+          aria-label={s.submit}
+          className="flex min-h-11 min-w-12 items-center justify-center rounded-e-full border border-ink bg-ink pe-1 text-white transition-colors hover:bg-ink-3"
         >
           <Search size={18} />
         </button>
@@ -148,17 +151,17 @@ export function SearchBox({ className = "", placeholder = "Rechercher un télép
         <div
           id={listId}
           role="listbox"
-          className="absolute right-0 top-full z-50 mt-1.5 max-h-[70vh] w-full overflow-y-auto rounded-2xl border border-ink/10 bg-white shadow-[0_30px_60px_-25px_rgb(17_16_19/0.45)] sm:w-[24rem]"
+          className="absolute inset-e-0 top-full z-50 mt-1.5 max-h-[70vh] w-full overflow-y-auto rounded-2xl border border-ink/10 bg-white shadow-[0_30px_60px_-25px_rgb(17_16_19/0.45)] sm:w-[24rem]"
         >
           {loading && items.length === 0 ? (
             <p className="flex items-center gap-2 px-4 py-4 text-sm text-neutral-500">
-              <Loader2 size={16} className="animate-spin" /> Recherche…
+              <Loader2 size={16} className="animate-spin" /> {s.loading}
             </p>
           ) : items.length === 0 ? (
             <div className="px-4 py-4 text-sm text-neutral-600">
-              Aucun produit pour « {query} ».{" "}
+              {s.noneBefore(query)}{" "}
               <a href={WHATSAPP_URL} className="font-semibold text-ink underline decoration-whatsapp decoration-2 underline-offset-2">
-                Demandez-nous sur WhatsApp
+                {s.askWhatsapp}
               </a>
               .
             </div>
@@ -183,10 +186,10 @@ export function SearchBox({ className = "", placeholder = "Rechercher un télép
                       <span className="min-w-0 flex-1">
                         {p.brand && <span className="block text-[11px] uppercase tracking-wide text-neutral-500">{p.brand}</span>}
                         <span className="block text-sm font-medium leading-snug text-neutral-900 line-clamp-2">{p.name}</span>
-                        {p.isPhone && <span className="text-xs text-neutral-500">{CONDITION_LABEL[p.condition] ?? p.condition}</span>}
+                        {p.isPhone && <span className="text-xs text-neutral-500">{t.grades.label[p.condition] ?? p.condition}</span>}
                       </span>
-                      <span className="shrink-0 text-right">
-                        {p.fromPrice && <span className="block text-[11px] text-neutral-500">dès</span>}
+                      <span className="shrink-0 text-end">
+                        {p.fromPrice && <span className="block text-[11px] text-neutral-500">{t.common.from}</span>}
                         <span className="block text-sm font-bold text-ink">{formatMAD(p.price)}</span>
                         {p.compareAtPrice && <span className="block text-xs text-neutral-500 line-through">{formatMAD(p.compareAtPrice)}</span>}
                       </span>
@@ -199,7 +202,7 @@ export function SearchBox({ className = "", placeholder = "Rechercher un télép
                 onClick={goToResults}
                 className="w-full border-t border-black/10 px-4 py-3 text-sm font-semibold text-ink hover:bg-neutral-50"
               >
-                {total > items.length ? "Voir tous les résultats" : "Voir les résultats"} →
+                {total > items.length ? s.seeAll : s.see} <span className="inline-block rtl:rotate-180">→</span>
               </button>
             </>
           )}

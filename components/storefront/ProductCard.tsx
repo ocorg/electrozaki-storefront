@@ -1,11 +1,14 @@
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import Link from "@/components/i18n/Link";
 import { formatMAD, savingOf } from "@/lib/format";
 import type { PublicProduct } from "@/lib/db/public-products";
+import { getT } from "@/lib/i18n/server";
+import { categoryName } from "@/lib/i18n/labels";
 import { ProductVisual } from "@/components/storefront/ProductVisual";
 import { BatteryLevel, GradeMeter } from "@/components/storefront/GradeMeter";
 
-export function ProductCard({ product, priority = false }: { product: PublicProduct; priority?: boolean }) {
+export async function ProductCard({ product, priority = false }: { product: PublicProduct; priority?: boolean }) {
+  const t = await getT();
   const cover = product.images[0];
   const isSoldOut = product.availability === "OUT_OF_STOCK" || product.availability === "DISCONTINUED";
   const isComingSoon = product.availability === "COMING_SOON";
@@ -44,7 +47,7 @@ export function ProductCard({ product, priority = false }: { product: PublicProd
         <div className="absolute inset-x-2 top-2 z-3 flex items-start justify-between gap-2">
           {isSoldOut || isComingSoon ? (
             <span className="rounded-full bg-ink/90 px-2.5 py-1 text-[11px] font-semibold text-white">
-              {isComingSoon ? "Bientôt" : "Épuisé"}
+              {isComingSoon ? t.product.comingSoon : t.product.soldOut}
             </span>
           ) : (
             // No stock badge: quantities are private, and used phones are
@@ -53,7 +56,7 @@ export function ProductCard({ product, priority = false }: { product: PublicProd
           )}
           {(saving !== null || unitPromo) && (
             <span className="rounded-full bg-red-600 px-2.5 py-1 font-mono text-[11px] font-bold text-white">
-              {saving !== null ? `−${formatMAD(saving)}` : "Promo"}
+              {saving !== null ? `−${formatMAD(saving)}` : t.product.promo}
             </span>
           )}
         </div>
@@ -61,7 +64,7 @@ export function ProductCard({ product, priority = false }: { product: PublicProd
 
       <div className="flex flex-1 flex-col px-3.5 pb-3.5 pt-3 sm:px-4 sm:pb-4">
         <p className="min-h-4 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-          {product.brand ?? product.category.name}
+          {product.brand ?? categoryName(t, product.category.slug, product.category.name)}
         </p>
         <h3 className="mt-0.5 line-clamp-2 min-h-[2.6em] text-[15px] font-semibold leading-snug text-ink" title={product.name}>
           {product.name}
@@ -78,12 +81,12 @@ export function ProductCard({ product, priority = false }: { product: PublicProd
 
         <div className="mt-auto flex items-end justify-between gap-2 pt-3">
           <p className="leading-none">
-            {fromPrice && <span className="mb-1 block text-[11px] font-medium text-neutral-500">à partir de</span>}
+            {fromPrice && <span className="mb-1 block text-[11px] font-medium text-neutral-500">{t.product.fromPrice}</span>}
             <span className="readout text-lg font-bold text-ink sm:text-xl">
               {formatMAD(product.recommendedSalePrice.toString())}
             </span>
             {saving !== null && product.compareAtPrice && (
-              <span className="readout ml-1.5 text-xs text-neutral-500 line-through">
+              <span className="readout ms-1.5 text-xs text-neutral-500 line-through">
                 {formatMAD(product.compareAtPrice.toString())}
               </span>
             )}
@@ -92,7 +95,7 @@ export function ProductCard({ product, priority = false }: { product: PublicProd
             aria-hidden
             className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-paper text-ink transition-all duration-300 group-hover:rotate-45 group-hover:bg-gold"
           >
-            <ArrowUpRight size={17} />
+            <ArrowUpRight size={17} className="rtl:-scale-x-100" />
           </span>
         </div>
       </div>

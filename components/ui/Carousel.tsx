@@ -2,14 +2,17 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useT } from "@/components/i18n/I18nProvider";
 
 // Touch/trackpad users already have native swipe via the snap-x scroller —
 // these arrows exist for mouse users, who have no other affordance that the
-// row scrolls at all.
+// row scrolls at all. "Start"/"end" follow the reading direction: in Arabic
+// the row starts on the right and scrollLeft runs from 0 to negative.
 export function Carousel({ children, className = "" }: { children: ReactNode; className?: string }) {
+  const t = useT();
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [canScrollStart, setCanScrollStart] = useState(false);
+  const [canScrollEnd, setCanScrollEnd] = useState(false);
 
   useEffect(() => {
     const el = scrollerRef.current;
@@ -20,10 +23,11 @@ export function Carousel({ children, className = "" }: { children: ReactNode; cl
       // "start" is the container's own padding value (e.g. 16px for px-4),
       // not 0 — measure against that instead of a flat epsilon.
       const style = getComputedStyle(el);
-      const paddingLeft = parseFloat(style.paddingLeft) || 0;
-      const paddingRight = parseFloat(style.paddingRight) || 0;
-      setCanScrollLeft(el.scrollLeft > paddingLeft + 4);
-      setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - paddingRight - 4);
+      const paddingStart = parseFloat(style.paddingInlineStart) || 0;
+      const paddingEnd = parseFloat(style.paddingInlineEnd) || 0;
+      const scrolled = Math.abs(el.scrollLeft);
+      setCanScrollStart(scrolled > paddingStart + 4);
+      setCanScrollEnd(scrolled + el.clientWidth < el.scrollWidth - paddingEnd - 4);
     };
 
     updateState();
@@ -38,7 +42,8 @@ export function Carousel({ children, className = "" }: { children: ReactNode; cl
   function scrollByDirection(direction: 1 | -1) {
     const el = scrollerRef.current;
     if (!el) return;
-    el.scrollBy({ left: direction * el.clientWidth * 0.8, behavior: "smooth" });
+    const rtl = getComputedStyle(el).direction === "rtl";
+    el.scrollBy({ left: (rtl ? -direction : direction) * el.clientWidth * 0.8, behavior: "smooth" });
   }
 
   return (
@@ -50,24 +55,24 @@ export function Carousel({ children, className = "" }: { children: ReactNode; cl
         {children}
       </div>
 
-      {canScrollLeft && (
+      {canScrollStart && (
         <button
           type="button"
-          aria-label="Précédent"
+          aria-label={t.common.previous}
           onClick={() => scrollByDirection(-1)}
-          className="absolute left-0 top-[42%] z-10 hidden h-12 w-12 -translate-y-1/2 -translate-x-1/2 items-center justify-center rounded-full bg-ink text-white shadow-[0_12px_24px_-10px_rgb(17_16_19/0.7)] transition-transform hover:scale-105 md:flex"
+          className="absolute inset-s-0 top-[42%] z-10 hidden h-12 w-12 -translate-y-1/2 -translate-x-1/2 rtl:translate-x-1/2 items-center justify-center rounded-full bg-ink text-white shadow-[0_12px_24px_-10px_rgb(17_16_19/0.7)] transition-transform hover:scale-105 md:flex"
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={20} className="rtl:rotate-180" />
         </button>
       )}
-      {canScrollRight && (
+      {canScrollEnd && (
         <button
           type="button"
-          aria-label="Suivant"
+          aria-label={t.common.next}
           onClick={() => scrollByDirection(1)}
-          className="absolute right-0 top-[42%] z-10 hidden h-12 w-12 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full bg-ink text-white shadow-[0_12px_24px_-10px_rgb(17_16_19/0.7)] transition-transform hover:scale-105 md:flex"
+          className="absolute inset-e-0 top-[42%] z-10 hidden h-12 w-12 -translate-y-1/2 translate-x-1/2 rtl:-translate-x-1/2 items-center justify-center rounded-full bg-ink text-white shadow-[0_12px_24px_-10px_rgb(17_16_19/0.7)] transition-transform hover:scale-105 md:flex"
         >
-          <ChevronRight size={20} />
+          <ChevronRight size={20} className="rtl:rotate-180" />
         </button>
       )}
     </div>

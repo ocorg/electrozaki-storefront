@@ -72,7 +72,7 @@ const PUBLIC_PRODUCT_SELECT = {
           id: true,
           slug: true,
           name: true,
-          category: { select: { name: true } },
+          category: { select: { name: true, slug: true } },
           images: { select: { url: true }, orderBy: { sortOrder: "asc" as const }, take: 1 },
         },
       },
@@ -146,7 +146,7 @@ export interface PublicProduct {
       id: string;
       slug: string;
       name: string;
-      category: { name: string };
+      category: { name: string; slug: string };
       images: { url: string }[];
     };
   }[];

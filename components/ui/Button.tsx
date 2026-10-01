@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ComponentProps } from "react";
 
 // primary: ink pill (default action) · accent: brass pill (the one main

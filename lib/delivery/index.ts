@@ -46,8 +46,6 @@ export function searchKey(text: string): string {
   return text.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 }
 
-export const WEEKDAYS_FR = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
-
 export type DeliveryEstimate =
   | { deliverable: false }
   | {
@@ -104,11 +102,26 @@ export function frenchDay(isoDate: string): string {
   });
 }
 
-/** "aujourd'hui" / "demain" / "jeudi 25 septembre", relative to now on the store clock. */
-export function relativeDay(isoDate: string, now: number = Date.now()): string {
+
+export type DayParts = {
+  /** 0 = today, 1 = tomorrow (store clock), otherwise null */
+  offset: 0 | 1 | null;
+  /** 0 = Monday … 6 = Sunday */
+  weekday: number;
+  day: number;
+  /** 0 = January … 11 = December */
+  month: number;
+};
+
+/** A 'YYYY-MM-DD' store date broken into parts, so each language words it its own way. */
+export function dayParts(isoDate: string, now: number = Date.now()): DayParts {
   const today = iso(dayOf(now));
   const tomorrow = iso(new Date(dayOf(now).getTime() + DAY_MS));
-  if (isoDate === today) return "aujourd'hui";
-  if (isoDate === tomorrow) return "demain";
-  return frenchDay(isoDate);
+  const date = new Date(`${isoDate}T12:00:00Z`);
+  return {
+    offset: isoDate === today ? 0 : isoDate === tomorrow ? 1 : null,
+    weekday: mondayFirst(date),
+    day: date.getUTCDate(),
+    month: date.getUTCMonth(),
+  };
 }

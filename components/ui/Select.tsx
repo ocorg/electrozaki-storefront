@@ -161,12 +161,12 @@ export function Select({ value, defaultValue, onChange, children, className = ""
         aria-controls={open ? listId : undefined}
         onClick={() => (open ? setOpen(false) : openList())}
         onKeyDown={onKey}
-        className={`relative flex items-center bg-white pr-9 text-left ${className} ${open ? "border-gold" : ""}`}
+        className={`relative flex items-center bg-white pe-9 text-start ${className} ${open ? "border-gold" : ""}`}
       >
         <span className="truncate">{selected?.label ?? ""}</span>
         <ChevronDown
           size={16}
-          className={`absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`absolute inset-e-3 top-1/2 -translate-y-1/2 text-neutral-500 transition-transform ${open ? "rotate-180" : ""}`}
         />
       </button>
       {name && <input ref={hiddenRef} type="hidden" name={name} value={current} readOnly />}

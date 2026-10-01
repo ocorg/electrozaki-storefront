@@ -1,8 +1,10 @@
 import { createElement } from "react";
 import { SHOP, SITE_URL, WHATSAPP_URL, absoluteUrl } from "@/lib/site";
+import { LOCALE_META, localePath, type Locale } from "@/lib/i18n/config";
 
 // schema.org structured data (Google rich results): the store itself on
-// every page, breadcrumbs on catalogue pages, FAQ on repair topics.
+// every page, breadcrumbs on catalogue pages, FAQ on repair topics. Each
+// carries the page's language, and its URLs point at that language.
 
 type Json = Record<string, unknown>;
 
@@ -14,13 +16,14 @@ export function JsonLd({ data }: { data: Json | Json[] }) {
   });
 }
 
-export function storeJsonLd(): Json {
+export function storeJsonLd(locale: Locale): Json {
   return {
     "@context": "https://schema.org",
     "@type": "MobilePhoneStore",
     "@id": `${SITE_URL}/#store`,
     name: SHOP.name,
-    url: SITE_URL,
+    url: absoluteUrl(localePath(locale, "/")),
+    inLanguage: LOCALE_META[locale].htmlLang,
     logo: absoluteUrl("/logo-mark.png"),
     image: absoluteUrl("/opengraph-image"),
     telephone: `+${SHOP.whatsappNumber}`,
@@ -36,7 +39,8 @@ export function storeJsonLd(): Json {
   };
 }
 
-export function breadcrumbJsonLd(items: { name: string; path: string }[]): Json {
+/** Breadcrumbs; `path`s are unprefixed ("/collections/x") and get the page's language. */
+export function breadcrumbJsonLd(locale: Locale, items: { name: string; path: string }[]): Json {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -44,15 +48,16 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]): Json 
       "@type": "ListItem",
       position: i + 1,
       name: it.name,
-      item: absoluteUrl(it.path),
+      item: absoluteUrl(localePath(locale, it.path)),
     })),
   };
 }
 
-export function faqJsonLd(entries: { question: string; answer: string }[]): Json {
+export function faqJsonLd(locale: Locale, entries: { question: string; answer: string }[]): Json {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    inLanguage: LOCALE_META[locale].htmlLang,
     mainEntity: entries.map((e) => ({
       "@type": "Question",
       name: e.question,

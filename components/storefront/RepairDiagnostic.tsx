@@ -1,15 +1,18 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { CheckCircle2 } from "lucide-react";
-import { submitRepairRequest } from "@/app/(storefront)/reparation/actions";
+import { submitRepairRequest } from "@/app/[lang]/(storefront)/reparation/actions";
 import { Button } from "@/components/ui/Button";
 import { cardClasses } from "@/components/ui/Card";
 import { StepProgress } from "@/components/ui/StepProgress";
 import { PROBLEMS, REPAIR_KINDS, type RepairKind } from "@/lib/repair-problems";
 import { WHATSAPP_URL } from "@/lib/site";
+import { useT } from "@/components/i18n/I18nProvider";
+import { translateError } from "@/lib/i18n/labels";
 
+// "Autre" is the value the ERP receives; only its label is translated.
 const BRANDS = ["Apple", "Samsung", "Xiaomi", "Huawei", "Autre"];
 
 const inputClass =
@@ -18,6 +21,8 @@ const inputClass =
 // Four short steps, one decision each: what kind of help → which device →
 // what's wrong (or, for a consultation, the question and a time) → contact.
 export function RepairDiagnostic() {
+  const t = useT();
+  const d = t.diagnostic;
   const [step, setStep] = useState(0);
   const [kind, setKind] = useState<RepairKind | null>(null);
   const [deviceBrand, setDeviceBrand] = useState("");
@@ -60,7 +65,7 @@ export function RepairDiagnostic() {
     });
     setSubmitting(false);
     if (!result.ok) {
-      setError(result.error);
+      setError(translateError(t, result.error));
       return;
     }
     setDone(result.ref);
@@ -70,29 +75,26 @@ export function RepairDiagnostic() {
     return (
       <div className={cardClasses("p-6 text-center")}>
         <CheckCircle2 size={28} className="mx-auto text-green-600" />
-        <p className="mt-2 text-lg font-bold">Demande envoyée</p>
+        <p className="mt-2 text-lg font-bold">{d.sent}</p>
         <div className="mx-auto mt-4 max-w-xs rounded-xl border border-gold/50 bg-gold/5 p-4">
-          <p className="text-xs uppercase tracking-wide text-neutral-500">Votre numéro de demande</p>
-          <p className="mt-1 select-all font-mono text-2xl font-bold tracking-wider">{done}</p>
-          <p className="mt-1 text-xs text-neutral-500">Notez-le : avec votre téléphone, il permet de suivre votre demande.</p>
+          <p className="text-xs uppercase tracking-wide text-neutral-500">{d.yourRef}</p>
+          <p dir="ltr" className="mt-1 select-all font-mono text-2xl font-bold tracking-wider">{done}</p>
+          <p className="mt-1 text-xs text-neutral-500">{d.noteIt}</p>
         </div>
         <p className="mt-4 text-sm text-neutral-600">
-          {isConsult
-            ? "Nous vous contactons pour fixer l'heure de la consultation. "
-            : "Nous vous répondons rapidement avec une estimation. "}
-          Pour une réponse immédiate, écrivez-nous sur{" "}
+          {isConsult ? d.consultNext : d.repairNext} {d.immediateBefore}{" "}
           <a
             href={WHATSAPP_URL}
             className="font-medium text-neutral-900 underline decoration-gold decoration-2 underline-offset-2"
           >
             WhatsApp
           </a>
-          . Suivez votre demande, puis votre réparation, sur{" "}
+          {d.trackBefore}{" "}
           <Link
             href={`/reparation/suivi?ref=${encodeURIComponent(done)}`}
             className="font-medium underline decoration-gold decoration-2 underline-offset-2"
           >
-            la page de suivi
+            {d.trackLink}
           </Link>
           .
         </p>
@@ -105,20 +107,20 @@ export function RepairDiagnostic() {
     return (
       <div className={cardClasses("p-6")}>
         <StepProgress step={1} total={4} />
-        <p className="mb-4 font-medium">De quoi avez-vous besoin ?</p>
+        <p className="mb-4 font-medium">{d.needQ}</p>
         <div className="grid gap-3 sm:grid-cols-3">
           {REPAIR_KINDS.map((k) => (
             <button
               key={k.kind}
               type="button"
               onClick={() => chooseKind(k.kind)}
-              className={`rounded-xl border bg-white p-4 text-left shadow-sm transition-colors hover:border-gold ${
+              className={`rounded-xl border bg-white p-4 text-start shadow-sm transition-colors hover:border-gold ${
                 kind === k.kind ? "border-gold bg-gold/5" : "border-neutral-300"
               }`}
             >
               <k.icon size={22} className="text-gold-deep" />
-              <p className="mt-2 text-sm font-semibold">{k.label}</p>
-              <p className="mt-1 text-xs text-neutral-500">{k.description}</p>
+              <p className="mt-2 text-sm font-semibold">{t.repairKinds[k.kind].label}</p>
+              <p className="mt-1 text-xs text-neutral-500">{t.repairKinds[k.kind].description}</p>
             </button>
           ))}
         </div>
@@ -132,7 +134,7 @@ export function RepairDiagnostic() {
       <div className={cardClasses("p-6")}>
         <StepProgress step={2} total={4} />
         <p className="mb-4 font-medium">
-          Quel est votre appareil ?{isConsult && <span className="text-sm font-normal text-neutral-500"> (facultatif)</span>}
+          {d.deviceQ}{isConsult && <span className="text-sm font-normal text-neutral-500"> {d.optional}</span>}
         </p>
         <div className="grid gap-2 sm:grid-cols-3">
           {BRANDS.map((b) => (
@@ -143,14 +145,14 @@ export function RepairDiagnostic() {
               onClick={() => setDeviceBrand(b)}
               className={deviceBrand === b ? "" : "hover:bg-gold/5"}
             >
-              {b}
+              {b === "Autre" ? d.otherBrand : b}
             </Button>
           ))}
         </div>
         {deviceBrand && (
           <input
             type="text"
-            placeholder="Modèle (ex : iPhone 12, Galaxy A32…)"
+            placeholder={d.modelPlaceholder}
             value={deviceModel}
             onChange={(e) => setDeviceModel(e.target.value)}
             maxLength={80}
@@ -159,7 +161,7 @@ export function RepairDiagnostic() {
         )}
         <div className="mt-4 flex gap-2">
           <Button type="button" variant="outline" onClick={() => setStep(0)} className="flex-1">
-            Retour
+            {d.back}
           </Button>
           <Button
             type="button"
@@ -167,7 +169,7 @@ export function RepairDiagnostic() {
             onClick={() => setStep(2)}
             className="flex-1"
           >
-            Continuer
+            {d.next}
           </Button>
         </div>
       </div>
@@ -181,9 +183,9 @@ export function RepairDiagnostic() {
         <StepProgress step={3} total={4} />
         {isConsult ? (
           <div className="space-y-4">
-            <p className="font-medium">Votre question</p>
+            <p className="font-medium">{d.yourQuestion}</p>
             <textarea
-              placeholder="Décrivez le problème ou la question (ex : mon téléphone chauffe, quel modèle choisir…)"
+              placeholder={d.questionPlaceholder}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={4}
@@ -192,20 +194,19 @@ export function RepairDiagnostic() {
             />
             <input
               type="text"
-              placeholder="Quand vous appeler ? (ex : demain après 18h)"
+              placeholder={d.slotPlaceholder}
               value={preferredSlot}
               onChange={(e) => setPreferredSlot(e.target.value)}
               maxLength={120}
               className={inputClass}
             />
             <p className="rounded-lg bg-neutral-50 px-3 py-2 text-xs text-neutral-600">
-              Consultation par WhatsApp (appel ou vidéo). Les conseils simples sont gratuits ; si le problème
-              demande une intervention, nous vous annonçons le tarif avant de commencer.
+              {d.consultNote}
             </p>
           </div>
         ) : (
           <>
-            <p className="mb-4 font-medium">Quel est le problème ? (plusieurs choix possibles)</p>
+            <p className="mb-4 font-medium">{d.problemQ}</p>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               {PROBLEMS[kind].map((p) => {
                 const isSelected = problemAreas.includes(p.key);
@@ -219,22 +220,21 @@ export function RepairDiagnostic() {
                     }`}
                   >
                     <p.icon size={22} className={`mx-auto ${isSelected ? "text-gold-deep" : "text-neutral-600"}`} />
-                    <p className="mt-1.5 text-xs font-medium">{p.label}</p>
+                    <p className="mt-1.5 text-xs font-medium">{t.repairProblems[p.key] ?? p.key}</p>
                   </button>
                 );
               })}
             </div>
             {kind === "SOFTWARE" && problemAreas.includes("compte_config") && (
               <p className="mt-3 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-900">
-                Pour un compte Google / Apple oublié, apportez une preuve que le téléphone vous appartient (facture ou
-                boîte avec l&apos;IMEI). Nous ne débloquons jamais un appareil sans cette preuve.
+                {d.accountNote}
               </p>
             )}
           </>
         )}
         <div className="mt-4 flex gap-2">
           <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1">
-            Retour
+            {d.back}
           </Button>
           <Button
             type="button"
@@ -242,7 +242,7 @@ export function RepairDiagnostic() {
             onClick={() => setStep(3)}
             className="flex-1"
           >
-            Continuer
+            {d.next}
           </Button>
         </div>
       </div>
@@ -253,11 +253,11 @@ export function RepairDiagnostic() {
   return (
     <form onSubmit={handleSubmit} className={cardClasses("space-y-4 p-6")}>
       <StepProgress step={4} total={4} />
-      <p className="mb-2 font-medium">Vos coordonnées</p>
+      <p className="mb-2 font-medium">{d.contactQ}</p>
       <input
         type="text"
         required
-        placeholder="Nom complet"
+        placeholder={d.fullName}
         value={customerName}
         onChange={(e) => setCustomerName(e.target.value)}
         maxLength={120}
@@ -266,14 +266,15 @@ export function RepairDiagnostic() {
       <input
         type="tel"
         required
-        placeholder="Numéro de téléphone (ex : 06XXXXXXXX)"
+        placeholder={d.phone}
+        dir="ltr"
         value={customerPhone}
         onChange={(e) => setCustomerPhone(e.target.value)}
         className={inputClass}
       />
       {!isConsult && (
         <textarea
-          placeholder="Détail supplémentaire (facultatif)"
+          placeholder={d.extra}
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={3}
@@ -284,10 +285,10 @@ export function RepairDiagnostic() {
       {error && <p className="text-sm text-red-600">{error}</p>}
       <div className="flex gap-2">
         <Button type="button" variant="outline" onClick={() => setStep(2)} className="flex-1">
-          Retour
+          {d.back}
         </Button>
         <Button type="submit" variant="accent" disabled={submitting} className="flex-1">
-          {submitting ? "Envoi…" : isConsult ? "Demander la consultation" : "Demander une évaluation"}
+          {submitting ? d.sending : isConsult ? d.askConsult : d.askEstimate}
         </Button>
       </div>
     </form>

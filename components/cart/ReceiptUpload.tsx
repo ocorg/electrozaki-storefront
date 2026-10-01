@@ -2,8 +2,10 @@
 
 import { useState, useRef } from "react";
 import { CheckCircle2, Upload } from "lucide-react";
-import { uploadReceipt } from "@/app/(storefront)/cart/actions";
+import { uploadReceipt } from "@/app/[lang]/(storefront)/cart/actions";
 import { compressImage } from "@/lib/compress-image";
+import { useT } from "@/components/i18n/I18nProvider";
+import { translateError } from "@/lib/i18n/labels";
 
 // The private object key plus the server's signature over it — the order
 // action only accepts a receipt it can prove this server stored.
@@ -14,6 +16,8 @@ type Props = {
 };
 
 export function ReceiptUpload({ onUploadedAction }: Props) {
+  const t = useT();
+  const r = t.receipt;
   const [status, setStatus] = useState<"idle" | "uploading" | "done" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -31,12 +35,12 @@ export function ReceiptUpload({ onUploadedAction }: Props) {
       formData.set("receipt", await compressImage(file));
       result = await uploadReceipt(formData);
     } catch {
-      result = { ok: false, error: "L'envoi a échoué. Réessayez avec une photo plus légère ou une capture d'écran du reçu." };
+      result = { ok: false, error: r.failed };
     }
 
     if (!result.ok) {
       setStatus("error");
-      setError(result.error);
+      setError(translateError(t, result.error));
       return;
     }
 
@@ -65,18 +69,18 @@ export function ReceiptUpload({ onUploadedAction }: Props) {
         {status === "done" ? (
           <>
             <CheckCircle2 size={30} className="text-green-600" />
-            <p className="mt-2 text-sm font-medium text-green-700">Reçu envoyé avec succès</p>
-            <p className="mt-1 text-xs text-neutral-500">Appuyez pour remplacer le fichier</p>
+            <p className="mt-2 text-sm font-medium text-green-700">{r.done}</p>
+            <p className="mt-1 text-xs text-neutral-500">{r.replace}</p>
           </>
         ) : status === "uploading" ? (
-          <p className="text-sm text-neutral-500">Envoi en cours...</p>
+          <p className="text-sm text-neutral-500">{r.uploading}</p>
         ) : (
           <>
             <Upload size={30} className="text-neutral-400" />
             <p className="mt-2 text-sm font-medium">
-              Déposez votre reçu : photo, capture d&apos;écran ou PDF du virement
+              {r.drop}
             </p>
-            <p className="mt-1 text-xs text-neutral-500">JPG, PNG ou PDF — 5 Mo maximum</p>
+            <p className="mt-1 text-xs text-neutral-500">{r.formats}</p>
           </>
         )}
       </label>

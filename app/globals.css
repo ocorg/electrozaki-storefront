@@ -41,8 +41,11 @@
   --color-neutral-900: #1b1916;
   --color-neutral-950: #0f0e0c;
 
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-bricolage), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  /* Latin brand fonts first, Arabic after: the Latin fonts have no Arabic
+     letters, so Arabic text falls through to the Arabic font while Latin
+     words (iPhone, Samsung…) keep the brand font, even in an Arabic line. */
+  --font-sans: var(--font-manrope), var(--font-plex-arabic), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-readex), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
@@ -244,6 +247,21 @@ body {
   50%, 100% { transform: translateY(420px); opacity: 0; }
 }
 
+/* ── Arabic ────────────────────────────────────────────────────────────
+   Arabic letters join to their neighbours: any letter-spacing pulls words
+   apart into broken, disconnected glyphs. The design tracks labels and
+   headings a lot, so Arabic pages reset it everywhere (Darija is written
+   in Latin letters and keeps it). */
+html[lang^="ar"] *,
+html[lang^="ar"] *::before,
+html[lang^="ar"] *::after {
+  letter-spacing: normal !important;
+}
+/* Arabic script needs more line height than the tight Latin headings. */
+html[lang^="ar"] .font-display {
+  line-height: 1.25;
+}
+
 /* ── Catalogue filter sheet ──────────────────────────────────────────────
    A native <dialog> (focus trap, Esc, inert page for free): a bottom sheet
    on phones, a drawer from the right from md up. Slides in and out with
@@ -306,6 +324,21 @@ body {
   @starting-style {
     .sheet[open] {
       transform: translateX(100%);
+    }
+  }
+}
+/* Right-to-left (Arabic): the drawer comes in from the reading side. */
+@media (min-width: 768px) {
+  [dir="rtl"] .sheet {
+    inset: 0 auto 0 0;
+    border-radius: 0 1.75rem 1.75rem 0;
+  }
+  [dir="rtl"] .sheet:not([open]) {
+    transform: translateX(-100%);
+  }
+  @starting-style {
+    [dir="rtl"] .sheet[open] {
+      transform: translateX(-100%);
     }
   }
 }

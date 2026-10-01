@@ -1,16 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, ShoppingBag, Truck, X } from "lucide-react";
+import Link from "@/components/i18n/Link";
+import { useT } from "@/components/i18n/I18nProvider";
+import { LanguageChips, LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { useCart } from "@/components/cart/CartContext";
 import { SearchBox } from "@/components/storefront/SearchBox";
 import { LiveClock } from "@/components/storefront/LiveClock";
 import { DeviceArt } from "@/components/storefront/DeviceArt";
 import { artFor } from "@/lib/category-art";
 import { formatMAD } from "@/lib/format";
+import { splitLocale } from "@/lib/i18n/config";
+import { categoryName } from "@/lib/i18n/labels";
 import type { AisleStat } from "@/lib/db/storefront";
 
 type Category = { id: string; name: string; slug: string };
@@ -37,15 +41,18 @@ function StatusIcons() {
 }
 
 const navLink = (active: boolean) =>
-  `relative inline-flex min-h-11 items-center px-1 text-[15px] font-semibold transition-colors after:absolute after:inset-x-1 after:bottom-2 after:h-[2px] after:origin-left after:scale-x-0 after:rounded-full after:bg-gold after:transition-transform after:duration-300 hover:text-ink hover:after:scale-x-100 ${
+  `relative inline-flex min-h-11 items-center px-1 text-[15px] font-semibold transition-colors after:absolute after:inset-x-1 after:bottom-2 after:h-[2px] after:origin-left rtl:after:origin-right after:scale-x-0 after:rounded-full after:bg-gold after:transition-transform after:duration-300 hover:text-ink hover:after:scale-x-100 ${
     active ? "text-ink after:scale-x-100" : "text-neutral-700"
   }`;
 
 export function Header({ categories, aisles }: { categories: Category[]; aisles: AisleStat[] }) {
+  const t = useT();
   const { totalItems } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  // Active-link checks compare paths without the /fr, /ar… prefix.
+  const { path } = splitLocale(pathname);
 
   // Close the mobile menu when the route changes (tapping a link inside it).
   const [lastPath, setLastPath] = useState(pathname);
@@ -62,7 +69,8 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
 
   const phones = categories.find((c) => c.slug === "telephones");
   const groups = categories.filter((c) => c.slug !== "telephones");
-  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+  const name = (c: { slug: string; name: string }) => categoryName(t, c.slug, c.name);
 
   return (
     <>
@@ -71,12 +79,13 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
         <div className="mx-auto flex h-8 max-w-7xl items-center justify-between gap-4 px-4">
           <span className="flex items-center gap-2">
             <LiveClock className="font-semibold" />
-            <span className="hidden text-neutral-300 sm:inline">Meknès</span>
+            <span className="hidden text-neutral-300 sm:inline">{t.common.city}</span>
           </span>
           <span className="flex min-w-0 items-center gap-1.5 text-neutral-200">
             <Truck size={13} className="flex-none text-gold" aria-hidden />
             <span className="truncate">
-              Livraison partout au Maroc<span className="hidden sm:inline"> · Paiement à la livraison</span>
+              {t.common.deliveryEverywhere}
+              <span className="hidden sm:inline"> · {t.common.cashOnDelivery}</span>
             </span>
           </span>
           <StatusIcons />
@@ -91,20 +100,21 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 lg:gap-8">
-          <Link href="/" className="flex flex-none items-center gap-2.5" aria-label="Electro Zaki — accueil">
+          <Link href="/" className="flex flex-none items-center gap-2.5" aria-label={t.common.homeAria}>
             {/* The mark's Z is white: it sits on an ink squircle. */}
             <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[30%] bg-ink p-1.5 shadow-[0_6px_14px_-6px_rgb(17_16_19/0.7)]">
               <Image src="/logo-mark.png" alt="" width={28} height={28} priority className="h-full w-full object-contain" />
             </span>
-            <span className="hidden font-display text-[1.15rem] font-extrabold leading-none tracking-tight text-ink sm:inline">
+            {/* The wordmark is a logo: always Latin, always left-to-right. */}
+            <span dir="ltr" className="hidden font-display text-[1.15rem] font-extrabold leading-none tracking-tight text-ink sm:inline">
               ELECTRO<span className="text-gold-deep"> ZAKI</span>
             </span>
           </Link>
 
-          <nav aria-label="Navigation principale" className="hidden items-center gap-5 md:flex">
+          <nav aria-label={t.common.mainNav} className="hidden items-center gap-5 md:flex">
             {phones && (
               <Link href={`/collections/${phones.slug}`} className={navLink(isActive(`/collections/${phones.slug}`))}>
-                {phones.name}
+                {name(phones)}
               </Link>
             )}
             {groups.map((g) => {
@@ -114,17 +124,17 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
               if (!children.length) {
                 return (
                   <Link key={g.id} href={`/collections/${g.slug}`} className={navLink(active)}>
-                    {g.name}
+                    {name(g)}
                   </Link>
                 );
               }
               return (
                 <div key={g.id} className="group/menu relative">
                   <Link href={`/collections/${g.slug}`} className={`${navLink(active)} gap-1`}>
-                    {g.name}
+                    {name(g)}
                     <ChevronDown size={15} className="transition-transform duration-300 group-hover/menu:rotate-180" aria-hidden />
                   </Link>
-                  {/* Hover / keyboard-focus mega menu: every aisle with its drawing and count. */}
+                  {/* Hover / keyboard-focus mega menu: every aisle with its drawing and "from" price. */}
                   <div className="invisible absolute left-1/2 top-full z-50 w-[560px] -translate-x-1/2 translate-y-2 pt-2 opacity-0 transition-all duration-300 ease-out-quint group-focus-within/menu:visible group-focus-within/menu:translate-y-0 group-focus-within/menu:opacity-100 group-hover/menu:visible group-hover/menu:translate-y-0 group-hover/menu:opacity-100">
                     <div className="grid grid-cols-2 gap-1 rounded-3xl border border-ink/10 bg-white p-2 shadow-[0_30px_60px_-25px_rgb(17_16_19/0.45)]">
                       {children.map((c) => (
@@ -137,10 +147,10 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
                             <DeviceArt kind={artFor(c.slug, c.name)} className="h-8 w-8 text-ink" />
                           </span>
                           <span className="min-w-0">
-                            <span className="block text-sm font-semibold text-ink">{c.name}</span>
+                            <span className="block text-sm font-semibold text-ink">{name(c)}</span>
                             {c.fromPrice !== null && (
                               <span className="block text-xs text-neutral-500">
-                                dès <span className="readout font-semibold text-neutral-700">{formatMAD(c.fromPrice)}</span>
+                                {t.common.from} <span className="readout font-semibold text-neutral-700">{formatMAD(c.fromPrice)}</span>
                               </span>
                             )}
                           </span>
@@ -152,26 +162,30 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
               );
             })}
             <Link href="/reparation" className={navLink(isActive("/reparation"))}>
-              Réparation
+              {t.common.repair}
             </Link>
             <Link href="/contact" className={navLink(isActive("/contact"))}>
-              Contact
+              {t.common.contact}
             </Link>
           </nav>
 
-          <div className="ml-auto flex items-center gap-2 sm:gap-3">
-            <SearchBox className="hidden w-60 sm:block lg:w-72" placeholder="iPhone 13, coque, chargeur…" />
+          <div className="ms-auto flex items-center gap-1 sm:gap-2">
+            <SearchBox className="hidden w-56 sm:block lg:w-64" placeholder={t.common.searchPlaceholder} />
+
+            <div className="hidden md:block">
+              <LanguageSwitcher />
+            </div>
 
             <Link
               href="/cart"
-              aria-label={totalItems > 0 ? `Panier, ${totalItems} article${totalItems > 1 ? "s" : ""}` : "Panier"}
+              aria-label={t.common.cartAria(totalItems)}
               className="relative flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors hover:bg-ink/5"
             >
               <ShoppingBag size={22} strokeWidth={2} />
               {totalItems > 0 && (
                 <span
                   key={totalItems}
-                  className="absolute right-0.5 top-0.5 inline-flex h-5 min-w-5 animate-[notif-in_0.5s_var(--ease-spring)] items-center justify-center rounded-full bg-gold px-1 text-[11px] font-bold text-gold-foreground ring-2 ring-paper"
+                  className="absolute inset-e-0.5 top-0.5 inline-flex h-5 min-w-5 animate-[notif-in_0.5s_var(--ease-spring)] items-center justify-center rounded-full bg-gold px-1 text-[11px] font-bold text-gold-foreground ring-2 ring-paper"
                 >
                   {totalItems}
                 </span>
@@ -182,7 +196,7 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
               type="button"
               className="flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-ink/5 md:hidden"
               onClick={() => setMenuOpen((v) => !v)}
-              aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-label={menuOpen ? t.common.closeMenu : t.common.openMenu}
               aria-expanded={menuOpen}
               aria-controls="menu-mobile"
             >
@@ -193,34 +207,36 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
 
         {/* Phones: search always visible under the logo row. */}
         <div className="px-4 pb-3 sm:hidden">
-          <SearchBox placeholder="iPhone 13, coque, chargeur…" />
+          <SearchBox placeholder={t.common.searchPlaceholder} />
         </div>
 
-        {/* Mobile menu: every aisle as an app-icon grid. */}
+        {/* Mobile menu: every aisle as an app-icon grid, then the language. */}
         {menuOpen && (
           <nav
             id="menu-mobile"
-            aria-label="Menu"
+            aria-label={t.common.menu}
             className="animate-in max-h-[75vh] overflow-y-auto border-t border-ink/10 bg-paper px-4 pb-6 pt-4 md:hidden"
           >
-            <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-500">Rayons</p>
+            <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-500">{t.common.aisles}</p>
             <div className="mt-3 grid grid-cols-4 gap-x-2 gap-y-4">
               {aisles.map((a) => (
                 <Link key={a.slug} href={`/collections/${a.slug}`} className="flex flex-col items-center gap-1.5 text-center">
                   <span className="flex h-14 w-14 items-center justify-center rounded-[30%] bg-white shadow-[0_6px_16px_-10px_rgb(17_16_19/0.5)] ring-1 ring-ink/5">
                     <DeviceArt kind={artFor(a.slug, a.name)} className="h-9 w-9 text-ink" />
                   </span>
-                  <span className="line-clamp-2 text-[11px] font-semibold leading-tight text-neutral-800">{a.name}</span>
+                  <span className="line-clamp-2 text-[11px] font-semibold leading-tight text-neutral-800">{name(a)}</span>
                 </Link>
               ))}
             </div>
             <div className="mt-6 grid grid-cols-2 gap-2">
-              {[
-                ["/reparation", "Réparation"],
-                ["/reparation/suivi", "Suivre ma réparation"],
-                ["/contact", "Contact"],
-                ["/cart", "Mon panier"],
-              ].map(([href, label]) => (
+              {(
+                [
+                  ["/reparation", t.common.repair],
+                  ["/reparation/suivi", t.common.trackRepair],
+                  ["/contact", t.common.contact],
+                  ["/cart", t.common.myCart],
+                ] as const
+              ).map(([href, label]) => (
                 <Link
                   key={href}
                   href={href}
@@ -229,6 +245,9 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
                   {label}
                 </Link>
               ))}
+            </div>
+            <div className="mt-6">
+              <LanguageChips />
             </div>
           </nav>
         )}

@@ -58,17 +58,4 @@ export function artFor(categorySlug: string | null | undefined, productName?: st
   return "bolt";
 }
 
-// Short, human line under each aisle tile on the home page.
-export const AISLE_BLURB: Record<string, string> = {
-  telephones: "iPhone, Samsung, Xiaomi — neufs et d'occasion",
-  pochettes: "Coques pour chaque modèle",
-  incassables: "Verres trempés, protection d'écran",
-  chargeurs: "Charge rapide, toutes prises",
-  "tete-de-chargeur": "Adaptateurs secteur USB-C et USB",
-  cables: "Lightning, USB-C, micro-USB",
-  ecouteurs: "Filaires et sans fil",
-  airpods: "Écouteurs sans fil",
-  powerbank: "Batteries externes 10K à 30K",
-  band: "Montres et bracelets",
-  "sticky-pad": "Supports adhésifs",
-};
+// (Each aisle's one-line description is text: see t.aisleBlurb in the dictionaries.)
