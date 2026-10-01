@@ -3,12 +3,15 @@
 import { useMemo, useSyncExternalStore } from "react";
 import { useLocale } from "@/components/i18n/I18nProvider";
 import { LOCALE_META } from "@/lib/i18n/config";
+import { STORE_TIME_ZONE } from "@/lib/time";
 
 // Meknès time, like a phone's status bar. Empty on the server and until
 // hydration (the server's clock and timezone aren't the visitor's), then
 // ticks every 15 s. Day and month names follow the site's language; digits
 // stay Western (0-9), as everywhere else on the site.
-const TZ = "Africa/Casablanca";
+// Store time (lib/time.ts), not "Africa/Casablanca": browsers still put that
+// zone at GMT+1, an hour ahead of Morocco since September 2026.
+const TZ = STORE_TIME_ZONE;
 
 function subscribe(onChange: () => void) {
   const id = setInterval(onChange, 15_000);
