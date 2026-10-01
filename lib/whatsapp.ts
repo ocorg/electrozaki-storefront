@@ -29,7 +29,7 @@ export function buildWhatsAppOrderLink(
       (l) =>
         `- ${l.quantity}x ${l.productName}${
           l.variantName ? ` (${l.variantName})` : ""
-        } — ${l.price} MAD`
+        } - ${l.price} MAD`
     )
     .join("\n");
 
@@ -39,7 +39,7 @@ export function buildWhatsAppOrderLink(
   const total = Math.max(0, subtotal - discountAmount) + deliveryFee;
 
   const messageParts = [
-    `Bonjour, je souhaite commander (${customerName})${context?.reference ? ` — réf. ${context.reference}` : ""} :`,
+    `Bonjour, je souhaite commander (${customerName})${context?.reference ? ` - réf. ${context.reference}` : ""} :`,
     itemLines,
   ];
 
@@ -54,7 +54,7 @@ export function buildWhatsAppOrderLink(
 
   if (context?.deliveryAddress) {
     messageParts.push(
-      `Adresse de livraison : ${context.delivery ? `${context.delivery.city} — ` : ""}${context.deliveryAddress}`
+      `Adresse de livraison : ${context.delivery ? `${context.delivery.city} - ` : ""}${context.deliveryAddress}`
     );
   }
   if (context?.delivery?.unavailable) {

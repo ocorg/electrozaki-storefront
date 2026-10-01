@@ -6,14 +6,14 @@ import type { Dictionary } from "./fr";
 // (téléphone, batterie, livraison…).
 export const darija: Dictionary = {
   meta: {
-    title: "Electro Zaki — Tilifounat w accessoires f Mknas",
+    title: "Electro Zaki | Tilifounat w accessoires f Mknas",
     description:
       "Tilifounat jdad w mosta3mlin (iPhone, Samsung, Xiaomi), coques, chargeurs, cables, écouteurs w tasli7 f Mknas. L7ala w l batterie dyal kol téléphone bayna, w livraison l ga3 lmghrib.",
   },
 
   common: {
     skipToContent: "Doz l contenu",
-    homeAria: "Electro Zaki — l'accueil",
+    homeAria: "Electro Zaki | l'accueil",
     mainNav: "Menu principal",
     menu: "Menu",
     openMenu: "7el l menu",
@@ -75,7 +75,7 @@ export const darija: Dictionary = {
   },
 
   aisleBlurb: {
-    telephones: "iPhone, Samsung, Xiaomi — jdad w mosta3mlin",
+    telephones: "iPhone, Samsung, Xiaomi - jdad w mosta3mlin",
     pochettes: "Coques l kol modèle",
     incassables: "Verre trempé, 7imaya l l'écran",
     chargeurs: "Charge rapide, l kol prise",
@@ -121,7 +121,7 @@ export const darija: Dictionary = {
     budgetQ: "Ch7al l budget dyalek?",
     usageQ: "Fach ghadi tsta3mlo ktar?",
     brandQ: "3ndek chi marque f balek?",
-    budgets: ["9el mn 2 000 DH", "2 000 – 4 000 DH", "4 000 – 7 000 DH", "Ktar mn 7 000 DH"],
+    budgets: ["9el mn 2 000 DH", "2 000 - 4 000 DH", "4 000 - 7 000 DH", "Ktar mn 7 000 DH"],
     usages: ["Appels w SMS", "Réseaux sociaux w tsawer", "Jeux w performance", "Khedma w multitâche"],
     anyBrand: "Machi mouchkil",
     done: "Choukran! Hado huma l i9tira7at dyalna.",
@@ -132,7 +132,7 @@ export const darija: Dictionary = {
   hero: {
     eyebrow: "Tilifounat · Accessoires · Tasli7",
     title: ["Tilifounat", "w accessoires", "f Mknas."],
-    lead: "iPhone, Samsung, Xiaomi, jdad w mosta3mlin — l7ala w l batterie dyal kol appareil bayna 9bel ma tchri. Coques, chargeurs, cables, écouteurs, w tasli7 f l7in.",
+    lead: "iPhone, Samsung, Xiaomi, jdad w mosta3mlin - l7ala w l batterie dyal kol appareil bayna 9bel ma tchri. Coques, chargeurs, cables, écouteurs, w tasli7 f l7in.",
     seePhones: "Chouf tilifounat",
     lockCaption: "Mknas · Electro Zaki",
     inStock: "kayn",
@@ -179,7 +179,7 @@ export const darija: Dictionary = {
     accessories: {
       eyebrow: "Accessoires",
       title: "Prix sghar, service kbir.",
-      intro: "Coques, verre trempé, chargeurs w cables l kol modèle — kaynin f Mknas.",
+      intro: "Coques, verre trempé, chargeurs w cables l kol modèle - kaynin f Mknas.",
       all: "Ga3 l accessoires",
     },
     finder: {
@@ -211,9 +211,9 @@ export const darija: Dictionary = {
     metaPhonesTitle: "Tilifounat jdad w mosta3mlin f Mknas",
     metaPhonesDescription:
       "iPhone, Samsung, Xiaomi jdad w mosta3mlin f Mknas: l7ala, l batterie w l pièces bayna l kol téléphone. Livraison l ga3 lmghrib.",
-    metaAisleTitle: (name: string) => `${name} — accessoires dyal téléphone f Mknas`,
+    metaAisleTitle: (name: string) => `${name} - accessoires dyal téléphone f Mknas`,
     metaAisleDescription: (name: string, blurb: string | null) =>
-      `${name} l téléphone dyalek 3nd Electro Zaki, Mknas. ${blurb ?? "Kaynin"} — livraison l ga3 lmghrib.`,
+      `${name} l téléphone dyalek 3nd Electro Zaki, Mknas. ${blurb ?? "Kaynin"} - livraison l ga3 lmghrib.`,
     seeAll: "Chouf kolchi",
     emptyFilteredTitle: "Walou b had les filtres.",
     emptyTitle: "7wayej jdad jayin qrib.",
@@ -273,7 +273,7 @@ export const darija: Dictionary = {
     sameAisle: "F nfs rayon.",
     alsoSee: "Chouf 7ta hado.",
     wholeAisle: (name: string) => `Ga3 rayon ${name}`,
-    metaTitle: (name: string, condition: string | null) => (condition ? `${name} — ${condition}` : name),
+    metaTitle: (name: string, condition: string | null) => (condition ? `${name} - ${condition}` : name),
     metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
       `${name}${condition ? ` (${condition})` : ""} b ${price} 3nd Electro Zaki, Mknas.${
         used ? " L7ala w l batterie bayna l kol wa7ed." : ""
@@ -291,7 +291,7 @@ export const darija: Dictionary = {
     color: "Couleur",
     storage: "Stockage",
     chooseVersion: "Khtar version",
-    soldOutSuffix: " — mabqach",
+    soldOutSuffix: " - mabqach",
     quantity: "L'quantité",
     removeOne: "N9es wa7ed",
     addOne: "Zid wa7ed",
@@ -358,7 +358,7 @@ export const darija: Dictionary = {
   },
 
   repairPage: {
-    metaTitle: "Tasli7 dyal tilifounat f Mknas — l'écran, batterie, logiciel",
+    metaTitle: "Tasli7 dyal tilifounat f Mknas - l'écran, batterie, logiciel",
     metaDescription:
       "Tasli7 tilifounat f Mknas: l'écran, batterie, port de charge, machakil logiciel, rj3an dyal les données w consultation 3la b3d. Devis fabor, suivi f l'internet.",
     ogTitle: "Tasli7 dyal tilifounat f Mknas",
@@ -386,16 +386,16 @@ export const darija: Dictionary = {
     remote: "3la b3d",
     faq: "Les questions li kaytsawlo",
     questionTitle: "3ndek so2al 3la l'appareil dyalek?",
-    questionText: "Sifet lina tswira wla goul lina l mouchkil f WhatsApp — jawab dghya, bla iltizam.",
+    questionText: "Sifet lina tswira wla goul lina l mouchkil f WhatsApp - jawab dghya, bla iltizam.",
     waProblem: "Salam, 3ndi mouchkil f téléphone dyali:",
     chatWhatsapp: "Hder m3ana f WhatsApp",
   },
 
   repairTopic: {
-    metaTitle: (title: string) => `${title} — tasli7 f Mknas`,
+    metaTitle: (title: string) => `${title} - tasli7 f Mknas`,
     faqByBrand: "Les questions 3la 7sab l marque",
     notListedTitle: "L7ala dyalek ma kaynach f had les questions?",
-    notListedText: "Kol appareil w 7alto — tleb diagnostic fabor wla goul lina l mouchkil nichan f WhatsApp.",
+    notListedText: "Kol appareil w 7alto - tleb diagnostic fabor wla goul lina l mouchkil nichan f WhatsApp.",
     askDiagnostic: "Tleb diagnostic",
   },
 
@@ -440,7 +440,7 @@ export const darija: Dictionary = {
       pret: "Salat",
       recupere: "Tsddat",
     },
-    requestStep: "Demande wslat — ghadi ntsslo bik",
+    requestStep: "Demande wslat - ghadi ntsslo bik",
     confirmAccept: (amount: string) => `Confirmer: wach mwafe9 3la devis dyal ${amount}?`,
     confirmRefuse: "Confirmer: wach rafed devis? L'appareil ghadi yrje3 lik bla tasli7.",
     refPlaceholder: "Numéro dyal demande wla tasli7 (DEM-… wla REP-…)",
@@ -449,8 +449,8 @@ export const darija: Dictionary = {
     submit: "Tba3 tasli7 dyali",
     cancelled: "Had demande tlghat. Tassel bina ila 3ndek chi so2al.",
     quote: "Devis li 9tar7na:",
-    accepted: "Choukran, wafe9ti 3la devis — ghadi nbdaw tasli7.",
-    refused: "Rfedti devis — l'appareil ghadi yrje3 lik.",
+    accepted: "Choukran, wafe9ti 3la devis - ghadi nbdaw tasli7.",
+    refused: "Rfedti devis - l'appareil ghadi yrje3 lik.",
     accept: "Mwafe9",
     refuse: "Rafed",
     ready: "L'appareil dyalek wajed: dowz khodo mn l7anout Electro Zaki (Mknas) m3a l bon de dépôt.",
@@ -534,7 +534,7 @@ export const darija: Dictionary = {
   cartPage: {
     sentTitle: "Demande tsiftat",
     reference: (ref: string) => `Référence: ${ref}`,
-    finishOnWhatsapp: "Wrek lta7t bach tkmmel commande dyalek f WhatsApp — ghadi njawbok dghya.",
+    finishOnWhatsapp: "Wrek lta7t bach tkmmel commande dyalek f WhatsApp - ghadi njawbok dghya.",
     openWhatsapp: "7el WhatsApp",
     backHome: "Rje3 l l'accueil",
     emptyTitle: "Panier dyalek khawi",
@@ -571,7 +571,7 @@ export const darija: Dictionary = {
     whyAdvanceText: "Had l3arboun kaygetti masarif l livraison w kay7jez lik téléphone 7tal iwslek.",
     consent: "Mwafe9 belli les données dyali w l reçu dyal banque ytkhdmo b sirriya, 7sab l9anoun dyal CNDP.",
     codTitle: "Khlles mnin twslek",
-    codText: "Ta 3arboun ma khass f commande dyal accessoires — katkhlles mnin twslek.",
+    codText: "Ta 3arboun ma khass f commande dyal accessoires - katkhlles mnin twslek.",
     sending: "Kansifto…",
     confirm: "Confirmer commande dyali",
   },
@@ -591,13 +591,13 @@ export const darija: Dictionary = {
     change: "Beddel",
     cityLabel: "Lmdina wla lblad dyal livraison",
     cityPlaceholder: "Kteb lmdina dyalek (bhal: Fès, Agadir, Tiflet…)",
-    noCity: "Ma l9inach had lblad — jreb ktaba khra wla a9rab mdina.",
+    noCity: "Ma l9inach had lblad - jreb ktaba khra wla a9rab mdina.",
     notServed: "ma kaywslouhach",
     carrier: "Livraison m3a Ameex",
     days: "Iyyam dyal livraison",
     shipping: "Katmchi",
     afterCutoff: (h: number) => ` (commande wslat men b3d ${h}h00)`,
-    estimated: "— livraison t9riban nhar",
+    estimated: "- livraison t9riban nhar",
     waits: (city: string) =>
       `Ameex ma katwsel l ${city} ghir chi iyyam: l colis dyalek ghadi ytsenna f dépôt 7tal nhar li jay.`,
     indicative: "Wa9t t9ribi (24 l 30 sa3a men b3d ma yjiwha), bla ma n7esbo t2khir dyal transporteur.",
@@ -605,7 +605,7 @@ export const darija: Dictionary = {
     notDeliverableAfter:
       ". T9der tcommandi 3adi: ghadi ntsslo bik bach nl9aw 7al (mdina 9riba, point de retrait…). Wa9t l livraison ma n9droch ndmnouh.",
     checkPin: "Chouf wach l3alama f lblad dyalek (blasa t9ribiya). Ila la, khtar smiya khra mn la liste.",
-    noPin: "Had lblad mazal ma 7ttinahach f la carte — t2kked mn smiya li khtariti.",
+    noPin: "Had lblad mazal ma 7ttinahach f la carte - t2kked mn smiya li khtariti.",
     map: (label: string) => `Carte: ${label}`,
   },
 
@@ -615,7 +615,7 @@ export const darija: Dictionary = {
     replace: "Wrek bach tbeddel l fichier",
     uploading: "Kansifto…",
     drop: "7tt l reçu dyalek: tswira, capture d'écran wla PDF dyal virement",
-    formats: "JPG, PNG wla PDF — 5 Mo max",
+    formats: "JPG, PNG wla PDF - 5 Mo max",
   },
 
   offer: {
@@ -674,7 +674,7 @@ export const darija: Dictionary = {
     title: "Chouf wach kaymchi",
     choose: "Khtar téléphone dyalek",
     yes: "Kaymchi m3a téléphone dyalek",
-    unknownBefore: "Ma mt2kdinch wach kaymchi m3a had modèle — kteb lina f",
+    unknownBefore: "Ma mt2kdinch wach kaymchi m3a had modèle - kteb lina f",
     unknownAfter: "bach nchoufo.",
   },
 

@@ -30,7 +30,7 @@ export function DeliveryMap({ lat, lng, label, ariaLabel }: Props) {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(mapRef.current);
         L.circleMarker(MEKNES, { radius: 5, color: "#1a1a1a", weight: 2, fillOpacity: 0.6 })
-          .bindTooltip("Electro Zaki — Meknès")
+          .bindTooltip("Electro Zaki | Meknès")
           .addTo(mapRef.current);
       }
 

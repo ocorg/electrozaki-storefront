@@ -26,7 +26,7 @@ export function SectionHeading({
     <div className={`flex flex-wrap items-end justify-between gap-x-8 gap-y-4 ${className}`}>
       <div className="max-w-2xl">
         <p className={`font-mono text-xs font-semibold uppercase tracking-[0.18em] ${dark ? "text-gold" : "text-gold-deep"}`}>
-          {index && <span className="me-2">{index} —</span>}
+          {index && <span className="me-2">{index} -</span>}
           {eyebrow}
         </p>
         <h2

@@ -3,14 +3,14 @@ import type { Dictionary } from "./fr";
 // English. Prices stay in DH, the way they're written in Morocco.
 export const en: Dictionary = {
   meta: {
-    title: "Electro Zaki — Phones & accessories in Meknes",
+    title: "Electro Zaki | Phones & accessories in Meknes",
     description:
       "New and used phones (iPhone, Samsung, Xiaomi), cases, chargers, cables, earphones and repairs in Meknes. Condition and battery shown for every phone, delivery anywhere in Morocco.",
   },
 
   common: {
     skipToContent: "Skip to content",
-    homeAria: "Electro Zaki — home",
+    homeAria: "Electro Zaki | home",
     mainNav: "Main navigation",
     menu: "Menu",
     openMenu: "Open menu",
@@ -72,7 +72,7 @@ export const en: Dictionary = {
   },
 
   aisleBlurb: {
-    telephones: "iPhone, Samsung, Xiaomi — new and used",
+    telephones: "iPhone, Samsung, Xiaomi - new and used",
     pochettes: "Cases for every model",
     incassables: "Tempered glass, screen protection",
     chargeurs: "Fast charging, every plug",
@@ -118,7 +118,7 @@ export const en: Dictionary = {
     budgetQ: "What's your budget?",
     usageQ: "What will you mostly use it for?",
     brandQ: "A brand in mind?",
-    budgets: ["Under 2,000 DH", "2,000 – 4,000 DH", "4,000 – 7,000 DH", "Over 7,000 DH"],
+    budgets: ["Under 2,000 DH", "2,000 - 4,000 DH", "4,000 - 7,000 DH", "Over 7,000 DH"],
     usages: ["Calls & texts", "Social media & photos", "Gaming & performance", "Work & multitasking"],
     anyBrand: "No preference",
     done: "Thanks! Here are our picks.",
@@ -129,7 +129,7 @@ export const en: Dictionary = {
   hero: {
     eyebrow: "Phones · Accessories · Repairs",
     title: ["Phones", "& accessories", "in Meknes."],
-    lead: "iPhone, Samsung, Xiaomi, new and used — the condition and battery of every device shown before you buy. Cases, chargers, cables, earphones, and repairs on site.",
+    lead: "iPhone, Samsung, Xiaomi, new and used - the condition and battery of every device shown before you buy. Cases, chargers, cables, earphones, and repairs on site.",
     seePhones: "See the phones",
     lockCaption: "Meknes · Electro Zaki",
     inStock: "in stock",
@@ -176,7 +176,7 @@ export const en: Dictionary = {
     accessories: {
       eyebrow: "Accessories",
       title: "Small prices, big service.",
-      intro: "Cases, tempered glass, chargers and cables for every model — in stock in Meknes.",
+      intro: "Cases, tempered glass, chargers and cables for every model - in stock in Meknes.",
       all: "All accessories",
     },
     finder: {
@@ -208,9 +208,9 @@ export const en: Dictionary = {
     metaPhonesTitle: "New and used phones in Meknes",
     metaPhonesDescription:
       "New and used iPhone, Samsung, Xiaomi in Meknes: condition, battery and parts shown for every phone. Delivery anywhere in Morocco.",
-    metaAisleTitle: (name: string) => `${name} — phone accessories in Meknes`,
+    metaAisleTitle: (name: string) => `${name} - phone accessories in Meknes`,
     metaAisleDescription: (name: string, blurb: string | null) =>
-      `${name} for your phone at Electro Zaki, Meknes. ${blurb ?? "In stock"} — delivery anywhere in Morocco.`,
+      `${name} for your phone at Electro Zaki, Meknes. ${blurb ?? "In stock"} - delivery anywhere in Morocco.`,
     seeAll: "See all",
     emptyFilteredTitle: "Nothing for these filters.",
     emptyTitle: "New items coming soon.",
@@ -288,7 +288,7 @@ export const en: Dictionary = {
     color: "Colour",
     storage: "Storage",
     chooseVersion: "Choose a version",
-    soldOutSuffix: " — sold out",
+    soldOutSuffix: " - sold out",
     quantity: "Quantity",
     removeOne: "Remove one",
     addOne: "Add one",
@@ -355,7 +355,7 @@ export const en: Dictionary = {
   },
 
   repairPage: {
-    metaTitle: "Phone repair in Meknes — screen, battery, software",
+    metaTitle: "Phone repair in Meknes - screen, battery, software",
     metaDescription:
       "Phone repair in Meknes: screen, battery, charging port, software problems, data recovery and online consultation. Free quote, online tracking.",
     ogTitle: "Phone repair in Meknes",
@@ -384,16 +384,16 @@ export const en: Dictionary = {
     remote: "Remote",
     faq: "FAQ",
     questionTitle: "A question about your device?",
-    questionText: "Send us a photo or describe the problem on WhatsApp — quick answer, no commitment.",
+    questionText: "Send us a photo or describe the problem on WhatsApp - quick answer, no commitment.",
     waProblem: "Hello, I have a problem with my phone:",
     chatWhatsapp: "Chat on WhatsApp",
   },
 
   repairTopic: {
-    metaTitle: (title: string) => `${title} — repair in Meknes`,
+    metaTitle: (title: string) => `${title} - repair in Meknes`,
     faqByBrand: "FAQ by brand",
     notListedTitle: "Your problem isn't listed here?",
-    notListedText: "Every device is different — ask for a free diagnosis or describe the problem directly on WhatsApp.",
+    notListedText: "Every device is different - ask for a free diagnosis or describe the problem directly on WhatsApp.",
     askDiagnostic: "Request a diagnosis",
   },
 
@@ -438,7 +438,7 @@ export const en: Dictionary = {
       pret: "Done",
       recupere: "Closed",
     },
-    requestStep: "Request received — we'll contact you",
+    requestStep: "Request received - we'll contact you",
     confirmAccept: (amount: string) => `Confirm: you accept the quote of ${amount}?`,
     confirmRefuse: "Confirm: you decline the quote? Your device will be returned unrepaired.",
     refPlaceholder: "Request or repair number (DEM-… or REP-…)",
@@ -447,8 +447,8 @@ export const en: Dictionary = {
     submit: "Track my repair",
     cancelled: "This request was cancelled. Contact us with any question.",
     quote: "Proposed quote:",
-    accepted: "Thank you, you accepted the quote — we're starting the repair.",
-    refused: "You declined the quote — your device will be returned to you.",
+    accepted: "Thank you, you accepted the quote - we're starting the repair.",
+    refused: "You declined the quote - your device will be returned to you.",
     accept: "I accept",
     refuse: "I decline",
     ready: "Your device is ready: pick it up at the Electro Zaki shop (Meknes) with your drop-off slip.",
@@ -532,7 +532,7 @@ export const en: Dictionary = {
   cartPage: {
     sentTitle: "Request sent",
     reference: (ref: string) => `Reference: ${ref}`,
-    finishOnWhatsapp: "Tap below to finish your order on WhatsApp — we'll reply quickly.",
+    finishOnWhatsapp: "Tap below to finish your order on WhatsApp - we'll reply quickly.",
     openWhatsapp: "Open WhatsApp",
     backHome: "Back to home",
     emptyTitle: "Your cart is empty",
@@ -570,7 +570,7 @@ export const en: Dictionary = {
     consent:
       "I agree that my data and bank receipt are handled confidentially, in line with CNDP regulations.",
     codTitle: "Cash on delivery",
-    codText: "No deposit needed for an accessories order — you pay when it arrives.",
+    codText: "No deposit needed for an accessories order - you pay when it arrives.",
     sending: "Sending…",
     confirm: "Confirm my order",
   },
@@ -590,13 +590,13 @@ export const en: Dictionary = {
     change: "Change",
     cityLabel: "Delivery town or city",
     cityPlaceholder: "Type your town (e.g. Fes, Agadir, Tiflet…)",
-    noCity: "No place found — try another spelling or the nearest town.",
+    noCity: "No place found - try another spelling or the nearest town.",
     notServed: "not served",
     carrier: "Ameex delivery",
     days: "Delivery days",
     shipping: "Ships",
     afterCutoff: (h: number) => ` (order received after ${h}:00)`,
-    estimated: "— estimated delivery",
+    estimated: "- estimated delivery",
     waits: (city: string) =>
       `Ameex only delivers to ${city} on certain days: your parcel will wait at the depot for the next delivery day.`,
     indicative: "Estimated time (24 to 30 h after pickup), barring carrier delays.",
@@ -604,7 +604,7 @@ export const en: Dictionary = {
     notDeliverableAfter:
       ". You can still order: we'll contact you to find a solution (nearby town, pickup point…). The delivery time can't be guaranteed.",
     checkPin: "Check that the pin matches your town (approximate position). If not, pick another name from the list.",
-    noPin: "This place isn't on the map yet — double-check the name you chose.",
+    noPin: "This place isn't on the map yet - double-check the name you chose.",
     map: (label: string) => `Map: ${label}`,
   },
 
@@ -614,7 +614,7 @@ export const en: Dictionary = {
     replace: "Tap to replace the file",
     uploading: "Uploading…",
     drop: "Upload your receipt: photo, screenshot or PDF of the transfer",
-    formats: "JPG, PNG or PDF — 5 MB max",
+    formats: "JPG, PNG or PDF - 5 MB max",
   },
 
   offer: {
@@ -673,7 +673,7 @@ export const en: Dictionary = {
     title: "Check compatibility",
     choose: "Choose your phone",
     yes: "Works with your phone",
-    unknownBefore: "Compatibility not confirmed for this model — message us on",
+    unknownBefore: "Compatibility not confirmed for this model - message us on",
     unknownAfter: "to check.",
   },
 

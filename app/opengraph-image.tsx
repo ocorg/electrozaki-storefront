@@ -4,7 +4,7 @@ import { ImageResponse } from "next/og";
 
 // The card shown when a link to the site is shared (WhatsApp, Facebook…):
 // ink + brass, the mark, and what the shop sells, in one look.
-export const alt = "Electro Zaki — Téléphones & accessoires à Meknès";
+export const alt = "Electro Zaki | Téléphones & accessoires à Meknès";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

@@ -13,9 +13,9 @@ export const en: RepairTopicsText = {
         brand: "Apple (iPhone)",
         entries: [
           {
-            question: "Touch still works despite the crack — should I still replace it?",
+            question: "Touch still works despite the crack - should I still replace it?",
             answer:
-              "Yes, it's recommended. Cracked glass keeps weakening every time you handle it, shards can cut, and moisture getting in through the crack can damage the panel underneath — a much more expensive repair than a simple glass replacement.",
+              "Yes, it's recommended. Cracked glass keeps weakening every time you handle it, shards can cut, and moisture getting in through the crack can damage the panel underneath - a much more expensive repair than a simple glass replacement.",
           },
           {
             question: "Does Face ID still work after a screen replacement?",
@@ -25,7 +25,7 @@ export const en: RepairTopicsText = {
           {
             question: "Why do auto-brightness or True Tone seem different after the repair?",
             answer:
-              "On some models, the brightness/True Tone sensor is paired in software with the original screen. A quality part that is properly recalibrated fixes this — which is why the choice of part and technician makes the difference.",
+              "On some models, the brightness/True Tone sensor is paired in software with the original screen. A quality part that is properly recalibrated fixes this - which is why the choice of part and technician makes the difference.",
           },
         ],
       },
@@ -33,9 +33,9 @@ export const en: RepairTopicsText = {
         brand: "Samsung",
         entries: [
           {
-            question: "I have dark spots or lines on the screen, but no visible break on the surface — what now?",
+            question: "I have dark spots or lines on the screen, but no visible break on the surface - what now?",
             answer:
-              "It's a sign that the panel itself is damaged, not just the glass — common after a knock even with no visible crack. On most Galaxy phones the glass and panel form one block, so the whole module has to be replaced.",
+              "It's a sign that the panel itself is damaged, not just the glass - common after a knock even with no visible crack. On most Galaxy phones the glass and panel form one block, so the whole module has to be replaced.",
           },
           {
             question: "Touch no longer responds in some areas although the glass looks intact?",
@@ -45,7 +45,7 @@ export const en: RepairTopicsText = {
           {
             question: "Is there a way to test the screen before deciding on a repair?",
             answer:
-              "Yes — Samsung's hidden diagnostic menu (dial *#0*# in the phone app) lets you test multitouch, dead pixels and vibration, useful to confirm how far the problem goes before a repair.",
+              "Yes - Samsung's hidden diagnostic menu (dial *#0*# in the phone app) lets you test multitouch, dead pixels and vibration, useful to confirm how far the problem goes before a repair.",
           },
         ],
       },
@@ -55,12 +55,12 @@ export const en: RepairTopicsText = {
           {
             question: "After a repair elsewhere, I get “ghost” touches that happen on their own?",
             answer:
-              "That usually points to a badly reconnected touch ribbon or poor-quality adhesive during a previous replacement — an installation problem, not a problem with the part itself.",
+              "That usually points to a badly reconnected touch ribbon or poor-quality adhesive during a previous replacement - an installation problem, not a problem with the part itself.",
           },
           {
-            question: "MIUI shows “non-original part detected” after a screen change — is that serious?",
+            question: "MIUI shows “non-original part detected” after a screen change - is that serious?",
             answer:
-              "No, it's an informational software notice on some Xiaomi models when the screen isn't the exact factory part — it doesn't stop normal use with an equivalent quality part.",
+              "No, it's an informational software notice on some Xiaomi models when the screen isn't the exact factory part - it doesn't stop normal use with an equivalent quality part.",
           },
         ],
       },
@@ -70,7 +70,7 @@ export const en: RepairTopicsText = {
           {
             question: "My phone vibrates and rings when a call comes in, but the screen stays black after a drop?",
             answer:
-              "It's often the screen connector (a ribbon knocked loose) or the backlight, not the motherboard — a fairly reassuring sign that points to a simple repair.",
+              "It's often the screen connector (a ribbon knocked loose) or the backlight, not the motherboard - a fairly reassuring sign that points to a simple repair.",
           },
         ],
       },
@@ -80,7 +80,7 @@ export const en: RepairTopicsText = {
           {
             question: "Do all brands use the same kind of screen?",
             answer:
-              "No — LCD, AMOLED and their variants have different costs and sensitivities. The diagnosis tells whether only the outer glass or the whole module needs replacing, which has a big effect on the price.",
+              "No - LCD, AMOLED and their variants have different costs and sensitivities. The diagnosis tells whether only the outer glass or the whole module needs replacing, which has a big effect on the price.",
           },
         ],
       },
@@ -92,7 +92,7 @@ export const en: RepairTopicsText = {
     shortTitle: "Battery",
     cardDescription: "Battery no longer holding a charge? We replace it.",
     intro:
-      "Every lithium-ion battery naturally loses capacity over time — wear usually becomes noticeable after about 500 full charge cycles, a little sooner with frequent heat or constant charging to 100%. It isn't a defect, it's chemistry — but it's easy to replace.",
+      "Every lithium-ion battery naturally loses capacity over time - wear usually becomes noticeable after about 500 full charge cycles, a little sooner with frequent heat or constant charging to 100%. It isn't a defect, it's chemistry - but it's easy to replace.",
     brands: [
       {
         brand: "Apple (iPhone)",
@@ -103,12 +103,12 @@ export const en: RepairTopicsText = {
               "Apple considers a battery under 80% of maximum capacity (shown in Settings > Battery > Battery Health) to have reached the normal end of its life, and a replacement would bring back the original battery life and performance.",
           },
           {
-            question: "My iPhone shuts off suddenly at 20–30% battery shown — why?",
+            question: "My iPhone shuts off suddenly at 20-30% battery shown - why?",
             answer:
               "An ageing battery loses its ability to deliver a big burst of current (flash photo, gaming). The iPhone then protects itself and shuts down earlier than the percentage suggests.",
           },
           {
-            question: "The “non-genuine battery” message appears after a replacement — is that a problem?",
+            question: "The “non-genuine battery” message appears after a replacement - is that a problem?",
             answer:
               "The iPhone checks the battery's authenticity through a dedicated chip. A quality battery that isn't officially paired can trigger this purely informational message without stopping the phone from working normally.",
           },
@@ -118,14 +118,14 @@ export const en: RepairTopicsText = {
         brand: "Samsung",
         entries: [
           {
-            question: "The battery percentage drops suddenly (e.g. 40% to 15%) — is that serious?",
+            question: "The battery percentage drops suddenly (e.g. 40% to 15%) - is that serious?",
             answer:
               "It's a classic symptom of a worn battery whose real capacity no longer matches the software's estimate. A replacement brings back a reliable reading and consistent battery life.",
           },
           {
-            question: "My Galaxy gets very hot while charging — is the battery to blame?",
+            question: "My Galaxy gets very hot while charging - is the battery to blame?",
             answer:
-              "Often it comes from using the phone while it charges (gaming, GPS, streaming), which works the processor and battery at the same time. An ageing battery can make the heat worse — worth checking in a diagnosis if it's new.",
+              "Often it comes from using the phone while it charges (gaming, GPS, streaming), which works the processor and battery at the same time. An ageing battery can make the heat worse - worth checking in a diagnosis if it's new.",
           },
         ],
       },
@@ -133,9 +133,9 @@ export const en: RepairTopicsText = {
         brand: "Xiaomi",
         entries: [
           {
-            question: "MIUI restricts apps in the background — is that linked to the physical battery?",
+            question: "MIUI restricts apps in the background - is that linked to the physical battery?",
             answer:
-              "No, it's a MIUI power-saving software feature, independent of the battery's real condition — it can delay notifications even with a brand-new battery.",
+              "No, it's a MIUI power-saving software feature, independent of the battery's real condition - it can delay notifications even with a brand-new battery.",
           },
           {
             question: "Does fast charging wear the battery out faster?",
@@ -150,7 +150,7 @@ export const en: RepairTopicsText = {
           {
             question: "My battery drains fast even though I barely use the phone?",
             answer:
-              "Before concluding it's a hardware problem, check the background apps that keep restarting — sometimes seen on models without Google services. If the drain continues after a software check, a battery diagnosis is worth it.",
+              "Before concluding it's a hardware problem, check the background apps that keep restarting - sometimes seen on models without Google services. If the drain continues after a software check, a battery diagnosis is worth it.",
           },
         ],
       },
@@ -170,7 +170,7 @@ export const en: RepairTopicsText = {
   connecteur: {
     title: "Charging port that won't charge or charges badly",
     shortTitle: "Charging port",
-    cardDescription: "Phone won't charge or charges badly — quick repair.",
+    cardDescription: "Phone won't charge or charges badly - quick repair.",
     intro:
       "The most common cause of a temperamental charging port isn't an electronic fault but a mechanical blockage: dust, pocket lint or oxidation from moisture stop the pins from making proper contact with the cable.",
     brands: [
@@ -178,14 +178,14 @@ export const en: RepairTopicsText = {
         brand: "Apple (iPhone)",
         entries: [
           {
-            question: "“Liquid detected” stops charging — what should I do?",
+            question: "“Liquid detected” stops charging - what should I do?",
             answer:
-              "It's a software protection that deliberately blocks charging to avoid a short circuit. Let the port dry completely in open air (never with a heat source) before trying again — forcing a charge during the alert can make the damage worse.",
+              "It's a software protection that deliberately blocks charging to avoid a short circuit. Let the port dry completely in open air (never with a heat source) before trying again - forcing a charge during the alert can make the damage worse.",
           },
           {
-            question: "The phone charges, but much more slowly than before — is the port to blame?",
+            question: "The phone charges, but much more slowly than before - is the port to blame?",
             answer:
-              "Usually not — a non-certified or worn cable or charger is the first cause of slow charging. Testing with a different certified cable and adapter isolates the real problem before suspecting the port.",
+              "Usually not - a non-certified or worn cable or charger is the first cause of slow charging. Testing with a different certified cable and adapter isolates the real problem before suspecting the port.",
           },
         ],
       },
@@ -193,14 +193,14 @@ export const en: RepairTopicsText = {
         brand: "Samsung, Xiaomi, Huawei (USB-C)",
         entries: [
           {
-            question: "The cable sits loosely or wobbles in the port — is that normal?",
+            question: "The cable sits loosely or wobbles in the port - is that normal?",
             answer:
-              "No — a USB-C connector in good condition holds the cable firmly. Play or unusual movement signals mechanical wear of the pins that's best dealt with before it gets worse and damages the cable too.",
+              "No - a USB-C connector in good condition holds the cable firmly. Play or unusual movement signals mechanical wear of the pins that's best dealt with before it gets worse and damages the cable too.",
           },
           {
             question: "The phone only charges with the cable held in one exact position?",
             answer:
-              "That's almost always a partly damaged or dirty connector rather than a faulty cable — a professional port cleaning solves most of these cases.",
+              "That's almost always a partly damaged or dirty connector rather than a faulty cable - a professional port cleaning solves most of these cases.",
           },
         ],
       },
@@ -220,20 +220,20 @@ export const en: RepairTopicsText = {
   camera: {
     title: "Blurry or broken camera",
     shortTitle: "Camera",
-    cardDescription: "Blurry photos or a dead camera — diagnosis and repair.",
+    cardDescription: "Blurry photos or a dead camera - diagnosis and repair.",
     intro:
-      "Before suspecting the hardware, a simple restart or force-closing the app solves a good share of camera problems — the rest comes from a physical module knocked out of alignment or dirty after a drop.",
+      "Before suspecting the hardware, a simple restart or force-closing the app solves a good share of camera problems - the rest comes from a physical module knocked out of alignment or dirty after a drop.",
     brands: [
       {
         brand: "Apple (iPhone)",
         entries: [
           {
-            question: "“Cannot activate camera” — what should I check before a repair?",
+            question: "“Cannot activate camera” - what should I check before a repair?",
             answer:
               "This message can come from a third-party app blocking camera access or, after a drop, from a camera module that has come loose from its connector. A restart rules out the first cause before moving to a hardware diagnosis.",
           },
           {
-            question: "The lens is clean but photos are still blurry — why?",
+            question: "The lens is clean but photos are still blurry - why?",
             answer:
               "It can point to an autofocus or optical stabilisation (OIS) problem after a knock, which needs the camera module replaced rather than just cleaned.",
           },
@@ -245,12 +245,12 @@ export const en: RepairTopicsText = {
           {
             question: "The same spot appears on all my photos, even after cleaning the lens?",
             answer:
-              "That's dust that has got inside the module, between the lenses — invisible and impossible to clean from outside. A technician has to open the module.",
+              "That's dust that has got inside the module, between the lenses - invisible and impossible to clean from outside. A technician has to open the module.",
           },
           {
             question: "The camera closes on its own (crashes) when I open it?",
             answer:
-              "Start by clearing the camera app's cache and checking for system updates — most crashes of this kind are software, not hardware.",
+              "Start by clearing the camera app's cache and checking for system updates - most crashes of this kind are software, not hardware.",
           },
         ],
       },
@@ -282,7 +282,7 @@ export const en: RepairTopicsText = {
     shortTitle: "Sound / Mic",
     cardDescription: "Faulty speaker or mic, brought back to life.",
     intro:
-      "A smartphone actually has several separate microphones and speakers (call earpiece, media speaker, noise-cancelling mics) — finding which one is at fault changes the diagnosis a lot. Dust built up in the grilles is the most common cause, and the easiest to fix.",
+      "A smartphone actually has several separate microphones and speakers (call earpiece, media speaker, noise-cancelling mics) - finding which one is at fault changes the diagnosis a lot. Dust built up in the grilles is the most common cause, and the easiest to fix.",
     brands: [
       {
         brand: "Apple (iPhone)",
@@ -315,7 +315,7 @@ export const en: RepairTopicsText = {
           {
             question: "The sound crackles only at high volume?",
             answer:
-              "That's a classic sign of a damaged or dirty speaker membrane — a professional cleaning is sometimes enough, otherwise the part needs replacing.",
+              "That's a classic sign of a damaged or dirty speaker membrane - a professional cleaning is sometimes enough, otherwise the part needs replacing.",
           },
         ],
       },
@@ -325,7 +325,7 @@ export const en: RepairTopicsText = {
           {
             question: "Can water exposure cause this kind of fault, even on a “water-resistant” phone?",
             answer:
-              "Yes — water-resistance certification (IP) wears down with time and knocks, and speaker grilles are a classic entry point for leftover moisture that affects the sound afterwards.",
+              "Yes - water-resistance certification (IP) wears down with time and knocks, and speaker grilles are a classic entry point for leftover moisture that affects the sound afterwards.",
           },
         ],
       },
@@ -337,7 +337,7 @@ export const en: RepairTopicsText = {
     shortTitle: "Network unlock",
     cardDescription: "Network unlock so you can use your phone anywhere.",
     intro:
-      "A network lock (SIM lock) is a software restriction set by a carrier and tied to the device's IMEI — often in exchange for a subsidised price. It's very different from a blacklisted IMEI (a phone reported stolen or unpaid), a status no unlock can lift since it isn't the same problem.",
+      "A network lock (SIM lock) is a software restriction set by a carrier and tied to the device's IMEI - often in exchange for a subsidised price. It's very different from a blacklisted IMEI (a phone reported stolen or unpaid), a status no unlock can lift since it isn't the same problem.",
     brands: [
       {
         brand: "All devices",
@@ -350,12 +350,12 @@ export const en: RepairTopicsText = {
           {
             question: "What's the difference between a network unlock and a blacklisted IMEI?",
             answer:
-              "A network unlock removes a software restriction set by the original carrier. A blacklisted IMEI means the device was reported stolen or with an unpaid balance to the carriers — a completely different problem that no unlock can legally solve.",
+              "A network unlock removes a software restriction set by the original carrier. A blacklisted IMEI means the device was reported stolen or with an unpaid balance to the carriers - a completely different problem that no unlock can legally solve.",
           },
           {
             question: "After the unlock, my phone shows “not registered on network” with the new SIM?",
             answer:
-              "Very often it's just a missing or wrong APN setting for the new carrier, not a failed unlock — something we check every time after an unlock.",
+              "Very often it's just a missing or wrong APN setting for the new carrier, not a failed unlock - something we check every time after an unlock.",
           },
         ],
       },
@@ -365,7 +365,7 @@ export const en: RepairTopicsText = {
           {
             question: "Can an iPhone financed by a carrier be unlocked before it's paid off?",
             answer:
-              "Generally not — the financing lock stays active until the carrier's conditions are met, whatever third-party unlock service is used.",
+              "Generally not - the financing lock stays active until the carrier's conditions are met, whatever third-party unlock service is used.",
           },
         ],
       },
@@ -377,13 +377,13 @@ export const en: RepairTopicsText = {
     shortTitle: "Stuck, slow or boot loop",
     cardDescription: "Phone frozen on the logo, very slow, crashing or restarting non-stop.",
     intro:
-      "Most of these faults are software: an interrupted update, full storage, a misbehaving app or a corrupted system. They're often fixed without changing any part — but a boot loop can also come from a worn battery, which we check first.",
+      "Most of these faults are software: an interrupted update, full storage, a misbehaving app or a corrupted system. They're often fixed without changing any part - but a boot loop can also come from a worn battery, which we check first.",
     brands: [
       {
         brand: "All devices",
         entries: [
           {
-            question: "My phone stays stuck on the logo at startup — is it serious?",
+            question: "My phone stays stuck on the logo at startup - is it serious?",
             answer:
               "Most often the system can't load (interrupted update, corrupted files). Reinstalling the system usually fixes it; we always try to keep your data before going that far.",
           },
@@ -413,7 +413,7 @@ export const en: RepairTopicsText = {
         brand: "All devices",
         entries: [
           {
-            question: "The update fails or gets stuck — what should I do?",
+            question: "The update fails or gets stuck - what should I do?",
             answer:
               "It's often a lack of storage space or a battery that's too low during the install. If the phone no longer starts after an interrupted update, reinstalling the system is usually needed.",
           },
@@ -443,7 +443,7 @@ export const en: RepairTopicsText = {
               "Yes: contacts, photos, apps and, depending on the case, WhatsApp history. Moving from Android to iPhone (or the other way) is possible but some data doesn't follow; we explain what will be transferred.",
           },
           {
-            question: "My phone won't turn on anymore — are my photos lost?",
+            question: "My phone won't turn on anymore - are my photos lost?",
             answer:
               "If the device can be brought back to life (screen, battery, connector), the data is often intact. If it was backed up to the cloud (Google Photos, iCloud), it shows up on another device with the same account.",
           },
@@ -463,7 +463,7 @@ export const en: RepairTopicsText = {
         brand: "All devices",
         entries: [
           {
-            question: "I forgot my Google or Apple account password — what can I do?",
+            question: "I forgot my Google or Apple account password - what can I do?",
             answer:
               "Recovery goes through Google's or Apple's official procedures (recovery phone or email, questions, security delay). We guide you through them, on showing the invoice or the box with the device's IMEI.",
           },

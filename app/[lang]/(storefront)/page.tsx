@@ -302,8 +302,8 @@ export default async function HomePage() {
                   </div>
                   <div className="readout mt-2 flex justify-between text-xs text-neutral-300">
                     <span>&lt; 80 %</span>
-                    <span>80–84 %</span>
-                    <span>85–100 %</span>
+                    <span>80-84 %</span>
+                    <span>85-100 %</span>
                   </div>
                 </div>
                 <p className="mt-4 text-sm text-neutral-300">{h.transparency.batteryNote}</p>

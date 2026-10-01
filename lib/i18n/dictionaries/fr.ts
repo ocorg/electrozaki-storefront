@@ -3,14 +3,14 @@
 
 export const fr = {
   meta: {
-    title: "Electro Zaki — Téléphones & accessoires à Meknès",
+    title: "Electro Zaki | Téléphones & accessoires à Meknès",
     description:
       "Téléphones neufs et d'occasion (iPhone, Samsung, Xiaomi), coques, chargeurs, câbles, écouteurs et réparation à Meknès. État et batterie affichés pour chaque téléphone, livraison partout au Maroc.",
   },
 
   common: {
     skipToContent: "Aller au contenu",
-    homeAria: "Electro Zaki — accueil",
+    homeAria: "Electro Zaki | accueil",
     mainNav: "Navigation principale",
     menu: "Menu",
     openMenu: "Ouvrir le menu",
@@ -75,7 +75,7 @@ export const fr = {
 
   // Short line under each aisle (home tiles, category page intro).
   aisleBlurb: {
-    telephones: "iPhone, Samsung, Xiaomi — neufs et d'occasion",
+    telephones: "iPhone, Samsung, Xiaomi - neufs et d'occasion",
     pochettes: "Coques pour chaque modèle",
     incassables: "Verres trempés, protection d'écran",
     chargeurs: "Charge rapide, toutes prises",
@@ -122,7 +122,7 @@ export const fr = {
     budgetQ: "Quel est votre budget ?",
     usageQ: "Quel est votre usage principal ?",
     brandQ: "Une marque en tête ?",
-    budgets: ["Moins de 2 000 DH", "2 000 – 4 000 DH", "4 000 – 7 000 DH", "Plus de 7 000 DH"],
+    budgets: ["Moins de 2 000 DH", "2 000 - 4 000 DH", "4 000 - 7 000 DH", "Plus de 7 000 DH"],
     usages: ["Appels & SMS", "Réseaux sociaux & Photos", "Gaming & Performance", "Pro & Multitâche"],
     anyBrand: "Peu importe",
     done: "Merci ! Voici nos suggestions.",
@@ -133,7 +133,7 @@ export const fr = {
   hero: {
     eyebrow: "Téléphones · Accessoires · Réparation",
     title: ["Téléphones", "& accessoires", "à Meknès."],
-    lead: "iPhone, Samsung, Xiaomi, neufs et d'occasion — l'état et la batterie de chaque appareil affichés avant l'achat. Coques, chargeurs, câbles, écouteurs, et réparation sur place.",
+    lead: "iPhone, Samsung, Xiaomi, neufs et d'occasion - l'état et la batterie de chaque appareil affichés avant l'achat. Coques, chargeurs, câbles, écouteurs, et réparation sur place.",
     seePhones: "Voir les téléphones",
     lockCaption: "Meknès · Electro Zaki",
     inStock: "en stock",
@@ -180,7 +180,7 @@ export const fr = {
     accessories: {
       eyebrow: "Accessoires",
       title: "Petits prix, gros service.",
-      intro: "Coques, verres trempés, chargeurs et câbles pour chaque modèle — en stock à Meknès.",
+      intro: "Coques, verres trempés, chargeurs et câbles pour chaque modèle - en stock à Meknès.",
       all: "Tous les accessoires",
     },
     finder: {
@@ -212,9 +212,9 @@ export const fr = {
     metaPhonesTitle: "Téléphones neufs et d'occasion à Meknès",
     metaPhonesDescription:
       "iPhone, Samsung, Xiaomi neufs et d'occasion à Meknès : état, batterie et pièces affichés pour chaque téléphone. Livraison partout au Maroc.",
-    metaAisleTitle: (name: string) => `${name} — accessoires téléphone à Meknès`,
+    metaAisleTitle: (name: string) => `${name} - accessoires téléphone à Meknès`,
     metaAisleDescription: (name: string, blurb: string | null) =>
-      `${name} pour téléphone chez Electro Zaki, Meknès. ${blurb ?? "En stock"} — livraison partout au Maroc.`,
+      `${name} pour téléphone chez Electro Zaki, Meknès. ${blurb ?? "En stock"} - livraison partout au Maroc.`,
     seeAll: "Tout voir",
     emptyFilteredTitle: "Rien pour ces filtres.",
     emptyTitle: "Nouveaux articles bientôt en ligne.",
@@ -292,7 +292,7 @@ export const fr = {
     color: "Couleur",
     storage: "Stockage",
     chooseVersion: "Choisir une version",
-    soldOutSuffix: " — épuisé",
+    soldOutSuffix: " - épuisé",
     quantity: "Quantité",
     removeOne: "Retirer un",
     addOne: "Ajouter un",
@@ -359,7 +359,7 @@ export const fr = {
   },
 
   repairPage: {
-    metaTitle: "Réparation de téléphone à Meknès — écran, batterie, logiciel",
+    metaTitle: "Réparation de téléphone à Meknès - écran, batterie, logiciel",
     metaDescription:
       "Réparation de téléphones à Meknès : écran, batterie, port de charge, problèmes logiciels, récupération de données et consultation en ligne. Devis gratuit, suivi en ligne.",
     ogTitle: "Réparation de téléphone à Meknès",
@@ -388,17 +388,17 @@ export const fr = {
     remote: "À distance",
     faq: "Questions fréquentes",
     questionTitle: "Une question sur votre appareil ?",
-    questionText: "Envoyez-nous une photo ou décrivez le problème sur WhatsApp — réponse rapide, sans engagement.",
+    questionText: "Envoyez-nous une photo ou décrivez le problème sur WhatsApp - réponse rapide, sans engagement.",
     waProblem: "Bonjour, j'ai un problème avec mon téléphone :",
     chatWhatsapp: "Discuter sur WhatsApp",
   },
 
   repairTopic: {
-    metaTitle: (title: string) => `${title} — réparation à Meknès`,
+    metaTitle: (title: string) => `${title} - réparation à Meknès`,
     faqByBrand: "Questions fréquentes par marque",
     notListedTitle: "Votre cas ne correspond à aucune de ces questions ?",
     notListedText:
-      "Chaque appareil est différent — demandez un diagnostic gratuit ou décrivez votre panne directement sur WhatsApp.",
+      "Chaque appareil est différent - demandez un diagnostic gratuit ou décrivez votre panne directement sur WhatsApp.",
     askDiagnostic: "Demander un diagnostic",
   },
 
@@ -443,7 +443,7 @@ export const fr = {
       pret: "Terminée",
       recupere: "Clôturée",
     },
-    requestStep: "Demande reçue — nous vous contactons",
+    requestStep: "Demande reçue - nous vous contactons",
     confirmAccept: (amount: string) => `Confirmer : vous acceptez le devis de ${amount} ?`,
     confirmRefuse: "Confirmer : vous refusez le devis ? Votre appareil vous sera rendu sans réparation.",
     refPlaceholder: "N° de demande ou de réparation (DEM-… ou REP-…)",
@@ -452,8 +452,8 @@ export const fr = {
     submit: "Suivre ma réparation",
     cancelled: "Cette demande a été annulée. Contactez-nous pour toute question.",
     quote: "Devis proposé :",
-    accepted: "Merci, vous avez accepté le devis — nous lançons la réparation.",
-    refused: "Vous avez refusé le devis — votre appareil vous sera rendu.",
+    accepted: "Merci, vous avez accepté le devis - nous lançons la réparation.",
+    refused: "Vous avez refusé le devis - votre appareil vous sera rendu.",
     accept: "J'accepte",
     refuse: "Je refuse",
     ready: "Votre appareil est prêt : passez le récupérer à la boutique Electro Zaki (Meknès) avec votre bon de dépôt.",
@@ -537,7 +537,7 @@ export const fr = {
   cartPage: {
     sentTitle: "Demande envoyée",
     reference: (ref: string) => `Référence : ${ref}`,
-    finishOnWhatsapp: "Appuyez ci-dessous pour finaliser votre commande sur WhatsApp — nous vous répondrons rapidement.",
+    finishOnWhatsapp: "Appuyez ci-dessous pour finaliser votre commande sur WhatsApp - nous vous répondrons rapidement.",
     openWhatsapp: "Ouvrir WhatsApp",
     backHome: "Retour à l'accueil",
     emptyTitle: "Votre panier est vide",
@@ -576,7 +576,7 @@ export const fr = {
     consent:
       "J'accepte que mes données et mon reçu bancaire soient traités de manière confidentielle, conformément à la réglementation CNDP.",
     codTitle: "Paiement à la livraison",
-    codText: "Aucune avance requise pour une commande d'accessoires — vous payez à la réception.",
+    codText: "Aucune avance requise pour une commande d'accessoires - vous payez à la réception.",
     sending: "Envoi…",
     confirm: "Confirmer ma commande",
   },
@@ -597,13 +597,13 @@ export const fr = {
     change: "Changer",
     cityLabel: "Ville ou localité de livraison",
     cityPlaceholder: "Tapez votre ville (ex : Fès, Agadir, Tiflet…)",
-    noCity: "Aucune localité trouvée — essayez une autre orthographe ou la ville la plus proche.",
+    noCity: "Aucune localité trouvée - essayez une autre orthographe ou la ville la plus proche.",
     notServed: "non desservie",
     carrier: "Livraison Ameex",
     days: "Jours de livraison",
     shipping: "Expédition",
     afterCutoff: (h: number) => ` (commande reçue après ${h}h00)`,
-    estimated: "— livraison estimée le",
+    estimated: "- livraison estimée le",
     waits: (city: string) =>
       `Ameex ne livre ${city} que certains jours : votre colis attendra au dépôt le prochain jour de passage.`,
     indicative: "Délai indicatif (24 à 30 h après l'enlèvement), hors imprévus du transporteur.",
@@ -611,7 +611,7 @@ export const fr = {
     notDeliverableAfter:
       ". Vous pouvez quand même commander : nous vous contacterons pour trouver une solution (ville voisine, point de retrait…). Le délai de livraison ne peut pas être garanti.",
     checkPin: "Vérifiez que le repère correspond bien à votre localité (position approximative). Sinon, choisissez un autre nom dans la liste.",
-    noPin: "Cette localité n'est pas encore placée sur la carte — vérifiez bien le nom choisi.",
+    noPin: "Cette localité n'est pas encore placée sur la carte - vérifiez bien le nom choisi.",
     map: (label: string) => `Carte : ${label}`,
   },
 
@@ -621,7 +621,7 @@ export const fr = {
     replace: "Appuyez pour remplacer le fichier",
     uploading: "Envoi en cours…",
     drop: "Déposez votre reçu : photo, capture d'écran ou PDF du virement",
-    formats: "JPG, PNG ou PDF — 5 Mo maximum",
+    formats: "JPG, PNG ou PDF - 5 Mo maximum",
   },
 
   offer: {
@@ -680,7 +680,7 @@ export const fr = {
     title: "Vérifiez la compatibilité",
     choose: "Choisissez votre téléphone",
     yes: "Compatible avec votre téléphone",
-    unknownBefore: "Compatibilité non confirmée pour ce modèle — écrivez-nous sur",
+    unknownBefore: "Compatibilité non confirmée pour ce modèle - écrivez-nous sur",
     unknownAfter: "pour vérifier.",
   },
 

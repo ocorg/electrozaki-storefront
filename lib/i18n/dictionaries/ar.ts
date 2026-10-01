@@ -4,14 +4,14 @@ import type { Dictionary } from "./fr";
 // digits, the way prices and phone numbers are written in Morocco.
 export const ar: Dictionary = {
   meta: {
-    title: "إلكترو زكي — هواتف وإكسسوارات في مكناس",
+    title: "إلكترو زكي | هواتف وإكسسوارات في مكناس",
     description:
-      "هواتف جديدة ومستعملة (iPhone وSamsung وXiaomi)، أغلفة وشواحن وكابلات وسماعات، وإصلاح الهواتف في مكناس. حالة كل هاتف وبطاريته معروضة، والتوصيل إلى جميع أنحاء المغرب.",
+      "هواتف جديدة ومستعملة (iPhone و Samsung و Xiaomi)، أغلفة وشواحن وكابلات وسماعات، وإصلاح الهواتف في مكناس. حالة كل هاتف وبطاريته معروضة، والتوصيل إلى جميع أنحاء المغرب.",
   },
 
   common: {
     skipToContent: "الانتقال إلى المحتوى",
-    homeAria: "إلكترو زكي — الصفحة الرئيسية",
+    homeAria: "إلكترو زكي | الصفحة الرئيسية",
     mainNav: "القائمة الرئيسية",
     menu: "القائمة",
     openMenu: "فتح القائمة",
@@ -73,12 +73,12 @@ export const ar: Dictionary = {
   },
 
   aisleBlurb: {
-    telephones: "iPhone وSamsung وXiaomi — جديدة ومستعملة",
+    telephones: "iPhone و Samsung و Xiaomi - جديدة ومستعملة",
     pochettes: "أغلفة لكل طراز",
     incassables: "زجاج مقوّى وحماية للشاشة",
     chargeurs: "شحن سريع، لكل المقابس",
-    "tete-de-chargeur": "محولات حائط USB-C وUSB",
-    cables: "Lightning وUSB-C وmicro-USB",
+    "tete-de-chargeur": "محولات حائط USB-C و USB",
+    cables: "Lightning و USB-C و micro-USB",
     ecouteurs: "سلكية ولاسلكية",
     airpods: "سماعات لاسلكية",
     powerbank: "بطاريات خارجية من 10K إلى 30K",
@@ -119,7 +119,7 @@ export const ar: Dictionary = {
     budgetQ: "ما هي ميزانيتك؟",
     usageQ: "ما هو استعمالك الأساسي؟",
     brandQ: "هل تفضّل علامة معيّنة؟",
-    budgets: ["أقل من 2 000 درهم", "2 000 – 4 000 درهم", "4 000 – 7 000 درهم", "أكثر من 7 000 درهم"],
+    budgets: ["أقل من 2 000 درهم", "2 000 - 4 000 درهم", "4 000 - 7 000 درهم", "أكثر من 7 000 درهم"],
     usages: ["مكالمات ورسائل", "مواقع التواصل والصور", "الألعاب والأداء", "العمل وتعدد المهام"],
     anyBrand: "لا يهم",
     done: "شكرًا! إليك اقتراحاتنا.",
@@ -130,7 +130,7 @@ export const ar: Dictionary = {
   hero: {
     eyebrow: "هواتف · إكسسوارات · إصلاح",
     title: ["هواتف", "وإكسسوارات", "في مكناس."],
-    lead: "iPhone وSamsung وXiaomi، جديدة ومستعملة — حالة كل جهاز وبطاريته معروضة قبل الشراء. أغلفة وشواحن وكابلات وسماعات، وإصلاح في عين المكان.",
+    lead: "iPhone و Samsung و Xiaomi، جديدة ومستعملة - حالة كل جهاز وبطاريته معروضة قبل الشراء. أغلفة وشواحن وكابلات وسماعات، وإصلاح في عين المكان.",
     seePhones: "عرض الهواتف",
     lockCaption: "مكناس · إلكترو زكي",
     inStock: "متوفر",
@@ -177,7 +177,7 @@ export const ar: Dictionary = {
     accessories: {
       eyebrow: "الإكسسوارات",
       title: "أسعار صغيرة، خدمة كبيرة.",
-      intro: "أغلفة وزجاج مقوّى وشواحن وكابلات لكل طراز — متوفرة في مكناس.",
+      intro: "أغلفة وزجاج مقوّى وشواحن وكابلات لكل طراز - متوفرة في مكناس.",
       all: "كل الإكسسوارات",
     },
     finder: {
@@ -203,15 +203,15 @@ export const ar: Dictionary = {
 
   collection: {
     introPhones:
-      "iPhone وSamsung وXiaomi وHonor… جديدة ومستعملة. كل هاتف مستعمل يُباع بالوحدة، مع عرض حالته وبطاريته وقطعه.",
+      "iPhone و Samsung و Xiaomi و Honor… جديدة ومستعملة. كل هاتف مستعمل يُباع بالوحدة، مع عرض حالته وبطاريته وقطعه.",
     introAisle: (blurb: string | null, name: string) =>
       `${blurb ? `${blurb}. ` : ""}${name} متوفرة في مكناس، والتوصيل إلى جميع أنحاء المغرب.`,
     metaPhonesTitle: "هواتف جديدة ومستعملة في مكناس",
     metaPhonesDescription:
-      "iPhone وSamsung وXiaomi جديدة ومستعملة في مكناس: الحالة والبطارية والقطع معروضة لكل هاتف. التوصيل إلى جميع أنحاء المغرب.",
-    metaAisleTitle: (name: string) => `${name} — إكسسوارات الهاتف في مكناس`,
+      "iPhone و Samsung و Xiaomi جديدة ومستعملة في مكناس: الحالة والبطارية والقطع معروضة لكل هاتف. التوصيل إلى جميع أنحاء المغرب.",
+    metaAisleTitle: (name: string) => `${name} - إكسسوارات الهاتف في مكناس`,
     metaAisleDescription: (name: string, blurb: string | null) =>
-      `${name} لهاتفك عند إلكترو زكي، مكناس. ${blurb ?? "متوفرة"} — التوصيل إلى جميع أنحاء المغرب.`,
+      `${name} لهاتفك عند إلكترو زكي، مكناس. ${blurb ?? "متوفرة"} - التوصيل إلى جميع أنحاء المغرب.`,
     seeAll: "عرض الكل",
     emptyFilteredTitle: "لا شيء بهذه الفلاتر.",
     emptyTitle: "منتجات جديدة قريبًا.",
@@ -271,7 +271,7 @@ export const ar: Dictionary = {
     sameAisle: "في نفس القسم.",
     alsoSee: "قد يعجبك أيضًا.",
     wholeAisle: (name: string) => `كل قسم ${name}`,
-    metaTitle: (name: string, condition: string | null) => (condition ? `${name} — ${condition}` : name),
+    metaTitle: (name: string, condition: string | null) => (condition ? `${name} - ${condition}` : name),
     metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
       `${name}${condition ? ` (${condition})` : ""} بـ ${price} عند إلكترو زكي، مكناس.${
         used ? " الحالة والبطارية معروضتان لكل وحدة." : ""
@@ -289,7 +289,7 @@ export const ar: Dictionary = {
     color: "اللون",
     storage: "السعة",
     chooseVersion: "اختر نسخة",
-    soldOutSuffix: " — نفد",
+    soldOutSuffix: " - نفد",
     quantity: "الكمية",
     removeOne: "إنقاص واحد",
     addOne: "إضافة واحد",
@@ -356,7 +356,7 @@ export const ar: Dictionary = {
   },
 
   repairPage: {
-    metaTitle: "إصلاح الهواتف في مكناس — الشاشة، البطارية، البرمجيات",
+    metaTitle: "إصلاح الهواتف في مكناس - الشاشة، البطارية، البرمجيات",
     metaDescription:
       "إصلاح الهواتف في مكناس: الشاشة، البطارية، منفذ الشحن، مشاكل البرمجيات، استرجاع البيانات والاستشارة عن بعد. تقدير مجاني وتتبع عبر الإنترنت.",
     ogTitle: "إصلاح الهواتف في مكناس",
@@ -384,16 +384,16 @@ export const ar: Dictionary = {
     remote: "عن بعد",
     faq: "أسئلة شائعة",
     questionTitle: "سؤال حول جهازك؟",
-    questionText: "أرسل لنا صورة أو صف المشكل على واتساب — رد سريع وبدون التزام.",
+    questionText: "أرسل لنا صورة أو صف المشكل على واتساب - رد سريع وبدون التزام.",
     waProblem: "السلام عليكم، عندي مشكل في هاتفي:",
     chatWhatsapp: "تحدث معنا على واتساب",
   },
 
   repairTopic: {
-    metaTitle: (title: string) => `${title} — إصلاح في مكناس`,
+    metaTitle: (title: string) => `${title} - إصلاح في مكناس`,
     faqByBrand: "أسئلة شائعة حسب العلامة",
     notListedTitle: "حالتك غير موجودة في هذه الأسئلة؟",
-    notListedText: "كل جهاز مختلف — اطلب تشخيصًا مجانيًا أو صف العطل مباشرة على واتساب.",
+    notListedText: "كل جهاز مختلف - اطلب تشخيصًا مجانيًا أو صف العطل مباشرة على واتساب.",
     askDiagnostic: "اطلب تشخيصًا",
   },
 
@@ -438,7 +438,7 @@ export const ar: Dictionary = {
       pret: "انتهت",
       recupere: "مغلقة",
     },
-    requestStep: "استُلم الطلب — سنتصل بك",
+    requestStep: "استُلم الطلب - سنتصل بك",
     confirmAccept: (amount: string) => `تأكيد: هل توافق على تقدير ${amount}؟`,
     confirmRefuse: "تأكيد: هل ترفض التقدير؟ سيُعاد إليك جهازك دون إصلاح.",
     refPlaceholder: "رقم الطلب أو الإصلاح (DEM-… أو REP-…)",
@@ -447,8 +447,8 @@ export const ar: Dictionary = {
     submit: "تتبع الإصلاح",
     cancelled: "أُلغي هذا الطلب. اتصل بنا لأي سؤال.",
     quote: "التقدير المقترح:",
-    accepted: "شكرًا، وافقت على التقدير — نبدأ الإصلاح.",
-    refused: "رفضت التقدير — سيُعاد إليك جهازك.",
+    accepted: "شكرًا، وافقت على التقدير - نبدأ الإصلاح.",
+    refused: "رفضت التقدير - سيُعاد إليك جهازك.",
     accept: "أوافق",
     refuse: "أرفض",
     ready: "جهازك جاهز: تفضل باستلامه من محل إلكترو زكي (مكناس) مع وصل الإيداع.",
@@ -532,7 +532,7 @@ export const ar: Dictionary = {
   cartPage: {
     sentTitle: "تم إرسال الطلب",
     reference: (ref: string) => `المرجع: ${ref}`,
-    finishOnWhatsapp: "اضغط أدناه لإتمام طلبك على واتساب — سنرد عليك بسرعة.",
+    finishOnWhatsapp: "اضغط أدناه لإتمام طلبك على واتساب - سنرد عليك بسرعة.",
     openWhatsapp: "فتح واتساب",
     backHome: "العودة إلى الرئيسية",
     emptyTitle: "سلتك فارغة",
@@ -569,7 +569,7 @@ export const ar: Dictionary = {
     whyAdvanceText: "يغطي هذا العربون مصاريف الشحن ويضمن حجز هاتفك طوال مدة التوصيل.",
     consent: "أوافق على معالجة بياناتي ووصل التحويل البنكي بسرية، وفقًا لقوانين CNDP.",
     codTitle: "الدفع عند الاستلام",
-    codText: "لا حاجة لعربون في طلبات الإكسسوارات — تدفع عند الاستلام.",
+    codText: "لا حاجة لعربون في طلبات الإكسسوارات - تدفع عند الاستلام.",
     sending: "جارٍ الإرسال…",
     confirm: "تأكيد طلبي",
   },
@@ -589,13 +589,13 @@ export const ar: Dictionary = {
     change: "تغيير",
     cityLabel: "مدينة أو بلدة التوصيل",
     cityPlaceholder: "اكتب مدينتك (مثلًا: Fès، Agadir، Tiflet…)",
-    noCity: "لم نجد هذه البلدة — جرّب كتابة أخرى أو أقرب مدينة.",
+    noCity: "لم نجد هذه البلدة - جرّب كتابة أخرى أو أقرب مدينة.",
     notServed: "غير مخدومة",
     carrier: "التوصيل مع Ameex",
     days: "أيام التوصيل",
     shipping: "الشحن",
     afterCutoff: (h: number) => ` (طلب مستلم بعد ${h}:00)`,
-    estimated: "— التوصيل المتوقع يوم",
+    estimated: "- التوصيل المتوقع يوم",
     waits: (city: string) =>
       `لا توصل Ameex إلى ${city} إلا في أيام معيّنة: سينتظر طردك في المستودع إلى يوم المرور التالي.`,
     indicative: "مدة تقريبية (24 إلى 30 ساعة بعد الاستلام)، باستثناء تأخيرات الناقل.",
@@ -603,7 +603,7 @@ export const ar: Dictionary = {
     notDeliverableAfter:
       ". يمكنك الطلب رغم ذلك: سنتصل بك لإيجاد حل (مدينة مجاورة، نقطة استلام…). لا يمكن ضمان مدة التوصيل.",
     checkPin: "تأكد أن العلامة توافق بلدتك (موقع تقريبي). وإلا، اختر اسمًا آخر من القائمة.",
-    noPin: "هذه البلدة غير موضوعة على الخريطة بعد — تأكد جيدًا من الاسم المختار.",
+    noPin: "هذه البلدة غير موضوعة على الخريطة بعد - تأكد جيدًا من الاسم المختار.",
     map: (label: string) => `الخريطة: ${label}`,
   },
 
@@ -613,7 +613,7 @@ export const ar: Dictionary = {
     replace: "اضغط لتغيير الملف",
     uploading: "جارٍ الإرسال…",
     drop: "أرفق وصلك: صورة أو لقطة شاشة أو PDF للتحويل",
-    formats: "JPG أو PNG أو PDF — 5 ميغابايت كحد أقصى",
+    formats: "JPG أو PNG أو PDF - 5 ميغابايت كحد أقصى",
   },
 
   offer: {
@@ -672,7 +672,7 @@ export const ar: Dictionary = {
     title: "تحقق من التوافق",
     choose: "اختر هاتفك",
     yes: "متوافق مع هاتفك",
-    unknownBefore: "التوافق غير مؤكد لهذا الطراز — راسلنا على",
+    unknownBefore: "التوافق غير مؤكد لهذا الطراز - راسلنا على",
     unknownAfter: "للتحقق.",
   },
 

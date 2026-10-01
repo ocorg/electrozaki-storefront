@@ -165,7 +165,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                   )}
                   <span className="flex items-center gap-2 text-sm font-medium">
                     <span className="h-3.5 w-3.5 rounded-full border border-black/15" style={{ background: swatch(u.color) }} aria-hidden />
-                    {u.color ? colorName(t, u.color) : "—"}
+                    {u.color ? colorName(t, u.color) : "-"}
                   </span>
                   {b !== null && (
                     <span className="mt-2 flex items-center gap-2 text-sm">

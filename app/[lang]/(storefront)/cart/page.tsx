@@ -22,9 +22,9 @@ type Confirmation = { orderRequestId: string; whatsappUrl: string };
 
 // TODO before going live: replace with your real bank account details.
 const BANK_TRANSFER_INFO = {
-  bank: "[À COMPLÉTER — nom de la banque]",
-  rib: "[À COMPLÉTER — RIB / IBAN]",
-  holder: "[À COMPLÉTER — titulaire du compte]",
+  bank: "[À COMPLÉTER - nom de la banque]",
+  rib: "[À COMPLÉTER - RIB / IBAN]",
+  holder: "[À COMPLÉTER - titulaire du compte]",
 };
 
 export default function CartPage() {

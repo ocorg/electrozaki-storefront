@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { Bricolage_Grotesque, IBM_Plex_Sans_Arabic, JetBrains_Mono, Manrope, Readex_Pro } from "next/font/google";
+import { Bricolage_Grotesque, JetBrains_Mono, Manrope } from "next/font/google";
+import localFont from "next/font/local";
 import { SHOP, SITE_URL } from "@/lib/site";
 import { isLocale, LOCALE_META, LOCALES } from "@/lib/i18n/config";
 import { DICTIONARIES } from "@/lib/i18n/dictionaries";
@@ -27,23 +28,29 @@ const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   weight: ["400", "600", "700"],
 });
-// Arabic: the Latin fonts above have no Arabic letters, so Arabic text falls
-// back to these (globals.css lists them after the Latin ones: "iPhone 13"
-// keeps the brand font inside an Arabic sentence). Not preloaded — only
-// Arabic pages ever render those glyphs, and the browser fetches them then.
-const plexArabic = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
+// Arabic: Alexandria (SIL Open Font License), a modern geometric Arabic face
+// that sits well next to Bricolage and Manrope. On Arabic pages globals.css
+// puts it FIRST in every font stack: the Latin fonts' generated fallbacks
+// (local Arial) cover Arabic letters too, so listed after them it would never
+// be reached. Self-hosted as its Arabic-only file, limited to the Arabic
+// blocks, so Latin words ("iPhone 13") still use the brand fonts; the Google
+// loader would also bring Alexandria's Latin files, which would take over
+// those words. One variable file covers every weight. Not preloaded: only
+// Arabic pages ever render these glyphs.
+const alexandria = localFont({
+  src: "../fonts/alexandria-arabic.woff2",
+  weight: "100 900",
   display: "swap",
-  variable: "--font-plex-arabic",
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-arabic",
   preload: false,
-});
-const readex = Readex_Pro({
-  subsets: ["arabic"],
-  display: "swap",
-  variable: "--font-readex",
-  weight: ["500", "600", "700"],
-  preload: false,
+  adjustFontFallback: false,
+  declarations: [
+    {
+      prop: "unicode-range",
+      value:
+        "U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC",
+    },
+  ],
 });
 
 export function generateStaticParams() {
@@ -88,7 +95,7 @@ export default async function RootLayout({ children, params }: { children: React
     <html
       lang={meta.htmlLang}
       dir={meta.dir}
-      className={`${manrope.variable} ${bricolage.variable} ${jetbrains.variable} ${plexArabic.variable} ${readex.variable}`}
+      className={`${manrope.variable} ${bricolage.variable} ${jetbrains.variable} ${alexandria.variable}`}
     >
       <body className="bg-paper font-sans text-neutral-900">
         <I18nProvider locale={lang}>{children}</I18nProvider>

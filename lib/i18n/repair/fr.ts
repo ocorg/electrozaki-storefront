@@ -16,7 +16,7 @@ export const fr = {
           {
             question: "Le tactile fonctionne encore malgré la fissure, faut-il quand même le changer ?",
             answer:
-              "Oui, c'est recommandé. Une vitre fissurée continue de se fragiliser à chaque manipulation, les éclats peuvent blesser, et l'infiltration d'humidité par la fissure peut endommager la dalle en dessous — un problème bien plus coûteux à réparer qu'un simple remplacement de vitre.",
+              "Oui, c'est recommandé. Une vitre fissurée continue de se fragiliser à chaque manipulation, les éclats peuvent blesser, et l'infiltration d'humidité par la fissure peut endommager la dalle en dessous - un problème bien plus coûteux à réparer qu'un simple remplacement de vitre.",
           },
           {
             question: "Face ID fonctionne-t-il encore après un remplacement d'écran ?",
@@ -26,7 +26,7 @@ export const fr = {
           {
             question: "Pourquoi la luminosité automatique ou True Tone semble différente après réparation ?",
             answer:
-              "Sur certains modèles, le capteur de luminosité/True Tone est apparié logiciellement à l'écran d'origine. Une pièce de qualité correctement recalibrée règle ce point — c'est pour ça que le choix de la pièce et du technicien fait la différence.",
+              "Sur certains modèles, le capteur de luminosité/True Tone est apparié logiciellement à l'écran d'origine. Une pièce de qualité correctement recalibrée règle ce point - c'est pour ça que le choix de la pièce et du technicien fait la différence.",
           },
         ],
       },
@@ -36,7 +36,7 @@ export const fr = {
           {
             question: "J'ai des taches sombres ou des lignes sur l'écran, pas de casse visible en surface : que faire ?",
             answer:
-              "C'est un signe que la dalle elle-même est touchée, pas seulement la vitre — fréquent après un choc même sans fissure visible. Sur la plupart des Galaxy, la vitre et la dalle forment un seul bloc, donc le remplacement du module complet est nécessaire.",
+              "C'est un signe que la dalle elle-même est touchée, pas seulement la vitre - fréquent après un choc même sans fissure visible. Sur la plupart des Galaxy, la vitre et la dalle forment un seul bloc, donc le remplacement du module complet est nécessaire.",
           },
           {
             question: "Le tactile ne répond plus sur certaines zones alors que le verre semble intact ?",
@@ -46,7 +46,7 @@ export const fr = {
           {
             question: "Existe-t-il un moyen de tester l'écran avant de décider d'une réparation ?",
             answer:
-              "Oui — le menu de diagnostic caché de Samsung (composer *#0*# dans l'app téléphone) permet de tester le multitouch, les pixels morts et la vibration, utile pour confirmer l'étendue du problème avant réparation.",
+              "Oui - le menu de diagnostic caché de Samsung (composer *#0*# dans l'app téléphone) permet de tester le multitouch, les pixels morts et la vibration, utile pour confirmer l'étendue du problème avant réparation.",
           },
         ],
       },
@@ -56,12 +56,12 @@ export const fr = {
           {
             question: "Après une réparation ailleurs, j'ai des touches \"fantômes\" qui apparaissent seules ?",
             answer:
-              "C'est généralement le signe d'une nappe tactile mal reconnectée ou d'une colle de fixation de qualité insuffisante lors d'un remplacement précédent — un problème d'installation, pas de la pièce elle-même.",
+              "C'est généralement le signe d'une nappe tactile mal reconnectée ou d'une colle de fixation de qualité insuffisante lors d'un remplacement précédent - un problème d'installation, pas de la pièce elle-même.",
           },
           {
             question: "MIUI affiche \"pièce non originale détectée\" après un changement d'écran, est-ce grave ?",
             answer:
-              "Non, c'est une notification logicielle informative sur certains modèles Xiaomi quand l'écran n'est pas la pièce d'usine exacte — elle n'empêche pas le fonctionnement normal avec une pièce de qualité équivalente.",
+              "Non, c'est une notification logicielle informative sur certains modèles Xiaomi quand l'écran n'est pas la pièce d'usine exacte - elle n'empêche pas le fonctionnement normal avec une pièce de qualité équivalente.",
           },
         ],
       },
@@ -71,7 +71,7 @@ export const fr = {
           {
             question: "Mon téléphone vibre et sonne à la réception d'un appel, mais l'écran reste noir après une chute ?",
             answer:
-              "C'est souvent la connectique de l'écran (nappe débranchée par le choc) ou le rétroéclairage, pas la carte mère — un signe plutôt rassurant qui pointe vers une réparation simple.",
+              "C'est souvent la connectique de l'écran (nappe débranchée par le choc) ou le rétroéclairage, pas la carte mère - un signe plutôt rassurant qui pointe vers une réparation simple.",
           },
         ],
       },
@@ -81,7 +81,7 @@ export const fr = {
           {
             question: "Toutes les marques utilisent-elles le même type d'écran ?",
             answer:
-              "Non — LCD, AMOLED et leurs variantes ont des coûts et des sensibilités différentes. Le diagnostic détermine si seule la vitre extérieure ou l'ensemble du module doit être remplacé, ce qui influence fortement le prix.",
+              "Non - LCD, AMOLED et leurs variantes ont des coûts et des sensibilités différentes. Le diagnostic détermine si seule la vitre extérieure ou l'ensemble du module doit être remplacé, ce qui influence fortement le prix.",
           },
         ],
       },
@@ -93,7 +93,7 @@ export const fr = {
     shortTitle: "Batterie",
     cardDescription: "Batterie qui ne tient plus la charge ? On la remplace.",
     intro:
-      "Toute batterie lithium-ion perd naturellement de sa capacité avec le temps — la dégradation devient généralement sensible après environ 500 cycles de charge complets, un peu plus tôt en cas de chaleur fréquente ou de charge à 100% en continu. Ce n'est pas un défaut, c'est de la chimie — mais ça se remplace facilement.",
+      "Toute batterie lithium-ion perd naturellement de sa capacité avec le temps - la dégradation devient généralement sensible après environ 500 cycles de charge complets, un peu plus tôt en cas de chaleur fréquente ou de charge à 100% en continu. Ce n'est pas un défaut, c'est de la chimie - mais ça se remplace facilement.",
     brands: [
       {
         brand: "Apple (iPhone)",
@@ -126,7 +126,7 @@ export const fr = {
           {
             question: "Mon Galaxy chauffe beaucoup pendant la charge, batterie en cause ?",
             answer:
-              "Souvent lié à l'usage du téléphone pendant la charge (jeu, GPS, streaming), qui sollicite processeur et batterie en même temps. Une batterie vieillissante peut amplifier cet échauffement — à vérifier en diagnostic si le phénomène est nouveau.",
+              "Souvent lié à l'usage du téléphone pendant la charge (jeu, GPS, streaming), qui sollicite processeur et batterie en même temps. Une batterie vieillissante peut amplifier cet échauffement - à vérifier en diagnostic si le phénomène est nouveau.",
           },
         ],
       },
@@ -136,7 +136,7 @@ export const fr = {
           {
             question: "MIUI restreint des apps en arrière-plan, est-ce lié à la batterie physique ?",
             answer:
-              "Non, c'est une fonction logicielle d'économie d'énergie de MIUI, indépendante de l'état réel de la batterie — elle peut retarder des notifications même sur une batterie neuve.",
+              "Non, c'est une fonction logicielle d'économie d'énergie de MIUI, indépendante de l'état réel de la batterie - elle peut retarder des notifications même sur une batterie neuve.",
           },
           {
             question: "La charge rapide abîme-t-elle la batterie plus vite ?",
@@ -151,7 +151,7 @@ export const fr = {
           {
             question: "Ma batterie se vide vite alors que le téléphone est peu utilisé ?",
             answer:
-              "Avant de conclure à un problème matériel, vérifiez les apps en arrière-plan qui se relancent fréquemment — un comportement parfois observé sur les modèles sans services Google. Si le drain persiste après vérification logicielle, un diagnostic batterie est justifié.",
+              "Avant de conclure à un problème matériel, vérifiez les apps en arrière-plan qui se relancent fréquemment - un comportement parfois observé sur les modèles sans services Google. Si le drain persiste après vérification logicielle, un diagnostic batterie est justifié.",
           },
         ],
       },
@@ -171,7 +171,7 @@ export const fr = {
   connecteur: {
     title: "Port de charge qui ne charge plus ou mal",
     shortTitle: "Port de charge",
-    cardDescription: "Le téléphone ne charge plus ou mal — réparation rapide.",
+    cardDescription: "Le téléphone ne charge plus ou mal - réparation rapide.",
     intro:
       "La cause la plus fréquente d'un port de charge capricieux n'est pas une panne électronique mais un blocage mécanique : poussière, peluches de poche ou oxydation liée à l'humidité empêchent un contact correct entre les broches et le câble.",
     brands: [
@@ -181,12 +181,12 @@ export const fr = {
           {
             question: "\"Alerte liquide détectée\" empêche la charge, que faire ?",
             answer:
-              "C'est une protection logicielle qui bloque volontairement la charge pour éviter un court-circuit. Laissez le port sécher complètement à l'air libre (jamais de source de chaleur) avant de retenter — forcer la charge pendant l'alerte peut aggraver les dégâts.",
+              "C'est une protection logicielle qui bloque volontairement la charge pour éviter un court-circuit. Laissez le port sécher complètement à l'air libre (jamais de source de chaleur) avant de retenter - forcer la charge pendant l'alerte peut aggraver les dégâts.",
           },
           {
             question: "Le téléphone charge, mais beaucoup plus lentement qu'avant : le port est-il en cause ?",
             answer:
-              "Le plus souvent non — un câble ou chargeur non certifié, ou un câble usé, sont les premières causes de charge lente. Tester avec un câble et un adaptateur certifiés différents permet d'isoler le vrai problème avant de suspecter le port.",
+              "Le plus souvent non - un câble ou chargeur non certifié, ou un câble usé, sont les premières causes de charge lente. Tester avec un câble et un adaptateur certifiés différents permet d'isoler le vrai problème avant de suspecter le port.",
           },
         ],
       },
@@ -196,12 +196,12 @@ export const fr = {
           {
             question: "Le câble tient mal ou bouge dans le port, c'est normal ?",
             answer:
-              "Non — un connecteur USB-C en bon état maintient le câble fermement. Un jeu ou un mouvement anormal signale une usure mécanique des broches qu'il vaut mieux traiter avant qu'elle n'empire et n'endommage aussi le câble.",
+              "Non - un connecteur USB-C en bon état maintient le câble fermement. Un jeu ou un mouvement anormal signale une usure mécanique des broches qu'il vaut mieux traiter avant qu'elle n'empire et n'endommage aussi le câble.",
           },
           {
             question: "Le téléphone ne charge que dans une position précise du câble ?",
             answer:
-              "C'est presque toujours le signe d'un connecteur partiellement endommagé ou encrassé plutôt qu'un défaut de câble — un nettoyage professionnel du port résout la majorité de ces cas.",
+              "C'est presque toujours le signe d'un connecteur partiellement endommagé ou encrassé plutôt qu'un défaut de câble - un nettoyage professionnel du port résout la majorité de ces cas.",
           },
         ],
       },
@@ -223,7 +223,7 @@ export const fr = {
     shortTitle: "Caméra",
     cardDescription: "Photo floue ou caméra hors service, diagnostic et réparation.",
     intro:
-      "Avant de suspecter le matériel, un simple redémarrage ou la fermeture forcée de l'application résout une bonne partie des soucis de caméra — le reste vient d'un module physique désaligné ou encrassé après un choc.",
+      "Avant de suspecter le matériel, un simple redémarrage ou la fermeture forcée de l'application résout une bonne partie des soucis de caméra - le reste vient d'un module physique désaligné ou encrassé après un choc.",
     brands: [
       {
         brand: "Apple (iPhone)",
@@ -246,12 +246,12 @@ export const fr = {
           {
             question: "Une tache identique apparaît sur toutes mes photos, même après nettoyage de l'objectif ?",
             answer:
-              "C'est un signe de poussière infiltrée à l'intérieur du module, entre les lentilles — invisible et impossible à nettoyer de l'extérieur. Cela nécessite une ouverture du module par un technicien.",
+              "C'est un signe de poussière infiltrée à l'intérieur du module, entre les lentilles - invisible et impossible à nettoyer de l'extérieur. Cela nécessite une ouverture du module par un technicien.",
           },
           {
             question: "L'appareil photo se ferme tout seul (crash) au lancement ?",
             answer:
-              "Commencez par vider le cache de l'application appareil photo et vérifier les mises à jour système — la majorité des crashs de ce type sont logiciels, pas matériels.",
+              "Commencez par vider le cache de l'application appareil photo et vérifier les mises à jour système - la majorité des crashs de ce type sont logiciels, pas matériels.",
           },
         ],
       },
@@ -283,7 +283,7 @@ export const fr = {
     shortTitle: "Son / Micro",
     cardDescription: "Haut-parleur ou micro défaillant, remis en état.",
     intro:
-      "Un smartphone a en réalité plusieurs micros et haut-parleurs distincts (écouteur d'appel, haut-parleur multimédia, micros de réduction de bruit) — identifier lequel est en cause change beaucoup le diagnostic. La poussière accumulée dans les grilles est la cause la plus fréquente et la plus simple à résoudre.",
+      "Un smartphone a en réalité plusieurs micros et haut-parleurs distincts (écouteur d'appel, haut-parleur multimédia, micros de réduction de bruit) - identifier lequel est en cause change beaucoup le diagnostic. La poussière accumulée dans les grilles est la cause la plus fréquente et la plus simple à résoudre.",
     brands: [
       {
         brand: "Apple (iPhone)",
@@ -316,7 +316,7 @@ export const fr = {
           {
             question: "Le son a un grésillement à volume élevé uniquement ?",
             answer:
-              "C'est un signe classique de membrane de haut-parleur endommagée ou encrassée — un nettoyage professionnel suffit parfois, sinon un remplacement de la pièce est nécessaire.",
+              "C'est un signe classique de membrane de haut-parleur endommagée ou encrassée - un nettoyage professionnel suffit parfois, sinon un remplacement de la pièce est nécessaire.",
           },
         ],
       },
@@ -326,7 +326,7 @@ export const fr = {
           {
             question: "Une exposition à l'eau peut-elle causer ce genre de panne même sur un téléphone \"résistant à l'eau\" ?",
             answer:
-              "Oui — la certification de résistance à l'eau (IP) se dégrade avec le temps et les chocs, et les grilles de haut-parleur sont un point d'entrée classique pour l'humidité résiduelle qui affecte le son après coup.",
+              "Oui - la certification de résistance à l'eau (IP) se dégrade avec le temps et les chocs, et les grilles de haut-parleur sont un point d'entrée classique pour l'humidité résiduelle qui affecte le son après coup.",
           },
         ],
       },
@@ -338,7 +338,7 @@ export const fr = {
     shortTitle: "Désimlockage réseau",
     cardDescription: "Déblocage réseau pour utiliser votre téléphone partout.",
     intro:
-      "Un verrouillage réseau (SIM lock) est une restriction logicielle imposée par un opérateur, liée à l'IMEI de l'appareil — souvent posée en échange d'un prix subventionné. C'est très différent d'un IMEI blacklisté (téléphone déclaré volé ou impayé), un statut qu'aucun déblocage ne peut lever puisqu'il ne s'agit pas du même problème.",
+      "Un verrouillage réseau (SIM lock) est une restriction logicielle imposée par un opérateur, liée à l'IMEI de l'appareil - souvent posée en échange d'un prix subventionné. C'est très différent d'un IMEI blacklisté (téléphone déclaré volé ou impayé), un statut qu'aucun déblocage ne peut lever puisqu'il ne s'agit pas du même problème.",
     brands: [
       {
         brand: "Tous appareils",
@@ -351,12 +351,12 @@ export const fr = {
           {
             question: "Quelle est la différence entre déverrouillage réseau et IMEI blacklisté ?",
             answer:
-              "Le déverrouillage réseau retire une restriction logicielle posée par l'opérateur d'origine. Un IMEI blacklisté signifie que l'appareil a été signalé volé ou avec un solde impayé auprès des opérateurs — un problème totalement différent qu'aucun déblocage ne peut résoudre légalement.",
+              "Le déverrouillage réseau retire une restriction logicielle posée par l'opérateur d'origine. Un IMEI blacklisté signifie que l'appareil a été signalé volé ou avec un solde impayé auprès des opérateurs - un problème totalement différent qu'aucun déblocage ne peut résoudre légalement.",
           },
           {
             question: "Après le déblocage, mon téléphone affiche \"réseau non enregistré\" avec la nouvelle SIM ?",
             answer:
-              "C'est très souvent un simple réglage d'APN manquant ou incorrect pour le nouvel opérateur, pas un échec du déblocage lui-même — un point que nous vérifions systématiquement après chaque désimlockage.",
+              "C'est très souvent un simple réglage d'APN manquant ou incorrect pour le nouvel opérateur, pas un échec du déblocage lui-même - un point que nous vérifions systématiquement après chaque désimlockage.",
           },
         ],
       },
@@ -366,7 +366,7 @@ export const fr = {
           {
             question: "Un iPhone financé par un opérateur peut-il être désimlocké avant la fin du remboursement ?",
             answer:
-              "Généralement non — le verrouillage lié au financement reste actif tant que les conditions de l'opérateur ne sont pas remplies, indépendamment de tout service de déblocage tiers.",
+              "Généralement non - le verrouillage lié au financement reste actif tant que les conditions de l'opérateur ne sont pas remplies, indépendamment de tout service de déblocage tiers.",
           },
         ],
       },
@@ -377,7 +377,7 @@ export const fr = {
     shortTitle: "Bloqué, lent ou en boucle",
     cardDescription: "Téléphone figé sur le logo, très lent, qui plante ou redémarre sans arrêt.",
     intro:
-      "La plupart de ces pannes sont logicielles : une mise à jour interrompue, une mémoire pleine, une application défaillante ou un système corrompu. Elles se règlent souvent sans changer de pièce — mais un redémarrage en boucle peut aussi venir d'une batterie usée, que nous vérifions d'abord.",
+      "La plupart de ces pannes sont logicielles : une mise à jour interrompue, une mémoire pleine, une application défaillante ou un système corrompu. Elles se règlent souvent sans changer de pièce - mais un redémarrage en boucle peut aussi venir d'une batterie usée, que nous vérifions d'abord.",
     brands: [
       {
         brand: "Tous appareils",

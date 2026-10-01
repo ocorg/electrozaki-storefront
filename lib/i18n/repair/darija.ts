@@ -15,7 +15,7 @@ export const darija: RepairTopicsText = {
           {
             question: "L tactile mazal khddam wakha l'écran mcheqqeq, wach khass nbeddlo?",
             answer:
-              "Ah, mzyan tbeddlo. Zzaj l mcheqqeq kaydh3af kol mra katchedd téléphone, t9der tjre7 b chi 9t3a, w rtouba li katdkhel mn cheqqa t9der tkhsser la dalle li ta7tha — w hadak tasli7 ghali bzzaf 3la tbdil dyal vitre.",
+              "Ah, mzyan tbeddlo. Zzaj l mcheqqeq kaydh3af kol mra katchedd téléphone, t9der tjre7 b chi 9t3a, w rtouba li katdkhel mn cheqqa t9der tkhsser la dalle li ta7tha - w hadak tasli7 ghali bzzaf 3la tbdil dyal vitre.",
           },
           {
             question: "Wach Face ID kaybqa khddam men b3d ma nbeddlo l'écran?",
@@ -25,7 +25,7 @@ export const darija: RepairTopicsText = {
           {
             question: "3lach luminosité automatique wla True Tone kaybanou mbeddlin men b3d tasli7?",
             answer:
-              "F chi modèles, capteur dyal luminosité/True Tone mrbout b logiciel m3a l'écran d'origine. Pièce mzyana w m3ayra mzyan katsl7 had l mouchkil — w hadchi 3lach khtiyar l pièce w technicien kaydir lfer9.",
+              "F chi modèles, capteur dyal luminosité/True Tone mrbout b logiciel m3a l'écran d'origine. Pièce mzyana w m3ayra mzyan katsl7 had l mouchkil - w hadchi 3lach khtiyar l pièce w technicien kaydir lfer9.",
           },
         ],
       },
@@ -35,7 +35,7 @@ export const darija: RepairTopicsText = {
           {
             question: "3ndi taches k7lin wla khtout f l'écran, bla ma ybano 7ta cheqqa: chno ndir?",
             answer:
-              "Hadi 3alama belli la dalle nit hiya li tkhssrat, machi ghir zzaj — kaywe9e3 bzzaf men b3d chi darba 7ta bla cheqqa bayna. F ktar les Galaxy, zzaj w la dalle bloc wa7ed, donc khass ytbeddel l module kamel.",
+              "Hadi 3alama belli la dalle nit hiya li tkhssrat, machi ghir zzaj - kaywe9e3 bzzaf men b3d chi darba 7ta bla cheqqa bayna. F ktar les Galaxy, zzaj w la dalle bloc wa7ed, donc khass ytbeddel l module kamel.",
           },
           {
             question: "L tactile ma bqach kayjawb f chi blayes wakha zzaj bayn salem?",
@@ -45,7 +45,7 @@ export const darija: RepairTopicsText = {
           {
             question: "Kayna chi tari9a ntesti biha l'écran 9bel ma nqerrer ndir tasli7?",
             answer:
-              "Ah — menu diagnostic mkhbi dyal Samsung (dreb *#0*# f l'app dyal téléphone) kaykhllik ttesti multitouch, pixels mytin w vibration, mzyan bach t3ref ch7al kbir l mouchkil 9bel tasli7.",
+              "Ah - menu diagnostic mkhbi dyal Samsung (dreb *#0*# f l'app dyal téléphone) kaykhllik ttesti multitouch, pixels mytin w vibration, mzyan bach t3ref ch7al kbir l mouchkil 9bel tasli7.",
           },
         ],
       },
@@ -55,12 +55,12 @@ export const darija: RepairTopicsText = {
           {
             question: "Men b3d tasli7 f blasa khra, kaytl3o lia touches « fantômes » bou7dhom?",
             answer:
-              "Ghaliban hadi 3alama 3la nappe tactile ma trbtatch mzyan wla colle 9lilat l jawda f tbdil li fat — mouchkil f tarkib, machi f l pièce nit.",
+              "Ghaliban hadi 3alama 3la nappe tactile ma trbtatch mzyan wla colle 9lilat l jawda f tbdil li fat - mouchkil f tarkib, machi f l pièce nit.",
           },
           {
             question: "MIUI katban « pièce non originale détectée » men b3d tbdil l'écran, wach khatar?",
             answer:
-              "La, ghir notification dyal logiciel kat3lmek f chi modèles Xiaomi mnin l'écran machi nit l pièce dyal l'usine — ma katmne3ch l'usage l 3adi m3a pièce mzyana b7alha.",
+              "La, ghir notification dyal logiciel kat3lmek f chi modèles Xiaomi mnin l'écran machi nit l pièce dyal l'usine - ma katmne3ch l'usage l 3adi m3a pièce mzyana b7alha.",
           },
         ],
       },
@@ -70,7 +70,7 @@ export const darija: RepairTopicsText = {
           {
             question: "Téléphone kayrjef w kayrenn mnin kayjini appel, walakin l'écran kaybqa k7el men b3d ma ta7?",
             answer:
-              "Bzzaf dyal l merrat kayna l connectique dyal l'écran (nappe t9at3at b darba) wla rétroéclairage, machi carte mère — 3alama mzyana kat9oul belli tasli7 sahel.",
+              "Bzzaf dyal l merrat kayna l connectique dyal l'écran (nappe t9at3at b darba) wla rétroéclairage, machi carte mère - 3alama mzyana kat9oul belli tasli7 sahel.",
           },
         ],
       },
@@ -80,7 +80,7 @@ export const darija: RepairTopicsText = {
           {
             question: "Wach ga3 les marques kaysta3mlo nfs no3 dyal l'écran?",
             answer:
-              "La — LCD, AMOLED w les variantes dyalhom 3ndhom prix w 7ssasiya mkhtalfa. Diagnostic kaybyyen wach ghir zzaj lberrani wla l module kamel li khasso ytbeddel, w hadchi kay2tter bzzaf f l prix.",
+              "La - LCD, AMOLED w les variantes dyalhom 3ndhom prix w 7ssasiya mkhtalfa. Diagnostic kaybyyen wach ghir zzaj lberrani wla l module kamel li khasso ytbeddel, w hadchi kay2tter bzzaf f l prix.",
           },
         ],
       },
@@ -92,7 +92,7 @@ export const darija: RepairTopicsText = {
     shortTitle: "Batterie",
     cardDescription: "Batterie ma bqatch katchedd charge? Kanbeddlouha lik.",
     intro:
-      "Kol batterie lithium-ion kat2ekhed mn capacité dyalha b tabi3a m3a l wa9t — ghaliban katban men b3d chi 500 cycle dyal charge kamla, w 9bel chwiya ila kanet sskhana bzzaf wla charge dima 7tal 100%. Machi 3ib, hadi kimya — walakin kattbeddel b sahoula.",
+      "Kol batterie lithium-ion kat2ekhed mn capacité dyalha b tabi3a m3a l wa9t - ghaliban katban men b3d chi 500 cycle dyal charge kamla, w 9bel chwiya ila kanet sskhana bzzaf wla charge dima 7tal 100%. Machi 3ib, hadi kimya - walakin kattbeddel b sahoula.",
     brands: [
       {
         brand: "Apple (iPhone)",
@@ -125,7 +125,7 @@ export const darija: RepairTopicsText = {
           {
             question: "Galaxy dyali kaysakhen bzzaf f charge, wach batterie hiya sbab?",
             answer:
-              "Ghaliban 7it katsta3mel téléphone w howa f charge (jeux, GPS, streaming), w hadchi kaytqqel 3la processeur w batterie f nfs l wa9t. Batterie 9dima t9der tzid f sskhana — chouf f diagnostic ila kan had chi jdid.",
+              "Ghaliban 7it katsta3mel téléphone w howa f charge (jeux, GPS, streaming), w hadchi kaytqqel 3la processeur w batterie f nfs l wa9t. Batterie 9dima t9der tzid f sskhana - chouf f diagnostic ila kan had chi jdid.",
           },
         ],
       },
@@ -135,7 +135,7 @@ export const darija: RepairTopicsText = {
           {
             question: "MIUI katssedd 3la les apps f arrière-plan, wach 3ndha 3ela9a b batterie?",
             answer:
-              "La, hadi fonction dyal logiciel dyal MIUI bach twffer l'énergie, ma 3ndha 7ta 3ela9a b 7alt batterie l7a9i9iya — t9der t2khkher les notifications 7ta m3a batterie jdida.",
+              "La, hadi fonction dyal logiciel dyal MIUI bach twffer l'énergie, ma 3ndha 7ta 3ela9a b 7alt batterie l7a9i9iya - t9der t2khkher les notifications 7ta m3a batterie jdida.",
           },
           {
             question: "Wach charge rapide katkhsser batterie dghya?",
@@ -150,7 +150,7 @@ export const darija: RepairTopicsText = {
           {
             question: "Batterie dyali katkhwa dghya wakha ma kansta3melch téléphone bzzaf?",
             answer:
-              "9bel ma tgoul mouchkil matériel, chouf les apps li f arrière-plan w kay3awdo ybdaw bou7dhom — 7aja katban f modèles bla services Google. Ila bqa kaykhwa men b3d ma chefti logiciel, diagnostic dyal batterie mzyan.",
+              "9bel ma tgoul mouchkil matériel, chouf les apps li f arrière-plan w kay3awdo ybdaw bou7dhom - 7aja katban f modèles bla services Google. Ila bqa kaykhwa men b3d ma chefti logiciel, diagnostic dyal batterie mzyan.",
           },
         ],
       },
@@ -160,7 +160,7 @@ export const darija: RepairTopicsText = {
           {
             question: "Kifach n3ref belli batterie hiya l mouchkil machi chi 7aja khra?",
             answer:
-              "Téléphone kaytfa fjat, dhar dyalo ntfekh w bayn, autonomie kattay7 f chi simanat, wla sskhana ktar mn l3ada — hado huma l 3alamat li kayt9o bihom. Diagnostic dghya kayakkd 9bel ay tbdil.",
+              "Téléphone kaytfa fjat, dhar dyalo ntfekh w bayn, autonomie kattay7 f chi simanat, wla sskhana ktar mn l3ada - hado huma l 3alamat li kayt9o bihom. Diagnostic dghya kayakkd 9bel ay tbdil.",
           },
         ],
       },
@@ -170,7 +170,7 @@ export const darija: RepairTopicsText = {
   connecteur: {
     title: "Port de charge ma kaychargich wla kaychargi 3iyan",
     shortTitle: "Port de charge",
-    cardDescription: "Téléphone ma kaychargich wla kaychargi b s3ouba — tasli7 dghya.",
+    cardDescription: "Téléphone ma kaychargich wla kaychargi b s3ouba - tasli7 dghya.",
     intro:
       "Ktar sbab kaykhlli port de charge ykhdem mrra w mrra la machi panne électronique, walakin blocage mécanique: l ghbra, zghb dyal jib wla oxydation mn rtouba kaymn3o l contact mzyan bin les broches w l câble.",
     brands: [
@@ -180,12 +180,12 @@ export const darija: RepairTopicsText = {
           {
             question: "« Alerte liquide détectée » katmne3 charge, chno ndir?",
             answer:
-              "Hadi protection dyal logiciel katmne3 charge b l3ani bach ma ykounch court-circuit. Khlli l port ynchef mzyan f l hwa (bla ta chi sskhana) 9bel ma t3awed — ila forciti charge f wa9t l'alerte t9der tzid f l'dégât.",
+              "Hadi protection dyal logiciel katmne3 charge b l3ani bach ma ykounch court-circuit. Khlli l port ynchef mzyan f l hwa (bla ta chi sskhana) 9bel ma t3awed - ila forciti charge f wa9t l'alerte t9der tzid f l'dégât.",
           },
           {
             question: "Téléphone kaychargi walakin b chwiya bzzaf 3la 9bel: wach l port?",
             answer:
-              "Ghaliban la — câble wla chargeur machi certifié wla mst3mel bzzaf howa awel sbab dyal charge b chwiya. Jreb b câble w adaptateur certifiés khrin bach t3ref l mouchkil l7a9i9i 9bel ma tchekk f l port.",
+              "Ghaliban la - câble wla chargeur machi certifié wla mst3mel bzzaf howa awel sbab dyal charge b chwiya. Jreb b câble w adaptateur certifiés khrin bach t3ref l mouchkil l7a9i9i 9bel ma tchekk f l port.",
           },
         ],
       },
@@ -195,12 +195,12 @@ export const darija: RepairTopicsText = {
           {
             question: "L câble ma chaddch mzyan wla kaytt7errek f l port, wach normal?",
             answer:
-              "La — connecteur USB-C salem kaychedd l câble mzyan. Ila kan kaytt7errek ktar mn l3ada, rah les broches tkelsso, w mzyan tsl7ha 9bel ma tzid w tkhsser 7ta l câble.",
+              "La - connecteur USB-C salem kaychedd l câble mzyan. Ila kan kaytt7errek ktar mn l3ada, rah les broches tkelsso, w mzyan tsl7ha 9bel ma tzid w tkhsser 7ta l câble.",
           },
           {
             question: "Téléphone ma kaychargi ghir f wa7ed l position dyal l câble?",
             answer:
-              "Hadi t9riban dima 3alama 3la connecteur mkhsser chwiya wla m3ammer b l wsakh, machi l câble — nettoyage professionnel dyal l port kaysl7 ktar had l 7alat.",
+              "Hadi t9riban dima 3alama 3la connecteur mkhsser chwiya wla m3ammer b l wsakh, machi l câble - nettoyage professionnel dyal l port kaysl7 ktar had l 7alat.",
           },
         ],
       },
@@ -222,7 +222,7 @@ export const darija: RepairTopicsText = {
     shortTitle: "Caméra",
     cardDescription: "Tsawer mdbbbin wla caméra ma khddamach, diagnostic w tasli7.",
     intro:
-      "9bel ma tchekk f l matériel, redémarrage sahel wla tseddi l'app b l'force kaysl7 bzzaf dyal machakil l caméra — w lba9i kayji mn module tzeg mn blasto wla twssekh men b3d chi darba.",
+      "9bel ma tchekk f l matériel, redémarrage sahel wla tseddi l'app b l'force kaysl7 bzzaf dyal machakil l caméra - w lba9i kayji mn module tzeg mn blasto wla twssekh men b3d chi darba.",
     brands: [
       {
         brand: "Apple (iPhone)",
@@ -245,12 +245,12 @@ export const darija: RepairTopicsText = {
           {
             question: "Nfs tache katban f ga3 tsawer dyali, 7ta men b3d ma n9it l'objectif?",
             answer:
-              "Hadi 3alama 3la ghbra dkhlat l dakhel l module, bin les lentilles — ma katbanch w ma kat9derch tneqqiha mn berra. Khass technicien y7el l module.",
+              "Hadi 3alama 3la ghbra dkhlat l dakhel l module, bin les lentilles - ma katbanch w ma kat9derch tneqqiha mn berra. Khass technicien y7el l module.",
           },
           {
             question: "Caméra katsedd bou7dha (crash) mnin kan7elha?",
             answer:
-              "Bda b tmsse7 l cache dyal l'app caméra w chouf wach kayna mise à jour dyal système — ktar had l crashs logiciel, machi matériel.",
+              "Bda b tmsse7 l cache dyal l'app caméra w chouf wach kayna mise à jour dyal système - ktar had l crashs logiciel, machi matériel.",
           },
         ],
       },
@@ -282,7 +282,7 @@ export const darija: RepairTopicsText = {
     shortTitle: "Sout / Micro",
     cardDescription: "Haut-parleur wla micro fih mouchkil, kanrjj3ouh ykhdem.",
     intro:
-      "Smartphone f l7a9i9a fih bzzaf d micros w haut-parleurs mfar9in (écouteur dyal appels, haut-parleur dyal multimédia, micros dyal réduction de bruit) — t3ref chmen wa7ed fih l mouchkil kaybeddel diagnostic bzzaf. L ghbra li kattjme3 f les grilles hiya ktar sbab, w hiya sahla f tasli7.",
+      "Smartphone f l7a9i9a fih bzzaf d micros w haut-parleurs mfar9in (écouteur dyal appels, haut-parleur dyal multimédia, micros dyal réduction de bruit) - t3ref chmen wa7ed fih l mouchkil kaybeddel diagnostic bzzaf. L ghbra li kattjme3 f les grilles hiya ktar sbab, w hiya sahla f tasli7.",
     brands: [
       {
         brand: "Apple (iPhone)",
@@ -315,7 +315,7 @@ export const darija: RepairTopicsText = {
           {
             question: "Sout kayweshwesh ghir mnin kanteli3 l volume?",
             answer:
-              "Hadi 3alama classique dyal membrane dyal haut-parleur mkhssra wla m3ammra — mrrat nettoyage professionnel kaykfi, w ila la khass tbdil l pièce.",
+              "Hadi 3alama classique dyal membrane dyal haut-parleur mkhssra wla m3ammra - mrrat nettoyage professionnel kaykfi, w ila la khass tbdil l pièce.",
           },
         ],
       },
@@ -325,7 +325,7 @@ export const darija: RepairTopicsText = {
           {
             question: "Wach l ma y9der ydir had l panne 7ta f téléphone « résistant à l'eau »?",
             answer:
-              "Ah — certification dyal résistance à l'eau (IP) katdh3af m3a l wa9t w d-drabi, w grilles dyal haut-parleur blasa classique fin katdkhel rtouba li kat2tter f sout men b3d.",
+              "Ah - certification dyal résistance à l'eau (IP) katdh3af m3a l wa9t w d-drabi, w grilles dyal haut-parleur blasa classique fin katdkhel rtouba li kat2tter f sout men b3d.",
           },
         ],
       },
@@ -337,7 +337,7 @@ export const darija: RepairTopicsText = {
     shortTitle: "Débloquer réseau",
     cardDescription: "Débloquer réseau bach tsta3mel téléphone dyalek m3a ay opérateur.",
     intro:
-      "Verrouillage réseau (SIM lock) howa restriction dyal logiciel kaydirha opérateur, mrbouta b l'IMEI dyal l'appareil — ghaliban 7it tba3 lik b prix mnaqqes. Hadchi mkhtalef bzzaf 3la IMEI blacklisté (téléphone mdeclari m3ahu mesrou9 wla ma mkhllesch), w hadik 7ala ta déblocage ma y9der y7iyedha 7it machi nfs l mouchkil.",
+      "Verrouillage réseau (SIM lock) howa restriction dyal logiciel kaydirha opérateur, mrbouta b l'IMEI dyal l'appareil - ghaliban 7it tba3 lik b prix mnaqqes. Hadchi mkhtalef bzzaf 3la IMEI blacklisté (téléphone mdeclari m3ahu mesrou9 wla ma mkhllesch), w hadik 7ala ta déblocage ma y9der y7iyedha 7it machi nfs l mouchkil.",
     brands: [
       {
         brand: "Ga3 les appareils",
@@ -350,12 +350,12 @@ export const darija: RepairTopicsText = {
           {
             question: "Chno lfer9 bin déblocage réseau w IMEI blacklisté?",
             answer:
-              "Déblocage réseau kay7iyed restriction dyal logiciel dayrha opérateur lowl. IMEI blacklisté ya3ni l'appareil tsjjel belli mesrou9 wla fih flous ma tkhllsouch 3nd les opérateurs — mouchkil akhor kamel, ta déblocage ma y9der ysl7o b l9anoun.",
+              "Déblocage réseau kay7iyed restriction dyal logiciel dayrha opérateur lowl. IMEI blacklisté ya3ni l'appareil tsjjel belli mesrou9 wla fih flous ma tkhllsouch 3nd les opérateurs - mouchkil akhor kamel, ta déblocage ma y9der ysl7o b l9anoun.",
           },
           {
             question: "Men b3d déblocage, téléphone kaybayen « réseau non enregistré » m3a SIM jdida?",
             answer:
-              "Bzzaf dyal l merrat ghir réglage APN na9es wla ghalat l opérateur jdid, machi déblocage li ma nje7ch — w hadchi kanchoufouh dima men b3d kol déblocage.",
+              "Bzzaf dyal l merrat ghir réglage APN na9es wla ghalat l opérateur jdid, machi déblocage li ma nje7ch - w hadchi kanchoufouh dima men b3d kol déblocage.",
           },
         ],
       },
@@ -365,7 +365,7 @@ export const darija: RepairTopicsText = {
           {
             question: "iPhone chrito b crédit mn 3nd opérateur, wach y9der ytdebloqua 9bel ma nkhlles kolchi?",
             answer:
-              "Ghaliban la — verrouillage dyal crédit kaybqa khddam 7tal tkmmel les conditions dyal opérateur, w ma kayhemmch ay service dyal déblocage mn berra.",
+              "Ghaliban la - verrouillage dyal crédit kaybqa khddam 7tal tkmmel les conditions dyal opérateur, w ma kayhemmch ay service dyal déblocage mn berra.",
           },
         ],
       },
@@ -377,7 +377,7 @@ export const darija: RepairTopicsText = {
     shortTitle: "Bloqué, t9il wla kay3awed",
     cardDescription: "Téléphone wa9ef f logo, t9il bzzaf, kayplanta wla kay3awed ybda bla ma y7bes.",
     intro:
-      "Ktar had l pannes logiciel: mise à jour t9at3at, mémoire 3amra, application fiha mouchkil wla système mkhsser. Bzzaf dyal l merrat katsl7 bla ma nbeddlo ta pièce — walakin redémarrage bla ma y7bes y9der yji 7ta mn batterie mst3mla, w hiya li kanchoufo lowla.",
+      "Ktar had l pannes logiciel: mise à jour t9at3at, mémoire 3amra, application fiha mouchkil wla système mkhsser. Bzzaf dyal l merrat katsl7 bla ma nbeddlo ta pièce - walakin redémarrage bla ma y7bes y9der yji 7ta mn batterie mst3mla, w hiya li kanchoufo lowla.",
     brands: [
       {
         brand: "Ga3 les appareils",
@@ -390,7 +390,7 @@ export const darija: RepairTopicsText = {
           {
             question: "3lach téléphone dyali wella t9il bzzaf?",
             answer:
-              "Mémoire t9riban 3amra, applications khddamin f arrière-plan wla batterie 3yana (système kayn9ess l performance) — hado huma ktar l asbab. Diagnostic kaybyyen wach nettoyage kaykfi wla khass tbdil batterie.",
+              "Mémoire t9riban 3amra, applications khddamin f arrière-plan wla batterie 3yana (système kayn9ess l performance) - hado huma ktar l asbab. Diagnostic kaybyyen wach nettoyage kaykfi wla khass tbdil batterie.",
           },
           {
             question: "Wach ghadi ntlef les données dyali?",

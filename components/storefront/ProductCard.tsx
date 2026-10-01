@@ -74,7 +74,7 @@ export async function ProductCard({ product, priority = false }: { product: Publ
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
             <GradeMeter grade={product.condition} />
             {bMin !== null && bMax !== null && product.condition !== "NEUF" && (
-              <BatteryLevel percent={bMax} label={bMin === bMax ? undefined : `${bMin}–${bMax} %`} />
+              <BatteryLevel percent={bMax} label={bMin === bMax ? undefined : `${bMin}-${bMax} %`} />
             )}
           </div>
         )}
