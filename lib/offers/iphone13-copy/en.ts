@@ -5,7 +5,7 @@ export const en: OfferCopy = {
   meta: {
     title: (gifts: string | null) => `iPhone 13 128GB very good condition${gifts ? ` - free ${gifts}` : ""}`,
     description: (gifts: string | null) =>
-      `iPhone 13 128GB in very good condition in Meknes: battery checked and shown, original parts, 3-month warranty. ${
+      `iPhone 13 128GB in very good condition in Meknes: checked by our technicians, original parts, 3-month warranty. ${
         gifts ? `Free ${gifts}, delivery` : "Delivery"
       } anywhere in Morocco.`,
   },
@@ -14,12 +14,12 @@ export const en: OfferCopy = {
     eyebrow: "Electro Zaki offer · In stock in Meknes",
     title: "iPhone 13",
     subtitle: "128GB · Very good",
-    lead: "The ideal size, the A15 Bionic chip and a dual camera that still impresses. Every phone is checked, and its battery is measured and shown before you pick it.",
+    lead: "The ideal size, the A15 Bionic chip and a dual camera that still impresses. Every phone is checked by our technicians before it's sold.",
     priceLabel: "Offer price",
     instead: "instead of",
     giftBadge: "Free: {item}",
     cta: "Order now",
-    trust: ["Battery {min}% and up", "Original parts", "3-month warranty", "Delivery anywhere in Morocco"],
+    trust: ["Checked by our technicians", "Original parts", "3-month warranty", "Delivery anywhere in Morocco"],
   },
 
   form: {
@@ -53,7 +53,7 @@ export const en: OfferCopy = {
     sending: "Sending…",
     failed: "Couldn't send. Check your connection and try again.",
     consent: "By confirming, you agree that Electro Zaki will call you to finalise the order.",
-    needUnit: "Choose your iPhone above",
+    needUnit: "Choose a colour above",
     needCity: "Choose your delivery town",
     successTitle: "Order received, thank you!",
     successRef: "Reference: {ref}",
@@ -89,8 +89,8 @@ export const en: OfferCopy = {
         text: "6.1-inch OLED, deep blacks and true colours, readable even in bright sun (up to 1,200 nits in HDR).",
       },
       {
-        title: "All-day battery",
-        text: "Up to 19 h of video playback when new, plus fast charging: 50% in 30 minutes with a 20W charger or higher.",
+        title: "Fast charging",
+        text: "50% in 30 minutes with a 20W charger or higher, plus MagSafe or Qi wireless charging.",
       },
       {
         title: "Tough and water-resistant",
@@ -103,12 +103,6 @@ export const en: OfferCopy = {
     ],
   },
 
-  battery: {
-    eyebrow: "The battery, no surprises",
-    title: "You see the battery health before you choose.",
-    text: "Every iPhone in this offer shows its measured battery health (Settings > Battery > Battery Health). Above 80%, Apple considers a battery in good shape: at {min}% and up, you keep most of the original battery life.",
-    points: ["Exact percentage shown for each phone", "Original batteries, never replaced", "Original parts: screen, cameras, Face ID"],
-  },
 
   specs: {
     eyebrow: "Specifications",
@@ -141,14 +135,14 @@ export const en: OfferCopy = {
   checks: {
     eyebrow: "Checked by our technicians",
     title: "Tested before it's sold.",
-    items: ["Battery health", "Screen and touch", "Face ID", "Front and rear cameras", "Speakers and mics", "Network, Wi-Fi and Bluetooth"],
+    items: ["Screen and touch", "Face ID", "Front and rear cameras", "Speakers and mics", "Network, Wi-Fi and Bluetooth"],
   },
 
   steps: {
     eyebrow: "How it works",
     title: "Order in 4 steps.",
     items: [
-      { title: "You order", text: "Pick your iPhone and your town, and leave your name and number." },
+      { title: "You order", text: "Pick the colour and your town, and leave your name and number." },
       { title: "We call you", text: "We confirm the order and the exact delivery address." },
       { title: "300 DH deposit", text: "It reserves your phone before shipping." },
       { title: "Delivery", text: "You receive your iPhone and pay the rest on delivery." },
@@ -166,10 +160,6 @@ export const en: OfferCopy = {
       {
         q: "When will I get my iPhone?",
         a: "After the confirmation call and the deposit, it ships with Ameex: usually 24 to 30 h after pickup. The estimated date shows as soon as you pick your town.",
-      },
-      {
-        q: "Is the battery shown the real one?",
-        a: "Yes. It's the health measured by the iPhone itself (Settings > Battery > Battery Health), read on each phone. You choose the exact phone you receive.",
       },
       {
         q: "Is a charger included?",
@@ -197,7 +187,7 @@ export const en: OfferCopy = {
 
   final: {
     title: "Your iPhone 13 is waiting.",
-    text: (gifts: string | null) => `${gifts ? `Free ${gifts}, b` : "B"}attery shown, 3-month warranty.`,
+    text: (gifts: string | null) => `${gifts ? `Free ${gifts}, 3` : "3"}-month warranty, delivery anywhere in Morocco.`,
     cta: "Order now",
   },
 };

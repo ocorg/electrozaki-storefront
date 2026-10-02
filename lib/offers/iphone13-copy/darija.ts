@@ -7,7 +7,7 @@ export const darija: OfferCopy = {
   meta: {
     title: (gifts: string | null) => `iPhone 13 128GB 7ala mzyana bzzaf${gifts ? ` - ${gifts} cadeau` : ""}`,
     description: (gifts: string | null) =>
-      `iPhone 13 128GB f 7ala mzyana bzzaf f Mknas: batterie mchoufa w bayna, pièces d'origine, garantie 3 chhour. ${
+      `iPhone 13 128GB f 7ala mzyana bzzaf f Mknas: mchouf mn 3nd les techniciens, pièces d'origine, garantie 3 chhour. ${
         gifts ? `${cap(gifts)} cadeau, livraison` : "Livraison"
       } l ga3 lmghrib.`,
   },
@@ -16,12 +16,12 @@ export const darija: OfferCopy = {
     eyebrow: "Offre Electro Zaki · Kayn f Mknas",
     title: "iPhone 13",
     subtitle: "128GB · 7ala mzyana bzzaf",
-    lead: "L 7ajm li ki3jbek, puce A15 Bionic w double caméra mazal katsawer mzyan. Kol téléphone mchouf, w sa7t l batterie dyalo m9iyssa w bayna 9bel ma tkhtaro.",
+    lead: "L 7ajm li ki3jbek, puce A15 Bionic w double caméra mazal katsawer mzyan. Kol téléphone mchouf mn 3nd les techniciens dyalna 9bel l bi3.",
     priceLabel: "Prix dyal l offre",
     instead: "f blast",
     giftBadge: "Cadeau: {item}",
     cta: "Commandi daba",
-    trust: ["Batterie {min}% w ktar", "Pièces d'origine", "Garantie 3 chhour", "Livraison l ga3 lmghrib"],
+    trust: ["Mchouf mn 3nd les techniciens", "Pièces d'origine", "Garantie 3 chhour", "Livraison l ga3 lmghrib"],
   },
 
   form: {
@@ -55,7 +55,7 @@ export const darija: OfferCopy = {
     sending: "Kansifto…",
     failed: "Ma tsifetch. Chouf l connexion dyalek w 3awed.",
     consent: "Mnin katconfirmer, rak mwafe9 belli Electro Zaki y3ayet lik bach ykmmel l commande.",
-    needUnit: "Khtar iPhone dyalek l fou9",
+    needUnit: "Khtar couleur l fou9",
     needCity: "Khtar lmdina dyal livraison",
     successTitle: "Commande wslatna, choukran!",
     successRef: "Référence: {ref}",
@@ -90,8 +90,8 @@ export const darija: OfferCopy = {
         text: "OLED 6,1 pouces, k7el ghame9 w couleurs s7a7, kayban mzyan 7ta f chems (7tal 1 200 nits f HDR).",
       },
       {
-        title: "Batterie l nhar kamel",
-        text: "7tal 19 sa3a d vidéo mnin kan jdid, w charge rapide: 50% f 30 d9i9a b chargeur 20W wla ktar.",
+        title: "Charge rapide",
+        text: "50% f 30 d9i9a b chargeur 20W wla ktar, w charge bla fil MagSafe wla Qi.",
       },
       {
         title: "9a7 w kay9awem l ma",
@@ -104,12 +104,6 @@ export const darija: OfferCopy = {
     ],
   },
 
-  battery: {
-    eyebrow: "Batterie bla mfaj2at",
-    title: "Katchouf sa7t l batterie 9bel ma tkhtar.",
-    text: "Kol iPhone f had l offre kaybayen sa7t l batterie dyalo m9iyssa (Réglages > Batterie > État de la batterie). Fou9 80%, Apple kat3tabar batterie mzyana: b {min}% w ktar, katb9a 3ndek ktar l autonomie d'origine.",
-    points: ["L pourcentage b dbt bayn l kol téléphone", "Batteries d'origine, 3emmerha ma tbeddlat", "Pièces d'origine: l'écran, caméras, Face ID"],
-  },
 
   specs: {
     eyebrow: "Fiche technique",
@@ -142,14 +136,14 @@ export const darija: OfferCopy = {
   checks: {
     eyebrow: "Mchouf mn 3nd les techniciens dyalna",
     title: "Mtesti 9bel l bi3.",
-    items: ["Sa7t l batterie", "L'écran w tactile", "Face ID", "Caméras l9ddam w l lor", "Haut-parleurs w micros", "Réseau, Wi-Fi w Bluetooth"],
+    items: ["L'écran w tactile", "Face ID", "Caméras l9ddam w l lor", "Haut-parleurs w micros", "Réseau, Wi-Fi w Bluetooth"],
   },
 
   steps: {
     eyebrow: "Kifach katdouz",
     title: "Commandi f 4 étapes.",
     items: [
-      { title: "Katcommandi", text: "Khtar iPhone dyalek w lmdina, w khlli smiytek w r9mek." },
+      { title: "Katcommandi", text: "Khtar couleur w lmdina, w khlli smiytek w r9mek." },
       { title: "Kan3ayto lik", text: "Kanconfirmiw l commande w l'adresse b dbt." },
       { title: "3arboun 300 DH", text: "Kay7jez lik téléphone 9bel l expédition." },
       { title: "Livraison", text: "Kaywslek iPhone dyalek w katkhlles lba9i mnin twslek." },
@@ -167,10 +161,6 @@ export const darija: OfferCopy = {
       {
         q: "Imta ghadi iwslni iPhone?",
         a: "Men b3d l'appel dyal confirmation w l3arboun, kaymchi m3a Ameex: ghaliban 24 l 30 sa3a men b3d ma yjiwh. Nhar l livraison kayban mnin tkhtar lmdina dyalek.",
-      },
-      {
-        q: "Wach l batterie li bayna s7i7a?",
-        a: "Ah. Hiya sa7t li kay9iss iPhone b rasso (Réglages > Batterie > État de la batterie), mchoufa f kol téléphone. Katkhtar nit téléphone li ghadi iwslek.",
       },
       {
         q: "Wach chargeur kayn m3ah?",
@@ -198,7 +188,7 @@ export const darija: OfferCopy = {
 
   final: {
     title: "iPhone 13 dyalek kaytsennak.",
-    text: (gifts: string | null) => `${gifts ? `${cap(gifts)} cadeau, b` : "B"}atterie bayna, garantie 3 chhour.`,
+    text: (gifts: string | null) => `${gifts ? `${cap(gifts)} cadeau, g` : "G"}arantie 3 chhour, livraison l ga3 lmghrib.`,
     cta: "Commandi daba",
   },
 };

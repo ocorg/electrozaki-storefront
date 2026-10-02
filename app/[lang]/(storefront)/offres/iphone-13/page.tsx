@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import {
   ArrowDown,
-  BatteryCharging,
   Camera,
   Check,
   ChevronDown,
@@ -10,6 +9,7 @@ import {
   Monitor,
   Package,
   ScanFace,
+  Zap,
   type LucideIcon,
 } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
@@ -30,7 +30,7 @@ import { OfferExperience } from "./OfferExperience";
 // promo page "iphone-13" switches it on and off and sets the offer price.
 export const revalidate = 60;
 
-const WHY_ICONS: LucideIcon[] = [Cpu, Camera, Monitor, BatteryCharging, Droplets, ScanFace];
+const WHY_ICONS: LucideIcon[] = [Cpu, Camera, Monitor, Zap, Droplets, ScanFace];
 const PATH = `/offres/${OFFER_SLUG}`;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -75,10 +75,24 @@ export default async function Iphone13OfferPage() {
     );
   }
 
-  const batteries = offer.units.map((u) => u.batteryHealthPercent).filter((b): b is number => b !== null);
-  const minBattery = batteries.length ? Math.min(...batteries) : null;
-  const min = String(minBattery ?? 80);
   const gifts = giftList(c, offer.included, locale);
+
+  // The page offers a colour, not a unit: best phone of each colour first
+  // (lowest price, then best battery), and no battery or unit details sent
+  // to the browser. Those are given on the confirmation call.
+  const pageUnits = [...offer.units]
+    .sort((a, b) => a.price - b.price || (b.batteryHealthPercent ?? 0) - (a.batteryHealthPercent ?? 0))
+    .map((u) => ({
+      ...u,
+      name: "",
+      batteryHealthPercent: null,
+      batteryGenuine: null,
+      screenGenuine: null,
+      faceIdWorking: null,
+      cameraGenuine: null,
+      chargingPortGenuine: null,
+      speakerGenuine: null,
+    }));
 
   const url = absoluteUrl(localePath(locale, PATH));
   const jsonLd = {
@@ -115,11 +129,10 @@ export default async function Iphone13OfferPage() {
         <OfferExperience
           hero={c.hero}
           copy={c.form}
-          units={offer.units}
+          units={pageUnits}
           images={offer.images}
           included={offer.included}
           addons={offer.addons}
-          minBattery={minBattery}
         />
       </div>
 
@@ -145,46 +158,6 @@ export default async function Iphone13OfferPage() {
               );
             })}
           </ul>
-        </div>
-      </section>
-
-      {/* ── Battery ── */}
-      <section aria-labelledby="battery" className="mx-auto max-w-7xl px-4 py-20 sm:py-24">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          <Reveal>
-            <SectionHeading id="battery" eyebrow={c.battery.eyebrow} title={c.battery.title} />
-            <p className="mt-5 max-w-xl leading-relaxed text-neutral-700">{c.battery.text.replace("{min}", min)}</p>
-            <ul className="mt-6 space-y-3">
-              {c.battery.points.map((p) => (
-                <li key={p} className="flex items-start gap-3 text-neutral-800">
-                  <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-signal/15 text-signal">
-                    <Check size={14} aria-hidden />
-                  </span>
-                  {p}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-          {/* A gauge reads low → high left to right in every language. */}
-          <Reveal>
-            <div dir="ltr" className="rounded-4xl bg-ink p-8 text-white">
-              <div className="flex items-end justify-between">
-                <BatteryCharging size={36} className="text-gold" aria-hidden />
-                <p className="readout text-6xl font-bold">
-                  {min}
-                  <span className="text-3xl">%+</span>
-                </p>
-              </div>
-              <div className="mt-8 h-4 overflow-hidden rounded-full bg-white/10">
-                <div className="h-full rounded-full bg-linear-to-r from-gold via-gold-bright to-signal" style={{ width: `${min}%` }} />
-              </div>
-              <div className="readout mt-3 flex justify-between text-xs text-neutral-400">
-                <span>0 %</span>
-                <span>80 %</span>
-                <span>100 %</span>
-              </div>
-            </div>
-          </Reveal>
         </div>
       </section>
 

@@ -25,11 +25,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useT } from "@/components/i18n/I18nProvider";
-import { categoryName } from "@/lib/i18n/labels";
+import { categoryName, colorName } from "@/lib/i18n/labels";
 import { ProductVisual } from "@/components/storefront/ProductVisual";
-import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
-import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
-import type { VariantData } from "@/components/storefront/ProductVariantExperience";
+import { swatch } from "@/lib/colors";
 import { DeliveryPicker } from "@/components/cart/DeliveryPicker";
 import { Button } from "@/components/ui/Button";
 import { findCity } from "@/lib/delivery";
@@ -74,44 +72,18 @@ type Props = {
   images: { url: string; altText: string | null }[];
   included: OfferAccessory[];
   addons: OfferAccessory[];
-  minBattery: number | null;
 };
 
-export function OfferExperience({ hero, copy, units, images, included, addons, minBattery }: Props) {
+export function OfferExperience({ hero, copy, units, images, included, addons }: Props) {
   const t = useT();
   const formRef = useRef<HTMLDivElement>(null);
 
-  // The unit picker speaks the product page's shape; prices are the offer's.
-  const variants: VariantData[] = useMemo(
-    () =>
-      units.map((u) => ({
-        id: u.id,
-        name: u.name,
-        priceOverride: String(u.price),
-        compareAtPrice: u.normalPrice > u.price ? String(u.normalPrice) : null,
-        color: u.color,
-        storageLabel: null,
-        imageUrl: u.imageUrl,
-        stockQuantity: u.stockQuantity,
-        batteryHealthPercent: u.batteryHealthPercent,
-        batteryGenuine: u.batteryGenuine,
-        screenGenuine: u.screenGenuine,
-        faceIdWorking: u.faceIdWorking,
-        cameraGenuine: u.cameraGenuine,
-        chargingPortGenuine: u.chargingPortGenuine,
-        speakerGenuine: u.speakerGenuine,
-        hasDefects: u.hasDefects,
-        transparencyNotes: null,
-      })),
-    [units]
-  );
-
-  // Opens on the best unit's colour: a few cards to choose from instead of
-  // every unit in stock (the colour chips are one tap away).
-  const first = matchUnits(variants, "all", "all")[0];
-  const [color, setColor] = useState(first?.color ?? "all");
-  const [battery, setBattery] = useState<BatteryRange>("all");
-  const [unitId, setUnitId] = useState<string | undefined>(first?.id);
+  // The colour is the only choice. Units arrive best first (the page sorts
+  // them), so the order reserves the best phone of the chosen colour; other
+  // details about the device are given on the confirmation call.
+  const ranked = units;
+  const colors = useMemo(() => [...new Set(ranked.map((u) => u.color ?? ""))], [ranked]);
+  const [color, setColor] = useState(colors[0] ?? "");
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const [city, setCity] = useState<string | null>(null);
   const [name, setName] = useState("");
@@ -131,7 +103,8 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
     return what && what !== a.name ? what : undefined;
   };
 
-  const unit = units.find((u) => u.id === unitId);
+  const unit = ranked.find((u) => (u.color ?? "") === color);
+  const unitId = unit?.id;
   const fee = findCity(city)?.fee ?? 0;
   const addonsTotal = addons.filter((a) => picked.has(a.key)).reduce((s, a) => s + a.price, 0);
   const total = (unit?.price ?? 0) + addonsTotal + fee;
@@ -145,14 +118,6 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
       : unit?.imageUrl
         ? { url: unit.imageUrl, altText: null }
         : (gallery[0] ?? null);
-
-  function applyFilters(c: string, b: BatteryRange) {
-    setColor(c);
-    setBattery(b);
-    const matches = matchUnits(variants, c, b);
-    if (!matches.some((u) => u.id === unitId)) setUnitId(matches[0]?.id);
-    setImageIndex(null);
-  }
 
   function toggle(key: string) {
     setPicked((prev) => {
@@ -188,18 +153,6 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
       setBusy(false);
     }
   }
-
-  const condition = unit
-    ? {
-        batteryHealthPercent: unit.batteryHealthPercent,
-        batteryGenuine: unit.batteryGenuine,
-        screenGenuine: unit.screenGenuine,
-        faceIdWorking: unit.faceIdWorking,
-        cameraGenuine: unit.cameraGenuine,
-        chargingPortGenuine: unit.chargingPortGenuine,
-        speakerGenuine: unit.speakerGenuine,
-      }
-    : null;
 
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14">
@@ -268,7 +221,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
             return (
               <li key={item} className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2.5 ring-1 ring-ink/6">
                 <Icon size={17} aria-hidden className="flex-none text-gold-deep" />
-                {fill(item, { min: String(minBattery ?? 80) })}
+                {item}
               </li>
             );
           })}
@@ -329,19 +282,28 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
               <h2 className="font-display text-2xl font-bold text-ink">{copy.title}</h2>
 
               <div className="mt-5 space-y-5">
-                <UnitPicker
-                  units={variants}
-                  color={color}
-                  battery={battery}
-                  selectedId={unitId}
-                  onColor={(c) => applyFilters(c, "all")}
-                  onBattery={(b) => applyFilters(color, b)}
-                  onSelect={(id) => {
-                    setUnitId(id);
-                    setImageIndex(null);
-                  }}
-                />
-                {condition && <ConditionDashboard {...condition} />}
+                <fieldset>
+                  <legend className="mb-3 text-sm font-semibold text-neutral-700">{t.unitPicker.color}</legend>
+                  <div className="flex flex-wrap gap-2">
+                    {colors.map((c) => (
+                      <button
+                        key={c || "none"}
+                        type="button"
+                        aria-pressed={color === c}
+                        onClick={() => {
+                          setColor(c);
+                          setImageIndex(null);
+                        }}
+                        className={`inline-flex min-h-12 items-center gap-2.5 rounded-full border px-4 text-sm font-semibold transition-colors ${
+                          color === c ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
+                        }`}
+                      >
+                        <span aria-hidden className="h-5 w-5 rounded-full border border-ink/15" style={{ background: swatch(c || null) }} />
+                        {c ? colorName(t, c) : t.unitPicker.other}
+                      </button>
+                    ))}
+                  </div>
+                </fieldset>
               </div>
 
               {/* Free with the phone */}

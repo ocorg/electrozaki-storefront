@@ -12,7 +12,7 @@ export const fr = {
     // gifts = what is free right now ("coque transparente + verre trempé"), or null.
     title: (gifts: string | null) => `iPhone 13 128GB très bon état${gifts ? ` - ${gifts} offerts` : ""}`,
     description: (gifts: string | null) =>
-      `iPhone 13 128GB en très bon état à Meknès : batterie vérifiée et affichée, pièces d'origine, garantie 3 mois. ${
+      `iPhone 13 128GB en très bon état à Meknès : vérifié par nos techniciens, pièces d'origine, garantie 3 mois. ${
         gifts ? `${cap(gifts)} offerts, livraison` : "Livraison"
       } partout au Maroc.`,
   },
@@ -21,12 +21,12 @@ export const fr = {
     eyebrow: "Offre Electro Zaki · Stock à Meknès",
     title: "iPhone 13",
     subtitle: "128GB · Très bon état",
-    lead: "Le format idéal, la puce A15 Bionic et une double caméra qui n'a rien perdu de sa superbe. Chaque téléphone est vérifié, sa batterie est mesurée et affichée avant que vous le choisissiez.",
+    lead: "Le format idéal, la puce A15 Bionic et une double caméra qui n'a rien perdu de sa superbe. Chaque téléphone est vérifié par nos techniciens avant la vente.",
     priceLabel: "Prix de l'offre",
     instead: "au lieu de",
     giftBadge: "Offert : {item}",
     cta: "Commander maintenant",
-    trust: ["Batterie {min} % et plus", "Pièces d'origine", "Garantie 3 mois", "Livraison partout au Maroc"],
+    trust: ["Vérifié par nos techniciens", "Pièces d'origine", "Garantie 3 mois", "Livraison partout au Maroc"],
   },
 
   // Order panel (client). Plain strings; "{x}" = a value filled in there.
@@ -63,7 +63,7 @@ export const fr = {
     sending: "Envoi…",
     failed: "Envoi impossible. Vérifiez votre connexion et réessayez.",
     consent: "En confirmant, vous acceptez qu'Electro Zaki vous appelle pour finaliser la commande.",
-    needUnit: "Choisissez votre iPhone ci-dessus",
+    needUnit: "Choisissez une couleur ci-dessus",
     needCity: "Choisissez votre ville de livraison",
     successTitle: "Commande reçue, merci !",
     successRef: "Référence : {ref}",
@@ -99,8 +99,8 @@ export const fr = {
         text: "OLED 6,1 pouces, noirs profonds et couleurs fidèles, lisible même en plein soleil (jusqu'à 1 200 nits en HDR).",
       },
       {
-        title: "Autonomie d'une journée",
-        text: "Jusqu'à 19 h de lecture vidéo d'origine, et la charge rapide : 50 % en 30 minutes avec un chargeur 20W ou plus.",
+        title: "Charge rapide",
+        text: "50 % en 30 minutes avec un chargeur 20W ou plus, et recharge sans fil MagSafe ou Qi.",
       },
       {
         title: "Solide et étanche",
@@ -113,12 +113,6 @@ export const fr = {
     ],
   },
 
-  battery: {
-    eyebrow: "La batterie, sans surprise",
-    title: "Vous voyez la santé de la batterie avant de choisir.",
-    text: "Chaque iPhone de l'offre affiche sa santé de batterie mesurée (Réglages > Batterie > État de la batterie). Au-dessus de 80 %, Apple considère la batterie en bon état : à {min} % et plus, vous gardez l'essentiel de l'autonomie d'origine.",
-    points: ["Pourcentage exact affiché pour chaque téléphone", "Batteries d'origine, jamais remplacées", "Pièces d'origine : écran, caméras, Face ID"],
-  },
 
   specs: {
     eyebrow: "Fiche technique",
@@ -151,14 +145,14 @@ export const fr = {
   checks: {
     eyebrow: "Vérifié par nos techniciens",
     title: "Contrôlé avant la vente.",
-    items: ["Santé de la batterie", "Écran et tactile", "Face ID", "Caméras avant et arrière", "Haut-parleurs et micros", "Réseau, Wi-Fi et Bluetooth"],
+    items: ["Écran et tactile", "Face ID", "Caméras avant et arrière", "Haut-parleurs et micros", "Réseau, Wi-Fi et Bluetooth"],
   },
 
   steps: {
     eyebrow: "Comment ça se passe",
     title: "Commander en 4 étapes.",
     items: [
-      { title: "Vous commandez", text: "Choisissez votre iPhone, votre ville, et laissez votre nom et votre numéro." },
+      { title: "Vous commandez", text: "Choisissez la couleur et votre ville, et laissez votre nom et votre numéro." },
       { title: "On vous appelle", text: "Nous confirmons la commande et l'adresse exacte de livraison." },
       { title: "Avance de 300 DH", text: "Elle réserve votre téléphone avant l'expédition." },
       { title: "Livraison", text: "Vous recevez votre iPhone et payez le reste à la livraison." },
@@ -176,10 +170,6 @@ export const fr = {
       {
         q: "Quand vais-je recevoir mon iPhone ?",
         a: "Après l'appel de confirmation et la réception de l'avance, il part avec Ameex : en général 24 à 30 h après l'enlèvement. La date estimée s'affiche dès que vous choisissez votre ville.",
-      },
-      {
-        q: "La batterie affichée est-elle la vraie ?",
-        a: "Oui. C'est la santé mesurée par l'iPhone lui-même (Réglages > Batterie > État de la batterie), relevée sur chaque téléphone. Vous choisissez le téléphone exact que vous recevez.",
       },
       {
         q: "Le chargeur est-il fourni ?",
@@ -208,7 +198,7 @@ export const fr = {
 
   final: {
     title: "Votre iPhone 13 vous attend.",
-    text: (gifts: string | null) => `${gifts ? `${cap(gifts)} offerts, b` : "B"}atterie affichée, garantie 3 mois.`,
+    text: (gifts: string | null) => `${gifts ? `${cap(gifts)} offerts, g` : "G"}arantie 3 mois, livraison partout au Maroc.`,
     cta: "Commander maintenant",
   },
 };
