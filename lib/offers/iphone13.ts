@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { AvailabilityStatus } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/db/client";
-import { landingPrice, landingStatus, type LandingStatus } from "@/lib/db/landing";
+import { landingStatus, type LandingStatus } from "@/lib/db/landing";
 import { MAX_QTY } from "@/lib/db/cart-pricing";
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -9,12 +9,22 @@ import { MAX_QTY } from "@/lib/db/cart-pricing";
 // accessories, a few suggested add-ons, ordered in one form on the page.
 //
 // It is tied to the ERP promo page with the same slug ("Site web → Pages
-// promo"): switching that page off takes the offer down, its discount sets
-// the offer price, its views and orders are counted there. Prices and stock
-// always come from the database.
+// promo"): switching that page off takes the offer down, its views and
+// orders are counted there. The offer price is OFFER_PRICE below; normal
+// prices and stock always come from the database.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const OFFER_SLUG = "iphone-13";
+
+// One price for every phone of the offer, set here on the website (the ERP
+// prices are left as they are, and the ERP page's discount is not used for
+// it). A unit already priced lower in the ERP keeps its own price.
+export const OFFER_PRICE = 3300;
+
+/** What a unit costs on the offer, from its normal (ERP) price. */
+export function offerPrice(normalPrice: number): number {
+  return Math.min(normalPrice, OFFER_PRICE);
+}
 
 /** Listings whose in-stock units are sold here (clean units only: no "pièces remplacées"). */
 export const PHONE_SLUGS = ["iphone-13-128gb-tres-bon-etat"];
@@ -206,7 +216,7 @@ async function loadIphone13Offer(): Promise<OfferData> {
           name: v.name,
           color: v.color,
           batteryHealthPercent: v.batteryHealthPercent,
-          price: landingPrice(page, normalPrice),
+          price: offerPrice(normalPrice),
           normalPrice,
           imageUrl: v.imageUrl,
           batteryGenuine: v.batteryGenuine ?? p.batteryGenuine,

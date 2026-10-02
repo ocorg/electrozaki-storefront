@@ -12,13 +12,13 @@ import { prisma } from "@/lib/db/client";
 import { MOROCCAN_PHONE_RE } from "@/lib/validation";
 import { priceCart, type CartLineInput, type PricedLine } from "@/lib/db/cart-pricing";
 import { createOrderRequest } from "@/lib/db/order-requests";
-import { landingPrice, landingStatus } from "@/lib/db/landing";
+import { landingStatus } from "@/lib/db/landing";
 import { findCity, estimateDelivery } from "@/lib/delivery";
 import { buildWhatsAppOrderLink } from "@/lib/whatsapp";
-import { getOfferPage, offerAccessoryLists, resolveOfferUnit } from "@/lib/offers/iphone13";
+import { getOfferPage, offerAccessoryLists, offerPrice, resolveOfferUnit } from "@/lib/offers/iphone13";
 
 // Order from the iPhone 13 offer page. Everything is priced here, from the
-// database: the phone gets the ERP promo page's price, the add-ons their
+// database: the phone gets the offer price (OFFER_PRICE, lib/offers/iphone13), the add-ons their
 // normal price (through priceCart, like the cart), the included case and
 // glass are free. The browser only says which unit and which add-ons.
 //
@@ -88,7 +88,7 @@ export async function submitIphone13Order(input: Input): Promise<Result> {
           // The ERP unit name ends with its normal price ("… · 3400 DH"):
           // dropped here, the offer price is the one charged.
           variantName: l.variantName?.replace(/\s*·\s*[\d\s]+DH\s*$/i, ""),
-          unitPrice: landingPrice(page, l.unitPrice),
+          unitPrice: offerPrice(l.unitPrice),
         }
       : l
   );
