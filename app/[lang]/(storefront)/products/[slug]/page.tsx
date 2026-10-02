@@ -194,7 +194,7 @@ export default async function ProductPage({ params }: Props) {
       <JsonLd data={jsonLd} />
       <Breadcrumbs items={crumbs} className="mb-6" />
 
-      <div className="grid gap-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
         <ProductVariantExperience
           product={productData}
           variants={variantsData}

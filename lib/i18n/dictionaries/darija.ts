@@ -716,6 +716,8 @@ export const darija: Dictionary = {
     trackLocked:
       "Bzzaf dyal les tentatives l had n-numéro lyouma. 3awed ghedda wla kteb lina f WhatsApp m3a numéro dyal demande.",
     quoteClosed: "Had devis mab9ach kaytsenna jawab. Kteb lina f WhatsApp ila bghiti.",
+    offerEnded: "Had l offre mabqatch.",
+    offerUnitGone: "Had téléphone tt7jez ghir daba. Khtar wa7ed akhor 3afak.",
   },
 
   specKeys: { "État": "L7ala", Stockage: "Stockage", RAM: "RAM" },

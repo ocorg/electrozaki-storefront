@@ -55,8 +55,8 @@ export async function ProductCard({ product, priority = false }: { product: Publ
             <span />
           )}
           {(saving !== null || unitPromo) && (
-            <span className="rounded-full bg-red-600 px-2.5 py-1 font-mono text-[11px] font-bold text-white">
-              {saving !== null ? `−${formatMAD(saving)}` : t.product.promo}
+            <span dir={saving !== null ? "ltr" : undefined} className="rounded-full bg-red-600 px-2.5 py-1 font-mono text-[11px] font-bold text-white">
+              {saving !== null ? `-${formatMAD(saving)}` : t.product.promo}
             </span>
           )}
         </div>

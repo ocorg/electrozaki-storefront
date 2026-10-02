@@ -726,6 +726,8 @@ export const fr = {
     trackLocked:
       "Trop d'essais pour ce numéro de téléphone aujourd'hui. Réessayez demain ou écrivez-nous sur WhatsApp avec votre numéro de demande.",
     quoteClosed: "Ce devis n'attend plus de réponse. Contactez-nous sur WhatsApp si besoin.",
+    offerEnded: "Cette offre n'est plus disponible.",
+    offerUnitGone: "Ce téléphone vient d'être réservé. Merci d'en choisir un autre.",
   },
 
   // Spec labels as typed in the ERP → shown label.

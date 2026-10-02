@@ -715,6 +715,8 @@ export const en: Dictionary = {
     trackLocked:
       "Too many attempts for this phone number today. Try again tomorrow or message us on WhatsApp with your request number.",
     quoteClosed: "This quote is no longer waiting for an answer. Message us on WhatsApp if needed.",
+    offerEnded: "This offer is no longer available.",
+    offerUnitGone: "This phone was just reserved. Please choose another one.",
   },
 
   specKeys: { "État": "Condition", Stockage: "Storage", RAM: "RAM" },

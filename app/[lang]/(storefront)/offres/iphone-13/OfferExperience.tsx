@@ -1,0 +1,498 @@
+"use client";
+
+import { useMemo, useRef, useState, type FormEvent } from "react";
+import Image from "next/image";
+import {
+  ArrowDown,
+  BatteryCharging,
+  Cable,
+  Check,
+  CheckCircle2,
+  Gift,
+  Loader2,
+  MessageCircle,
+  Phone,
+  Plug,
+  Plus,
+  ShieldCheck,
+  Smartphone,
+  Sticker,
+  Truck,
+  Wrench,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
+import { useT } from "@/components/i18n/I18nProvider";
+import { ProductVisual } from "@/components/storefront/ProductVisual";
+import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
+import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
+import type { VariantData } from "@/components/storefront/ProductVariantExperience";
+import { DeliveryPicker } from "@/components/cart/DeliveryPicker";
+import { Button } from "@/components/ui/Button";
+import { findCity } from "@/lib/delivery";
+import { formatMAD } from "@/lib/format";
+import { translateError } from "@/lib/i18n/labels";
+import { whatsappLink } from "@/lib/site";
+import type { OfferAccessory, OfferUnit } from "@/lib/offers/iphone13";
+import type { OfferCopy } from "@/lib/offers/iphone13-copy";
+import { submitIphone13Order } from "./actions";
+
+const ADVANCE = 300;
+
+const INCLUDED_ICONS: Record<string, LucideIcon> = { case: Smartphone, glass: ShieldCheck };
+const ADDON_ICONS: Record<string, LucideIcon> = { charger25: Zap, cable: Cable, head20: Plug, sticky: Sticker };
+const TRUST_ICONS: LucideIcon[] = [BatteryCharging, Wrench, ShieldCheck, Truck];
+
+/** "{rest}" → value. */
+function fill(text: string, values: Record<string, string>): string {
+  return text.replace(/\{(\w+)\}/g, (_, k: string) => values[k] ?? "");
+}
+
+const inputClass =
+  "min-h-12 w-full rounded-2xl border border-ink/15 bg-white px-4 text-[15px] focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30";
+
+type Props = {
+  hero: OfferCopy["hero"];
+  copy: OfferCopy["form"];
+  units: OfferUnit[];
+  images: { url: string; altText: string | null }[];
+  included: OfferAccessory[];
+  addons: OfferAccessory[];
+  minBattery: number | null;
+};
+
+export function OfferExperience({ hero, copy, units, images, included, addons, minBattery }: Props) {
+  const t = useT();
+  const formRef = useRef<HTMLDivElement>(null);
+
+  // The unit picker speaks the product page's shape; prices are the offer's.
+  const variants: VariantData[] = useMemo(
+    () =>
+      units.map((u) => ({
+        id: u.id,
+        name: u.name,
+        priceOverride: String(u.price),
+        compareAtPrice: u.normalPrice > u.price ? String(u.normalPrice) : null,
+        color: u.color,
+        storageLabel: null,
+        imageUrl: u.imageUrl,
+        stockQuantity: u.stockQuantity,
+        batteryHealthPercent: u.batteryHealthPercent,
+        batteryGenuine: u.batteryGenuine,
+        screenGenuine: u.screenGenuine,
+        faceIdWorking: u.faceIdWorking,
+        cameraGenuine: u.cameraGenuine,
+        chargingPortGenuine: u.chargingPortGenuine,
+        speakerGenuine: u.speakerGenuine,
+        hasDefects: u.hasDefects,
+        transparencyNotes: null,
+      })),
+    [units]
+  );
+
+  // Opens on the best unit's colour: a few cards to choose from instead of
+  // every unit in stock (the colour chips are one tap away).
+  const first = matchUnits(variants, "all", "all")[0];
+  const [color, setColor] = useState(first?.color ?? "all");
+  const [battery, setBattery] = useState<BatteryRange>("all");
+  const [unitId, setUnitId] = useState<string | undefined>(first?.id);
+  const [picked, setPicked] = useState<Set<string>>(new Set());
+  const [city, setCity] = useState<string | null>(null);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [done, setDone] = useState<{ reference: string; whatsappUrl: string; phone: string } | null>(null);
+  const [imageIndex, setImageIndex] = useState<number | null>(null);
+
+  const unit = units.find((u) => u.id === unitId);
+  const fee = findCity(city)?.fee ?? 0;
+  const addonsTotal = addons.filter((a) => picked.has(a.key)).reduce((s, a) => s + a.price, 0);
+  const total = (unit?.price ?? 0) + addonsTotal + fee;
+  const saving = unit && unit.normalPrice > unit.price ? unit.normalPrice - unit.price : 0;
+
+  // The chosen unit's photo, unless the customer is browsing the gallery.
+  const gallery = images.length ? images : unit?.imageUrl ? [{ url: unit.imageUrl, altText: null }] : [];
+  const shown =
+    imageIndex !== null && gallery[imageIndex]
+      ? gallery[imageIndex]
+      : unit?.imageUrl
+        ? { url: unit.imageUrl, altText: null }
+        : (gallery[0] ?? null);
+
+  function applyFilters(c: string, b: BatteryRange) {
+    setColor(c);
+    setBattery(b);
+    const matches = matchUnits(variants, c, b);
+    if (!matches.some((u) => u.id === unitId)) setUnitId(matches[0]?.id);
+    setImageIndex(null);
+  }
+
+  function toggle(key: string) {
+    setPicked((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  }
+
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    if (!unitId || !city) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const r = await submitIphone13Order({
+        unitId,
+        addons: [...picked],
+        customerName: name,
+        customerPhone: phone,
+        deliveryCity: city,
+      });
+      if (r.ok) {
+        setDone({ reference: r.reference, whatsappUrl: r.whatsappUrl, phone });
+        formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else setError(translateError(t, r.error));
+    } catch {
+      setError(copy.failed);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const condition = unit
+    ? {
+        batteryHealthPercent: unit.batteryHealthPercent,
+        batteryGenuine: unit.batteryGenuine,
+        screenGenuine: unit.screenGenuine,
+        faceIdWorking: unit.faceIdWorking,
+        cameraGenuine: unit.cameraGenuine,
+        chargingPortGenuine: unit.chargingPortGenuine,
+        speakerGenuine: unit.speakerGenuine,
+      }
+    : null;
+
+  return (
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14">
+      {/* ── Gallery ── */}
+      <div className="md:sticky md:top-28 md:self-start">
+        <div className="relative aspect-square overflow-hidden rounded-4xl border border-ink/7 bg-white shadow-[0_30px_60px_-40px_rgb(17_16_19/0.5)]">
+          <ProductVisual image={shown} name="iPhone 13" brand="Apple" isPhone priority size="large" sizes="(min-width: 768px) 50vw, 100vw" />
+          <ul className="absolute inset-s-4 top-4 z-3 flex flex-col gap-2">
+            {hero.gifts.map((g) => (
+              <li key={g} className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-xs font-bold text-gold">
+                <Gift size={14} aria-hidden /> {g}
+              </li>
+            ))}
+          </ul>
+        </div>
+        {gallery.length > 1 && (
+          <div className="mt-3 flex gap-2 overflow-x-auto pb-1 scrollbar-none" role="group" aria-label={t.pdp.photos}>
+            {gallery.map((img, i) => (
+              <button
+                key={img.url}
+                type="button"
+                onClick={() => setImageIndex(i)}
+                aria-label={t.pdp.photo(i + 1)}
+                aria-pressed={shown?.url === img.url}
+                className={`relative h-18 w-18 flex-none overflow-hidden rounded-2xl border-2 bg-white transition-colors ${
+                  shown?.url === img.url ? "border-ink" : "border-transparent hover:border-ink/20"
+                }`}
+              >
+                <Image src={img.url} alt="" fill sizes="72px" className="object-contain p-1.5" />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* ── Offer + order ── */}
+      <div>
+        <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-gold-deep">{hero.eyebrow}</p>
+        <h1 className="font-display mt-2 text-5xl font-extrabold leading-none text-ink sm:text-6xl">{hero.title}</h1>
+        <p className="mt-2 text-lg font-semibold text-neutral-700">{hero.subtitle}</p>
+
+        {unit && (
+          <div className="mt-5">
+            <p className="text-sm font-medium text-neutral-600">{hero.priceLabel}</p>
+            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
+              <p dir="ltr" className="readout text-5xl font-bold leading-none text-ink">
+                {formatMAD(unit.price)}
+              </p>
+              {saving > 0 && (
+                <>
+                  <p className="text-base text-neutral-500">
+                    {hero.instead} <span className="readout line-through">{formatMAD(unit.normalPrice)}</span>
+                  </p>
+                  <span dir="ltr" className="rounded-full bg-red-600 px-2.5 py-1 text-sm font-bold text-white">-{formatMAD(saving)}</span>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+
+        <p className="mt-5 leading-relaxed text-neutral-700">{hero.lead}</p>
+
+        <ul className="mt-5 grid grid-cols-2 gap-2 text-sm text-neutral-800">
+          {hero.trust.map((item, i) => {
+            const Icon = TRUST_ICONS[i] ?? Check;
+            return (
+              <li key={item} className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2.5 ring-1 ring-ink/6">
+                <Icon size={17} aria-hidden className="flex-none text-gold-deep" />
+                {fill(item, { min: String(minBattery ?? 80) })}
+              </li>
+            );
+          })}
+        </ul>
+
+        {!done && units.length > 0 && (
+          <a
+            href="#commander"
+            className="mt-5 flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-base font-bold text-ink transition-[filter] hover:brightness-105 md:hidden"
+          >
+            {hero.cta} <ArrowDown size={18} aria-hidden />
+          </a>
+        )}
+
+        <div id="commander" ref={formRef} className="scroll-mt-28">
+          {done ? (
+            <div className="mt-8 rounded-4xl bg-ink p-6 text-white sm:p-8" role="status">
+              <CheckCircle2 size={36} className="text-gold" aria-hidden />
+              <h2 className="font-display mt-4 text-3xl font-bold">{copy.successTitle}</h2>
+              <p dir="ltr" className="mt-2 font-mono text-sm text-neutral-300 rtl:text-end">
+                {fill(copy.successRef, { ref: done.reference })}
+              </p>
+              <p className="mt-4 leading-relaxed text-neutral-200">
+                {fill(copy.successText, { phone: done.phone })}
+              </p>
+              <ol className="mt-6 space-y-3">
+                {copy.successSteps.map((s, i) => (
+                  <li key={s} className="flex items-center gap-3">
+                    <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-gold text-sm font-bold text-ink">{i + 1}</span>
+                    {s}
+                  </li>
+                ))}
+              </ol>
+              <a
+                href={done.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-7 flex min-h-12 items-center justify-center gap-2 rounded-full bg-whatsapp px-6 font-semibold text-ink"
+              >
+                <MessageCircle size={18} aria-hidden /> {copy.whatsapp}
+              </a>
+            </div>
+          ) : units.length === 0 ? (
+            <div className="mt-8 rounded-4xl bg-ink/5 p-6">
+              <p className="font-display text-2xl font-bold text-ink">{copy.soldOutTitle}</p>
+              <p className="mt-2 text-neutral-700">{copy.soldOutText}</p>
+              <a
+                href={whatsappLink(copy.soldOutTitle)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full bg-whatsapp px-6 font-semibold text-ink"
+              >
+                <MessageCircle size={18} aria-hidden /> {copy.whatsapp}
+              </a>
+            </div>
+          ) : (
+            <form onSubmit={submit} className="mt-8 rounded-4xl border border-ink/8 bg-white p-4 shadow-[0_30px_60px_-45px_rgb(17_16_19/0.45)] sm:p-6">
+              <h2 className="font-display text-2xl font-bold text-ink">{copy.title}</h2>
+
+              <div className="mt-5 space-y-5">
+                <UnitPicker
+                  units={variants}
+                  color={color}
+                  battery={battery}
+                  selectedId={unitId}
+                  onColor={(c) => applyFilters(c, "all")}
+                  onBattery={(b) => applyFilters(color, b)}
+                  onSelect={(id) => {
+                    setUnitId(id);
+                    setImageIndex(null);
+                  }}
+                />
+                {condition && <ConditionDashboard {...condition} />}
+              </div>
+
+              {/* Free with the phone */}
+              {included.length > 0 && (
+                <section className="mt-7" aria-labelledby="offer-included">
+                  <h3 id="offer-included" className="text-sm font-semibold text-neutral-700">{copy.included}</h3>
+                  <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                    {included.map((item) => {
+                      const Icon = INCLUDED_ICONS[item.key] ?? Gift;
+                      return (
+                        <li key={item.key} className="flex items-center gap-3 rounded-2xl bg-gold/10 px-4 py-3 ring-1 ring-gold/40">
+                          <Icon size={20} aria-hidden className="flex-none text-gold-deep" />
+                          <span className="flex-1 text-sm font-semibold text-ink">
+                            {copy.includedItems[item.key as keyof typeof copy.includedItems] ?? item.name}
+                          </span>
+                          <span className="text-sm text-neutral-500 line-through">{formatMAD(item.price)}</span>
+                          <span className="rounded-full bg-ink px-2.5 py-0.5 text-xs font-bold text-gold">{copy.free}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              )}
+
+              {/* Suggested add-ons */}
+              {addons.length > 0 && (
+                <section className="mt-7" aria-labelledby="offer-addons">
+                  <h3 id="offer-addons" className="text-sm font-semibold text-neutral-700">{copy.addons}</h3>
+                  <p className="mt-1 text-xs text-neutral-500">{copy.addonsHint}</p>
+                  <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                    {addons.map((a) => {
+                      const on = picked.has(a.key);
+                      const Icon = ADDON_ICONS[a.key] ?? Plus;
+                      const label = copy.addonItems[a.key as keyof typeof copy.addonItems];
+                      return (
+                        <li key={a.key}>
+                          <button
+                            type="button"
+                            onClick={() => toggle(a.key)}
+                            aria-pressed={on}
+                            className={`flex h-full w-full items-center gap-3 rounded-2xl border px-4 py-3 text-start transition-colors ${
+                              on ? "border-gold-deep bg-gold/8 ring-2 ring-gold/40" : "border-ink/12 bg-white hover:border-ink/30"
+                            }`}
+                          >
+                            <Icon size={20} aria-hidden className="flex-none text-gold-deep" />
+                            <span className="min-w-0 flex-1">
+                              <span className="block text-sm font-semibold text-ink">{label?.title ?? a.name}</span>
+                              {label?.hint && <span className="block text-xs text-neutral-500">{label.hint}</span>}
+                            </span>
+                            <span className="flex flex-col items-end gap-1">
+                              <span dir="ltr" className="readout text-sm font-bold text-ink">+{formatMAD(a.price)}</span>
+                              <span
+                                className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
+                                  on ? "bg-ink text-white" : "bg-ink/6 text-ink"
+                                }`}
+                              >
+                                {on ? <Check size={12} aria-hidden /> : <Plus size={12} aria-hidden />}
+                                {on ? copy.added : copy.add}
+                              </span>
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              )}
+
+              {/* Delivery: the town sets the fee and the date */}
+              <section className="mt-7">
+                <h3 className="mb-3 text-sm font-semibold text-neutral-700">{copy.delivery}</h3>
+                <DeliveryPicker value={city} onChangeAction={setCity} />
+              </section>
+
+              {/* Contact */}
+              <section className="mt-7 space-y-3" aria-labelledby="offer-contact">
+                <h3 id="offer-contact" className="text-sm font-semibold text-neutral-700">{copy.contact}</h3>
+                <input
+                  type="text"
+                  required
+                  autoComplete="name"
+                  placeholder={copy.fullName}
+                  aria-label={copy.fullName}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  maxLength={120}
+                  className={inputClass}
+                />
+                <div className="relative">
+                  <Phone size={17} aria-hidden className="pointer-events-none absolute inset-s-4 top-1/2 -translate-y-1/2 text-neutral-400" />
+                  <input
+                    type="tel"
+                    required
+                    dir="ltr"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    placeholder={copy.phone}
+                    aria-label={copy.phone}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    maxLength={20}
+                    className={`${inputClass} ps-11 rtl:text-end`}
+                  />
+                </div>
+              </section>
+
+              {/* Summary */}
+              <section className="mt-7 rounded-3xl bg-paper-2 p-4 sm:p-5" aria-labelledby="offer-summary">
+                <h3 id="offer-summary" className="text-sm font-semibold text-neutral-700">{copy.summary}</h3>
+                <dl className="mt-3 space-y-2 text-sm">
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-neutral-700">{copy.phoneLine}</dt>
+                    <dd className="readout font-semibold">{unit ? formatMAD(unit.price) : "-"}</dd>
+                  </div>
+                  {included.length > 0 && (
+                    <div className="flex justify-between gap-4">
+                      <dt className="text-neutral-700">{copy.giftsLine}</dt>
+                      <dd className="font-semibold text-green-700">{copy.free}</dd>
+                    </div>
+                  )}
+                  {addons
+                    .filter((a) => picked.has(a.key))
+                    .map((a) => (
+                      <div key={a.key} className="flex justify-between gap-4">
+                        <dt className="text-neutral-700">{copy.addonItems[a.key as keyof typeof copy.addonItems]?.title ?? a.name}</dt>
+                        <dd className="readout font-semibold">{formatMAD(a.price)}</dd>
+                      </div>
+                    ))}
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-neutral-700">
+                      {copy.delivery}
+                      {city ? ` (${city})` : ""}
+                    </dt>
+                    <dd className={city ? "readout font-semibold" : "text-neutral-500"}>{city ? formatMAD(fee) : copy.deliveryPending}</dd>
+                  </div>
+                  <div className="flex justify-between gap-4 border-t border-ink/10 pt-3 text-lg">
+                    <dt className="font-bold text-ink">{copy.total}</dt>
+                    <dd className="readout font-bold text-ink">{formatMAD(total)}</dd>
+                  </div>
+                </dl>
+              </section>
+
+              {/* The 300 DH advance */}
+              <div className="mt-4 rounded-3xl border border-gold/50 bg-gold/8 p-4 sm:p-5">
+                <p className="font-semibold text-ink">{copy.advanceTitle}</p>
+                <p className="mt-1 text-sm leading-relaxed text-neutral-700">
+                  {fill(copy.advanceText, { rest: formatMAD(Math.max(0, total - ADVANCE)) })}
+                </p>
+                <p className="mt-2 flex items-start gap-2 text-sm leading-relaxed text-neutral-700">
+                  <Phone size={16} aria-hidden className="mt-0.5 flex-none text-gold-deep" />
+                  {copy.callNote}
+                </p>
+              </div>
+
+              {error && (
+                <p role="alert" className="mt-4 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {error}
+                </p>
+              )}
+
+              <Button type="submit" variant="accent" size="lg" disabled={busy || !unitId || !city} className="mt-5 w-full">
+                {busy ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" aria-hidden /> {copy.sending}
+                  </>
+                ) : (
+                  <>
+                    {copy.submit} {unit && city ? <span className="readout">· {formatMAD(total)}</span> : null}
+                  </>
+                )}
+              </Button>
+              {(!unitId || !city) && (
+                <p className="mt-2 text-center text-xs font-medium text-neutral-600">{!unitId ? copy.needUnit : copy.needCity}</p>
+              )}
+              <p className="mt-3 text-center text-xs text-neutral-500">{copy.consent}</p>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

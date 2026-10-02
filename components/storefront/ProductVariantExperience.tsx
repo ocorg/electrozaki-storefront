@@ -193,8 +193,8 @@ export function ProductVariantExperience({ product, variants, images, categorySl
             sizes="(min-width: 1280px) 620px, (min-width: 768px) 50vw, 100vw"
           />
           {saving !== null && (
-            <span className="readout absolute inset-s-4 top-4 z-3 rounded-full bg-red-600 px-3 py-1.5 text-sm font-bold text-white">
-              −{formatMAD(saving)}
+            <span dir="ltr" className="readout absolute inset-s-4 top-4 z-3 rounded-full bg-red-600 px-3 py-1.5 text-sm font-bold text-white">
+              -{formatMAD(saving)}
             </span>
           )}
         </div>

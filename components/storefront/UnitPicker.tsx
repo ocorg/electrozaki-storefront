@@ -187,7 +187,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                     {saving !== null && u.compareAtPrice && (
                       <>
                         <span className="text-sm text-neutral-500 line-through">{formatMAD(u.compareAtPrice)}</span>
-                        <span className="rounded-full bg-red-600 px-2 py-0.5 text-xs font-bold text-white">
+                        <span dir="ltr" className="rounded-full bg-red-600 px-2 py-0.5 text-xs font-bold text-white">
                           -{formatMAD(saving)}
                         </span>
                       </>

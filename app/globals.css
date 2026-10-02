@@ -256,6 +256,12 @@ html[lang^="ar"] *::before,
 html[lang^="ar"] *::after {
   letter-spacing: normal !important;
 }
+/* Screen-reader-only text keeps Tailwind's -1px margin, which in right-to-left
+   pages pushes it 1px past the edge and lets the page scroll sideways. */
+html[dir="rtl"] .sr-only {
+  margin: 0;
+}
+
 /* Arabic pages: Alexandria first in every stack (see app/[lang]/layout.tsx). */
 html[lang^="ar"] {
   --font-sans: var(--font-arabic), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
