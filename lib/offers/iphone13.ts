@@ -20,6 +20,10 @@ export const OFFER_SLUG = "iphone-13";
 // prices are left as they are, and the ERP page's discount is not used for
 // it). A unit already priced lower in the ERP keeps its own price.
 export const OFFER_PRICE = 3300;
+// The price shown crossed out next to it ("au lieu de 3 400 DH", -100 DH) on
+// every phone, even one priced lower in the ERP. Display only: what is
+// charged is offerPrice().
+export const OFFER_REFERENCE_PRICE = 3400;
 
 /** What a unit costs on the offer, from its normal (ERP) price. */
 export function offerPrice(normalPrice: number): number {
@@ -44,7 +48,7 @@ export type OfferUnit = {
   batteryHealthPercent: number | null;
   /** offer price, whole DH */
   price: number;
-  /** normal site price, whole DH */
+  /** price shown crossed out: the ERP price, at least OFFER_REFERENCE_PRICE (display only) */
   normalPrice: number;
   imageUrl: string | null;
   // Condition, as on the product page (unit value, else the listing's).
@@ -217,7 +221,7 @@ async function loadIphone13Offer(): Promise<OfferData> {
           color: v.color,
           batteryHealthPercent: v.batteryHealthPercent,
           price: offerPrice(normalPrice),
-          normalPrice,
+          normalPrice: Math.max(normalPrice, OFFER_REFERENCE_PRICE),
           imageUrl: v.imageUrl,
           batteryGenuine: v.batteryGenuine ?? p.batteryGenuine,
           screenGenuine: v.screenGenuine ?? p.screenGenuine,
