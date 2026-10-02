@@ -9,7 +9,7 @@ export const fr = {
   meta: {
     title: "iPhone 13 128 Go très bon état - verre trempé et coque offerts",
     description:
-      "iPhone 13 128 Go en très bon état à Meknès : batterie vérifiée et affichée, pièces d'origine, garantie incluse. Verre trempé et coque offerts, livraison partout au Maroc.",
+      "iPhone 13 128 Go en très bon état à Meknès : batterie vérifiée et affichée, pièces d'origine, garantie 3 mois. Verre trempé et coque offerts, livraison partout au Maroc.",
   },
 
   hero: {
@@ -21,7 +21,7 @@ export const fr = {
     instead: "au lieu de",
     gifts: ["Verre trempé offert", "Coque offerte"],
     cta: "Commander maintenant",
-    trust: ["Batterie {min} % et plus", "Pièces d'origine", "Garantie incluse", "Livraison partout au Maroc"],
+    trust: ["Batterie {min} % et plus", "Pièces d'origine", "Garantie 3 mois", "Livraison partout au Maroc"],
   },
 
   // Order panel (client). Plain strings; "{x}" = a value filled in there.
@@ -180,7 +180,7 @@ export const fr = {
       },
       {
         q: "Le téléphone est-il garanti ?",
-        a: "Oui, une garantie est incluse. Ses conditions vous sont précisées lors de l'appel de confirmation.",
+        a: "Oui, il est garanti 3 mois. Les conditions de la garantie vous sont précisées lors de l'appel de confirmation.",
       },
       {
         q: "Puis-je le voir en boutique ?",
@@ -191,7 +191,7 @@ export const fr = {
 
   final: {
     title: "Votre iPhone 13 vous attend.",
-    text: "Verre trempé et coque offerts, batterie affichée, garantie incluse.",
+    text: "Verre trempé et coque offerts, batterie affichée, garantie 3 mois.",
     cta: "Commander maintenant",
   },
 };

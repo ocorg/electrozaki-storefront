@@ -5,7 +5,7 @@ export const en: OfferCopy = {
   meta: {
     title: "iPhone 13 128GB very good condition - free screen glass and case",
     description:
-      "iPhone 13 128GB in very good condition in Meknes: battery checked and shown, original parts, warranty included. Free tempered glass and case, delivery anywhere in Morocco.",
+      "iPhone 13 128GB in very good condition in Meknes: battery checked and shown, original parts, 3-month warranty. Free tempered glass and case, delivery anywhere in Morocco.",
   },
 
   hero: {
@@ -17,7 +17,7 @@ export const en: OfferCopy = {
     instead: "instead of",
     gifts: ["Free tempered glass", "Free case"],
     cta: "Order now",
-    trust: ["Battery {min}% and up", "Original parts", "Warranty included", "Delivery anywhere in Morocco"],
+    trust: ["Battery {min}% and up", "Original parts", "3-month warranty", "Delivery anywhere in Morocco"],
   },
 
   form: {
@@ -174,7 +174,7 @@ export const en: OfferCopy = {
       },
       {
         q: "Is the phone under warranty?",
-        a: "Yes, a warranty is included. Its terms are explained during the confirmation call.",
+        a: "Yes, it comes with a 3-month warranty. Its terms are explained during the confirmation call.",
       },
       {
         q: "Can I see it in the shop?",
@@ -185,7 +185,7 @@ export const en: OfferCopy = {
 
   final: {
     title: "Your iPhone 13 is waiting.",
-    text: "Free tempered glass and case, battery shown, warranty included.",
+    text: "Free tempered glass and case, battery shown, 3-month warranty.",
     cta: "Order now",
   },
 };

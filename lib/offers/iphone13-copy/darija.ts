@@ -5,7 +5,7 @@ export const darija: OfferCopy = {
   meta: {
     title: "iPhone 13 128GB 7ala mzyana bzzaf - verre trempé w coque cadeau",
     description:
-      "iPhone 13 128GB f 7ala mzyana bzzaf f Mknas: batterie mchoufa w bayna, pièces d'origine, garantie kayna. Verre trempé w coque cadeau, livraison l ga3 lmghrib.",
+      "iPhone 13 128GB f 7ala mzyana bzzaf f Mknas: batterie mchoufa w bayna, pièces d'origine, garantie 3 chhour. Verre trempé w coque cadeau, livraison l ga3 lmghrib.",
   },
 
   hero: {
@@ -17,7 +17,7 @@ export const darija: OfferCopy = {
     instead: "f blast",
     gifts: ["Verre trempé cadeau", "Coque cadeau"],
     cta: "Commandi daba",
-    trust: ["Batterie {min}% w ktar", "Pièces d'origine", "Garantie kayna", "Livraison l ga3 lmghrib"],
+    trust: ["Batterie {min}% w ktar", "Pièces d'origine", "Garantie 3 chhour", "Livraison l ga3 lmghrib"],
   },
 
   form: {
@@ -173,7 +173,7 @@ export const darija: OfferCopy = {
       },
       {
         q: "Wach téléphone fih garantie?",
-        a: "Ah, garantie kayna. Les conditions dyalha kan9oulouhom lik f l'appel dyal confirmation.",
+        a: "Ah, fih garantie dyal 3 chhour. Les conditions dyalha kan9oulouhom lik f l'appel dyal confirmation.",
       },
       {
         q: "Wach n9der nchoufo f l7anout?",
@@ -184,7 +184,7 @@ export const darija: OfferCopy = {
 
   final: {
     title: "iPhone 13 dyalek kaytsennak.",
-    text: "Verre trempé w coque cadeau, batterie bayna, garantie kayna.",
+    text: "Verre trempé w coque cadeau, batterie bayna, garantie 3 chhour.",
     cta: "Commandi daba",
   },
 };
