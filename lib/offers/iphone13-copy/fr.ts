@@ -5,11 +5,16 @@
 //
 // Apple figures are the iPhone 13's official specifications.
 
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
 export const fr = {
   meta: {
-    title: "iPhone 13 128 Go très bon état - verre trempé et coque offerts",
-    description:
-      "iPhone 13 128 Go en très bon état à Meknès : batterie vérifiée et affichée, pièces d'origine, garantie 3 mois. Verre trempé et coque offerts, livraison partout au Maroc.",
+    // gifts = what is free right now ("coque transparente + verre trempé"), or null.
+    title: (gifts: string | null) => `iPhone 13 128 Go très bon état${gifts ? ` - ${gifts} offerts` : ""}`,
+    description: (gifts: string | null) =>
+      `iPhone 13 128 Go en très bon état à Meknès : batterie vérifiée et affichée, pièces d'origine, garantie 3 mois. ${
+        gifts ? `${cap(gifts)} offerts, livraison` : "Livraison"
+      } partout au Maroc.`,
   },
 
   hero: {
@@ -19,7 +24,7 @@ export const fr = {
     lead: "Le format idéal, la puce A15 Bionic et une double caméra qui n'a rien perdu de sa superbe. Chaque téléphone est vérifié, sa batterie est mesurée et affichée avant que vous le choisissiez.",
     priceLabel: "Prix de l'offre",
     instead: "au lieu de",
-    gifts: ["Verre trempé offert", "Coque offerte"],
+    giftBadge: "Offert : {item}",
     cta: "Commander maintenant",
     trust: ["Batterie {min} % et plus", "Pièces d'origine", "Garantie 3 mois", "Livraison partout au Maroc"],
   },
@@ -28,16 +33,18 @@ export const fr = {
   form: {
     title: "Votre iPhone 13",
     included: "Offert avec votre iPhone",
-    includedItems: { case: "Coque transparente", glass: "Verre trempé" },
+    // Labels by product slug; other products show their ERP name.
+    items: {
+      "iphone-transparent": { title: "Coque transparente" },
+      crystale: { title: "Verre trempé" },
+      "apple-c-l-25w": { title: "Chargeur rapide Apple 25W", hint: "Tête USB-C + câble Lightning" },
+      "apple-cable-c-l-1m": { title: "Câble USB-C vers Lightning", hint: "1 mètre" },
+      "apple-iphone-20w-originale": { title: "Tête de charge Apple 20W", hint: "Originale" },
+      "mm-300df": { title: "Sticky pad double face", hint: "Colle le téléphone à un miroir, une vitre…" },
+    } as Record<string, { title: string; hint?: string }>,
     free: "Offert",
     addons: "À ajouter si vous voulez",
     addonsHint: "Le chargeur n'est pas fourni avec l'iPhone.",
-    addonItems: {
-      charger25: { title: "Chargeur rapide Apple 25W", hint: "Tête USB-C + câble Lightning" },
-      cable: { title: "Câble USB-C vers Lightning", hint: "1 mètre" },
-      head20: { title: "Tête de charge Apple 20W", hint: "Originale" },
-      sticky: { title: "Sticky pad double face", hint: "Colle le téléphone à un miroir, une vitre…" },
-    },
     add: "Ajouter",
     added: "Ajouté",
     contact: "Vos coordonnées",
@@ -45,7 +52,6 @@ export const fr = {
     phone: "Téléphone (ex : 06XXXXXXXX)",
     summary: "Récapitulatif",
     phoneLine: "iPhone 13 128 Go",
-    giftsLine: "Coque + verre trempé",
     delivery: "Livraison",
     deliveryPending: "choisissez votre ville",
     total: "Total",
@@ -137,7 +143,8 @@ export const fr = {
   box: {
     eyebrow: "Dans votre colis",
     title: "Ce que vous recevez.",
-    items: ["iPhone 13 128 Go, vérifié par nos techniciens", "Coque transparente (offerte)", "Verre trempé (offert)"],
+    phone: "iPhone 13 128 Go, vérifié par nos techniciens",
+    gift: (item: string) => `${item} (offert)`,
     note: "Le chargeur n'est pas inclus : ajoutez-le à votre commande si besoin.",
   },
 
@@ -176,7 +183,7 @@ export const fr = {
       },
       {
         q: "Le chargeur est-il fourni ?",
-        a: "Non, l'iPhone est livré avec une coque et un verre trempé offerts, sans chargeur. Vous pouvez ajouter un chargeur Apple ou un câble Lightning dans le formulaire.",
+        a: "Non, le chargeur n'est pas fourni avec l'iPhone. Vous pouvez ajouter un chargeur Apple ou un câble Lightning dans le formulaire.",
       },
       {
         q: "Le téléphone est-il garanti ?",
@@ -189,9 +196,19 @@ export const fr = {
     ],
   },
 
+  // The offer elsewhere on the site: header bar, offers page, home, product page.
+  card: {
+    title: "iPhone 13 128 Go",
+    teaser: (gifts: string | null) => (gifts ? `${cap(gifts)} offerts` : "Très bon état, garantie 3 mois"),
+    bar: (price: string, gifts: string | null) => `Offre iPhone 13 : ${price}${gifts ? `, ${gifts} offerts` : ""}`,
+    banner: (price: string, gifts: string | null) =>
+      `En offre à ${price}${gifts ? ` avec ${gifts} offerts` : ""}, garantie 3 mois.`,
+    cta: "Voir l'offre",
+  },
+
   final: {
     title: "Votre iPhone 13 vous attend.",
-    text: "Verre trempé et coque offerts, batterie affichée, garantie 3 mois.",
+    text: (gifts: string | null) => `${gifts ? `${cap(gifts)} offerts, b` : "B"}atterie affichée, garantie 3 mois.`,
     cta: "Commander maintenant",
   },
 };

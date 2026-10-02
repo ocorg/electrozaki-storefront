@@ -21,7 +21,7 @@ import { getLocale } from "@/lib/i18n/server";
 import { alternates } from "@/lib/i18n/seo";
 import { absoluteUrl, SITE_URL } from "@/lib/site";
 import { getIphone13Offer, OFFER_SLUG } from "@/lib/offers/iphone13";
-import { OFFER_COPY } from "@/lib/offers/iphone13-copy";
+import { OFFER_COPY, giftList, itemTitle } from "@/lib/offers/iphone13-copy";
 import { ViewBeacon } from "../[slug]/OfferParts";
 import { OfferExperience } from "./OfferExperience";
 
@@ -39,14 +39,17 @@ export async function generateMetadata(): Promise<Metadata> {
   const alt = alternates(locale, PATH);
   const offer = await getIphone13Offer();
   const cover = offer.images[0];
+  const gifts = giftList(c, offer.included, locale);
+  const title = c.meta.title(gifts);
+  const description = c.meta.description(gifts);
   return {
-    title: c.meta.title,
-    description: c.meta.description,
+    title,
+    description,
     alternates: alt,
     openGraph: {
       type: "website",
-      title: `${c.meta.title} | Electro Zaki`,
-      description: c.meta.description,
+      title: `${title} | Electro Zaki`,
+      description,
       url: alt.canonical,
       locale: LOCALE_META[locale].ogLocale,
       ...(cover ? { images: [{ url: cover.url, alt: "iPhone 13" }] } : {}),
@@ -75,6 +78,7 @@ export default async function Iphone13OfferPage() {
   const batteries = offer.units.map((u) => u.batteryHealthPercent).filter((b): b is number => b !== null);
   const minBattery = batteries.length ? Math.min(...batteries) : null;
   const min = String(minBattery ?? 80);
+  const gifts = giftList(c, offer.included, locale);
 
   const url = absoluteUrl(localePath(locale, PATH));
   const jsonLd = {
@@ -82,7 +86,7 @@ export default async function Iphone13OfferPage() {
     "@type": "Product",
     name: "iPhone 13 128GB",
     brand: { "@type": "Brand", name: "Apple" },
-    description: c.meta.description,
+    description: c.meta.description(gifts),
     image: offer.images.map((i) => absoluteUrl(i.url)),
     url,
     inLanguage: LOCALE_META[locale].htmlLang,
@@ -195,7 +199,7 @@ export default async function Iphone13OfferPage() {
               </p>
               <p className="font-display mt-2 text-xl font-bold text-ink">{c.box.title}</p>
               <ul className="mt-4 space-y-2">
-                {c.box.items.map((item) => (
+                {[c.box.phone, ...offer.included.map((g) => c.box.gift(itemTitle(c.form.items, g)))].map((item) => (
                   <li key={item} className="flex items-start gap-2 text-neutral-800">
                     <Check size={17} aria-hidden className="mt-0.5 flex-none text-signal" /> {item}
                   </li>
@@ -277,7 +281,7 @@ export default async function Iphone13OfferPage() {
         <section className="px-4 pb-20">
           <div className="on-dark mx-auto flex max-w-5xl flex-col items-center rounded-4xl bg-ink px-6 py-14 text-center text-white">
             <h2 className="font-display text-3xl font-bold sm:text-4xl">{c.final.title}</h2>
-            <p className="mt-3 max-w-md text-neutral-300">{c.final.text}</p>
+            <p className="mt-3 max-w-md text-neutral-300">{c.final.text(gifts)}</p>
             <a
               href="#commander"
               className="mt-8 inline-flex min-h-13 items-center gap-2 rounded-full bg-gold px-8 text-base font-bold text-ink transition-[filter] hover:brightness-105"

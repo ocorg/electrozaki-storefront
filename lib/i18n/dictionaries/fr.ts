@@ -648,6 +648,27 @@ export const fr = {
     add: "Ajouter",
   },
 
+  offers: {
+    nav: "Offres",
+    live: "offre en cours",
+    metaTitle: "Offres du moment",
+    metaDescription:
+      "Les offres en cours chez Electro Zaki, Meknès : téléphones et accessoires à prix réduit, livraison partout au Maroc.",
+    eyebrow: "Offres du moment",
+    title: "Les bons plans de la boutique.",
+    intro: "Des prix réduits sur une sélection de téléphones et d'accessoires, pour une durée limitée.",
+    emptyTitle: "Pas d'offre en ce moment",
+    emptyText: "Revenez bientôt, ou écrivez-nous sur WhatsApp pour être prévenu de la prochaine.",
+    emptyCta: "Voir les téléphones",
+    see: "Voir l'offre",
+    all: "Toutes les offres",
+    homeTitle: "En ce moment à la boutique.",
+    from: "dès",
+    instead: "au lieu de",
+    discount: (value: string) => `${value} sur la sélection`,
+    until: (date: string) => `Jusqu'au ${date}`,
+  },
+
   searchBox: {
     label: "Rechercher un produit",
     clear: "Effacer",

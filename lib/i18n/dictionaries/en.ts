@@ -641,6 +641,26 @@ export const en: Dictionary = {
     add: "Add",
   },
 
+  offers: {
+    nav: "Offers",
+    live: "offer on now",
+    metaTitle: "Current offers",
+    metaDescription: "Current offers at Electro Zaki, Meknes: phones and accessories at reduced prices, delivery anywhere in Morocco.",
+    eyebrow: "Current offers",
+    title: "The shop's best deals.",
+    intro: "Reduced prices on a selection of phones and accessories, for a limited time.",
+    emptyTitle: "No offer right now",
+    emptyText: "Come back soon, or message us on WhatsApp to hear about the next one.",
+    emptyCta: "See the phones",
+    see: "See the offer",
+    all: "All offers",
+    homeTitle: "On right now at the shop.",
+    from: "from",
+    instead: "instead of",
+    discount: (value: string) => `${value} on the selection`,
+    until: (date: string) => `Until ${date}`,
+  },
+
   searchBox: {
     label: "Search for a product",
     clear: "Clear",

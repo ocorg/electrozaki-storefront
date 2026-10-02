@@ -1,11 +1,15 @@
 import type { OfferCopy } from "./fr";
 
 // Text of the iPhone 13 offer page — Darija (Latin letters + numbers).
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
 export const darija: OfferCopy = {
   meta: {
-    title: "iPhone 13 128GB 7ala mzyana bzzaf - verre trempé w coque cadeau",
-    description:
-      "iPhone 13 128GB f 7ala mzyana bzzaf f Mknas: batterie mchoufa w bayna, pièces d'origine, garantie 3 chhour. Verre trempé w coque cadeau, livraison l ga3 lmghrib.",
+    title: (gifts: string | null) => `iPhone 13 128GB 7ala mzyana bzzaf${gifts ? ` - ${gifts} cadeau` : ""}`,
+    description: (gifts: string | null) =>
+      `iPhone 13 128GB f 7ala mzyana bzzaf f Mknas: batterie mchoufa w bayna, pièces d'origine, garantie 3 chhour. ${
+        gifts ? `${cap(gifts)} cadeau, livraison` : "Livraison"
+      } l ga3 lmghrib.`,
   },
 
   hero: {
@@ -15,7 +19,7 @@ export const darija: OfferCopy = {
     lead: "L 7ajm li ki3jbek, puce A15 Bionic w double caméra mazal katsawer mzyan. Kol téléphone mchouf, w sa7t l batterie dyalo m9iyssa w bayna 9bel ma tkhtaro.",
     priceLabel: "Prix dyal l offre",
     instead: "f blast",
-    gifts: ["Verre trempé cadeau", "Coque cadeau"],
+    giftBadge: "Cadeau: {item}",
     cta: "Commandi daba",
     trust: ["Batterie {min}% w ktar", "Pièces d'origine", "Garantie 3 chhour", "Livraison l ga3 lmghrib"],
   },
@@ -23,16 +27,17 @@ export const darija: OfferCopy = {
   form: {
     title: "iPhone 13 dyalek",
     included: "Cadeau m3a iPhone dyalek",
-    includedItems: { case: "Coque transparente", glass: "Verre trempé" },
+    items: {
+      "iphone-transparent": { title: "Coque transparente" },
+      crystale: { title: "Verre trempé" },
+      "apple-c-l-25w": { title: "Chargeur rapide Apple 25W", hint: "Tête USB-C + câble Lightning" },
+      "apple-cable-c-l-1m": { title: "Câble USB-C l Lightning", hint: "1 mètre" },
+      "apple-iphone-20w-originale": { title: "Tête de charge Apple 20W", hint: "Originale" },
+      "mm-300df": { title: "Sticky pad double face", hint: "Kaylsse9 téléphone f l mraya, f zzaj…" },
+    },
     free: "Fabor",
     addons: "Zid ila bghiti",
     addonsHint: "iPhone ma kayjich m3ah chargeur.",
-    addonItems: {
-      charger25: { title: "Chargeur rapide Apple 25W", hint: "Tête USB-C + câble Lightning" },
-      cable: { title: "Câble USB-C l Lightning", hint: "1 mètre" },
-      head20: { title: "Tête de charge Apple 20W", hint: "Originale" },
-      sticky: { title: "Sticky pad double face", hint: "Kaylsse9 téléphone f l mraya, f zzaj…" },
-    },
     add: "Zid",
     added: "Tzad",
     contact: "Les coordonnées dyalek",
@@ -40,7 +45,6 @@ export const darija: OfferCopy = {
     phone: "Téléphone (bhal: 06XXXXXXXX)",
     summary: "Résumé",
     phoneLine: "iPhone 13 128GB",
-    giftsLine: "Coque + verre trempé",
     delivery: "Livraison",
     deliveryPending: "khtar lmdina dyalek",
     total: "Total",
@@ -130,7 +134,8 @@ export const darija: OfferCopy = {
   box: {
     eyebrow: "F l colis dyalek",
     title: "Chno ghadi twslek.",
-    items: ["iPhone 13 128GB, mchouf mn 3nd les techniciens dyalna", "Coque transparente (cadeau)", "Verre trempé (cadeau)"],
+    phone: "iPhone 13 128GB, mchouf mn 3nd les techniciens dyalna",
+    gift: (item: string) => `${item} (cadeau)`,
     note: "Chargeur ma kaynch: zido l commande dyalek ila khassek.",
   },
 
@@ -169,7 +174,7 @@ export const darija: OfferCopy = {
       },
       {
         q: "Wach chargeur kayn m3ah?",
-        a: "La, iPhone kayji m3a coque w verre trempé cadeau, bla chargeur. T9der tzid chargeur Apple wla câble Lightning f l formulaire.",
+        a: "La, iPhone ma kayjich m3ah chargeur. T9der tzid chargeur Apple wla câble Lightning f l formulaire.",
       },
       {
         q: "Wach téléphone fih garantie?",
@@ -182,9 +187,18 @@ export const darija: OfferCopy = {
     ],
   },
 
+  card: {
+    title: "iPhone 13 128GB",
+    teaser: (gifts: string | null) => (gifts ? `${cap(gifts)} cadeau` : "7ala mzyana bzzaf, garantie 3 chhour"),
+    bar: (price: string, gifts: string | null) => `Offre iPhone 13: ${price}${gifts ? `, ${gifts} cadeau` : ""}`,
+    banner: (price: string, gifts: string | null) =>
+      `Kayn f l offre b ${price}${gifts ? ` m3a ${gifts} cadeau` : ""}, garantie 3 chhour.`,
+    cta: "Chouf l offre",
+  },
+
   final: {
     title: "iPhone 13 dyalek kaytsennak.",
-    text: "Verre trempé w coque cadeau, batterie bayna, garantie 3 chhour.",
+    text: (gifts: string | null) => `${gifts ? `${cap(gifts)} cadeau, b` : "B"}atterie bayna, garantie 3 chhour.`,
     cta: "Commandi daba",
   },
 };

@@ -9,9 +9,11 @@ import { getAisles } from "@/lib/db/storefront";
 import { PageTracker } from "@/components/analytics/PageTracker";
 import { JsonLd, storeJsonLd } from "@/lib/json-ld";
 import { getLocale, getT } from "@/lib/i18n/server";
+import { getLiveOffers } from "@/lib/offers/live";
 
 export default async function StorefrontLayout({ children }: { children: ReactNode }) {
   const [categories, aisles, t, locale] = await Promise.all([getAllCategories(), getAisles(), getT(), getLocale()]);
+  const offers = (await getLiveOffers(locale)).map((o) => ({ href: o.href, title: o.title, bar: o.bar }));
 
   return (
     <CartProvider>
@@ -22,7 +24,7 @@ export default async function StorefrontLayout({ children }: { children: ReactNo
         {t.common.skipToContent}
       </a>
       <JsonLd data={storeJsonLd(locale)} />
-      <Header categories={categories} aisles={aisles} />
+      <Header categories={categories} aisles={aisles} offers={offers} />
       <main id="contenu" tabIndex={-1} className="pb-16 outline-none md:pb-0">
         {children}
       </main>

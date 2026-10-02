@@ -15,7 +15,7 @@ import { createOrderRequest } from "@/lib/db/order-requests";
 import { landingPrice, landingStatus } from "@/lib/db/landing";
 import { findCity, estimateDelivery } from "@/lib/delivery";
 import { buildWhatsAppOrderLink } from "@/lib/whatsapp";
-import { ADDONS, INCLUDED, getOfferPage, offerAccessories, resolveOfferUnit } from "@/lib/offers/iphone13";
+import { getOfferPage, offerAccessoryLists, resolveOfferUnit } from "@/lib/offers/iphone13";
 
 // Order from the iPhone 13 offer page. Everything is priced here, from the
 // database: the phone gets the ERP promo page's price, the add-ons their
@@ -70,7 +70,7 @@ export async function submitIphone13Order(input: Input): Promise<Result> {
 
   // Only add-ons this page offers, each once.
   const wanted = new Set(Array.isArray(input.addons) ? input.addons.map(String) : []);
-  const [addons, included] = await Promise.all([offerAccessories(ADDONS), offerAccessories(INCLUDED)]);
+  const { addons, included } = await offerAccessoryLists();
   const chosen = addons.filter((a) => wanted.has(a.key));
 
   const lines: CartLineInput[] = [

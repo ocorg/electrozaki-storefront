@@ -642,6 +642,26 @@ export const darija: Dictionary = {
     add: "Zid",
   },
 
+  offers: {
+    nav: "Offres",
+    live: "offre khddama",
+    metaTitle: "Les offres dyal daba",
+    metaDescription: "Les offres li khddamin 3nd Electro Zaki, Mknas: tilifounat w accessoires b prix mn9oussin, livraison l ga3 lmghrib.",
+    eyebrow: "Les offres dyal daba",
+    title: "Ahsan l offres dyal l7anout.",
+    intro: "Prix mn9oussin 3la tilifounat w accessoires mkhtarin, l wa9t m7dod.",
+    emptyTitle: "Ma kayna ta offre daba",
+    emptyText: "Rje3 qrib, wla kteb lina f WhatsApp bach n3lmouk b l offre jaya.",
+    emptyCta: "Chouf tilifounat",
+    see: "Chouf l offre",
+    all: "Ga3 les offres",
+    homeTitle: "Daba f l7anout.",
+    from: "mn",
+    instead: "f blast",
+    discount: (value: string) => `${value} 3la had l7wayej`,
+    until: (date: string) => `7tal ${date}`,
+  },
+
   searchBox: {
     label: "9elleb 3la produit",
     clear: "Mse7",

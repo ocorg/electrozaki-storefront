@@ -3,9 +3,11 @@ import type { OfferCopy } from "./fr";
 // Text of the iPhone 13 offer page — English.
 export const en: OfferCopy = {
   meta: {
-    title: "iPhone 13 128GB very good condition - free screen glass and case",
-    description:
-      "iPhone 13 128GB in very good condition in Meknes: battery checked and shown, original parts, 3-month warranty. Free tempered glass and case, delivery anywhere in Morocco.",
+    title: (gifts: string | null) => `iPhone 13 128GB very good condition${gifts ? ` - free ${gifts}` : ""}`,
+    description: (gifts: string | null) =>
+      `iPhone 13 128GB in very good condition in Meknes: battery checked and shown, original parts, 3-month warranty. ${
+        gifts ? `Free ${gifts}, delivery` : "Delivery"
+      } anywhere in Morocco.`,
   },
 
   hero: {
@@ -15,7 +17,7 @@ export const en: OfferCopy = {
     lead: "The ideal size, the A15 Bionic chip and a dual camera that still impresses. Every phone is checked, and its battery is measured and shown before you pick it.",
     priceLabel: "Offer price",
     instead: "instead of",
-    gifts: ["Free tempered glass", "Free case"],
+    giftBadge: "Free: {item}",
     cta: "Order now",
     trust: ["Battery {min}% and up", "Original parts", "3-month warranty", "Delivery anywhere in Morocco"],
   },
@@ -23,16 +25,17 @@ export const en: OfferCopy = {
   form: {
     title: "Your iPhone 13",
     included: "Free with your iPhone",
-    includedItems: { case: "Clear case", glass: "Tempered glass" },
+    items: {
+      "iphone-transparent": { title: "Clear case" },
+      crystale: { title: "Tempered glass" },
+      "apple-c-l-25w": { title: "Apple 25W fast charger", hint: "USB-C head + Lightning cable" },
+      "apple-cable-c-l-1m": { title: "USB-C to Lightning cable", hint: "1 metre" },
+      "apple-iphone-20w-originale": { title: "Apple 20W charger head", hint: "Original" },
+      "mm-300df": { title: "Double-sided sticky pad", hint: "Sticks your phone to a mirror, a window…" },
+    },
     free: "Free",
     addons: "Add if you like",
     addonsHint: "The iPhone doesn't come with a charger.",
-    addonItems: {
-      charger25: { title: "Apple 25W fast charger", hint: "USB-C head + Lightning cable" },
-      cable: { title: "USB-C to Lightning cable", hint: "1 metre" },
-      head20: { title: "Apple 20W charger head", hint: "Original" },
-      sticky: { title: "Double-sided sticky pad", hint: "Sticks your phone to a mirror, a window…" },
-    },
     add: "Add",
     added: "Added",
     contact: "Your details",
@@ -40,7 +43,6 @@ export const en: OfferCopy = {
     phone: "Phone (e.g. 06XXXXXXXX)",
     summary: "Summary",
     phoneLine: "iPhone 13 128GB",
-    giftsLine: "Case + tempered glass",
     delivery: "Delivery",
     deliveryPending: "choose your town",
     total: "Total",
@@ -131,7 +133,8 @@ export const en: OfferCopy = {
   box: {
     eyebrow: "In your parcel",
     title: "What you get.",
-    items: ["iPhone 13 128GB, checked by our technicians", "Clear case (free)", "Tempered glass (free)"],
+    phone: "iPhone 13 128GB, checked by our technicians",
+    gift: (item: string) => `${item} (free)`,
     note: "No charger included: add one to your order if you need it.",
   },
 
@@ -170,7 +173,7 @@ export const en: OfferCopy = {
       },
       {
         q: "Is a charger included?",
-        a: "No, the iPhone comes with a free case and tempered glass, without a charger. You can add an Apple charger or a Lightning cable in the form.",
+        a: "No, the iPhone doesn't come with a charger. You can add an Apple charger or a Lightning cable in the form.",
       },
       {
         q: "Is the phone under warranty?",
@@ -183,9 +186,18 @@ export const en: OfferCopy = {
     ],
   },
 
+  card: {
+    title: "iPhone 13 128GB",
+    teaser: (gifts: string | null) => (gifts ? `Free ${gifts}` : "Very good condition, 3-month warranty"),
+    bar: (price: string, gifts: string | null) => `iPhone 13 offer: ${price}${gifts ? `, free ${gifts}` : ""}`,
+    banner: (price: string, gifts: string | null) =>
+      `On offer at ${price}${gifts ? ` with free ${gifts}` : ""}, 3-month warranty.`,
+    cta: "See the offer",
+  },
+
   final: {
     title: "Your iPhone 13 is waiting.",
-    text: "Free tempered glass and case, battery shown, 3-month warranty.",
+    text: (gifts: string | null) => `${gifts ? `Free ${gifts}, b` : "B"}attery shown, 3-month warranty.`,
     cta: "Order now",
   },
 };

@@ -9,7 +9,9 @@ import {
   Check,
   CheckCircle2,
   Gift,
+  Headphones,
   Loader2,
+  Magnet,
   MessageCircle,
   Phone,
   Plug,
@@ -23,6 +25,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useT } from "@/components/i18n/I18nProvider";
+import { categoryName } from "@/lib/i18n/labels";
 import { ProductVisual } from "@/components/storefront/ProductVisual";
 import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
 import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
@@ -40,8 +43,20 @@ import { submitIphone13Order } from "./actions";
 
 const ADVANCE = 300;
 
-const INCLUDED_ICONS: Record<string, LucideIcon> = { case: Smartphone, glass: ShieldCheck };
-const ADDON_ICONS: Record<string, LucideIcon> = { charger25: Zap, cable: Cable, head20: Plug, sticky: Sticker };
+// Accessories come from the ERP: their icon follows their aisle.
+const AISLE_ICONS: Record<string, LucideIcon> = {
+  pochettes: Smartphone,
+  incassables: ShieldCheck,
+  chargeurs: Zap,
+  "tete-de-chargeur": Plug,
+  cables: Cable,
+  "sticky-pad": Sticker,
+  "support-magnetique": Magnet,
+  ecouteurs: Headphones,
+  airpods: Headphones,
+  casque: Headphones,
+  powerbank: BatteryCharging,
+};
 const TRUST_ICONS: LucideIcon[] = [BatteryCharging, Wrench, ShieldCheck, Truck];
 
 /** "{rest}" → value. */
@@ -105,6 +120,9 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<{ reference: string; whatsappUrl: string; phone: string } | null>(null);
   const [imageIndex, setImageIndex] = useState<number | null>(null);
+
+  const title = (a: OfferAccessory) => copy.items[a.key]?.title ?? a.name;
+  const hint = (a: OfferAccessory) => (copy.items[a.key] ? copy.items[a.key].hint : categoryName(t, a.categorySlug, ""));
 
   const unit = units.find((u) => u.id === unitId);
   const fee = findCity(city)?.fee ?? 0;
@@ -183,9 +201,9 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
         <div className="relative aspect-square overflow-hidden rounded-4xl border border-ink/7 bg-white shadow-[0_30px_60px_-40px_rgb(17_16_19/0.5)]">
           <ProductVisual image={shown} name="iPhone 13" brand="Apple" isPhone priority size="large" sizes="(min-width: 768px) 50vw, 100vw" />
           <ul className="absolute inset-s-4 top-4 z-3 flex flex-col gap-2">
-            {hero.gifts.map((g) => (
-              <li key={g} className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-xs font-bold text-gold">
-                <Gift size={14} aria-hidden /> {g}
+            {included.map((g) => (
+              <li key={g.key} className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-xs font-bold text-gold">
+                <Gift size={14} aria-hidden /> {fill(hero.giftBadge, { item: title(g) })}
               </li>
             ))}
           </ul>
@@ -325,12 +343,12 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                   <h3 id="offer-included" className="text-sm font-semibold text-neutral-700">{copy.included}</h3>
                   <ul className="mt-3 grid gap-2 sm:grid-cols-2">
                     {included.map((item) => {
-                      const Icon = INCLUDED_ICONS[item.key] ?? Gift;
+                      const Icon = AISLE_ICONS[item.categorySlug] ?? Gift;
                       return (
                         <li key={item.key} className="flex items-center gap-3 rounded-2xl bg-gold/10 px-4 py-3 ring-1 ring-gold/40">
                           <Icon size={20} aria-hidden className="flex-none text-gold-deep" />
                           <span className="flex-1 text-sm font-semibold text-ink">
-                            {copy.includedItems[item.key as keyof typeof copy.includedItems] ?? item.name}
+                            {title(item)}
                           </span>
                           <span className="text-sm text-neutral-500 line-through">{formatMAD(item.price)}</span>
                           <span className="rounded-full bg-ink px-2.5 py-0.5 text-xs font-bold text-gold">{copy.free}</span>
@@ -349,8 +367,8 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                   <ul className="mt-3 grid gap-2 sm:grid-cols-2">
                     {addons.map((a) => {
                       const on = picked.has(a.key);
-                      const Icon = ADDON_ICONS[a.key] ?? Plus;
-                      const label = copy.addonItems[a.key as keyof typeof copy.addonItems];
+                      const Icon = AISLE_ICONS[a.categorySlug] ?? Plus;
+                      const sub = hint(a);
                       return (
                         <li key={a.key}>
                           <button
@@ -363,8 +381,8 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                           >
                             <Icon size={20} aria-hidden className="flex-none text-gold-deep" />
                             <span className="min-w-0 flex-1">
-                              <span className="block text-sm font-semibold text-ink">{label?.title ?? a.name}</span>
-                              {label?.hint && <span className="block text-xs text-neutral-500">{label.hint}</span>}
+                              <span className="block text-sm font-semibold text-ink">{title(a)}</span>
+                              {sub && <span className="block text-xs text-neutral-500">{sub}</span>}
                             </span>
                             <span className="flex flex-col items-end gap-1">
                               <span dir="ltr" className="readout text-sm font-bold text-ink">+{formatMAD(a.price)}</span>
@@ -433,7 +451,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                   </div>
                   {included.length > 0 && (
                     <div className="flex justify-between gap-4">
-                      <dt className="text-neutral-700">{copy.giftsLine}</dt>
+                      <dt className="text-neutral-700">{included.map(title).join(" + ")}</dt>
                       <dd className="font-semibold text-green-700">{copy.free}</dd>
                     </div>
                   )}
@@ -441,7 +459,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                     .filter((a) => picked.has(a.key))
                     .map((a) => (
                       <div key={a.key} className="flex justify-between gap-4">
-                        <dt className="text-neutral-700">{copy.addonItems[a.key as keyof typeof copy.addonItems]?.title ?? a.name}</dt>
+                        <dt className="text-neutral-700">{title(a)}</dt>
                         <dd className="readout font-semibold">{formatMAD(a.price)}</dd>
                       </div>
                     ))}

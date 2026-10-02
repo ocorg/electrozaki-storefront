@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, ShoppingBag, Truck, X } from "lucide-react";
+import { ArrowRight, ChevronDown, Menu, ShoppingBag, Tag, Truck, X } from "lucide-react";
 import Link from "@/components/i18n/Link";
 import { useT } from "@/components/i18n/I18nProvider";
 import { LanguageChips, LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
@@ -18,6 +18,18 @@ import { categoryName } from "@/lib/i18n/labels";
 import type { AisleStat } from "@/lib/db/storefront";
 
 type Category = { id: string; name: string; slug: string };
+/** A live offer (see lib/offers/live): its page, title and top-bar line. */
+type HeaderOffer = { href: string; title: string; bar: string };
+
+/** Pulsing dot that says "on now". */
+function LiveDot({ className = "" }: { className?: string }) {
+  return (
+    <span className={`relative flex h-2 w-2 flex-none ${className}`} aria-hidden>
+      <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75 motion-safe:animate-ping" />
+      <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+    </span>
+  );
+}
 
 /** Decorative signal / wifi / battery glyphs of the status bar. */
 function StatusIcons() {
@@ -45,7 +57,7 @@ const navLink = (active: boolean) =>
     active ? "text-ink after:scale-x-100" : "text-neutral-700"
   }`;
 
-export function Header({ categories, aisles }: { categories: Category[]; aisles: AisleStat[] }) {
+export function Header({ categories, aisles, offers }: { categories: Category[]; aisles: AisleStat[]; offers: HeaderOffer[] }) {
   const t = useT();
   const { totalItems } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -71,6 +83,9 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
   const groups = categories.filter((c) => c.slug !== "telephones");
   const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
   const name = (c: { slug: string; name: string }) => categoryName(t, c.slug, c.name);
+  // One offer: straight to it. Several: the list.
+  const offersHref = offers.length === 1 ? offers[0].href : "/offres";
+  const topOffer = offers[0];
 
   return (
     <>
@@ -81,13 +96,24 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
             <LiveClock className="font-semibold" />
             <span className="hidden text-neutral-300 sm:inline">{t.common.city}</span>
           </span>
-          <span className="flex min-w-0 items-center gap-1.5 text-neutral-200">
-            <Truck size={13} className="flex-none text-gold" aria-hidden />
-            <span className="truncate">
-              {t.common.deliveryEverywhere}
-              <span className="hidden sm:inline"> · {t.common.cashOnDelivery}</span>
+          {topOffer ? (
+            <Link
+              href={topOffer.href}
+              className="flex min-w-0 items-center gap-1.5 font-semibold text-gold transition-colors hover:text-gold-bright"
+            >
+              <Tag size={13} className="flex-none" aria-hidden />
+              <span className="truncate">{topOffer.bar}</span>
+              <ArrowRight size={13} className="flex-none rtl:rotate-180" aria-hidden />
+            </Link>
+          ) : (
+            <span className="flex min-w-0 items-center gap-1.5 text-neutral-200">
+              <Truck size={13} className="flex-none text-gold" aria-hidden />
+              <span className="truncate">
+                {t.common.deliveryEverywhere}
+                <span className="hidden sm:inline"> · {t.common.cashOnDelivery}</span>
+              </span>
             </span>
-          </span>
+          )}
           <StatusIcons />
         </div>
       </div>
@@ -115,6 +141,16 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
             {phones && (
               <Link href={`/collections/${phones.slug}`} className={navLink(isActive(`/collections/${phones.slug}`))}>
                 {name(phones)}
+              </Link>
+            )}
+            {offers.length > 0 && (
+              <Link
+                href={offersHref}
+                aria-current={isActive("/offres") ? "page" : undefined}
+                className="inline-flex min-h-9 items-center gap-2 rounded-full bg-gold px-3.5 text-[14px] font-bold text-ink shadow-[0_6px_16px_-8px_rgb(184_145_47/0.9)] transition-[filter,transform] hover:-translate-y-px hover:brightness-105"
+              >
+                <LiveDot />
+                {t.offers.nav}
               </Link>
             )}
             {groups.map((g) => {
@@ -217,6 +253,31 @@ export function Header({ categories, aisles }: { categories: Category[]; aisles:
             aria-label={t.common.menu}
             className="animate-in max-h-[75vh] overflow-y-auto border-t border-ink/10 bg-paper px-4 pb-6 pt-4 md:hidden"
           >
+            {offers.length > 0 && (
+              <div className="mb-6 flex flex-col gap-2">
+                {offers.slice(0, 2).map((o) => (
+                  <Link
+                    key={o.href}
+                    href={o.href}
+                    className="flex min-w-0 items-center gap-3 rounded-2xl bg-gold px-4 py-3 text-ink shadow-[0_10px_24px_-14px_rgb(184_145_47/0.9)]"
+                  >
+                    <Tag size={20} className="flex-none" aria-hidden />
+                    <span className="min-w-0 flex-1">
+                      <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider">
+                        <LiveDot /> {t.offers.nav}
+                      </span>
+                      <span className="block truncate text-sm font-semibold">{o.bar}</span>
+                    </span>
+                    <ArrowRight size={18} className="flex-none rtl:rotate-180" aria-hidden />
+                  </Link>
+                ))}
+                {offers.length > 2 && (
+                  <Link href="/offres" className="text-center text-sm font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">
+                    {t.offers.all}
+                  </Link>
+                )}
+              </div>
+            )}
             <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-500">{t.common.aisles}</p>
             <div className="mt-3 grid grid-cols-4 gap-x-2 gap-y-4">
               {aisles.map((a) => (

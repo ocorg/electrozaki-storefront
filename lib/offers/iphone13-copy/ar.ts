@@ -3,9 +3,11 @@ import type { OfferCopy } from "./fr";
 // Text of the iPhone 13 offer page — Arabic.
 export const ar: OfferCopy = {
   meta: {
-    title: "iPhone 13 بسعة 128 جيجا بحالة ممتازة - زجاج مقوّى وغلاف هدية",
-    description:
-      "iPhone 13 بسعة 128 جيجا بحالة ممتازة في مكناس: بطارية مفحوصة ومعروضة، قطع أصلية، وضمان 3 أشهر. زجاج مقوّى وغلاف هدية، والتوصيل إلى جميع أنحاء المغرب.",
+    title: (gifts: string | null) => `iPhone 13 بسعة 128 جيجا بحالة ممتازة${gifts ? ` - ${gifts} هدية` : ""}`,
+    description: (gifts: string | null) =>
+      `iPhone 13 بسعة 128 جيجا بحالة ممتازة في مكناس: بطارية مفحوصة ومعروضة، قطع أصلية، وضمان 3 أشهر.${
+        gifts ? ` ${gifts} هدية، و` : " و"
+      }التوصيل إلى جميع أنحاء المغرب.`,
   },
 
   hero: {
@@ -15,7 +17,7 @@ export const ar: OfferCopy = {
     lead: "الحجم المثالي، شريحة A15 Bionic وكاميرا مزدوجة ما زالت مبهرة. كل هاتف مفحوص، وصحة بطاريته مقاسة ومعروضة قبل أن تختاره.",
     priceLabel: "سعر العرض",
     instead: "بدل",
-    gifts: ["زجاج مقوّى هدية", "غلاف هدية"],
+    giftBadge: "هدية: {item}",
     cta: "اطلب الآن",
     trust: ["بطارية {min}% فأكثر", "قطع أصلية", "ضمان 3 أشهر", "التوصيل لكل المغرب"],
   },
@@ -23,16 +25,17 @@ export const ar: OfferCopy = {
   form: {
     title: "هاتفك iPhone 13",
     included: "هدية مع هاتفك",
-    includedItems: { case: "غلاف شفاف", glass: "زجاج مقوّى" },
+    items: {
+      "iphone-transparent": { title: "غلاف شفاف" },
+      crystale: { title: "زجاج مقوّى" },
+      "apple-c-l-25w": { title: "شاحن Apple سريع 25W", hint: "رأس USB-C + كابل Lightning" },
+      "apple-cable-c-l-1m": { title: "كابل USB-C إلى Lightning", hint: "متر واحد" },
+      "apple-iphone-20w-originale": { title: "رأس شاحن Apple 20W", hint: "أصلي" },
+      "mm-300df": { title: "لاصق Sticky pad بوجهين", hint: "يثبّت الهاتف على مرآة أو زجاج…" },
+    },
     free: "مجانًا",
     addons: "أضف إن أردت",
     addonsHint: "الهاتف لا يأتي مع شاحن.",
-    addonItems: {
-      charger25: { title: "شاحن Apple سريع 25W", hint: "رأس USB-C + كابل Lightning" },
-      cable: { title: "كابل USB-C إلى Lightning", hint: "متر واحد" },
-      head20: { title: "رأس شاحن Apple 20W", hint: "أصلي" },
-      sticky: { title: "لاصق Sticky pad بوجهين", hint: "يثبّت الهاتف على مرآة أو زجاج…" },
-    },
     add: "أضف",
     added: "أُضيف",
     contact: "معلوماتك",
@@ -40,7 +43,6 @@ export const ar: OfferCopy = {
     phone: "الهاتف (مثلًا: 06XXXXXXXX)",
     summary: "ملخص الطلب",
     phoneLine: "iPhone 13 بسعة 128 جيجا",
-    giftsLine: "غلاف + زجاج مقوّى",
     delivery: "التوصيل",
     deliveryPending: "اختر مدينتك",
     total: "المجموع",
@@ -130,7 +132,8 @@ export const ar: OfferCopy = {
   box: {
     eyebrow: "في طردك",
     title: "ما ستستلمه.",
-    items: ["iPhone 13 بسعة 128 جيجا، مفحوص من طرف تقنيينا", "غلاف شفاف (هدية)", "زجاج مقوّى (هدية)"],
+    phone: "iPhone 13 بسعة 128 جيجا، مفحوص من طرف تقنيينا",
+    gift: (item: string) => `${item} (هدية)`,
     note: "الشاحن غير مرفق: أضفه إلى طلبك إن احتجت.",
   },
 
@@ -169,7 +172,7 @@ export const ar: OfferCopy = {
       },
       {
         q: "هل الشاحن مرفق؟",
-        a: "لا، يأتي الهاتف مع غلاف وزجاج مقوّى هدية، دون شاحن. يمكنك إضافة شاحن Apple أو كابل Lightning في الاستمارة.",
+        a: "لا، الهاتف لا يأتي مع شاحن. يمكنك إضافة شاحن Apple أو كابل Lightning في الاستمارة.",
       },
       {
         q: "هل الهاتف مضمون؟",
@@ -182,9 +185,18 @@ export const ar: OfferCopy = {
     ],
   },
 
+  card: {
+    title: "iPhone 13 بسعة 128 جيجا",
+    teaser: (gifts: string | null) => (gifts ? `${gifts} هدية` : "حالة ممتازة، ضمان 3 أشهر"),
+    bar: (price: string, gifts: string | null) => `عرض iPhone 13: ${price}${gifts ? `، ${gifts} هدية` : ""}`,
+    banner: (price: string, gifts: string | null) =>
+      `متوفر في العرض بـ ${price}${gifts ? ` مع ${gifts} هدية` : ""}، وضمان 3 أشهر.`,
+    cta: "شاهد العرض",
+  },
+
   final: {
     title: "هاتفك iPhone 13 في انتظارك.",
-    text: "زجاج مقوّى وغلاف هدية، بطارية معروضة، وضمان 3 أشهر.",
+    text: (gifts: string | null) => `${gifts ? `${gifts} هدية، ` : ""}بطارية معروضة، وضمان 3 أشهر.`,
     cta: "اطلب الآن",
   },
 };

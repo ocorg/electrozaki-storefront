@@ -6,6 +6,7 @@ import { REPAIR_SLUGS } from "@/lib/repair-faq";
 import { LOCALES } from "@/lib/i18n/config";
 import { alternates } from "@/lib/i18n/seo";
 import { absoluteUrl } from "@/lib/site";
+import { getLiveOffers } from "@/lib/offers/live";
 
 // Rebuilt at most once an hour: products come and go with the ERP sync.
 export const revalidate = 3600;
@@ -27,12 +28,13 @@ function localized(path: string, extra: Omit<Entry, "url" | "alternates">): Entr
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [aisles, products] = await Promise.all([
+  const [aisles, products, offers] = await Promise.all([
     getAisles(),
     prisma.product.findMany({
       where: { published: true, availability: { not: AvailabilityStatus.DISCONTINUED } },
       select: { slug: true, updatedAt: true, images: { select: { url: true }, orderBy: { sortOrder: "asc" }, take: 1 } },
     }),
+    getLiveOffers("fr"),
   ]);
   const parents = [...new Set(aisles.map((a) => a.parentSlug).filter((s): s is string => Boolean(s)))];
 
@@ -40,6 +42,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...localized("/", { changeFrequency: "daily", priority: 1 }),
     ...localized("/reparation", { changeFrequency: "monthly", priority: 0.8 }),
     ...localized("/contact", { changeFrequency: "yearly", priority: 0.4 }),
+    ...localized("/offres", { changeFrequency: "daily", priority: 0.8 }),
+    ...offers.flatMap((o) => localized(o.href, { changeFrequency: "daily", priority: 0.9 })),
     ...parents.flatMap((slug) => localized(`/collections/${slug}`, { changeFrequency: "daily", priority: 0.9 })),
     ...aisles.flatMap((a) => localized(`/collections/${a.slug}`, { changeFrequency: "daily", priority: 0.8 })),
     ...REPAIR_SLUGS.flatMap((slug) => localized(`/reparation/${slug}`, { changeFrequency: "monthly", priority: 0.6 })),

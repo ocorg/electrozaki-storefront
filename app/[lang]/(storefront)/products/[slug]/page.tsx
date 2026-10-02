@@ -24,6 +24,9 @@ import { LOCALE_META, localePath } from "@/lib/i18n/config";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { categoryName, specRow } from "@/lib/i18n/labels";
 import { alternates } from "@/lib/i18n/seo";
+import { Tag } from "lucide-react";
+import { PHONE_SLUGS, getIphone13Offer } from "@/lib/offers/iphone13";
+import { OFFER_COPY, giftList } from "@/lib/offers/iphone13-copy";
 
 export const revalidate = 60;
 
@@ -77,6 +80,17 @@ export default async function ProductPage({ params }: Props) {
   const [product, t, locale] = await Promise.all([getProductBySlug(slug), getT(), getLocale()]);
   if (!product) notFound();
   const aisleName = categoryName(t, product.category.slug, product.category.name);
+
+  // The same phones sold through the iPhone 13 offer: say so here, so a
+  // visitor who arrives from the catalogue doesn't pay more than the offer.
+  let offerBanner: { text: string; cta: string } | null = null;
+  if (PHONE_SLUGS.includes(product.slug)) {
+    const offer = await getIphone13Offer();
+    if (offer.status === "live" && offer.units.length && offer.fromPrice !== null) {
+      const c = OFFER_COPY[locale];
+      offerBanner = { text: c.card.banner(formatMAD(offer.fromPrice), giftList(c, offer.included, locale)), cta: c.card.cta };
+    }
+  }
 
   const [compatibilityPhones, rawBundles, related] = await Promise.all([
     product.compatibleWithPhones.length ? getCompatibilityTargetPhones() : Promise.resolve([]),
@@ -193,6 +207,20 @@ export default async function ProductPage({ params }: Props) {
     <div className="mx-auto max-w-7xl px-4 pb-8 pt-6 sm:pt-8">
       <JsonLd data={jsonLd} />
       <Breadcrumbs items={crumbs} className="mb-6" />
+      {offerBanner && (
+        <Link
+          href="/offres/iphone-13"
+          className="group mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-3xl bg-ink px-5 py-4 text-white shadow-[0_20px_40px_-30px_rgb(17_16_19/0.8)]"
+        >
+          <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[30%] bg-gold text-ink">
+            <Tag size={20} aria-hidden />
+          </span>
+          <span className="min-w-0 flex-1 font-semibold">{offerBanner.text}</span>
+          <span className="inline-flex min-h-10 items-center rounded-full bg-gold px-5 text-sm font-bold text-ink transition-[filter] group-hover:brightness-105">
+            {offerBanner.cta}
+          </span>
+        </Link>
+      )}
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
         <ProductVariantExperience

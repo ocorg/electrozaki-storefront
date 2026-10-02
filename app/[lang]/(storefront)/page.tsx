@@ -5,6 +5,7 @@ import Link from "@/components/i18n/Link";
 import { getAisles, getBrands, getHomeShelves, getShowcasePhones } from "@/lib/db/storefront";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { ControlCenter } from "@/components/storefront/ControlCenter";
+import { OffersStrip } from "@/components/storefront/OffersStrip";
 import { PhoneFinder } from "@/components/storefront/PhoneFinder";
 import { HeroPhone } from "@/components/storefront/HeroPhone";
 import { DeviceArt } from "@/components/storefront/DeviceArt";
@@ -145,6 +146,9 @@ export default async function HomePage() {
           />
         </div>
       )}
+
+      {/* ── Offers on right now (nothing when there are none) ─────────── */}
+      <OffersStrip />
 
       {/* ── Aisles ────────────────────────────────────────────────────── */}
       <section aria-labelledby="rayons" className="mx-auto max-w-7xl px-4 pt-20 sm:pt-28">

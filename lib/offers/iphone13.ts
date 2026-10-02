@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { AvailabilityStatus } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/db/client";
 import { landingPrice, landingStatus, type LandingStatus } from "@/lib/db/landing";
@@ -9,31 +10,21 @@ import { MAX_QTY } from "@/lib/db/cart-pricing";
 //
 // It is tied to the ERP promo page with the same slug ("Site web → Pages
 // promo"): switching that page off takes the offer down, its discount sets
-// the offer price, its views and orders are counted there. Products are
-// picked here by slug; their prices and stock always come from the database.
+// the offer price, its views and orders are counted there. Prices and stock
+// always come from the database.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const OFFER_SLUG = "iphone-13";
 
 /** Listings whose in-stock units are sold here (clean units only: no "pièces remplacées"). */
-const PHONE_SLUGS = ["iphone-13-128gb-tres-bon-etat"];
+export const PHONE_SLUGS = ["iphone-13-128gb-tres-bon-etat"];
 
-/** Given free with the phone. */
-export const INCLUDED = [
-  { key: "case", slug: "iphone-transparent" },
-  { key: "glass", slug: "crystale" },
-] as const;
-
-/** Suggested add-ons, at their normal price. */
-export const ADDONS = [
-  { key: "charger25", slug: "apple-c-l-25w" },
-  { key: "cable", slug: "apple-cable-c-l-1m" },
-  { key: "head20", slug: "apple-iphone-20w-originale" },
-  { key: "sticky", slug: "mm-300df" },
-] as const;
-
-export type IncludedKey = (typeof INCLUDED)[number]["key"];
-export type AddonKey = (typeof ADDONS)[number]["key"];
+// Free items and suggested add-ons come from the ERP: the listing's
+// "compatible accessories" (Site web → Catalogue → the phone), where
+// "Cadeau" ticked = free with the phone, unticked = suggested add-on. Until
+// that list is filled in, these defaults are used (by product slug).
+const DEFAULT_INCLUDED = ["iphone-transparent", "crystale"];
+const DEFAULT_ADDONS = ["apple-c-l-25w", "apple-cable-c-l-1m", "apple-iphone-20w-originale", "mm-300df"];
 
 export type OfferUnit = {
   id: string;
@@ -58,7 +49,8 @@ export type OfferUnit = {
   stockQuantity: number;
 };
 
-export type OfferAccessory = { key: string; productId: string; name: string; price: number; image: string | null };
+/** key = the product slug (labels in the page copy are keyed by it). */
+export type OfferAccessory = { key: string; productId: string; name: string; categorySlug: string; price: number; image: string | null };
 
 /** Stock check shared by the page and the order action. */
 function accessoryInStock(p: { availability: string; source: string; internal: { stockQuantity: number } | null }): boolean {
@@ -74,21 +66,66 @@ const ACCESSORY_SELECT = {
   source: true,
   recommendedSalePrice: true,
   internal: { select: { stockQuantity: true } },
+  category: { select: { slug: true } },
   images: { select: { url: true }, orderBy: { sortOrder: "asc" as const }, take: 1 },
 } as const;
 
-/** Accessories (by key) that are published and in stock right now. */
-export async function offerAccessories<K extends string>(list: readonly { key: K; slug: string }[]) {
+type AccessoryRow = {
+  id: string;
+  slug: string;
+  name: string;
+  availability: string;
+  source: string;
+  recommendedSalePrice: { toString(): string };
+  internal: { stockQuantity: number } | null;
+  category: { slug: string };
+  images: { url: string }[];
+};
+
+function toAccessory(p: AccessoryRow): OfferAccessory {
+  return {
+    key: p.slug,
+    productId: p.id,
+    name: p.name,
+    categorySlug: p.category.slug,
+    price: Number(p.recommendedSalePrice.toString()),
+    image: p.images[0]?.url ?? null,
+  };
+}
+
+/** Free items and add-ons that are published and in stock right now (see the ERP note above). */
+export async function offerAccessoryLists(): Promise<{ included: OfferAccessory[]; addons: OfferAccessory[] }> {
+  const links = await prisma.productCompatibility.findMany({
+    where: { compatibleWith: { slug: { in: PHONE_SLUGS } }, product: { published: true, isPhone: false, variants: { none: {} } } },
+    select: { isGiftOption: true, product: { select: ACCESSORY_SELECT } },
+  });
+
+  if (links.length) {
+    // One entry per accessory (it may be linked to several listings); free wins.
+    const byId = new Map<string, { gift: boolean; p: AccessoryRow }>();
+    for (const l of links) {
+      const seen = byId.get(l.product.id);
+      byId.set(l.product.id, { gift: (seen?.gift ?? false) || l.isGiftOption, p: l.product });
+    }
+    const rows = [...byId.values()].filter((r) => accessoryInStock(r.p));
+    const byPrice = (x: OfferAccessory, y: OfferAccessory) => x.price - y.price || x.name.localeCompare(y.name);
+    return {
+      included: rows.filter((r) => r.gift).map((r) => toAccessory(r.p)).sort(byPrice),
+      addons: rows.filter((r) => !r.gift).map((r) => toAccessory(r.p)).sort(byPrice),
+    };
+  }
+
   const rows = await prisma.product.findMany({
-    where: { slug: { in: list.map((a) => a.slug) }, published: true, variants: { none: {} } },
+    where: { slug: { in: [...DEFAULT_INCLUDED, ...DEFAULT_ADDONS] }, published: true, variants: { none: {} } },
     select: ACCESSORY_SELECT,
   });
   const bySlug = new Map(rows.map((r) => [r.slug, r]));
-  return list.flatMap((a) => {
-    const p = bySlug.get(a.slug);
-    if (!p || !accessoryInStock(p)) return [];
-    return [{ key: a.key, productId: p.id, name: p.name, price: Number(p.recommendedSalePrice.toString()), image: p.images[0]?.url ?? null }];
-  });
+  const pick = (slugs: string[]) =>
+    slugs.flatMap((slug) => {
+      const p = bySlug.get(slug);
+      return p && accessoryInStock(p) ? [toAccessory(p)] : [];
+    });
+  return { included: pick(DEFAULT_INCLUDED), addons: pick(DEFAULT_ADDONS) };
 }
 
 export async function getOfferPage() {
@@ -110,13 +147,16 @@ export type OfferData = {
   normalFrom: number | null;
 };
 
-export async function getIphone13Offer(): Promise<OfferData> {
+/** The offer as shown right now (read once per page render: header, page and banners share it). */
+export const getIphone13Offer = cache(loadIphone13Offer);
+
+async function loadIphone13Offer(): Promise<OfferData> {
   const page = await getOfferPage();
   const status: LandingStatus = page ? landingStatus(page) : "off";
   const empty: OfferData = { pageId: page?.id ?? null, status, units: [], images: [], included: [], addons: [], fromPrice: null, normalFrom: null };
   if (!page || status !== "live") return empty;
 
-  const [phones, included, addons] = await Promise.all([
+  const [phones, { included, addons }] = await Promise.all([
     prisma.product.findMany({
       where: { slug: { in: PHONE_SLUGS }, published: true, availability: AvailabilityStatus.IN_STOCK },
       select: {
@@ -151,8 +191,7 @@ export async function getIphone13Offer(): Promise<OfferData> {
         },
       },
     }),
-    offerAccessories(INCLUDED),
-    offerAccessories(ADDONS),
+    offerAccessoryLists(),
   ]);
 
   const units: OfferUnit[] = phones.flatMap((p) =>
