@@ -718,6 +718,7 @@ export const darija: Dictionary = {
     quoteClosed: "Had devis mab9ach kaytsenna jawab. Kteb lina f WhatsApp ila bghiti.",
     offerEnded: "Had l offre mabqatch.",
     offerUnitGone: "Had téléphone tt7jez ghir daba. Khtar wa7ed akhor 3afak.",
+    phoneOrderLimit: "Déjà derti bzzaf dyal les commandes b had n-numéro lyouma. Ghadi n3ayto lik dghya, wla kteb lina f WhatsApp.",
   },
 
   specKeys: { "État": "L7ala", Stockage: "Stockage", RAM: "RAM" },

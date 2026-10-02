@@ -1,7 +1,14 @@
 "use server";
 
 import { z } from "zod";
-import { allowRequest, RATE_LIMIT_MESSAGE } from "@/lib/rate-limit";
+import {
+  allowRequest,
+  phoneOrderLimitReached,
+  recordPhoneOrder,
+  PHONE_ORDER_LIMIT_MESSAGE,
+  RATE_LIMIT_MESSAGE,
+} from "@/lib/rate-limit";
+import { prisma } from "@/lib/db/client";
 import { MOROCCAN_PHONE_RE } from "@/lib/validation";
 import { priceCart, type CartLineInput, type PricedLine } from "@/lib/db/cart-pricing";
 import { createOrderRequest } from "@/lib/db/order-requests";
@@ -38,19 +45,28 @@ type Input = {
 type Result = { ok: true; reference: string; whatsappUrl: string } | { ok: false; error: string };
 
 export async function submitIphone13Order(input: Input): Promise<Result> {
-  if (!(await allowRequest("order"))) return { ok: false, error: RATE_LIMIT_MESSAGE };
-
+  // Form checks first (no database): a typo shouldn't use up the
+  // per-connection allowance, which many mobile customers share.
   const contact = contactSchema.safeParse({ customerName: input.customerName, customerPhone: input.customerPhone });
   if (!contact.success) return { ok: false, error: contact.error.issues[0]?.message ?? "Champs invalides." };
 
   const city = findCity(String(input.deliveryCity ?? ""));
   if (!city) return { ok: false, error: "Merci de choisir votre ville de livraison dans la liste." };
 
+  if (!(await allowRequest("order"))) return { ok: false, error: RATE_LIMIT_MESSAGE };
+
   const page = await getOfferPage();
   if (!page || landingStatus(page) !== "live") return { ok: false, error: OFFER_ENDED };
 
   const unit = await resolveOfferUnit(String(input.unitId ?? ""));
   if (!unit) return { ok: false, error: UNIT_GONE };
+
+  // Same customer, same phone, a few minutes later (a double tap, or a retry
+  // after a lost connection): hand back that order instead of a duplicate.
+  const repeat = await recentOrderFor(contact.data.customerPhone, unit.id);
+  if (repeat) return { ok: true, reference: repeat.id.slice(0, 8).toUpperCase(), whatsappUrl: repeat.whatsappUrl };
+
+  if (await phoneOrderLimitReached(contact.data.customerPhone)) return { ok: false, error: PHONE_ORDER_LIMIT_MESSAGE };
 
   // Only add-ons this page offers, each once.
   const wanted = new Set(Array.isArray(input.addons) ? input.addons.map(String) : []);
@@ -66,7 +82,14 @@ export async function submitIphone13Order(input: Input): Promise<Result> {
 
   const priced: PricedLine[] = cart.lines.map((l) =>
     l.variantId === unit.id
-      ? { ...l, productName: `${l.productName} (offre iPhone 13)`, unitPrice: landingPrice(page, l.unitPrice) }
+      ? {
+          ...l,
+          productName: `${l.productName} (offre iPhone 13)`,
+          // The ERP unit name ends with its normal price ("… · 3400 DH"):
+          // dropped here, the offer price is the one charged.
+          variantName: l.variantName?.replace(/\s*·\s*[\d\s]+DH\s*$/i, ""),
+          unitPrice: landingPrice(page, l.unitPrice),
+        }
       : l
   );
   // Free with the phone; skipped (not refused) if one just ran out.
@@ -95,6 +118,8 @@ export async function submitIphone13Order(input: Input): Promise<Result> {
     landingPageId: page.id,
   });
 
+  await recordPhoneOrder(contact.data.customerPhone);
+
   const reference = order.id.slice(0, 8).toUpperCase();
   const whatsappUrl = buildWhatsAppOrderLink(
     contact.data.customerName,
@@ -102,4 +127,47 @@ export async function submitIphone13Order(input: Input): Promise<Result> {
     { reference, requiresAdvance: true, receiptUploaded: false, delivery }
   );
   return { ok: true, reference, whatsappUrl };
+}
+
+const REPEAT_WINDOW_MINUTES = 30;
+const digits = (phone: string) => phone.replace(/\D/g, "").slice(-9);
+
+/** A still-new offer order for this phone and this unit, placed in the last minutes. */
+async function recentOrderFor(phone: string, unitId: string) {
+  const since = new Date(Date.now() - REPEAT_WINDOW_MINUTES * 60_000);
+  const orders = await prisma.orderRequest.findMany({
+    where: { status: "NEW", createdAt: { gte: since }, items: { some: { variantId: unitId } } },
+    select: {
+      id: true,
+      customerName: true,
+      customerPhone: true,
+      deliveryCity: true,
+      deliveryFee: true,
+      deliveryEstimate: true,
+      deliveryUnavailable: true,
+      items: { select: { productNameSnapshot: true, quantity: true, priceAtRequest: true } },
+    },
+    orderBy: { createdAt: "desc" },
+    take: 5,
+  });
+  const match = orders.find((o) => digits(o.customerPhone) === digits(phone));
+  if (!match) return null;
+  const whatsappUrl = buildWhatsAppOrderLink(
+    match.customerName,
+    match.items.map((i) => ({ productName: i.productNameSnapshot, quantity: i.quantity, price: Number(i.priceAtRequest) })),
+    {
+      reference: match.id.slice(0, 8).toUpperCase(),
+      requiresAdvance: true,
+      receiptUploaded: false,
+      delivery: match.deliveryCity
+        ? {
+            city: match.deliveryCity,
+            fee: Number(match.deliveryFee),
+            estimate: match.deliveryEstimate ? match.deliveryEstimate.toISOString().slice(0, 10) : null,
+            unavailable: match.deliveryUnavailable,
+          }
+        : undefined,
+    }
+  );
+  return { id: match.id, whatsappUrl };
 }

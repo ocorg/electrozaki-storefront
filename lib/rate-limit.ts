@@ -8,7 +8,9 @@ import { recordBot } from "./bot-hits";
 // in the database (no extra service): one row per attempt, keyed by a
 // salted hash of the IP — the raw address is never stored.
 const LIMITS = {
-  order: { max: 5, windowMinutes: 60 },
+  // Generous per connection: Moroccan mobile carriers put many customers
+  // behind one address. Per-phone limits (below) catch repeat orders.
+  order: { max: 20, windowMinutes: 60 },
   upload: { max: 10, windowMinutes: 60 },
   contact: { max: 5, windowMinutes: 60 },
   repair: { max: 5, windowMinutes: 60 },
@@ -77,6 +79,28 @@ export async function trackingPhoneLocked(phone: string): Promise<boolean> {
 export async function recordTrackingFailure(phone: string): Promise<void> {
   await prisma.rateLimitHit.create({ data: { bucket: "track_phone", keyHash: phoneKey(phone) } });
 }
+
+// Orders per phone number: a real customer orders once or twice a day; more
+// from one number is a mistake or a prank. Recorded only for orders that
+// were actually placed.
+const PHONE_ORDERS = { max: 3, windowHours: 24 };
+
+export async function phoneOrderLimitReached(phone: string): Promise<boolean> {
+  const since = new Date(Date.now() - PHONE_ORDERS.windowHours * 60 * 60_000);
+  const placed = await prisma.rateLimitHit.count({
+    where: { bucket: "order_phone", keyHash: phoneKey(phone), createdAt: { gte: since } },
+  });
+  if (placed < PHONE_ORDERS.max) return false;
+  await recordBot("blocked", "order_phone");
+  return true;
+}
+
+export async function recordPhoneOrder(phone: string): Promise<void> {
+  await prisma.rateLimitHit.create({ data: { bucket: "order_phone", keyHash: phoneKey(phone) } });
+}
+
+export const PHONE_ORDER_LIMIT_MESSAGE =
+  "Vous avez déjà passé plusieurs commandes avec ce numéro aujourd'hui. Nous vous appelons très vite, ou écrivez-nous sur WhatsApp.";
 
 export const RATE_LIMIT_MESSAGE =
   "Trop de tentatives. Merci de réessayer dans une heure ou de nous écrire sur WhatsApp.";

@@ -35,6 +35,7 @@ import { translateError } from "@/lib/i18n/labels";
 import { whatsappLink } from "@/lib/site";
 import type { OfferAccessory, OfferUnit } from "@/lib/offers/iphone13";
 import type { OfferCopy } from "@/lib/offers/iphone13-copy";
+import { track } from "@/components/analytics/track";
 import { submitIphone13Order } from "./actions";
 
 const ADVANCE = 300;
@@ -151,6 +152,8 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
         deliveryCity: city,
       });
       if (r.ok) {
+        // Counted in the ERP's sales funnel like an add to cart (this page has no cart).
+        if (unit) track({ t: "add_to_cart", pid: unit.productId, v: total });
         setDone({ reference: r.reference, whatsappUrl: r.whatsappUrl, phone });
         formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       } else setError(translateError(t, r.error));

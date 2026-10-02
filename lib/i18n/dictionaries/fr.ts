@@ -728,6 +728,7 @@ export const fr = {
     quoteClosed: "Ce devis n'attend plus de réponse. Contactez-nous sur WhatsApp si besoin.",
     offerEnded: "Cette offre n'est plus disponible.",
     offerUnitGone: "Ce téléphone vient d'être réservé. Merci d'en choisir un autre.",
+    phoneOrderLimit: "Vous avez déjà passé plusieurs commandes avec ce numéro aujourd'hui. Nous vous appelons très vite, ou écrivez-nous sur WhatsApp.",
   },
 
   // Spec labels as typed in the ERP → shown label.

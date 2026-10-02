@@ -6,6 +6,8 @@ type Signal =
   | { t: "add_to_cart"; pid: string; v: number }
   | { t: "search"; q: string; r: number };
 
+import { splitLocale } from "@/lib/i18n/config";
+
 const SOURCE_KEY = "ez_src";
 
 // Where the visit came from: ?utm_source=… first, else the referring site.
@@ -49,7 +51,9 @@ export function visitSource(): string {
 
 export function track(signal: Signal): void {
   try {
-    const body = JSON.stringify({ ...signal, p: window.location.pathname, s: visitSource() });
+    // The page without its language (/fr/offres/x → /offres/x): the ERP names
+    // pages by these paths, and one page in four languages counts as one.
+    const body = JSON.stringify({ ...signal, p: splitLocale(window.location.pathname).path, s: visitSource() });
     const blob = new Blob([body], { type: "application/json" });
     if (!navigator.sendBeacon?.("/api/a", blob)) {
       void fetch("/api/a", { method: "POST", body, keepalive: true, headers: { "content-type": "application/json" } });

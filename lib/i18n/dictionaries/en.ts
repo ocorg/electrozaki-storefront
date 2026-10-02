@@ -717,6 +717,7 @@ export const en: Dictionary = {
     quoteClosed: "This quote is no longer waiting for an answer. Message us on WhatsApp if needed.",
     offerEnded: "This offer is no longer available.",
     offerUnitGone: "This phone was just reserved. Please choose another one.",
+    phoneOrderLimit: "You've already placed several orders with this number today. We'll call you very soon, or message us on WhatsApp.",
   },
 
   specKeys: { "État": "Condition", Stockage: "Storage", RAM: "RAM" },

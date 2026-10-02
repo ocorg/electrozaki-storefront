@@ -1,11 +1,17 @@
 "use server";
 
 import { uploadReceiptImage, verifyReceiptToken } from "@/lib/storage";
-import { orderRequestSchema } from "@/lib/validation";
+import { orderRequestSchema, MOROCCAN_PHONE_RE } from "@/lib/validation";
 import { createOrderRequest, markWhatsAppOpened, PromoExhaustedError } from "@/lib/db/order-requests";
 import { priceCart, type CartLineInput } from "@/lib/db/cart-pricing";
 import { validatePromoCode, type PromoValidationResult } from "@/lib/db/promo-codes";
-import { allowRequest, RATE_LIMIT_MESSAGE } from "@/lib/rate-limit";
+import {
+  allowRequest,
+  phoneOrderLimitReached,
+  recordPhoneOrder,
+  PHONE_ORDER_LIMIT_MESSAGE,
+  RATE_LIMIT_MESSAGE,
+} from "@/lib/rate-limit";
 import { buildWhatsAppOrderLink } from "@/lib/whatsapp";
 import { findCity, estimateDelivery } from "@/lib/delivery";
 
@@ -42,7 +48,13 @@ type SubmitResult =
   | { ok: false; error: string };
 
 export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResult> {
+  // A mistyped number is caught before the attempt is counted: many mobile
+  // customers share one connection, and its allowance.
+  if (!MOROCCAN_PHONE_RE.test(String(input.customerPhone ?? "").trim())) {
+    return { ok: false, error: "Numéro de téléphone invalide (ex: 06XXXXXXXX)." };
+  }
   if (!(await allowRequest("order"))) return { ok: false, error: RATE_LIMIT_MESSAGE };
+  if (await phoneOrderLimitReached(String(input.customerPhone))) return { ok: false, error: PHONE_ORDER_LIMIT_MESSAGE };
 
   const cart = await priceCart(input.items);
   if (!cart.ok) return { ok: false, error: cart.error };
@@ -109,6 +121,8 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
     }
     throw err;
   }
+
+  await recordPhoneOrder(parsed.data.customerPhone);
 
   const whatsappUrl = buildWhatsAppOrderLink(
     parsed.data.customerName,
