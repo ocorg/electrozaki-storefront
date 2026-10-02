@@ -13,7 +13,7 @@ export const en: OfferCopy = {
   hero: {
     eyebrow: "Electro Zaki offer · In stock in Meknes",
     title: "iPhone 13",
-    subtitle: "128GB · Very good condition",
+    subtitle: "128GB · Very good",
     lead: "The ideal size, the A15 Bionic chip and a dual camera that still impresses. Every phone is checked, and its battery is measured and shown before you pick it.",
     priceLabel: "Offer price",
     instead: "instead of",

@@ -3,9 +3,9 @@ import type { OfferCopy } from "./fr";
 // Text of the iPhone 13 offer page — Arabic.
 export const ar: OfferCopy = {
   meta: {
-    title: (gifts: string | null) => `iPhone 13 بسعة 128 جيجا بحالة ممتازة${gifts ? ` - ${gifts} هدية` : ""}`,
+    title: (gifts: string | null) => `iPhone 13 128GB بحالة ممتازة${gifts ? ` - ${gifts} هدية` : ""}`,
     description: (gifts: string | null) =>
-      `iPhone 13 بسعة 128 جيجا بحالة ممتازة في مكناس: بطارية مفحوصة ومعروضة، قطع أصلية، وضمان 3 أشهر.${
+      `iPhone 13 128GB بحالة ممتازة في مكناس: بطارية مفحوصة ومعروضة، قطع أصلية، وضمان 3 أشهر.${
         gifts ? ` ${gifts} هدية، و` : " و"
       }التوصيل إلى جميع أنحاء المغرب.`,
   },
@@ -13,7 +13,7 @@ export const ar: OfferCopy = {
   hero: {
     eyebrow: "عرض إلكترو زكي · متوفر في مكناس",
     title: "iPhone 13",
-    subtitle: "128 جيجا · حالة ممتازة",
+    subtitle: "128GB · حالة ممتازة",
     lead: "الحجم المثالي، شريحة A15 Bionic وكاميرا مزدوجة ما زالت مبهرة. كل هاتف مفحوص، وصحة بطاريته مقاسة ومعروضة قبل أن تختاره.",
     priceLabel: "سعر العرض",
     instead: "بدل",
@@ -42,7 +42,7 @@ export const ar: OfferCopy = {
     fullName: "الاسم الكامل",
     phone: "الهاتف (مثلًا: 06XXXXXXXX)",
     summary: "ملخص الطلب",
-    phoneLine: "iPhone 13 بسعة 128 جيجا",
+    phoneLine: "iPhone 13 128GB",
     delivery: "التوصيل",
     deliveryPending: "اختر مدينتك",
     total: "المجموع",
@@ -115,7 +115,7 @@ export const ar: OfferCopy = {
     rows: [
       ["الشاشة", "6.1 بوصة Super Retina XDR OLED، 2532 × 1170 بكسل، 460 ppi، 800 شمعة (1200 في HDR)"],
       ["الشريحة", "A15 Bionic: معالج بست نوى، رسوميات بأربع نوى، Neural Engine بست عشرة نواة"],
-      ["السعة", "128 جيجا"],
+      ["السعة", "128GB"],
       ["الكاميرات الخلفية", "مزدوجة 12 ميغابكسل: واسعة ƒ/1.6 بتثبيت عبر تحريك المستشعر، فائقة الاتساع ƒ/2.4 (120°)"],
       ["التصوير", "الوضع الليلي، Smart HDR 4، الأنماط الفوتوغرافية، Deep Fusion"],
       ["الفيديو", "4K حتى 60 إطارًا في الثانية، الوضع السينمائي، Dolby Vision HDR"],
@@ -132,7 +132,7 @@ export const ar: OfferCopy = {
   box: {
     eyebrow: "في طردك",
     title: "ما ستستلمه.",
-    phone: "iPhone 13 بسعة 128 جيجا، مفحوص من طرف تقنيينا",
+    phone: "iPhone 13 128GB، مفحوص من طرف تقنيينا",
     gift: (item: string) => `${item} (هدية)`,
     note: "الشاحن غير مرفق: أضفه إلى طلبك إن احتجت.",
   },
@@ -186,7 +186,7 @@ export const ar: OfferCopy = {
   },
 
   card: {
-    title: "iPhone 13 بسعة 128 جيجا",
+    title: "iPhone 13 128GB",
     teaser: (gifts: string | null) => (gifts ? `${gifts} هدية` : "حالة ممتازة، ضمان 3 أشهر"),
     bar: (price: string, gifts: string | null) => `عرض iPhone 13: ${price}${gifts ? `، ${gifts} هدية` : ""}`,
     banner: (price: string, gifts: string | null) =>

@@ -10,9 +10,9 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 export const fr = {
   meta: {
     // gifts = what is free right now ("coque transparente + verre trempé"), or null.
-    title: (gifts: string | null) => `iPhone 13 128 Go très bon état${gifts ? ` - ${gifts} offerts` : ""}`,
+    title: (gifts: string | null) => `iPhone 13 128GB très bon état${gifts ? ` - ${gifts} offerts` : ""}`,
     description: (gifts: string | null) =>
-      `iPhone 13 128 Go en très bon état à Meknès : batterie vérifiée et affichée, pièces d'origine, garantie 3 mois. ${
+      `iPhone 13 128GB en très bon état à Meknès : batterie vérifiée et affichée, pièces d'origine, garantie 3 mois. ${
         gifts ? `${cap(gifts)} offerts, livraison` : "Livraison"
       } partout au Maroc.`,
   },
@@ -20,7 +20,7 @@ export const fr = {
   hero: {
     eyebrow: "Offre Electro Zaki · Stock à Meknès",
     title: "iPhone 13",
-    subtitle: "128 Go · Très bon état",
+    subtitle: "128GB · Très bon état",
     lead: "Le format idéal, la puce A15 Bionic et une double caméra qui n'a rien perdu de sa superbe. Chaque téléphone est vérifié, sa batterie est mesurée et affichée avant que vous le choisissiez.",
     priceLabel: "Prix de l'offre",
     instead: "au lieu de",
@@ -51,7 +51,7 @@ export const fr = {
     fullName: "Nom complet",
     phone: "Téléphone (ex : 06XXXXXXXX)",
     summary: "Récapitulatif",
-    phoneLine: "iPhone 13 128 Go",
+    phoneLine: "iPhone 13 128GB",
     delivery: "Livraison",
     deliveryPending: "choisissez votre ville",
     total: "Total",
@@ -126,7 +126,7 @@ export const fr = {
     rows: [
       ["Écran", "6,1 pouces Super Retina XDR OLED, 2532 × 1170 px, 460 ppp, 800 nits (1 200 nits en HDR)"],
       ["Puce", "A15 Bionic : CPU 6 cœurs, GPU 4 cœurs, Neural Engine 16 cœurs"],
-      ["Stockage", "128 Go"],
+      ["Stockage", "128GB"],
       ["Caméras arrière", "Double 12 Mpx : grand-angle ƒ/1.6 avec stabilisation par déplacement du capteur, ultra grand-angle ƒ/2.4 (120°)"],
       ["Photo", "Mode Nuit, Smart HDR 4, Styles photographiques, Deep Fusion"],
       ["Vidéo", "4K jusqu'à 60 i/s, mode Cinématique, Dolby Vision HDR"],
@@ -143,7 +143,7 @@ export const fr = {
   box: {
     eyebrow: "Dans votre colis",
     title: "Ce que vous recevez.",
-    phone: "iPhone 13 128 Go, vérifié par nos techniciens",
+    phone: "iPhone 13 128GB, vérifié par nos techniciens",
     gift: (item: string) => `${item} (offert)`,
     note: "Le chargeur n'est pas inclus : ajoutez-le à votre commande si besoin.",
   },
@@ -198,7 +198,7 @@ export const fr = {
 
   // The offer elsewhere on the site: header bar, offers page, home, product page.
   card: {
-    title: "iPhone 13 128 Go",
+    title: "iPhone 13 128GB",
     teaser: (gifts: string | null) => (gifts ? `${cap(gifts)} offerts` : "Très bon état, garantie 3 mois"),
     bar: (price: string, gifts: string | null) => `Offre iPhone 13 : ${price}${gifts ? `, ${gifts} offerts` : ""}`,
     banner: (price: string, gifts: string | null) =>

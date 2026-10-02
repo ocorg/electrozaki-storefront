@@ -121,8 +121,15 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
   const [done, setDone] = useState<{ reference: string; whatsappUrl: string; phone: string } | null>(null);
   const [imageIndex, setImageIndex] = useState<number | null>(null);
 
-  const title = (a: OfferAccessory) => copy.items[a.key]?.title ?? a.name;
-  const hint = (a: OfferAccessory) => (copy.items[a.key] ? copy.items[a.key].hint : categoryName(t, a.categorySlug, ""));
+  // Labels: the product's catalogue name (as in the shop, the cart and the
+  // ERP order), with what it is underneath. Badges keep the plain words.
+  const label = (a: OfferAccessory) => a.name;
+  const plain = (a: OfferAccessory) => copy.items[a.key]?.title ?? a.name;
+  const hint = (a: OfferAccessory) => {
+    const known = copy.items[a.key];
+    const what = known ? [known.title, known.hint].filter(Boolean).join(" · ") : categoryName(t, a.categorySlug, "");
+    return what && what !== a.name ? what : undefined;
+  };
 
   const unit = units.find((u) => u.id === unitId);
   const fee = findCity(city)?.fee ?? 0;
@@ -203,7 +210,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
           <ul className="absolute inset-s-4 top-4 z-3 flex flex-col gap-2">
             {included.map((g) => (
               <li key={g.key} className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-xs font-bold text-gold">
-                <Gift size={14} aria-hidden /> {fill(hero.giftBadge, { item: title(g) })}
+                <Gift size={14} aria-hidden /> {fill(hero.giftBadge, { item: plain(g) })}
               </li>
             ))}
           </ul>
@@ -347,8 +354,9 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                       return (
                         <li key={item.key} className="flex items-center gap-3 rounded-2xl bg-gold/10 px-4 py-3 ring-1 ring-gold/40">
                           <Icon size={20} aria-hidden className="flex-none text-gold-deep" />
-                          <span className="flex-1 text-sm font-semibold text-ink">
-                            {title(item)}
+                          <span className="min-w-0 flex-1">
+                            <span className="block text-sm font-semibold text-ink">{label(item)}</span>
+                            {hint(item) && <span className="block text-xs text-neutral-600">{hint(item)}</span>}
                           </span>
                           <span className="text-sm text-neutral-500 line-through">{formatMAD(item.price)}</span>
                           <span className="rounded-full bg-ink px-2.5 py-0.5 text-xs font-bold text-gold">{copy.free}</span>
@@ -381,7 +389,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                           >
                             <Icon size={20} aria-hidden className="flex-none text-gold-deep" />
                             <span className="min-w-0 flex-1">
-                              <span className="block text-sm font-semibold text-ink">{title(a)}</span>
+                              <span className="block text-sm font-semibold text-ink">{label(a)}</span>
                               {sub && <span className="block text-xs text-neutral-500">{sub}</span>}
                             </span>
                             <span className="flex flex-col items-end gap-1">
@@ -451,7 +459,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                   </div>
                   {included.length > 0 && (
                     <div className="flex justify-between gap-4">
-                      <dt className="text-neutral-700">{included.map(title).join(" + ")}</dt>
+                      <dt className="text-neutral-700">{included.map(label).join(" + ")}</dt>
                       <dd className="font-semibold text-green-700">{copy.free}</dd>
                     </div>
                   )}
@@ -459,7 +467,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                     .filter((a) => picked.has(a.key))
                     .map((a) => (
                       <div key={a.key} className="flex justify-between gap-4">
-                        <dt className="text-neutral-700">{title(a)}</dt>
+                        <dt className="text-neutral-700">{label(a)}</dt>
                         <dd className="readout font-semibold">{formatMAD(a.price)}</dd>
                       </div>
                     ))}
