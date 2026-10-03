@@ -1,7 +1,8 @@
 // Meta (Facebook/Instagram) Pixel: tells Meta Ads what visitors from an ad
 // do on the site, so campaigns can optimise for people who order. Pixel IDs
-// are public (they sit in every page's HTML). Empty = the Pixel is off.
-export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() || "";
+// are public (they sit in every page's HTML): Electro Zaki's is set here,
+// NEXT_PUBLIC_META_PIXEL_ID can override it.
+export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() || "1113388254762708";
 
 type MetaEvent = "PageView" | "ViewContent" | "AddToCart" | "InitiateCheckout" | "Purchase";
 
