@@ -25,7 +25,8 @@ function detectSource(): string {
 }
 
 function known(v: string): string | null {
-  if (/instagram|^igb/.test(v)) return "instagram"; // ig/fb: Meta ads {{site_source_name}}
+  // "ig"/"fb": what Meta ads put in utm_source={{site_source_name}}.
+  if (/instagram|^ig\b/.test(v)) return "instagram";
   if (/facebook|^fb\b|fb\.(com|me)|messenger/.test(v)) return "facebook";
   if (/tiktok/.test(v)) return "tiktok";
   if (/whatsapp|wa\.me/.test(v)) return "whatsapp";
