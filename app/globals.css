@@ -90,6 +90,9 @@ html {
 }
 
 body {
+  /* Safety net: nothing may make the page scroll sideways (a blank strip on
+     tablets). clip, not hidden, so the sticky header keeps working. */
+  overflow-x: clip;
   background: var(--color-paper);
   color: var(--color-neutral-900);
   text-rendering: optimizeLegibility;

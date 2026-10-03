@@ -160,14 +160,17 @@ export function OfferExperience({ hero, copy, units, images, included, addons }:
       <div className="md:sticky md:top-28 md:self-start">
         <div className="relative aspect-square overflow-hidden rounded-4xl border border-ink/7 bg-white shadow-[0_30px_60px_-40px_rgb(17_16_19/0.5)]">
           <ProductVisual image={shown} name="iPhone 13" brand="Apple" isPhone priority size="large" sizes="(min-width: 768px) 50vw, 100vw" />
-          <ul className="absolute inset-s-4 top-4 z-3 flex flex-col gap-2">
+        </div>
+        {/* Under the photo, not on it: product photos carry their own text. */}
+        {included.length > 0 && (
+          <ul className="mt-3 flex flex-wrap gap-2">
             {included.map((g) => (
-              <li key={g.key} className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-xs font-bold text-gold">
-                <Gift size={14} aria-hidden /> {fill(hero.giftBadge, { item: plain(g) })}
+              <li key={g.key} className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3.5 py-2 text-sm font-bold text-gold">
+                <Gift size={15} aria-hidden /> {fill(hero.giftBadge, { item: plain(g) })}
               </li>
             ))}
           </ul>
-        </div>
+        )}
         {gallery.length > 1 && (
           <div className="mt-3 flex gap-2 overflow-x-auto pb-1 scrollbar-none" role="group" aria-label={t.pdp.photos}>
             {gallery.map((img, i) => (
@@ -310,7 +313,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons }:
               {included.length > 0 && (
                 <section className="mt-7" aria-labelledby="offer-included">
                   <h3 id="offer-included" className="text-sm font-semibold text-neutral-700">{copy.included}</h3>
-                  <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                  <ul className="mt-3 grid gap-2 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
                     {included.map((item) => {
                       const Icon = AISLE_ICONS[item.categorySlug] ?? Gift;
                       return (
@@ -334,7 +337,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons }:
                 <section className="mt-7" aria-labelledby="offer-addons">
                   <h3 id="offer-addons" className="text-sm font-semibold text-neutral-700">{copy.addons}</h3>
                   <p className="mt-1 text-xs text-neutral-500">{copy.addonsHint}</p>
-                  <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                  <ul className="mt-3 grid gap-2 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
                     {addons.map((a) => {
                       const on = picked.has(a.key);
                       const Icon = AISLE_ICONS[a.categorySlug] ?? Plus;

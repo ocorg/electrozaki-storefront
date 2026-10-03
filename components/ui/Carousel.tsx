@@ -60,7 +60,7 @@ export function Carousel({ children, className = "" }: { children: ReactNode; cl
           type="button"
           aria-label={t.common.previous}
           onClick={() => scrollByDirection(-1)}
-          className="absolute inset-s-0 top-[42%] z-10 hidden h-12 w-12 -translate-y-1/2 -translate-x-1/2 rtl:translate-x-1/2 items-center justify-center rounded-full bg-ink text-white shadow-[0_12px_24px_-10px_rgb(17_16_19/0.7)] transition-transform hover:scale-105 md:flex"
+          className="absolute inset-s-0 top-[42%] z-10 hidden h-12 w-12 -translate-y-1/2 min-[1344px]:-translate-x-1/2 rtl:min-[1344px]:translate-x-1/2 items-center justify-center rounded-full bg-ink text-white shadow-[0_12px_24px_-10px_rgb(17_16_19/0.7)] transition-transform hover:scale-105 md:flex"
         >
           <ChevronLeft size={20} className="rtl:rotate-180" />
         </button>
@@ -70,7 +70,7 @@ export function Carousel({ children, className = "" }: { children: ReactNode; cl
           type="button"
           aria-label={t.common.next}
           onClick={() => scrollByDirection(1)}
-          className="absolute inset-e-0 top-[42%] z-10 hidden h-12 w-12 -translate-y-1/2 translate-x-1/2 rtl:-translate-x-1/2 items-center justify-center rounded-full bg-ink text-white shadow-[0_12px_24px_-10px_rgb(17_16_19/0.7)] transition-transform hover:scale-105 md:flex"
+          className="absolute inset-e-0 top-[42%] z-10 hidden h-12 w-12 -translate-y-1/2 min-[1344px]:translate-x-1/2 rtl:min-[1344px]:-translate-x-1/2 items-center justify-center rounded-full bg-ink text-white shadow-[0_12px_24px_-10px_rgb(17_16_19/0.7)] transition-transform hover:scale-105 md:flex"
         >
           <ChevronRight size={20} className="rtl:rotate-180" />
         </button>

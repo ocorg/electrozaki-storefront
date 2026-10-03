@@ -125,19 +125,19 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
             : "border-transparent bg-paper"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 lg:gap-8">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 xl:gap-8">
           <Link href="/" className="flex flex-none items-center gap-2.5" aria-label={t.common.homeAria}>
             {/* The mark's Z is white: it sits on an ink squircle. */}
             <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[30%] bg-ink p-1.5 shadow-[0_6px_14px_-6px_rgb(17_16_19/0.7)]">
               <Image src="/logo-mark.png" alt="" width={28} height={28} priority className="h-full w-full object-contain" />
             </span>
             {/* The wordmark is a logo: always Latin, always left-to-right. */}
-            <span dir="ltr" className="hidden font-display text-[1.15rem] font-extrabold leading-none tracking-tight text-ink sm:inline">
+            <span dir="ltr" className="hidden font-display text-[1.15rem] font-extrabold leading-none tracking-tight text-ink sm:inline md:hidden xl:inline">
               ELECTRO<span className="text-gold-deep"> ZAKI</span>
             </span>
           </Link>
 
-          <nav aria-label={t.common.mainNav} className="hidden items-center gap-5 md:flex">
+          <nav aria-label={t.common.mainNav} className="hidden items-center gap-3 md:flex lg:gap-4 xl:gap-5">
             {phones && (
               <Link href={`/collections/${phones.slug}`} className={navLink(isActive(`/collections/${phones.slug}`))}>
                 {name(phones)}
@@ -206,7 +206,7 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
           </nav>
 
           <div className="ms-auto flex items-center gap-1 sm:gap-2">
-            <SearchBox className="hidden w-56 sm:block lg:w-64" placeholder={t.common.searchPlaceholder} />
+            <SearchBox className="hidden w-56 sm:block md:hidden lg:block lg:w-44 xl:w-64" placeholder={t.common.searchPlaceholder} />
 
             <div className="hidden md:block">
               <LanguageSwitcher />
@@ -241,8 +241,8 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
           </div>
         </div>
 
-        {/* Phones: search always visible under the logo row. */}
-        <div className="px-4 pb-3 sm:hidden">
+        {/* Phones and portrait tablets: search under the logo row. */}
+        <div className="px-4 pb-3 sm:hidden md:block lg:hidden">
           <SearchBox placeholder={t.common.searchPlaceholder} />
         </div>
 

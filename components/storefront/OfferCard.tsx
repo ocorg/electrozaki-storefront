@@ -34,11 +34,6 @@ export function OfferCard({ offer, t, intl, priority = false }: { offer: LiveOff
             <Tag size={64} aria-hidden />
           </div>
         )}
-        {saving > 0 && (
-          <span dir="ltr" className="absolute inset-s-4 top-4 rounded-full bg-red-600 px-3 py-1.5 text-sm font-bold text-white">
-            -{formatMAD(saving)}
-          </span>
-        )}
       </div>
 
       <div className="flex flex-col justify-center gap-3 p-6 sm:p-8">
@@ -61,6 +56,11 @@ export function OfferCard({ offer, t, intl, priority = false }: { offer: LiveOff
             {saving > 0 && offer.normalPrice !== null && (
               <span className="text-sm text-neutral-400">
                 {t.offers.instead} <span className="readout line-through">{formatMAD(offer.normalPrice)}</span>
+              </span>
+            )}
+            {saving > 0 && (
+              <span dir="ltr" className="rounded-full bg-red-600 px-2.5 py-1 text-sm font-bold text-white">
+                -{formatMAD(saving)}
               </span>
             )}
           </p>
