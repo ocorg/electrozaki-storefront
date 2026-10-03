@@ -7,6 +7,7 @@ import { MobileTabBar } from "@/components/storefront/MobileTabBar";
 import { getAllCategories } from "@/lib/db/categories";
 import { getAisles } from "@/lib/db/storefront";
 import { PageTracker } from "@/components/analytics/PageTracker";
+import { MetaPixel } from "@/components/analytics/MetaPixel";
 import { JsonLd, storeJsonLd } from "@/lib/json-ld";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { getLiveOffers } from "@/lib/offers/live";
@@ -32,6 +33,7 @@ export default async function StorefrontLayout({ children }: { children: ReactNo
       <FloatingWhatsApp />
       <MobileTabBar />
       <PageTracker />
+      <MetaPixel />
     </CartProvider>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import Image from "next/image";
 import {
   ArrowDown,
@@ -37,6 +37,7 @@ import { whatsappLink } from "@/lib/site";
 import type { OfferAccessory, OfferUnit } from "@/lib/offers/iphone13";
 import type { OfferCopy } from "@/lib/offers/iphone13-copy";
 import { track } from "@/components/analytics/track";
+import { metaTrack } from "@/components/analytics/meta";
 import { submitIphone13Order } from "./actions";
 
 const ADVANCE = 300;
@@ -104,6 +105,14 @@ export function OfferExperience({ hero, copy, units, images, included, addons }:
   };
 
   const unit = ranked.find((u) => (u.color ?? "") === color);
+
+  // Offer page seen: Meta's "ViewContent" (once).
+  const viewed = useRef(false);
+  useEffect(() => {
+    if (viewed.current || !unit) return;
+    viewed.current = true;
+    metaTrack("ViewContent", { value: unit.price, content_ids: [unit.productId], content_type: "product", content_name: "iPhone 13 128GB" });
+  }, [unit]);
   const unitId = unit?.id;
   const fee = findCity(city)?.fee ?? 0;
   const addonsTotal = addons.filter((a) => picked.has(a.key)).reduce((s, a) => s + a.price, 0);
@@ -143,7 +152,10 @@ export function OfferExperience({ hero, copy, units, images, included, addons }:
       });
       if (r.ok) {
         // Counted in the ERP's sales funnel like an add to cart (this page has no cart).
-        if (unit) track({ t: "add_to_cart", pid: unit.productId, v: total });
+        if (unit) {
+          track({ t: "add_to_cart", pid: unit.productId, v: total });
+          metaTrack("Purchase", { value: total, content_ids: [unit.productId], content_type: "product", num_items: 1 + picked.size }, r.reference);
+        }
         setDone({ reference: r.reference, whatsappUrl: r.whatsappUrl, phone });
         formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       } else setError(translateError(t, r.error));
@@ -379,7 +391,14 @@ export function OfferExperience({ hero, copy, units, images, included, addons }:
               {/* Delivery: the town sets the fee and the date */}
               <section className="mt-7">
                 <h3 className="mb-3 text-sm font-semibold text-neutral-700">{copy.delivery}</h3>
-                <DeliveryPicker value={city} onChangeAction={setCity} />
+                <DeliveryPicker
+                  value={city}
+                  onChangeAction={(c) => {
+                    // Choosing a town = starting to order (once per visit).
+                    if (c && !city && unit) metaTrack("InitiateCheckout", { value: unit.price, content_ids: [unit.productId], content_type: "product" });
+                    setCity(c);
+                  }}
+                />
               </section>
 
               {/* Contact */}

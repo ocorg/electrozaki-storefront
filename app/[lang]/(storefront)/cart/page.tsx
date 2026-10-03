@@ -12,6 +12,7 @@ import { AnchorButton, Button, LinkButton } from "@/components/ui/Button";
 import { StepProgress } from "@/components/ui/StepProgress";
 import { DeliveryPicker } from "@/components/cart/DeliveryPicker";
 import { findCity } from "@/lib/delivery";
+import { metaTrack } from "@/components/analytics/meta";
 import { useT } from "@/components/i18n/I18nProvider";
 import { translateError } from "@/lib/i18n/labels";
 
@@ -97,6 +98,12 @@ export default function CartPage() {
       return;
     }
 
+    // An order placed (paid on delivery): Meta's "Purchase", for ad optimisation.
+    metaTrack(
+      "Purchase",
+      { value: discountedTotal, content_ids: items.map((i) => i.productId), content_type: "product", num_items: items.reduce((n, i) => n + i.quantity, 0) },
+      result.orderRequestId
+    );
     setConfirmation(result);
     clear();
   }
@@ -270,7 +277,14 @@ export default function CartPage() {
             </div>
           </div>
 
-          <Button type="button" onClick={() => setStep(1)} className="mt-6 w-full">
+          <Button
+            type="button"
+            onClick={() => {
+              metaTrack("InitiateCheckout", { value: totalPrice, num_items: items.reduce((n, i) => n + i.quantity, 0) });
+              setStep(1);
+            }}
+            className="mt-6 w-full"
+          >
             {c.next}
           </Button>
         </>

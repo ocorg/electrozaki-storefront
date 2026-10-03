@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { metaTrack } from "@/components/analytics/meta";
 import { track } from "@/components/analytics/track";
 
 export type CartItem = {
@@ -81,7 +82,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [items, hydrated]);
 
   const addItem: CartContextValue["addItem"] = (item, quantity = 1) => {
-    if (!item.isGift) track({ t: "add_to_cart", pid: item.productId, v: item.price * quantity });
+    if (!item.isGift) {
+      track({ t: "add_to_cart", pid: item.productId, v: item.price * quantity });
+      metaTrack("AddToCart", { value: item.price * quantity, content_ids: [item.productId], content_type: "product", content_name: item.productName });
+    }
     setItems((prev) => {
       const existing = prev.find((line) => sameLine(line, item));
       if (existing) {

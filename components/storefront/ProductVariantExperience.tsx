@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { Check, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
@@ -16,6 +16,7 @@ import { Select } from "@/components/ui/Select";
 import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
 import { useT } from "@/components/i18n/I18nProvider";
 import { colorName } from "@/lib/i18n/labels";
+import { metaTrack } from "@/components/analytics/meta";
 
 export type VariantData = ConditionData & {
   id: string;
@@ -64,6 +65,10 @@ function pick<T>(variantValue: T | null | undefined, productValue: T): T {
 
 export function ProductVariantExperience({ product, variants, images, categorySlug, children }: Props) {
   const t = useT();
+  // Product page seen: Meta's "ViewContent".
+  useEffect(() => {
+    metaTrack("ViewContent", { value: Number(product.recommendedSalePrice), content_ids: [product.id], content_type: "product", content_name: product.name });
+  }, [product.id, product.name, product.recommendedSalePrice]);
   const p = t.pdp;
   const [imageIndex, setImageIndex] = useState(0);
   const coverImage = images[imageIndex] ?? images[0] ?? null;
