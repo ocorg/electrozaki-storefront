@@ -5,6 +5,7 @@ import { allowRequest, RATE_LIMIT_MESSAGE } from "@/lib/rate-limit";
 import { MOROCCAN_PHONE_RE } from "@/lib/validation";
 import { createRepairRequest } from "@/lib/db/repair";
 import { PROBLEMS, type RepairKind } from "@/lib/repair-problems";
+import { notifyErp } from "@/lib/erp-notify";
 
 const repairRequestSchema = z
   .object({
@@ -57,5 +58,6 @@ export async function submitRepairRequest(input: RepairRequestInput): Promise<Re
   }
 
   const request = await createRepairRequest(parsed.data);
+  notifyErp();
   return { ok: true, ref: request.ref };
 }

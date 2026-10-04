@@ -16,6 +16,7 @@ import { landingStatus } from "@/lib/db/landing";
 import { findCity, estimateDelivery } from "@/lib/delivery";
 import { buildWhatsAppOrderLink } from "@/lib/whatsapp";
 import { getOfferPage, offerAccessoryLists, offerPrice, resolveOfferUnit } from "@/lib/offers/iphone13";
+import { notifyErp } from "@/lib/erp-notify";
 
 // Order from the iPhone 13 offer page. Everything is priced here, from the
 // database: the phone gets the offer price (OFFER_PRICE, lib/offers/iphone13), the add-ons their
@@ -118,6 +119,7 @@ export async function submitIphone13Order(input: Input): Promise<Result> {
     landingPageId: page.id,
   });
 
+  notifyErp();
   await recordPhoneOrder(contact.data.customerPhone);
 
   const reference = order.id.slice(0, 8).toUpperCase();

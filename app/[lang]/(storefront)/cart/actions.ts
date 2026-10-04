@@ -14,6 +14,7 @@ import {
 } from "@/lib/rate-limit";
 import { buildWhatsAppOrderLink } from "@/lib/whatsapp";
 import { findCity, estimateDelivery } from "@/lib/delivery";
+import { notifyErp } from "@/lib/erp-notify";
 
 type SubmitInput = {
   // Only product/variant ids, quantities and the gift/pack markers are read
@@ -121,6 +122,7 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
     }
     throw err;
   }
+  notifyErp();
 
   await recordPhoneOrder(parsed.data.customerPhone);
 
