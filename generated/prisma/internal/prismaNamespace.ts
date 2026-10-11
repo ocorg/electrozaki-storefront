@@ -402,6 +402,10 @@ export const ModelName = {
   ProductImage: 'ProductImage',
   ProductVariant: 'ProductVariant',
   ProductCompatibility: 'ProductCompatibility',
+  FacetGroup: 'FacetGroup',
+  FacetOption: 'FacetOption',
+  FacetGroupCategory: 'FacetGroupCategory',
+  ProductFacet: 'ProductFacet',
   ProductInternal: 'ProductInternal',
   OrderRequest: 'OrderRequest',
   OrderRequestItem: 'OrderRequestItem',
@@ -432,7 +436,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem" | "modelPhoto" | "rateLimitHit" | "repairTracking" | "landingPage" | "landingPageProduct" | "analyticsEvent" | "botHit"
+    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "facetGroup" | "facetOption" | "facetGroupCategory" | "productFacet" | "productInternal" | "orderRequest" | "orderRequestItem" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem" | "modelPhoto" | "rateLimitHit" | "repairTracking" | "landingPage" | "landingPageProduct" | "analyticsEvent" | "botHit"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -803,6 +807,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProductCompatibilityCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProductCompatibilityCountAggregateOutputType> | number
+        }
+      }
+    }
+    FacetGroup: {
+      payload: Prisma.$FacetGroupPayload<ExtArgs>
+      fields: Prisma.FacetGroupFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FacetGroupFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FacetGroupFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupPayload>
+        }
+        findFirst: {
+          args: Prisma.FacetGroupFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FacetGroupFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupPayload>
+        }
+        findMany: {
+          args: Prisma.FacetGroupFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupPayload>[]
+        }
+        create: {
+          args: Prisma.FacetGroupCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupPayload>
+        }
+        createMany: {
+          args: Prisma.FacetGroupCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FacetGroupCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupPayload>[]
+        }
+        delete: {
+          args: Prisma.FacetGroupDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupPayload>
+        }
+        update: {
+          args: Prisma.FacetGroupUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupPayload>
+        }
+        deleteMany: {
+          args: Prisma.FacetGroupDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FacetGroupUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FacetGroupUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupPayload>[]
+        }
+        upsert: {
+          args: Prisma.FacetGroupUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupPayload>
+        }
+        aggregate: {
+          args: Prisma.FacetGroupAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFacetGroup>
+        }
+        groupBy: {
+          args: Prisma.FacetGroupGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FacetGroupGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FacetGroupCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FacetGroupCountAggregateOutputType> | number
+        }
+      }
+    }
+    FacetOption: {
+      payload: Prisma.$FacetOptionPayload<ExtArgs>
+      fields: Prisma.FacetOptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FacetOptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetOptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FacetOptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetOptionPayload>
+        }
+        findFirst: {
+          args: Prisma.FacetOptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetOptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FacetOptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetOptionPayload>
+        }
+        findMany: {
+          args: Prisma.FacetOptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetOptionPayload>[]
+        }
+        create: {
+          args: Prisma.FacetOptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetOptionPayload>
+        }
+        createMany: {
+          args: Prisma.FacetOptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FacetOptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetOptionPayload>[]
+        }
+        delete: {
+          args: Prisma.FacetOptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetOptionPayload>
+        }
+        update: {
+          args: Prisma.FacetOptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetOptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.FacetOptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FacetOptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FacetOptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetOptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.FacetOptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetOptionPayload>
+        }
+        aggregate: {
+          args: Prisma.FacetOptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFacetOption>
+        }
+        groupBy: {
+          args: Prisma.FacetOptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FacetOptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FacetOptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FacetOptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    FacetGroupCategory: {
+      payload: Prisma.$FacetGroupCategoryPayload<ExtArgs>
+      fields: Prisma.FacetGroupCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FacetGroupCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FacetGroupCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.FacetGroupCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FacetGroupCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.FacetGroupCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.FacetGroupCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.FacetGroupCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FacetGroupCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.FacetGroupCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupCategoryPayload>
+        }
+        update: {
+          args: Prisma.FacetGroupCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.FacetGroupCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FacetGroupCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FacetGroupCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.FacetGroupCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FacetGroupCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.FacetGroupCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFacetGroupCategory>
+        }
+        groupBy: {
+          args: Prisma.FacetGroupCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FacetGroupCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FacetGroupCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FacetGroupCategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProductFacet: {
+      payload: Prisma.$ProductFacetPayload<ExtArgs>
+      fields: Prisma.ProductFacetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProductFacetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFacetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProductFacetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFacetPayload>
+        }
+        findFirst: {
+          args: Prisma.ProductFacetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFacetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProductFacetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFacetPayload>
+        }
+        findMany: {
+          args: Prisma.ProductFacetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFacetPayload>[]
+        }
+        create: {
+          args: Prisma.ProductFacetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFacetPayload>
+        }
+        createMany: {
+          args: Prisma.ProductFacetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProductFacetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFacetPayload>[]
+        }
+        delete: {
+          args: Prisma.ProductFacetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFacetPayload>
+        }
+        update: {
+          args: Prisma.ProductFacetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFacetPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProductFacetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProductFacetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProductFacetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFacetPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProductFacetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFacetPayload>
+        }
+        aggregate: {
+          args: Prisma.ProductFacetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProductFacet>
+        }
+        groupBy: {
+          args: Prisma.ProductFacetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductFacetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProductFacetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductFacetCountAggregateOutputType> | number
         }
       }
     }
@@ -2054,6 +2354,53 @@ export const ProductCompatibilityScalarFieldEnum = {
 export type ProductCompatibilityScalarFieldEnum = (typeof ProductCompatibilityScalarFieldEnum)[keyof typeof ProductCompatibilityScalarFieldEnum]
 
 
+export const FacetGroupScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  name: 'name',
+  question: 'question',
+  multi: 'multi',
+  display: 'display',
+  sortOrder: 'sortOrder',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FacetGroupScalarFieldEnum = (typeof FacetGroupScalarFieldEnum)[keyof typeof FacetGroupScalarFieldEnum]
+
+
+export const FacetOptionScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  key: 'key',
+  name: 'name',
+  level: 'level',
+  sortOrder: 'sortOrder',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FacetOptionScalarFieldEnum = (typeof FacetOptionScalarFieldEnum)[keyof typeof FacetOptionScalarFieldEnum]
+
+
+export const FacetGroupCategoryScalarFieldEnum = {
+  groupId: 'groupId',
+  categoryId: 'categoryId'
+} as const
+
+export type FacetGroupCategoryScalarFieldEnum = (typeof FacetGroupCategoryScalarFieldEnum)[keyof typeof FacetGroupCategoryScalarFieldEnum]
+
+
+export const ProductFacetScalarFieldEnum = {
+  productId: 'productId',
+  optionId: 'optionId'
+} as const
+
+export type ProductFacetScalarFieldEnum = (typeof ProductFacetScalarFieldEnum)[keyof typeof ProductFacetScalarFieldEnum]
+
+
 export const ProductInternalScalarFieldEnum = {
   id: 'id',
   productId: 'productId',
@@ -2456,6 +2803,20 @@ export type ListEnumProductSourceFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'FacetDisplay'
+ */
+export type EnumFacetDisplayFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FacetDisplay'>
+    
+
+
+/**
+ * Reference to a field of type 'FacetDisplay[]'
+ */
+export type ListEnumFacetDisplayFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FacetDisplay[]'>
+    
+
+
+/**
  * Reference to a field of type 'OrderRequestStatus'
  */
 export type EnumOrderRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderRequestStatus'>
@@ -2722,6 +3083,10 @@ export type GlobalOmitConfig = {
   productImage?: Prisma.ProductImageOmit
   productVariant?: Prisma.ProductVariantOmit
   productCompatibility?: Prisma.ProductCompatibilityOmit
+  facetGroup?: Prisma.FacetGroupOmit
+  facetOption?: Prisma.FacetOptionOmit
+  facetGroupCategory?: Prisma.FacetGroupCategoryOmit
+  productFacet?: Prisma.ProductFacetOmit
   productInternal?: Prisma.ProductInternalOmit
   orderRequest?: Prisma.OrderRequestOmit
   orderRequestItem?: Prisma.OrderRequestItemOmit

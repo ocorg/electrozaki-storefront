@@ -24,9 +24,12 @@ export type FilterValues = {
   promo?: string;
   sort?: string;
   page?: string;
+  budget?: string;
 };
 
-type Key = keyof FilterValues;
+// A filter's name in the address: one of the above, or a guide question's
+// key ("style") in a guided aisle.
+type Key = string;
 
 const GRADES = ["NEUF", "TRES_BON", "BON", "PIECES_REMPLACEES"] as const;
 const BATTERY_TIERS = ["90", "85", "80"] as const;
@@ -38,6 +41,18 @@ type Props = {
   options: CategoryFilterOptions;
   basePath: string;
   defaults: FilterValues;
+  /**
+   * A guided aisle (AisleGuide asks the questions above this bar): the
+   * guide's address parameters, kept in every link here, and the picked
+   * answers' names for the removable pills. The guide has its own budget
+   * question, so this bar's budget chips step aside. `more` are the
+   * checklist groups the guide doesn't ask about: filters in the sheet.
+   */
+  guide?: {
+    keys: string[];
+    labels: Record<string, string>;
+    more: { key: string; name: string; options: { key: string; label: string }[] }[];
+  };
 };
 
 // Brands are typed by hand in the ERP ("Apple", "APPLE"): one chip per brand
@@ -70,7 +85,7 @@ function dropEmptyFields(form: HTMLFormElement) {
  * sheet (bottom sheet on phones, side drawer on desktop). Chips, pills and
  * sort are plain links — instant, crawlable, and they work without JS.
  */
-export function CatalogBar({ options, basePath, defaults }: Props) {
+export function CatalogBar({ options, basePath, defaults, guide }: Props) {
   const t = useT();
   const withLocale = useLocalePath();
   const action = withLocale(basePath);
@@ -85,8 +100,10 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
   const topRef = useRef<HTMLDivElement>(null);
 
   // Current params without the page number: any change starts at page 1.
+  const guideKeys = guide?.keys ?? [];
+  const values = defaults as Record<string, string | undefined>;
   const current: Partial<Record<Key, string>> = {};
-  for (const k of [...FILTER_KEYS, "sort"] as Key[]) if (defaults[k]) current[k] = String(defaults[k]);
+  for (const k of [...FILTER_KEYS, ...guideKeys, "sort"]) if (typeof values[k] === "string" && values[k]) current[k] = values[k];
   const qs = new URLSearchParams(current as Record<string, string>).toString();
   // A link may carry another spelling ("APPLE"): light up the matching chip.
   const brandValue = current.brand
@@ -134,7 +151,7 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
       case "promo":
         return t.filters.onPromo;
       default:
-        return v;
+        return guide?.labels[k] ?? v;
     }
   };
 
@@ -143,8 +160,13 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
   const quick = new Set<Key>(phones ? ["condition", "promo"] : ["promo"]);
   if (!phones && current.maxPrice && budgets.includes(Number(current.maxPrice))) quick.add("maxPrice");
   const active = FILTER_KEYS.filter((k) => current[k]);
-  const pills = active.filter((k) => !quick.has(k));
-  const sheetCount = active.filter((k) => k !== "q").length;
+  // The guide shows (and clears) its own answers; only the sheet's extra
+  // checklist filters need a pill here. One whose value the aisle doesn't
+  // know has no name and is simply ignored.
+  const inSheet = new Set(guide?.more.map((g) => g.key));
+  const pills = [...active.filter((k) => !quick.has(k)), ...guideKeys.filter((k) => inSheet.has(k) && current[k] && guide?.labels[k])];
+  const sheetCount = active.filter((k) => k !== "q").length + guideKeys.filter((k) => inSheet.has(k) && current[k]).length;
+  const allKeys = [...FILTER_KEYS, ...guideKeys];
 
   return (
     <div ref={topRef} className="scroll-mt-24">
@@ -239,7 +261,8 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
                   </li>
                 );
               })
-            : budgets.map((b) => (
+            : !guide &&
+              budgets.map((b) => (
                 <li key={b} className="flex-none">
                   <QuickChip href={toggle("maxPrice", String(b))} on={current.maxPrice === String(b)}>
                     <span className="readout">≤ {formatMAD(b)}</span>
@@ -272,7 +295,7 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
             ))}
             <li>
               <Link
-                href={href(Object.fromEntries(FILTER_KEYS.map((k) => [k, undefined])))}
+                href={href(Object.fromEntries(allKeys.map((k) => [k, undefined])))}
                 scroll={false}
                 className="inline-flex min-h-9 items-center px-2 text-[13px] font-semibold text-neutral-600 underline underline-offset-2 hover:text-ink"
               >
@@ -321,6 +344,8 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
 
           <div className="min-h-0 flex-1 space-y-6 overflow-y-auto overscroll-contain px-5 pb-6">
             {current.q && <input type="hidden" name="q" value={current.q} />}
+            {/* The guide's answers stay when the sheet is applied. */}
+            {guideKeys.map((k) => (current[k] && !inSheet.has(k) ? <input key={k} type="hidden" name={k} value={current[k]} /> : null))}
 
             <Group title={t.filters.sortBy}>
               <div className="grid grid-cols-3 gap-1 rounded-2xl bg-white p-1 ring-1 ring-ink/10">
@@ -432,7 +457,18 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
               </>
             )}
 
-            <Group title={t.filters.budget}>
+            {guide?.more.map((group) => (
+              <Group key={group.key} title={group.name}>
+                <Chips
+                  name={group.key}
+                  all={t.filters.anyType}
+                  current={current[group.key]}
+                  items={group.options.map((o) => ({ value: o.key, label: o.label }))}
+                />
+              </Group>
+            ))}
+
+            {!guide && <Group title={t.filters.budget}>
               <Chips
                 name="maxPrice"
                 all={t.filters.anyPrice}
@@ -445,7 +481,7 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
                     : []),
                 ]}
               />
-            </Group>
+            </Group>}
 
             {options.hasPromos && (
               <label className="group flex min-h-14 cursor-pointer items-center justify-between gap-4 rounded-2xl bg-white px-4 ring-1 ring-ink/10 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ink">
@@ -467,7 +503,7 @@ export function CatalogBar({ options, basePath, defaults }: Props) {
 
           <div className="flex flex-none items-center gap-3 border-t border-ink/10 bg-paper px-5 py-4">
             <Link
-              href={href(Object.fromEntries(FILTER_KEYS.map((k) => [k, undefined])))}
+              href={href(Object.fromEntries(allKeys.map((k) => [k, undefined])))}
               scroll={false}
               onClick={() => sheetRef.current?.close()}
               className="min-h-12 flex-none px-2 py-3 text-sm font-semibold text-neutral-600 underline underline-offset-2 hover:text-ink"

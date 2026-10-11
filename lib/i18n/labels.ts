@@ -6,6 +6,16 @@ export function categoryName(t: Dictionary, slug: string, fallback: string): str
   return t.categories[slug] ?? fallback;
 }
 
+/** A checklist group's question ("Ton style ?") in the visitor's language, or as staff typed it. */
+export function facetQuestion(t: Dictionary, group: { key: string; name: string; question: string | null }): string {
+  return t.guide.question[group.key] ?? group.question ?? group.name;
+}
+
+/** A checklist option's name ("Fleuri") in the visitor's language, or as staff typed it. */
+export function facetOptionName(t: Dictionary, groupKey: string, option: { key: string; name: string }): string {
+  return t.guide.option[`${groupKey}.${option.key}`] ?? option.name;
+}
+
 /** A colour name from the ERP ("Bleu Sierra") in the visitor's language, or as typed. */
 export function colorName(t: Dictionary, name: string): string {
   return t.colors[name.trim()] ?? name;

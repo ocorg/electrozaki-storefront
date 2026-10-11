@@ -47,6 +47,15 @@ export const OrderRequestStatus = {
 export type OrderRequestStatus = (typeof OrderRequestStatus)[keyof typeof OrderRequestStatus]
 
 
+export const FacetDisplay = {
+  CHIPS: 'CHIPS',
+  TILES: 'TILES',
+  METER: 'METER'
+} as const
+
+export type FacetDisplay = (typeof FacetDisplay)[keyof typeof FacetDisplay]
+
+
 export const AdvancePaymentStatus = {
   NOT_REQUIRED: 'NOT_REQUIRED',
   AWAITING_RECEIPT: 'AWAITING_RECEIPT',

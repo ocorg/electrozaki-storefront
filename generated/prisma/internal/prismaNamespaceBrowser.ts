@@ -56,6 +56,10 @@ export const ModelName = {
   ProductImage: 'ProductImage',
   ProductVariant: 'ProductVariant',
   ProductCompatibility: 'ProductCompatibility',
+  FacetGroup: 'FacetGroup',
+  FacetOption: 'FacetOption',
+  FacetGroupCategory: 'FacetGroupCategory',
+  ProductFacet: 'ProductFacet',
   ProductInternal: 'ProductInternal',
   OrderRequest: 'OrderRequest',
   OrderRequestItem: 'OrderRequestItem',
@@ -186,6 +190,53 @@ export const ProductCompatibilityScalarFieldEnum = {
 } as const
 
 export type ProductCompatibilityScalarFieldEnum = (typeof ProductCompatibilityScalarFieldEnum)[keyof typeof ProductCompatibilityScalarFieldEnum]
+
+
+export const FacetGroupScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  name: 'name',
+  question: 'question',
+  multi: 'multi',
+  display: 'display',
+  sortOrder: 'sortOrder',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FacetGroupScalarFieldEnum = (typeof FacetGroupScalarFieldEnum)[keyof typeof FacetGroupScalarFieldEnum]
+
+
+export const FacetOptionScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  key: 'key',
+  name: 'name',
+  level: 'level',
+  sortOrder: 'sortOrder',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FacetOptionScalarFieldEnum = (typeof FacetOptionScalarFieldEnum)[keyof typeof FacetOptionScalarFieldEnum]
+
+
+export const FacetGroupCategoryScalarFieldEnum = {
+  groupId: 'groupId',
+  categoryId: 'categoryId'
+} as const
+
+export type FacetGroupCategoryScalarFieldEnum = (typeof FacetGroupCategoryScalarFieldEnum)[keyof typeof FacetGroupCategoryScalarFieldEnum]
+
+
+export const ProductFacetScalarFieldEnum = {
+  productId: 'productId',
+  optionId: 'optionId'
+} as const
+
+export type ProductFacetScalarFieldEnum = (typeof ProductFacetScalarFieldEnum)[keyof typeof ProductFacetScalarFieldEnum]
 
 
 export const ProductInternalScalarFieldEnum = {

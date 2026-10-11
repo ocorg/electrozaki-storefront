@@ -5,8 +5,11 @@ import Link from "@/components/i18n/Link";
 import { getProductsByCategorySlug, getCategoryFilterOptions } from "@/lib/db/public-products";
 import { getCategoryBySlug } from "@/lib/db/categories";
 import { getAisles } from "@/lib/db/storefront";
+import { getFacetGroups } from "@/lib/db/facets";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { CatalogBar, type FilterValues } from "@/components/storefront/CatalogBar";
+import { AisleGuide, type GuideStep } from "@/components/storefront/AisleGuide";
+import { RememberedPhone } from "@/components/storefront/RememberedPhone";
 import { DeviceArt } from "@/components/storefront/DeviceArt";
 import { Pagination } from "@/components/storefront/Pagination";
 import { SearchTracker } from "@/components/analytics/SearchTracker";
@@ -16,7 +19,8 @@ import { artFor } from "@/lib/category-art";
 import { formatMAD } from "@/lib/format";
 import { whatsappLink } from "@/lib/site";
 import { getLocale, getT } from "@/lib/i18n/server";
-import { categoryName } from "@/lib/i18n/labels";
+import { categoryName, facetOptionName, facetQuestion } from "@/lib/i18n/labels";
+import { BUDGET_BANDS, MODEL_GROUP, budgetOf, hasOption, matchesSelection, optionsIn, readBudget, readSelection } from "@/lib/facets";
 import { alternates } from "@/lib/i18n/seo";
 
 // A 60s cache keeps pages fast; the ERP also asks for an immediate refresh
@@ -60,7 +64,12 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   const category = await getCategoryBySlug(slug);
   if (!category) notFound();
 
-  const [options, aisles, t] = await Promise.all([getCategoryFilterOptions(slug), getAisles(), getT()]);
+  const [options, aisles, t, groups] = await Promise.all([
+    getCategoryFilterOptions(slug),
+    getAisles(),
+    getT(),
+    getFacetGroups(slug),
+  ]);
   const phones = options.kind === "phones";
   const str = (v?: string) => (typeof v === "string" && v ? v.slice(0, 80) : undefined);
   const int = (v?: string) => (v && Number.isFinite(Number(v)) && Number(v) > 0 ? Number(v) : undefined);
@@ -78,11 +87,101 @@ export default async function CollectionPage({ params, searchParams }: Props) {
     compatibleWith: phones ? undefined : str(filterParams.fits),
   };
 
-  const all = await getProductsByCategorySlug(slug, filters);
+  const fetched = await getProductsByCategorySlug(slug, filters);
+  const price = (p: (typeof fetched)[number]) => Number(p.recommendedSalePrice.toString());
+
+  // The aisle's guide (see AisleGuide): the answers are in the address, one
+  // option per checklist group, plus a budget band.
+  const basePath = `/collections/${slug}`;
+  const selection = readSelection(groups, filterParams);
+  const budget = groups.length ? readBudget(filterParams.budget) : undefined;
+  const inBudget = (p: (typeof fetched)[number]) => !budget || budgetOf(price(p)) === budget;
+  const all = fetched.filter((p) => matchesSelection(p.facets, selection) && inBudget(p));
+
+  const guideHref = (changes: Record<string, string | undefined>) => {
+    const next: Record<string, string | undefined> = { ...selection, budget, ...changes };
+    for (const k of ["q", "brand", "promo", "type", "fits", "maxPrice", "sort"] as const) next[k] ??= str(filterParams[k]);
+    const query = new URLSearchParams();
+    for (const [k, v] of Object.entries(next)) if (v) query.set(k, v);
+    const s = query.toString();
+    return s ? `${basePath}?${s}` : basePath;
+  };
+  // A question is only asked when it can tell products apart: options no
+  // product here carries (nobody ticked them yet) are left out.
+  const steps: GuideStep[] = groups
+    .filter((group) => group.question)
+    .map((group) => {
+      const others = fetched.filter((p) => matchesSelection(p.facets, selection, group.key) && inBudget(p));
+      return {
+        key: group.key,
+        question: facetQuestion(t, group),
+        kind: group.display === "TILES" ? ("tiles" as const) : group.display === "METER" ? ("meter" as const) : ("chips" as const),
+        options: group.options
+          .filter((o) => selection[group.key] === o.key || fetched.some((p) => hasOption(p.facets, group.key, o.key)))
+          .map((o) => {
+            const on = selection[group.key] === o.key;
+            const having = others.filter((p) => hasOption(p.facets, group.key, o.key));
+            return {
+              key: o.key,
+              label: facetOptionName(t, group.key, o),
+              count: having.length,
+              on,
+              href: guideHref({ [group.key]: on ? undefined : o.key }),
+              image: group.display === "TILES" ? (having.find((p) => p.images[0])?.images[0].url ?? null) : null,
+              level: o.level,
+            };
+          }),
+      };
+    })
+    .filter((step) => step.options.length > 1 || step.options.some((o) => o.on));
+  const guided = steps.length > 0;
+  if (guided) {
+    const inSelection = fetched.filter((p) => matchesSelection(p.facets, selection));
+    steps.push({
+      key: "budget",
+      question: t.guide.budget,
+      kind: "chips",
+      options: BUDGET_BANDS.map((band) => ({
+        key: band.key,
+        label: t.guide.bandName[band.key] ?? band.key,
+        detail:
+          band.max === null
+            ? t.guide.over(formatMAD(band.min))
+            : band.min === 0
+              ? t.guide.upTo(formatMAD(band.max))
+              : t.guide.between(band.min, formatMAD(band.max)),
+        count: inSelection.filter((p) => budgetOf(price(p)) === band.key).length,
+        on: budget === band.key,
+        href: guideHref({ budget: budget === band.key ? undefined : band.key }),
+      })),
+    });
+  }
+  const guideKeys = guided ? [...groups.map((g) => g.key), "budget"] : [];
+  // Groups without a question (material, extras): filters in the sheet.
+  const moreFilters = groups
+    .filter((group) => !group.question)
+    .map((group) => ({
+      key: group.key,
+      name: group.name,
+      options: group.options
+        .filter((o) => selection[group.key] === o.key || fetched.some((p) => hasOption(p.facets, group.key, o.key)))
+        .map((o) => ({ key: o.key, label: facetOptionName(t, group.key, o) })),
+    }))
+    .filter((group) => group.options.length > 1 || selection[group.key]);
+  const modelStep = steps.find((s) => s.key === MODEL_GROUP);
+  const pickedModel = modelStep?.options.find((o) => o.on);
+  // What each card says about itself: that it fits the picked phone, and
+  // its first tick in the next groups ("Luxe · Antichoc").
+  const traitGroups = groups.filter((g) => g.key !== MODEL_GROUP).slice(0, 3);
+  const ficheOf = (p: (typeof fetched)[number]) => ({
+    fits: pickedModel ? t.guide.fits(pickedModel.label) : undefined,
+    traits: traitGroups
+      .flatMap((g) => optionsIn(p.facets, g.key).slice(0, 1).map((o) => facetOptionName(t, g.key, o)))
+      .slice(0, 2),
+  });
 
   // Sorting and paging happen here: a whole aisle is at most a few hundred
   // rows, already fetched in one query for the filters above.
-  const price = (p: (typeof all)[number]) => Number(p.recommendedSalePrice.toString());
   const sorted =
     filterParams.sort === "prix-asc"
       ? [...all].sort((a, b) => price(a) - price(b))
@@ -100,7 +199,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   // How much stock there is stays private; what it costs is the useful part.
   const prices = (current ? [current] : siblings).map((a) => a.fromPrice).filter((p): p is number => p !== null);
   const fromPrice = prices.length ? Math.min(...prices) : null;
-  const filtered = Object.values(filters).some(Boolean);
+  const filtered = Object.values(filters).some(Boolean) || Object.keys(selection).length > 0 || Boolean(budget);
   const title = categoryName(t, slug, category.name);
 
   const crumbs = [
@@ -175,7 +274,42 @@ export default async function CollectionPage({ params, searchParams }: Props) {
       <div className="mx-auto max-w-7xl px-4 pb-8 sm:pb-10">
         {filters.q && <SearchTracker query={filters.q} results={all.length} />}
 
-        <CatalogBar options={options} basePath={`/collections/${slug}`} defaults={filterParams} />
+        {guided && (
+          <AisleGuide
+            steps={steps}
+            total={all.length}
+            restartHref={Object.keys(selection).length || budget ? guideHref(Object.fromEntries(guideKeys.map((k) => [k, undefined]))) : null}
+            art={artFor(slug, category.name)}
+            remembered={
+              modelStep && (
+                <RememberedPhone
+                  picked={pickedModel ? { key: pickedModel.key, name: pickedModel.label } : null}
+                  hrefs={Object.fromEntries(modelStep.options.filter((o) => o.count > 0).map((o) => [o.key, o.href]))}
+                />
+              )
+            }
+          />
+        )}
+
+        <CatalogBar
+          options={options}
+          basePath={basePath}
+          defaults={filterParams}
+          guide={
+            guided
+              ? {
+                  keys: guideKeys,
+                  labels: {
+                    ...Object.fromEntries(steps.flatMap((s) => s.options.filter((o) => o.on).map((o) => [s.key, o.label]))),
+                    ...Object.fromEntries(
+                      moreFilters.flatMap((g) => g.options.filter((o) => selection[g.key] === o.key).map((o) => [g.key, o.label]))
+                    ),
+                  },
+                  more: moreFilters,
+                }
+              : undefined
+          }
+        />
 
         <div className="pt-6 sm:pt-8">
           <div>
@@ -206,14 +340,14 @@ export default async function CollectionPage({ params, searchParams }: Props) {
             ) : (
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
                 {products.map((product, i) => (
-                  <ProductCard key={product.id} product={product} priority={i < 4} />
+                  <ProductCard key={product.id} product={product} priority={i < 4} fiche={guided ? ficheOf(product) : undefined} />
                 ))}
               </div>
             )}
             <Pagination
               page={page}
               pageCount={pageCount}
-              basePath={`/collections/${slug}`}
+              basePath={basePath}
               params={filterParams as Record<string, string | undefined>}
             />
           </div>

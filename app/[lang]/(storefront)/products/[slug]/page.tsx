@@ -4,6 +4,9 @@ import Link from "@/components/i18n/Link";
 import { getProductBySlug, getRelatedProducts } from "@/lib/db/public-products";
 import { getCompatibilityTargetPhones } from "@/lib/db/compatibility";
 import { getActiveBundlesForProduct } from "@/lib/db/bundles";
+import { getFacetGroups } from "@/lib/db/facets";
+import { MODEL_GROUP, optionsIn } from "@/lib/facets";
+import { FitsYourPhone } from "@/components/storefront/RememberedPhone";
 import { CompatibilitySelector } from "@/components/storefront/CompatibilitySelector";
 import { GiftPicker } from "@/components/storefront/GiftPicker";
 import { BundleOffer, type BundleOfferData } from "@/components/storefront/BundleOffer";
@@ -22,7 +25,7 @@ import { JsonLd } from "@/lib/json-ld";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 import { LOCALE_META, localePath } from "@/lib/i18n/config";
 import { getLocale, getT } from "@/lib/i18n/server";
-import { categoryName, specRow } from "@/lib/i18n/labels";
+import { categoryName, facetOptionName, specRow } from "@/lib/i18n/labels";
 import { alternates } from "@/lib/i18n/seo";
 import { Tag } from "lucide-react";
 import { PHONE_SLUGS, getIphone13Offer } from "@/lib/offers/iphone13";
@@ -92,11 +95,22 @@ export default async function ProductPage({ params }: Props) {
     }
   }
 
-  const [compatibilityPhones, rawBundles, related] = await Promise.all([
+  const [compatibilityPhones, rawBundles, related, facetGroups] = await Promise.all([
     product.compatibleWithPhones.length ? getCompatibilityTargetPhones() : Promise.resolve([]),
     product.isPhone ? getActiveBundlesForProduct(product.id) : Promise.resolve([]),
     getRelatedProducts(product, 4),
+    product.facets.length ? getFacetGroups(product.category.slug) : Promise.resolve([]),
   ]);
+  // The product's checklist, group by group, in the ERP's order. The phone
+  // models it fits lead; each answer links back to the aisle, narrowed.
+  const fiche = facetGroups
+    .map((group) => ({
+      group,
+      max: Math.max(...group.options.map((o) => o.level ?? 0)),
+      ticks: optionsIn(product.facets, group.key),
+    }))
+    .filter((row) => row.ticks.length > 0);
+  const fitsModels = fiche.find((row) => row.group.key === MODEL_GROUP)?.ticks ?? [];
   // Prisma Decimal fields can't cross the Server -> Client boundary as-is —
   // serialize before handing off to <BundleOffer>, a Client Component.
   const bundles: BundleOfferData[] = rawBundles.map((b) => ({
@@ -229,6 +243,45 @@ export default async function ProductPage({ params }: Props) {
           images={product.images.map((i) => ({ url: i.url, altText: i.altText }))}
           categorySlug={product.category.slug}
         >
+          {fiche.length > 0 && (
+            <div className="mt-8">
+              <h2 className="font-display text-xl font-bold text-ink">{t.guide.ficheTitle}</h2>
+              <FitsYourPhone
+                fits={fitsModels.map((o) => ({ key: o.key, name: o.name }))}
+                aisleHref={`/collections/${product.category.slug}`}
+              />
+              <dl className="mt-3 divide-y divide-ink/7 rounded-[1.25rem] bg-white px-5 ring-1 ring-ink/7">
+                {fiche.map(({ group, max, ticks }) => (
+                  <div key={group.key} className="flex items-start justify-between gap-4 py-3 text-sm">
+                    <dt className="flex-none pt-1.5 text-neutral-600">{group.name}</dt>
+                    <dd className="flex flex-wrap justify-end gap-1.5">
+                      {ticks.map((o) => (
+                        <Link
+                          key={o.key}
+                          href={`/collections/${product.category.slug}?${group.key}=${encodeURIComponent(o.key)}`}
+                          className="inline-flex min-h-8 items-center gap-2 rounded-full bg-paper px-3 text-[13px] font-semibold text-ink ring-1 ring-ink/7 transition-colors hover:ring-ink/30"
+                        >
+                          {group.display === "METER" && o.level !== null && (
+                            <span className="flex items-end gap-0.5" aria-hidden>
+                              {Array.from({ length: max }, (_, i) => (
+                                <span
+                                  key={i}
+                                  className={`w-0.75 rounded-[1px] ${i < o.level! ? "bg-ink" : "bg-ink/15"}`}
+                                  style={{ height: 5 + i * 3 }}
+                                />
+                              ))}
+                            </span>
+                          )}
+                          {facetOptionName(t, group.key, o)}
+                        </Link>
+                      ))}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+
           {Object.keys(specs).length > 0 && (
             <div className="mt-8">
               <h2 className="font-display text-xl font-bold text-ink">{t.productPage.specs}</h2>

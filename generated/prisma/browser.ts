@@ -43,6 +43,26 @@ export type ProductVariant = Prisma.ProductVariantModel
  */
 export type ProductCompatibility = Prisma.ProductCompatibilityModel
 /**
+ * Model FacetGroup
+ * 
+ */
+export type FacetGroup = Prisma.FacetGroupModel
+/**
+ * Model FacetOption
+ * 
+ */
+export type FacetOption = Prisma.FacetOptionModel
+/**
+ * Model FacetGroupCategory
+ * 
+ */
+export type FacetGroupCategory = Prisma.FacetGroupCategoryModel
+/**
+ * Model ProductFacet
+ * 
+ */
+export type ProductFacet = Prisma.ProductFacetModel
+/**
  * Model ProductInternal
  * 
  */

@@ -421,6 +421,7 @@ export type ProductWhereInput = {
   variants?: Prisma.ProductVariantListRelationFilter
   compatibleAccessories?: Prisma.ProductCompatibilityListRelationFilter
   compatibleWithPhones?: Prisma.ProductCompatibilityListRelationFilter
+  facets?: Prisma.ProductFacetListRelationFilter
   internal?: Prisma.XOR<Prisma.ProductInternalNullableScalarRelationFilter, Prisma.ProductInternalWhereInput> | null
   orderRequestItems?: Prisma.OrderRequestItemListRelationFilter
   landingPages?: Prisma.LandingPageProductListRelationFilter
@@ -463,6 +464,7 @@ export type ProductOrderByWithRelationInput = {
   variants?: Prisma.ProductVariantOrderByRelationAggregateInput
   compatibleAccessories?: Prisma.ProductCompatibilityOrderByRelationAggregateInput
   compatibleWithPhones?: Prisma.ProductCompatibilityOrderByRelationAggregateInput
+  facets?: Prisma.ProductFacetOrderByRelationAggregateInput
   internal?: Prisma.ProductInternalOrderByWithRelationInput
   orderRequestItems?: Prisma.OrderRequestItemOrderByRelationAggregateInput
   landingPages?: Prisma.LandingPageProductOrderByRelationAggregateInput
@@ -508,6 +510,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   variants?: Prisma.ProductVariantListRelationFilter
   compatibleAccessories?: Prisma.ProductCompatibilityListRelationFilter
   compatibleWithPhones?: Prisma.ProductCompatibilityListRelationFilter
+  facets?: Prisma.ProductFacetListRelationFilter
   internal?: Prisma.XOR<Prisma.ProductInternalNullableScalarRelationFilter, Prisma.ProductInternalWhereInput> | null
   orderRequestItems?: Prisma.OrderRequestItemListRelationFilter
   landingPages?: Prisma.LandingPageProductListRelationFilter
@@ -623,6 +626,7 @@ export type ProductCreateInput = {
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductCreateNestedManyWithoutProductInput
@@ -664,6 +668,7 @@ export type ProductUncheckedCreateInput = {
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductUncheckedCreateNestedManyWithoutProductInput
@@ -705,6 +710,7 @@ export type ProductUpdateInput = {
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUpdateManyWithoutProductNestedInput
@@ -746,6 +752,7 @@ export type ProductUncheckedUpdateInput = {
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUncheckedUpdateManyWithoutProductNestedInput
@@ -1131,6 +1138,20 @@ export type ProductUpdateOneRequiredWithoutCompatibleAccessoriesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutCompatibleAccessoriesInput, Prisma.ProductUpdateWithoutCompatibleAccessoriesInput>, Prisma.ProductUncheckedUpdateWithoutCompatibleAccessoriesInput>
 }
 
+export type ProductCreateNestedOneWithoutFacetsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutFacetsInput, Prisma.ProductUncheckedCreateWithoutFacetsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutFacetsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutFacetsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutFacetsInput, Prisma.ProductUncheckedCreateWithoutFacetsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutFacetsInput
+  upsert?: Prisma.ProductUpsertWithoutFacetsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutFacetsInput, Prisma.ProductUpdateWithoutFacetsInput>, Prisma.ProductUncheckedUpdateWithoutFacetsInput>
+}
+
 export type ProductCreateNestedOneWithoutInternalInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutInternalInput, Prisma.ProductUncheckedCreateWithoutInternalInput>
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutInternalInput
@@ -1221,6 +1242,7 @@ export type ProductCreateWithoutCategoryInput = {
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductCreateNestedManyWithoutProductInput
@@ -1261,6 +1283,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductUncheckedCreateNestedManyWithoutProductInput
@@ -1363,6 +1386,7 @@ export type ProductCreateWithoutImagesInput = {
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductCreateNestedManyWithoutProductInput
@@ -1403,6 +1427,7 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductUncheckedCreateNestedManyWithoutProductInput
@@ -1459,6 +1484,7 @@ export type ProductUpdateWithoutImagesInput = {
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUpdateManyWithoutProductNestedInput
@@ -1499,6 +1525,7 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUncheckedUpdateManyWithoutProductNestedInput
@@ -1539,6 +1566,7 @@ export type ProductCreateWithoutVariantsInput = {
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductCreateNestedManyWithoutProductInput
@@ -1579,6 +1607,7 @@ export type ProductUncheckedCreateWithoutVariantsInput = {
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductUncheckedCreateNestedManyWithoutProductInput
@@ -1635,6 +1664,7 @@ export type ProductUpdateWithoutVariantsInput = {
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUpdateManyWithoutProductNestedInput
@@ -1675,6 +1705,7 @@ export type ProductUncheckedUpdateWithoutVariantsInput = {
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUncheckedUpdateManyWithoutProductNestedInput
@@ -1715,6 +1746,7 @@ export type ProductCreateWithoutCompatibleWithPhonesInput = {
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
+  facets?: Prisma.ProductFacetCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductCreateNestedManyWithoutProductInput
@@ -1755,6 +1787,7 @@ export type ProductUncheckedCreateWithoutCompatibleWithPhonesInput = {
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
+  facets?: Prisma.ProductFacetUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductUncheckedCreateNestedManyWithoutProductInput
@@ -1800,6 +1833,7 @@ export type ProductCreateWithoutCompatibleAccessoriesInput = {
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
   compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductCreateNestedManyWithoutProductInput
@@ -1840,6 +1874,7 @@ export type ProductUncheckedCreateWithoutCompatibleAccessoriesInput = {
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductUncheckedCreateNestedManyWithoutProductInput
@@ -1896,6 +1931,7 @@ export type ProductUpdateWithoutCompatibleWithPhonesInput = {
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
+  facets?: Prisma.ProductFacetUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUpdateManyWithoutProductNestedInput
@@ -1936,6 +1972,7 @@ export type ProductUncheckedUpdateWithoutCompatibleWithPhonesInput = {
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
+  facets?: Prisma.ProductFacetUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUncheckedUpdateManyWithoutProductNestedInput
@@ -1987,6 +2024,7 @@ export type ProductUpdateWithoutCompatibleAccessoriesInput = {
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUpdateManyWithoutProductNestedInput
@@ -2026,6 +2064,187 @@ export type ProductUncheckedUpdateWithoutCompatibleAccessoriesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUncheckedUpdateManyWithoutProductNestedInput
+  internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
+  orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
+  landingPages?: Prisma.LandingPageProductUncheckedUpdateManyWithoutProductNestedInput
+  bundleItems?: Prisma.BundleItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutFacetsInput = {
+  id?: string
+  slug: string
+  name: string
+  brand?: string | null
+  condition: $Enums.ProductCondition
+  description?: string | null
+  isPhone?: boolean
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: $Enums.AvailabilityStatus
+  tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
+  modelKey?: string | null
+  batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  category: Prisma.CategoryCreateNestedOneWithoutProductsInput
+  images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
+  variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
+  internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
+  orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
+  landingPages?: Prisma.LandingPageProductCreateNestedManyWithoutProductInput
+  bundleItems?: Prisma.BundleItemCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutFacetsInput = {
+  id?: string
+  slug: string
+  name: string
+  brand?: string | null
+  condition: $Enums.ProductCondition
+  description?: string | null
+  isPhone?: boolean
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: $Enums.AvailabilityStatus
+  tags?: Prisma.ProductCreatetagsInput | string[]
+  source?: $Enums.ProductSource
+  erpKey?: string | null
+  published?: boolean
+  modelKey?: string | null
+  batteryHealthPercent?: number | null
+  faceIdWorking?: boolean | null
+  screenGenuine?: boolean | null
+  batteryGenuine?: boolean | null
+  cameraGenuine?: boolean | null
+  chargingPortGenuine?: boolean | null
+  speakerGenuine?: boolean | null
+  hasDefects?: boolean
+  transparencyNotes?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  categoryId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
+  variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
+  internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
+  orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
+  landingPages?: Prisma.LandingPageProductUncheckedCreateNestedManyWithoutProductInput
+  bundleItems?: Prisma.BundleItemUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutFacetsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutFacetsInput, Prisma.ProductUncheckedCreateWithoutFacetsInput>
+}
+
+export type ProductUpsertWithoutFacetsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutFacetsInput, Prisma.ProductUncheckedUpdateWithoutFacetsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutFacetsInput, Prisma.ProductUncheckedCreateWithoutFacetsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutFacetsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutFacetsInput, Prisma.ProductUncheckedUpdateWithoutFacetsInput>
+}
+
+export type ProductUpdateWithoutFacetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
+  tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
+  images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
+  variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
+  compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
+  internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
+  orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
+  landingPages?: Prisma.LandingPageProductUpdateManyWithoutProductNestedInput
+  bundleItems?: Prisma.BundleItemUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutFacetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.EnumProductConditionFieldUpdateOperationsInput | $Enums.ProductCondition
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPhone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  specs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recommendedSalePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availability?: Prisma.EnumAvailabilityStatusFieldUpdateOperationsInput | $Enums.AvailabilityStatus
+  tags?: Prisma.ProductUpdatetagsInput | string[]
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  erpKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  batteryGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cameraGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  chargingPortGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  speakerGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasDefects?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  transparencyNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
+  variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
+  compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2068,6 +2287,7 @@ export type ProductCreateWithoutInternalInput = {
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetCreateNestedManyWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductCreateNestedManyWithoutProductInput
   bundleItems?: Prisma.BundleItemCreateNestedManyWithoutProductInput
@@ -2108,6 +2328,7 @@ export type ProductUncheckedCreateWithoutInternalInput = {
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetUncheckedCreateNestedManyWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductUncheckedCreateNestedManyWithoutProductInput
   bundleItems?: Prisma.BundleItemUncheckedCreateNestedManyWithoutProductInput
@@ -2164,6 +2385,7 @@ export type ProductUpdateWithoutInternalInput = {
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUpdateManyWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUpdateManyWithoutProductNestedInput
   bundleItems?: Prisma.BundleItemUpdateManyWithoutProductNestedInput
@@ -2204,6 +2426,7 @@ export type ProductUncheckedUpdateWithoutInternalInput = {
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUncheckedUpdateManyWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUncheckedUpdateManyWithoutProductNestedInput
   bundleItems?: Prisma.BundleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2244,6 +2467,7 @@ export type ProductCreateWithoutOrderRequestItemsInput = {
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   landingPages?: Prisma.LandingPageProductCreateNestedManyWithoutProductInput
   bundleItems?: Prisma.BundleItemCreateNestedManyWithoutProductInput
@@ -2284,6 +2508,7 @@ export type ProductUncheckedCreateWithoutOrderRequestItemsInput = {
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   landingPages?: Prisma.LandingPageProductUncheckedCreateNestedManyWithoutProductInput
   bundleItems?: Prisma.BundleItemUncheckedCreateNestedManyWithoutProductInput
@@ -2340,6 +2565,7 @@ export type ProductUpdateWithoutOrderRequestItemsInput = {
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUpdateManyWithoutProductNestedInput
   bundleItems?: Prisma.BundleItemUpdateManyWithoutProductNestedInput
@@ -2380,6 +2606,7 @@ export type ProductUncheckedUpdateWithoutOrderRequestItemsInput = {
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUncheckedUpdateManyWithoutProductNestedInput
   bundleItems?: Prisma.BundleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2420,6 +2647,7 @@ export type ProductCreateWithoutBundleItemsInput = {
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductCreateNestedManyWithoutProductInput
@@ -2460,6 +2688,7 @@ export type ProductUncheckedCreateWithoutBundleItemsInput = {
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
   landingPages?: Prisma.LandingPageProductUncheckedCreateNestedManyWithoutProductInput
@@ -2516,6 +2745,7 @@ export type ProductUpdateWithoutBundleItemsInput = {
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUpdateManyWithoutProductNestedInput
@@ -2556,6 +2786,7 @@ export type ProductUncheckedUpdateWithoutBundleItemsInput = {
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUncheckedUpdateManyWithoutProductNestedInput
@@ -2596,6 +2827,7 @@ export type ProductCreateWithoutLandingPagesInput = {
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemCreateNestedManyWithoutProductInput
   bundleItems?: Prisma.BundleItemCreateNestedManyWithoutProductInput
@@ -2636,6 +2868,7 @@ export type ProductUncheckedCreateWithoutLandingPagesInput = {
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutCompatibleWithInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedCreateNestedManyWithoutProductInput
+  facets?: Prisma.ProductFacetUncheckedCreateNestedManyWithoutProductInput
   internal?: Prisma.ProductInternalUncheckedCreateNestedOneWithoutProductInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedCreateNestedManyWithoutProductInput
   bundleItems?: Prisma.BundleItemUncheckedCreateNestedManyWithoutProductInput
@@ -2692,6 +2925,7 @@ export type ProductUpdateWithoutLandingPagesInput = {
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
   bundleItems?: Prisma.BundleItemUpdateManyWithoutProductNestedInput
@@ -2732,6 +2966,7 @@ export type ProductUncheckedUpdateWithoutLandingPagesInput = {
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
   bundleItems?: Prisma.BundleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2803,6 +3038,7 @@ export type ProductUpdateWithoutCategoryInput = {
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUpdateManyWithoutProductNestedInput
@@ -2843,6 +3079,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
   compatibleAccessories?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutCompatibleWithNestedInput
   compatibleWithPhones?: Prisma.ProductCompatibilityUncheckedUpdateManyWithoutProductNestedInput
+  facets?: Prisma.ProductFacetUncheckedUpdateManyWithoutProductNestedInput
   internal?: Prisma.ProductInternalUncheckedUpdateOneWithoutProductNestedInput
   orderRequestItems?: Prisma.OrderRequestItemUncheckedUpdateManyWithoutProductNestedInput
   landingPages?: Prisma.LandingPageProductUncheckedUpdateManyWithoutProductNestedInput
@@ -2891,6 +3128,7 @@ export type ProductCountOutputType = {
   variants: number
   compatibleAccessories: number
   compatibleWithPhones: number
+  facets: number
   orderRequestItems: number
   landingPages: number
   bundleItems: number
@@ -2901,6 +3139,7 @@ export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   variants?: boolean | ProductCountOutputTypeCountVariantsArgs
   compatibleAccessories?: boolean | ProductCountOutputTypeCountCompatibleAccessoriesArgs
   compatibleWithPhones?: boolean | ProductCountOutputTypeCountCompatibleWithPhonesArgs
+  facets?: boolean | ProductCountOutputTypeCountFacetsArgs
   orderRequestItems?: boolean | ProductCountOutputTypeCountOrderRequestItemsArgs
   landingPages?: boolean | ProductCountOutputTypeCountLandingPagesArgs
   bundleItems?: boolean | ProductCountOutputTypeCountBundleItemsArgs
@@ -2942,6 +3181,13 @@ export type ProductCountOutputTypeCountCompatibleAccessoriesArgs<ExtArgs extends
  */
 export type ProductCountOutputTypeCountCompatibleWithPhonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ProductCompatibilityWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountFacetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductFacetWhereInput
 }
 
 /**
@@ -3002,6 +3248,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
   compatibleAccessories?: boolean | Prisma.Product$compatibleAccessoriesArgs<ExtArgs>
   compatibleWithPhones?: boolean | Prisma.Product$compatibleWithPhonesArgs<ExtArgs>
+  facets?: boolean | Prisma.Product$facetsArgs<ExtArgs>
   internal?: boolean | Prisma.Product$internalArgs<ExtArgs>
   orderRequestItems?: boolean | Prisma.Product$orderRequestItemsArgs<ExtArgs>
   landingPages?: boolean | Prisma.Product$landingPagesArgs<ExtArgs>
@@ -3117,6 +3364,7 @@ export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
   compatibleAccessories?: boolean | Prisma.Product$compatibleAccessoriesArgs<ExtArgs>
   compatibleWithPhones?: boolean | Prisma.Product$compatibleWithPhonesArgs<ExtArgs>
+  facets?: boolean | Prisma.Product$facetsArgs<ExtArgs>
   internal?: boolean | Prisma.Product$internalArgs<ExtArgs>
   orderRequestItems?: boolean | Prisma.Product$orderRequestItemsArgs<ExtArgs>
   landingPages?: boolean | Prisma.Product$landingPagesArgs<ExtArgs>
@@ -3138,6 +3386,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     variants: Prisma.$ProductVariantPayload<ExtArgs>[]
     compatibleAccessories: Prisma.$ProductCompatibilityPayload<ExtArgs>[]
     compatibleWithPhones: Prisma.$ProductCompatibilityPayload<ExtArgs>[]
+    facets: Prisma.$ProductFacetPayload<ExtArgs>[]
     internal: Prisma.$ProductInternalPayload<ExtArgs> | null
     orderRequestItems: Prisma.$OrderRequestItemPayload<ExtArgs>[]
     landingPages: Prisma.$LandingPageProductPayload<ExtArgs>[]
@@ -3573,6 +3822,7 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   variants<T extends Prisma.Product$variantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$variantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductVariantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   compatibleAccessories<T extends Prisma.Product$compatibleAccessoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$compatibleAccessoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductCompatibilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   compatibleWithPhones<T extends Prisma.Product$compatibleWithPhonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$compatibleWithPhonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductCompatibilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  facets<T extends Prisma.Product$facetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$facetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductFacetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   internal<T extends Prisma.Product$internalArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$internalArgs<ExtArgs>>): Prisma.Prisma__ProductInternalClient<runtime.Types.Result.GetResult<Prisma.$ProductInternalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   orderRequestItems<T extends Prisma.Product$orderRequestItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$orderRequestItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderRequestItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   landingPages<T extends Prisma.Product$landingPagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$landingPagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LandingPageProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4130,6 +4380,30 @@ export type Product$compatibleWithPhonesArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.ProductCompatibilityScalarFieldEnum | Prisma.ProductCompatibilityScalarFieldEnum[]
+}
+
+/**
+ * Product.facets
+ */
+export type Product$facetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductFacet
+   */
+  select?: Prisma.ProductFacetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductFacet
+   */
+  omit?: Prisma.ProductFacetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductFacetInclude<ExtArgs> | null
+  where?: Prisma.ProductFacetWhereInput
+  orderBy?: Prisma.ProductFacetOrderByWithRelationInput | Prisma.ProductFacetOrderByWithRelationInput[]
+  cursor?: Prisma.ProductFacetWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductFacetScalarFieldEnum | Prisma.ProductFacetScalarFieldEnum[]
 }
 
 /**

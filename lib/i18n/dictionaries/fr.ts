@@ -224,6 +224,33 @@ export const fr = {
     waLookingFor: (name: string, query?: string) => `Bonjour, je cherche : ${name}${query ? ` (${query})` : ""}`,
   },
 
+  // An aisle's guided choice (pochettes): components/storefront/AisleGuide.
+  // Group and option names come from the ERP in French; `question` and
+  // `option` translate the ones a language knows ("style", "style.fleuri").
+  guide: {
+    eyebrow: "Guide",
+    title: "Le bon choix, en quelques touches.",
+    lead: "Dites-nous votre téléphone et vos goûts : on ne garde que ce qui vous va.",
+    stepsDone: (done: number, total: number) => `${done} sur ${total}`,
+    change: "Changer",
+    budget: "Votre budget ?",
+    upTo: (price: string) => `Jusqu'à ${price}`,
+    between: (min: number, max: string) => `${min} à ${max}`,
+    over: (price: string) => `Plus de ${price}`,
+    bandName: { petit: "Petit prix", moyen: "Milieu de gamme", premium: "Premium" } as Record<string, string>,
+    results: (n: number) => `${n} résultat${n > 1 ? "s" : ""}`,
+    restart: "Recommencer",
+    fits: (model: string) => `Va sur ${model}`,
+    fitsYours: (model: string) => `Va sur votre ${model}`,
+    notYours: (model: string) => `Ne va pas sur votre ${model}`,
+    remembered: (model: string) => `Vous avez un ${model} ?`,
+    seeFitting: "Voir ce qui lui va",
+    ficheTitle: "En bref",
+    level: (n: number, max: number) => `niveau ${n} sur ${max}`,
+    question: {} as Record<string, string>,
+    option: {} as Record<string, string>,
+  },
+
   filters: {
     sortNew: "Récents",
     sortAsc: "Prix ↑",

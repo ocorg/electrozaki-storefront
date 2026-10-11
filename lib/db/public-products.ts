@@ -85,6 +85,13 @@ const PUBLIC_PRODUCT_SELECT = {
       compatibleWith: { select: { id: true, slug: true, name: true } },
     },
   },
+  // The checklist staff ticked in the ERP (style, protection, phone model…).
+  facets: {
+    where: { option: { active: true, group: { active: true } } },
+    select: {
+      option: { select: { key: true, name: true, level: true, sortOrder: true, group: { select: { key: true } } } },
+    },
+  },
 } as const;
 
 // Hand-written to match PUBLIC_PRODUCT_SELECT, rather than derived through
@@ -152,6 +159,9 @@ export interface PublicProduct {
   }[];
   compatibleWithPhones: {
     compatibleWith: { id: string; slug: string; name: string };
+  }[];
+  facets: {
+    option: { key: string; name: string; level: number | null; sortOrder: number; group: { key: string } };
   }[];
 }
 

@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import Link from "@/components/i18n/Link";
 import { formatMAD, savingOf } from "@/lib/format";
 import type { PublicProduct } from "@/lib/db/public-products";
@@ -7,7 +7,16 @@ import { categoryName } from "@/lib/i18n/labels";
 import { ProductVisual } from "@/components/storefront/ProductVisual";
 import { BatteryLevel, GradeMeter } from "@/components/storefront/GradeMeter";
 
-export async function ProductCard({ product, priority = false }: { product: PublicProduct; priority?: boolean }) {
+export async function ProductCard({
+  product,
+  priority = false,
+  fiche,
+}: {
+  product: PublicProduct;
+  priority?: boolean;
+  /** In a guided aisle: the phone it fits and what kind it is ("Luxe · Antichoc"). */
+  fiche?: { fits?: string; traits: string[] };
+}) {
   const t = await getT();
   const cover = product.images[0];
   const isSoldOut = product.availability === "OUT_OF_STOCK" || product.availability === "DISCONTINUED";
@@ -76,6 +85,18 @@ export async function ProductCard({ product, priority = false }: { product: Publ
             {bMin !== null && bMax !== null && product.condition !== "NEUF" && (
               <BatteryLevel percent={bMax} label={bMin === bMax ? undefined : `${bMin}-${bMax} %`} />
             )}
+          </div>
+        )}
+
+        {fiche && (fiche.fits || fiche.traits.length > 0) && (
+          <div className="mt-2 space-y-1">
+            {fiche.fits && (
+              <p className="flex items-center gap-1.5 text-xs font-bold text-signal">
+                <Check size={13} strokeWidth={3} aria-hidden className="flex-none" />
+                <span className="truncate">{fiche.fits}</span>
+              </p>
+            )}
+            {fiche.traits.length > 0 && <p className="truncate text-xs text-neutral-600">{fiche.traits.join(" · ")}</p>}
           </div>
         )}
 
