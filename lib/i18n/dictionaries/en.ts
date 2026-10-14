@@ -612,10 +612,11 @@ export const en: Dictionary = {
     total: "Total",
     advanceTitle: (amount: string) => `Reservation deposit: ${amount}`,
     advanceText: (amount: string, rest: string) =>
-      `Make a bank transfer of ${amount}, then upload the receipt below. The rest (${rest}) is paid on delivery.`,
-    bank: "Bank",
-    rib: "RIB / IBAN",
+      `Send ${amount} to one of the accounts below (bank transfer, CashPlus or Al Barid Bank), then upload the receipt. The rest (${rest}) is paid on delivery.`,
     holder: "Account holder",
+    accountNumber: "Account no.",
+    copy: "Copy",
+    copied: "Copied",
     whyAdvance: "Why a deposit?",
     whyAdvanceText: "The deposit covers shipping costs and holds your phone for you until delivery.",
     consent:

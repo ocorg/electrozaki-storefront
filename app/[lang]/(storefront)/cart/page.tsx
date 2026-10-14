@@ -8,6 +8,7 @@ import { useCart } from "@/components/cart/CartContext";
 import { formatMAD } from "@/lib/format";
 import { submitOrderRequest, confirmWhatsAppOpened, applyPromoCode } from "./actions";
 import { ReceiptUpload, type UploadedReceipt } from "@/components/cart/ReceiptUpload";
+import { PaymentAccounts } from "@/components/cart/PaymentAccounts";
 import { AnchorButton, Button, LinkButton } from "@/components/ui/Button";
 import { StepProgress } from "@/components/ui/StepProgress";
 import { DeliveryPicker } from "@/components/cart/DeliveryPicker";
@@ -20,13 +21,6 @@ import { translateError } from "@/lib/i18n/labels";
 const ADVANCE = 300;
 
 type Confirmation = { orderRequestId: string; whatsappUrl: string };
-
-// TODO before going live: replace with your real bank account details.
-const BANK_TRANSFER_INFO = {
-  bank: "[À COMPLÉTER - nom de la banque]",
-  rib: "[À COMPLÉTER - RIB / IBAN]",
-  holder: "[À COMPLÉTER - titulaire du compte]",
-};
 
 export default function CartPage() {
   const t = useT();
@@ -372,13 +366,7 @@ export default function CartPage() {
                 <p className="mt-1 text-sm text-neutral-700">
                   {c.advanceText(formatMAD(ADVANCE), formatMAD(discountedTotal - ADVANCE))}
                 </p>
-                <div className="mt-3 rounded-lg bg-white p-3 text-sm shadow-sm">
-                  <p>{c.bank} : {BANK_TRANSFER_INFO.bank}</p>
-                  <p>
-                    {c.rib} : <span dir="ltr">{BANK_TRANSFER_INFO.rib}</span>
-                  </p>
-                  <p>{c.holder} : {BANK_TRANSFER_INFO.holder}</p>
-                </div>
+                <PaymentAccounts />
 
                 <details className="mt-3 rounded-lg bg-white p-3 text-sm shadow-sm">
                   <summary className="cursor-pointer font-medium">{c.whyAdvance}</summary>

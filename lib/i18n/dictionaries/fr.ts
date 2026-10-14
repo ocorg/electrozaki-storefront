@@ -593,10 +593,11 @@ export const fr = {
     total: "Total",
     advanceTitle: (amount: string) => `Avance de réservation : ${amount}`,
     advanceText: (amount: string, rest: string) =>
-      `Effectuez un virement de ${amount}, puis déposez le reçu ci-dessous. Le reste du montant (${rest}) est payable à la livraison.`,
-    bank: "Banque",
-    rib: "RIB / IBAN",
+      `Envoyez ${amount} sur l'un des comptes ci-dessous (virement, CashPlus ou Al Barid Bank), puis déposez le reçu. Le reste (${rest}) est payable à la livraison.`,
     holder: "Titulaire",
+    accountNumber: "N° de compte",
+    copy: "Copier",
+    copied: "Copié",
     whyAdvance: "Pourquoi cette avance ?",
     whyAdvanceText:
       "Cette avance couvre les frais logistiques et garantit la réservation de votre téléphone le temps de la livraison.",
