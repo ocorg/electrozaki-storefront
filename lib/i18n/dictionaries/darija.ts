@@ -614,6 +614,20 @@ export const darija: Dictionary = {
     },
   },
 
+  pricesPage: {
+    title: "Ga3 les prix dyalna",
+    metaTitle: "Ga3 les prix: tilifounat w accessoires f Mknas",
+    metaDescription: "Les prix dyal ga3 tilifounat w accessoires Electro Zaki, m3a l jdid: iPhone, Samsung, Xiaomi, coques, chargeurs, cables. Livraison l ga3 lmghrib.",
+    intro: "Kol tilifoun w accessoire li kaynin, b taman dyal daba. Les prix kaytb3o l stock dyal l boutique f Mknas w kaytbeddlo wa7dhom.",
+    jump: "Sir l rayon",
+    seeAisle: "Chouf r-rayon",
+    product: "L montoj",
+    condition: "L 7ala",
+    price: "Taman",
+    footnote: "Tilifounat mosta3mlin: taman li kayban howa dyal arkhas wa7ed f stock; kol wa7ed 3ndo l fiche dyalo b l 7ala w l batterie. Livraison zayda 3la 7sab l mdina.",
+    footer: "Ga3 les prix",
+  },
+
   cartPage: {
     sentTitle: "Demande tsiftat",
     reference: (ref: string) => `Référence: ${ref}`,

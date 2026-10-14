@@ -37,6 +37,8 @@ export function proxy(request: NextRequest, event: NextFetchEvent) {
 // and not an address that already starts with a language.
 function needsLocale(pathname: string): boolean {
   if (pathname.startsWith("/api/") || pathname === "/api") return false;
+  // Machine feeds (Meta catalogue and its images) have no language.
+  if (pathname.startsWith("/feeds/")) return false;
   if (/\.[a-z0-9]{2,12}$/i.test(pathname)) return false;
   if (pathname.startsWith("/opengraph-image") || pathname.startsWith("/icon") || pathname.startsWith("/apple-icon")) return false;
   return !isLocale(pathname.split("/")[1]);

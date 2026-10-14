@@ -613,6 +613,20 @@ export const fr = {
     },
   },
 
+  pricesPage: {
+    title: "Tous nos prix",
+    metaTitle: "Tous nos prix : téléphones et accessoires à Meknès",
+    metaDescription: "Les prix de tous les téléphones et accessoires Electro Zaki, à jour : iPhone, Samsung, Xiaomi, coques, chargeurs, câbles. Livraison partout au Maroc.",
+    intro: "Chaque téléphone et accessoire en vente, avec son prix du moment. Les prix suivent le stock de la boutique à Meknès et se mettent à jour tout seuls.",
+    jump: "Aller au rayon",
+    seeAisle: "Voir le rayon",
+    product: "Produit",
+    condition: "État",
+    price: "Prix",
+    footnote: "Téléphones d'occasion : le prix indiqué est celui de l'unité la moins chère en stock ; chaque unité a sa fiche avec son état et sa batterie. Livraison en plus, selon la ville.",
+    footer: "Tous nos prix",
+  },
+
   cartPage: {
     sentTitle: "Demande envoyée",
     reference: (ref: string) => `Référence : ${ref}`,

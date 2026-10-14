@@ -630,6 +630,20 @@ export const en: Dictionary = {
     },
   },
 
+  pricesPage: {
+    title: "All our prices",
+    metaTitle: "All our prices: phones and accessories in Meknès",
+    metaDescription: "Up-to-date prices for every Electro Zaki phone and accessory: iPhone, Samsung, Xiaomi, cases, chargers, cables. Delivery across Morocco.",
+    intro: "Every phone and accessory on sale, with today's price. Prices follow the stock of the shop in Meknès and update on their own.",
+    jump: "Go to aisle",
+    seeAisle: "See the aisle",
+    product: "Product",
+    condition: "Condition",
+    price: "Price",
+    footnote: "Used phones: the price shown is the cheapest unit in stock; each unit has its own page with its condition and battery. Delivery extra, depending on the city.",
+    footer: "All our prices",
+  },
+
   cartPage: {
     sentTitle: "Request sent",
     reference: (ref: string) => `Reference: ${ref}`,

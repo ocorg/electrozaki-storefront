@@ -390,6 +390,18 @@ export async function getFeaturedProducts(
   });
 }
 
+/**
+ * Every product a visitor can find, aisle by aisle: for the Meta catalogue
+ * feed and the "Tous nos prix" page. Phones first, then accessories.
+ */
+export async function getAllPublicProducts(): Promise<PublicProduct[]> {
+  return prisma.product.findMany({
+    where: { published: true, availability: { not: AvailabilityStatus.DISCONTINUED } },
+    select: PUBLIC_PRODUCT_SELECT,
+    orderBy: [{ isPhone: "desc" }, { category: { sortOrder: "asc" } }, { recommendedSalePrice: "asc" }],
+  });
+}
+
 /** Other products from the same aisle, for "Dans le même rayon" on a product page. */
 export async function getRelatedProducts(
   product: { id: string; category: { id: string } },
