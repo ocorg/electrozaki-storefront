@@ -120,6 +120,14 @@ body {
   --focus: var(--color-gold-bright);
 }
 
+/* On phones the floating WhatsApp button sits over the checkout's buttons;
+   the order is finished on WhatsApp anyway, right after. */
+@media (max-width: 767px) {
+  body:has([data-checkout]) .floating-wa {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

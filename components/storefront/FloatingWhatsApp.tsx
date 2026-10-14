@@ -4,7 +4,8 @@ import { getT } from "@/lib/i18n/server";
 
 // Plain anchor, no client JS. Sits above the mobile tab bar on phones, and
 // below modals (z-40) so a dialog can still cover it. The icon is ink, not
-// white: white on WhatsApp green is 1.98:1, ink is 9.5:1.
+// white: white on WhatsApp green is 1.98:1, ink is 9.5:1. Hidden on phones
+// during checkout (globals.css), where it covered the "Continuer" button.
 export async function FloatingWhatsApp() {
   const t = await getT();
   return (
@@ -13,7 +14,7 @@ export async function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t.common.writeUsWhatsapp}
-      className="group fixed bottom-[calc(76px+env(safe-area-inset-bottom))] inset-e-4 z-40 flex h-14 items-center gap-2 rounded-full bg-whatsapp px-4 text-ink shadow-[0_14px_30px_-10px_rgb(37_211_102/0.8)] transition-all duration-300 hover:pe-5 md:bottom-6 md:inset-e-6"
+      className="floating-wa group fixed bottom-[calc(76px+env(safe-area-inset-bottom))] inset-e-4 z-40 flex h-14 items-center gap-2 rounded-full bg-whatsapp px-4 text-ink shadow-[0_14px_30px_-10px_rgb(37_211_102/0.8)] transition-all duration-300 hover:pe-5 md:bottom-6 md:inset-e-6"
     >
       <span className="relative flex">
         <MessageCircle size={24} strokeWidth={2.2} aria-hidden />

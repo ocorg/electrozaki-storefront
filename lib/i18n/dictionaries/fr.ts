@@ -561,6 +561,58 @@ export const fr = {
     send: "Envoyer",
   },
 
+  // The checkout's journey, its fields and what it says when something is
+  // missing (app/[lang]/(storefront)/cart/page.tsx, components/cart/CheckoutJourney).
+  checkout: {
+    journey: {
+      aria: "Étapes de la commande",
+      stops: ["Panier", "Livraison", "Paiement"],
+      lines: [
+        "Encore 2 étapes, et votre colis prend la route.",
+        "Plus qu'une étape : où livrer ?",
+        "Dernière ligne droite : on prépare votre colis.",
+      ],
+      goBack: (name: string) => `Revenir à l'étape ${name}`,
+      arrivalBefore: "Livraison prévue",
+      arrivalUnknown: "Choisissez votre ville pour voir la date de livraison.",
+    },
+    fields: {
+      name: "Nom complet",
+      phone: "Téléphone",
+      phoneHint: "Un mobile marocain : 06, 07 ou 05, 10 chiffres. Nous vous appelons pour confirmer.",
+      address: "Adresse de livraison",
+      addressHint: "Quartier, rue, numéro et un repère (mosquée, école, café…).",
+      notes: "Notes pour le livreur (optionnel)",
+    },
+    errors: {
+      name: "Indiquez votre nom complet.",
+      phone: "Numéro marocain attendu, par exemple 06 12 34 56 78.",
+      city: "Choisissez votre ville dans la liste.",
+      address: "Ajoutez un peu plus de détails : au moins 10 caractères.",
+      receipt: "Déposez le reçu de votre avance.",
+      consent: "Cochez la case pour accepter le traitement de vos données.",
+    },
+    missingNames: {
+      name: "votre nom",
+      phone: "votre téléphone",
+      city: "votre ville",
+      address: "votre adresse",
+      receipt: "le reçu de l'avance",
+      consent: "votre accord",
+    } as Record<string, string>,
+    missing: (names: string[]) =>
+      `Il manque encore ${names.length > 1 ? `${names.slice(0, -1).join(", ")} et ${names[names.length - 1]}` : names[0]}.`,
+    progress: (done: number, total: number) => (done === total ? "Tout est prêt !" : `${done} sur ${total} informations`),
+    done: {
+      steps: [
+        "Ouvrez WhatsApp pour finaliser : le message est déjà écrit.",
+        "Nous vous appelons pour confirmer l'adresse et l'heure.",
+        "Votre colis part de Meknès, vous payez à la livraison.",
+      ],
+      arrives: (date: string) => `Livraison prévue ${date}, paiement à la livraison.`,
+    },
+  },
+
   cartPage: {
     sentTitle: "Demande envoyée",
     reference: (ref: string) => `Référence : ${ref}`,

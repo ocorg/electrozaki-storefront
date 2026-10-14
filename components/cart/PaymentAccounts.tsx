@@ -59,7 +59,7 @@ export function PaymentAccounts() {
                     <dt className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
                       {d.label}
                     </dt>
-                    <dd dir="ltr" className="readout select-all break-all text-[13px] font-semibold text-ink">
+                    <dd dir="ltr" className="readout select-all break-words text-[13px] font-semibold text-ink">
                       {d.value}
                     </dd>
                   </div>

@@ -64,7 +64,9 @@ export function DeliveryMap({ lat, lng, label, ariaLabel }: Props) {
   return (
     <div
       ref={containerRef}
-      className="h-56 w-full overflow-hidden rounded-xl border border-black/10 bg-neutral-100"
+      // isolate: Leaflet stacks its panes up to z-index 1000; kept inside
+      // the map, so the sticky header and menus stay above it.
+      className="relative isolate z-0 h-56 w-full overflow-hidden rounded-xl border border-black/10 bg-neutral-100"
       role="img"
       aria-label={ariaLabel}
       dir="ltr"

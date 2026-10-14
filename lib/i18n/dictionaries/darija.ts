@@ -565,6 +565,55 @@ export const darija: Dictionary = {
     send: "Sifet",
   },
 
+  checkout: {
+    journey: {
+      aria: "Marahil dyal l commande",
+      stops: ["Panier", "Livraison", "Paiement"],
+      lines: [
+        "Ba9i 2 marahil w l colis dyalek ykhrej.",
+        "Ba9a marhala wa7da: fin nwesslou?",
+        "Akhir marhala: kanwejdou l colis dyalek.",
+      ],
+      goBack: (name: string) => `Rje3 l ${name}`,
+      arrivalBefore: "Livraison mtwe99a3a",
+      arrivalUnknown: "Khtar mdintek bach tchouf nhar l livraison.",
+    },
+    fields: {
+      name: "Smiya kamla",
+      phone: "Tilifoun",
+      phoneHint: "Numéro mghribi: 06, 07 wla 05, 10 ar9am. Kan3ayto lik bach nakdou.",
+      address: "Adresse dyal l livraison",
+      addressHint: "L 7ay, z-zen9a, r-ra9m w chi 3alama (jame3, madrassa, 9ahwa…).",
+      notes: "Mola7ada l livreur (machi daroury)",
+    },
+    errors: {
+      name: "Kteb smitek kamla.",
+      phone: "Khass numéro mghribi, b7al 06 12 34 56 78.",
+      city: "Khtar mdintek men la liste.",
+      address: "Zid chwiya d tafassil: 10 7orouf 3la l a9al.",
+      receipt: "7ett l reçu dyal l avance.",
+      consent: "Coché l case bach twafe9 3la l mo3alaja dyal l ma3loumat dyalek.",
+    },
+    missingNames: {
+      name: "smitek",
+      phone: "tilifounek",
+      city: "mdintek",
+      address: "l adresse dyalek",
+      receipt: "l reçu dyal l avance",
+      consent: "l mowafa9a dyalek",
+    },
+    missing: (names: string[]) => `Mazal khass: ${names.join(", ")}.`,
+    progress: (done: number, total: number) => (done === total ? "Kolchi wajed!" : `${done} men ${total} ma3loumat`),
+    done: {
+      steps: [
+        "7ell WhatsApp bach tkemmel: l message mektoub.",
+        "Kan3ayto lik bach nakdou l adresse w l wa9t.",
+        "L colis kaykhrej men Mknas, w katkhelles f l livraison.",
+      ],
+      arrives: (date: string) => `Livraison mtwe99a3a ${date}, l khlass f l livraison.`,
+    },
+  },
+
   cartPage: {
     sentTitle: "Demande tsiftat",
     reference: (ref: string) => `Référence: ${ref}`,

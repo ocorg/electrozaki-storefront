@@ -580,6 +580,56 @@ export const en: Dictionary = {
     send: "Send",
   },
 
+  checkout: {
+    journey: {
+      aria: "Order steps",
+      stops: ["Cart", "Delivery", "Payment"],
+      lines: [
+        "Two more steps and your parcel is on its way.",
+        "One more step: where should we deliver?",
+        "Home stretch: we're getting your parcel ready.",
+      ],
+      goBack: (name: string) => `Back to ${name}`,
+      arrivalBefore: "Expected delivery",
+      arrivalUnknown: "Choose your city to see the delivery date.",
+    },
+    fields: {
+      name: "Full name",
+      phone: "Phone",
+      phoneHint: "A Moroccan mobile: 06, 07 or 05, 10 digits. We call to confirm.",
+      address: "Delivery address",
+      addressHint: "Neighbourhood, street, number and a landmark (mosque, school, café…).",
+      notes: "Notes for the courier (optional)",
+    },
+    errors: {
+      name: "Enter your full name.",
+      phone: "A Moroccan number is needed, for example 06 12 34 56 78.",
+      city: "Choose your city from the list.",
+      address: "Add a few more details: at least 10 characters.",
+      receipt: "Upload the receipt for your advance.",
+      consent: "Tick the box to accept how your data is handled.",
+    },
+    missingNames: {
+      name: "your name",
+      phone: "your phone",
+      city: "your city",
+      address: "your address",
+      receipt: "the advance receipt",
+      consent: "your consent",
+    },
+    missing: (names: string[]) =>
+      `Still missing: ${names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0]}.`,
+    progress: (done: number, total: number) => (done === total ? "All set!" : `${done} of ${total} details`),
+    done: {
+      steps: [
+        "Open WhatsApp to finish: the message is already written.",
+        "We call you to confirm the address and time.",
+        "Your parcel leaves Meknès; you pay on delivery.",
+      ],
+      arrives: (date: string) => `Expected delivery ${date}, pay on delivery.`,
+    },
+  },
+
   cartPage: {
     sentTitle: "Request sent",
     reference: (ref: string) => `Reference: ${ref}`,

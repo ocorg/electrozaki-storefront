@@ -29,7 +29,7 @@ export const PAYMENT_ACCOUNTS: PaymentAccount[] = [
     key: "cashplus",
     name: "CashPlus",
     logo: { src: "/payments/cashplus.png", width: 215, height: 63 },
-    details: [{ label: "RIB", value: "835780030017730657914407" }],
+    details: [{ label: "RIB", value: "835 780 0300177306579144 07" }],
   },
   {
     key: "barid",
