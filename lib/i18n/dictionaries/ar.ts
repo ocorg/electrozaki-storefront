@@ -617,7 +617,6 @@ export const ar: Dictionary = {
     advanceText: (amount: string, rest: string) =>
       `أرسل ${amount} إلى أحد الحسابات أدناه (تحويل بنكي أو كاش بلوس أو بريد بنك)، ثم ارفع الوصل. الباقي (${rest}) يُدفع عند التسليم.`,
     holder: "صاحب الحساب",
-    accountNumber: "رقم الحساب",
     copy: "نسخ",
     copied: "تم النسخ",
     whyAdvance: "لماذا هذا العربون؟",

@@ -595,7 +595,6 @@ export const fr = {
     advanceText: (amount: string, rest: string) =>
       `Envoyez ${amount} sur l'un des comptes ci-dessous (virement, CashPlus ou Al Barid Bank), puis déposez le reçu. Le reste (${rest}) est payable à la livraison.`,
     holder: "Titulaire",
-    accountNumber: "N° de compte",
     copy: "Copier",
     copied: "Copié",
     whyAdvance: "Pourquoi cette avance ?",

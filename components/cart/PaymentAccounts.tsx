@@ -57,7 +57,7 @@ export function PaymentAccounts() {
                 <div key={id} className="flex items-center justify-between gap-2 rounded-md bg-paper px-2.5 py-1.5">
                   <div className="min-w-0">
                     <dt className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-                      {d.label === "account" ? c.accountNumber : d.label}
+                      {d.label}
                     </dt>
                     <dd dir="ltr" className="readout select-all break-all text-[13px] font-semibold text-ink">
                       {d.value}
@@ -66,7 +66,7 @@ export function PaymentAccounts() {
                   <button
                     type="button"
                     onClick={() => copy(id, d.value)}
-                    aria-label={`${c.copy} ${d.label === "account" ? c.accountNumber : d.label} ${account.name}`}
+                    aria-label={`${c.copy} ${d.label} ${account.name}`}
                     className={`flex min-h-10 flex-none items-center gap-1.5 rounded-full px-3 text-xs font-semibold transition-colors ${
                       done ? "bg-signal text-white" : "bg-white text-ink ring-1 ring-ink/10 hover:ring-ink/30"
                     }`}

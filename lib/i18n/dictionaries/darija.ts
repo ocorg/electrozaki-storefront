@@ -599,7 +599,6 @@ export const darija: Dictionary = {
     advanceText: (amount: string, rest: string) =>
       `Sift ${amount} l chi wa7ed men had les comptes (virement, CashPlus wla Al Barid Bank), w 7ett l reçu. L ba9i (${rest}) kat khellsou f livraison.`,
     holder: "Mol l compte",
-    accountNumber: "Ra9m l compte",
     copy: "Copier",
     copied: "Tcopia",
     whyAdvance: "3lach had l3arboun?",

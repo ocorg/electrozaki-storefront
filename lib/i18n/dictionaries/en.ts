@@ -614,7 +614,6 @@ export const en: Dictionary = {
     advanceText: (amount: string, rest: string) =>
       `Send ${amount} to one of the accounts below (bank transfer, CashPlus or Al Barid Bank), then upload the receipt. The rest (${rest}) is paid on delivery.`,
     holder: "Account holder",
-    accountNumber: "Account no.",
     copy: "Copy",
     copied: "Copied",
     whyAdvance: "Why a deposit?",
