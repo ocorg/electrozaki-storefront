@@ -139,7 +139,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
   useEffect(() => {
     if (viewed.current || !unit) return;
     viewed.current = true;
-    metaTrack("ViewContent", { value: unit.price, content_ids: [unit.productId], content_type: "product", content_name: "iPhone 13 128GB" });
+    metaTrack("ViewContent", { value: unit.price, content_ids: [unit.id], content_type: "product", content_name: "iPhone 13 128GB" });
   }, [unit]);
   const fee = findCity(city)?.fee ?? 0;
   const addonsTotal = addons.filter((a) => picked.has(a.key)).reduce((s, a) => s + a.price, 0);
@@ -189,7 +189,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
         // Counted in the ERP's sales funnel like an add to cart (this page has no cart).
         if (unit) {
           track({ t: "add_to_cart", pid: unit.productId, v: total });
-          metaTrack("Purchase", { value: total, content_ids: [unit.productId], content_type: "product", num_items: 1 + picked.size }, r.reference);
+          metaTrack("Purchase", { value: total, content_ids: [unit.id], content_type: "product", num_items: 1 + picked.size }, r.reference);
         }
         setDone({ reference: r.reference, whatsappUrl: r.whatsappUrl, phone });
         formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -433,7 +433,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                   value={city}
                   onChangeAction={(c) => {
                     // Choosing a town = starting to order (once per visit).
-                    if (c && !city && unit) metaTrack("InitiateCheckout", { value: unit.price, content_ids: [unit.productId], content_type: "product" });
+                    if (c && !city && unit) metaTrack("InitiateCheckout", { value: unit.price, content_ids: [unit.id], content_type: "product" });
                     setCity(c);
                   }}
                 />

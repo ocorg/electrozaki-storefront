@@ -10,7 +10,9 @@ type Params = {
   value?: number;
   currency?: "MAD";
   content_ids?: string[];
-  content_type?: "product";
+  // "product" = an item's own id in the catalogue feed; "product_group" = a
+  // used phone's listing, whose units are separate items (lib/catalog-feed.ts).
+  content_type?: "product" | "product_group";
   content_name?: string;
   num_items?: number;
 };
@@ -28,6 +30,14 @@ declare global {
  * de-duplicate it if the same event is later also sent from the server.
  * Never throws: statistics must not break the page.
  */
+/**
+ * The catalogue id of a cart line, as lib/catalog-feed.ts writes it: a used
+ * phone's unit has its own row; everything else is the product.
+ */
+export function catalogId(item: { productId: string; variantId?: string; isPhone?: boolean }): string {
+  return item.isPhone && item.variantId ? item.variantId : item.productId;
+}
+
 export function metaTrack(event: MetaEvent, params?: Params, eventId?: string): void {
   try {
     if (!META_PIXEL_ID || typeof window === "undefined") return;

@@ -65,10 +65,12 @@ function pick<T>(variantValue: T | null | undefined, productValue: T): T {
 
 export function ProductVariantExperience({ product, variants, images, categorySlug, children }: Props) {
   const t = useT();
-  // Product page seen: Meta's "ViewContent".
+  // Product page seen: Meta's "ViewContent". A used phone's units are separate
+  // catalogue items, so the listing is reported as their group.
+  const catalogGroup = product.isPhone && variants.length > 0;
   useEffect(() => {
-    metaTrack("ViewContent", { value: Number(product.recommendedSalePrice), content_ids: [product.id], content_type: "product", content_name: product.name });
-  }, [product.id, product.name, product.recommendedSalePrice]);
+    metaTrack("ViewContent", { value: Number(product.recommendedSalePrice), content_ids: [product.id], content_type: catalogGroup ? "product_group" : "product", content_name: product.name });
+  }, [product.id, product.name, product.recommendedSalePrice, catalogGroup]);
   const p = t.pdp;
   const [imageIndex, setImageIndex] = useState(0);
   const coverImage = images[imageIndex] ?? images[0] ?? null;

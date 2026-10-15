@@ -14,7 +14,7 @@ import { AnchorButton, Button, LinkButton } from "@/components/ui/Button";
 import { DeliveryPicker } from "@/components/cart/DeliveryPicker";
 import { dayParts, estimateDelivery, findCity } from "@/lib/delivery";
 import { MOROCCAN_PHONE_RE } from "@/lib/validation";
-import { metaTrack } from "@/components/analytics/meta";
+import { catalogId, metaTrack } from "@/components/analytics/meta";
 import { useT } from "@/components/i18n/I18nProvider";
 import { translateError } from "@/lib/i18n/labels";
 
@@ -160,7 +160,7 @@ export default function CartPage() {
     // An order placed (paid on delivery): Meta's "Purchase", for ad optimisation.
     metaTrack(
       "Purchase",
-      { value: discountedTotal, content_ids: items.map((i) => i.productId), content_type: "product", num_items: items.reduce((n, i) => n + i.quantity, 0) },
+      { value: discountedTotal, content_ids: items.map(catalogId), content_type: "product", num_items: items.reduce((n, i) => n + i.quantity, 0) },
       result.orderRequestId
     );
     setConfirmation(result);
