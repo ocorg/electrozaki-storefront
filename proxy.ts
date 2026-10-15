@@ -11,6 +11,19 @@ import { DEFAULT_LOCALE, isLocale, LOCALE_COOKIE, type Locale } from "@/lib/i18n
 export function proxy(request: NextRequest, event: NextFetchEvent) {
   const { pathname } = request.nextUrl;
 
+  // One address for the shop: the old Vercel address and www. go to the
+  // official one (NEXT_PUBLIC_SITE_URL), path and query kept. Only once
+  // that address is set to another host, so nothing moves before its DNS
+  // works; preview deployments keep their own addresses.
+  const host = request.headers.get("host")?.toLowerCase();
+  if (host && host !== CANONICAL_HOST && ALIAS_HOSTS.has(host)) {
+    const url = request.nextUrl.clone();
+    url.protocol = "https:";
+    url.host = CANONICAL_HOST!;
+    url.port = "";
+    return NextResponse.redirect(url, 308);
+  }
+
   if (isProbe(pathname)) {
     event.waitUntil(import("@/lib/bot-hits").then((m) => m.recordBot("probe", probeName(pathname))));
     return new NextResponse(null, { status: 404 });
@@ -32,6 +45,23 @@ export function proxy(request: NextRequest, event: NextFetchEvent) {
   res.headers.set("Vary", "Accept-Language, Cookie");
   return res;
 }
+
+// The official host, and the production hosts that should send visitors to it.
+const CANONICAL_HOST = (() => {
+  try {
+    return new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "").host.toLowerCase() || null;
+  } catch {
+    return null;
+  }
+})();
+// The Vercel address the shop used before electrozaki.ma (deployment-specific
+// addresses, e.g. previews, are left alone).
+const OLD_HOST = "electrozaki-storefront.vercel.app";
+const ALIAS_HOSTS = new Set(
+  CANONICAL_HOST && !CANONICAL_HOST.endsWith(".vercel.app") && process.env.VERCEL_ENV === "production"
+    ? [`www.${CANONICAL_HOST}`, OLD_HOST]
+    : []
+);
 
 // Pages only: not the API, not files (sitemap.xml, robots.txt, images…),
 // and not an address that already starts with a language.

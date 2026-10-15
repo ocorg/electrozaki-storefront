@@ -15,7 +15,7 @@ import fs from "node:fs";
 const CSV = "data/ameex-tarifs-meknes.csv";
 const CACHE = "data/geocode-cache.json";
 const OUT = "lib/delivery/cities.generated.ts";
-const UA = "ElectroZakiStorefront/1.0 (+https://electrozaki-storefront.vercel.app)";
+const UA = "ElectroZakiStorefront/1.0 (+https://electrozaki.ma)";
 const DAYS = ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"];
 
 const cache = fs.existsSync(CACHE) ? JSON.parse(fs.readFileSync(CACHE, "utf8")) : {};
