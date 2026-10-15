@@ -628,6 +628,17 @@ export const darija: Dictionary = {
     footer: "Ga3 les prix",
   },
 
+  comingSoon: {
+    eyebrow: "9rib f site",
+    title: (name: string) => `${name}: 9rib`,
+    text: "Les accessoires dyalna ghadi ykounou f site 9rib. Rahom deja f l boutique f Mknas: kteb lina f WhatsApp 3la taman w wach kayn, kanjawbo b zerba.",
+    ask: "Sowel f WhatsApp",
+    waMessage: (name: string) => `Salam, kanqelleb 3la: ${name}. Wach kayn?`,
+    phones: "Chouf tilifounat",
+    repair: "Tasli7",
+    tile: "9rib · sowel f WhatsApp",
+  },
+
   cartPage: {
     sentTitle: "Demande tsiftat",
     reference: (ref: string) => `Référence: ${ref}`,

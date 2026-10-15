@@ -1,3 +1,4 @@
+import { ACCESSORIES_OPEN } from "@/lib/site";
 import Link from "@/components/i18n/Link";
 import { LinkButton } from "@/components/ui/Button";
 import { getT } from "@/lib/i18n/server";
@@ -22,9 +23,15 @@ export default async function NotFound() {
         <LinkButton href="/collections/telephones" variant="accent">
           {n.seePhones}
         </LinkButton>
-        <LinkButton href="/collections/accessoires" variant="outline">
+        {ACCESSORIES_OPEN ? (
+            <LinkButton href="/collections/accessoires" variant="outline">
           {t.common.accessories}
         </LinkButton>
+          ) : (
+            <LinkButton href="/reparation" variant="outline">
+              {t.common.repair}
+            </LinkButton>
+          )}
       </div>
       <Link href="/" className="mt-6 text-sm font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">
         {n.backHome}

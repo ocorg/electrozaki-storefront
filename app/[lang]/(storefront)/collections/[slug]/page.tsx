@@ -17,7 +17,8 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { AnchorButton } from "@/components/ui/Button";
 import { artFor } from "@/lib/category-art";
 import { formatMAD } from "@/lib/format";
-import { whatsappLink } from "@/lib/site";
+import { aisleOpen, whatsappLink } from "@/lib/site";
+import { ComingSoon } from "@/components/storefront/ComingSoon";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { categoryName, facetOptionName, facetQuestion } from "@/lib/i18n/labels";
 import { BUDGET_BANDS, MODEL_GROUP, budgetOf, hasOption, matchesSelection, optionsIn, readBudget, readSelection } from "@/lib/facets";
@@ -44,6 +45,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const [category, t, locale] = await Promise.all([getCategoryBySlug(slug), getT(), getLocale()]);
   if (!category) return {};
   const name = categoryName(t, slug, category.name);
+  if (!aisleOpen(slug, category.parent?.slug)) return { title: t.comingSoon.title(name), robots: { index: false } };
   const blurb = t.aisleBlurb[slug] ?? null;
   const isPhones = slug === "telephones";
   const title = isPhones ? t.collection.metaPhonesTitle : t.collection.metaAisleTitle(name);
@@ -63,6 +65,10 @@ export default async function CollectionPage({ params, searchParams }: Props) {
 
   const category = await getCategoryBySlug(slug);
   if (!category) notFound();
+  if (!aisleOpen(slug, category.parent?.slug)) {
+    const t = await getT();
+    return <ComingSoon name={categoryName(t, slug, category.name)} art={artFor(slug, category.name)} />;
+  }
 
   const [options, aisles, t, groups] = await Promise.all([
     getCategoryFilterOptions(slug),

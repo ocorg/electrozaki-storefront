@@ -7,6 +7,7 @@ import { useT } from "@/components/i18n/I18nProvider";
 import { useCart } from "@/components/cart/CartContext";
 import { splitLocale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
+import { ACCESSORIES_OPEN } from "@/lib/site";
 
 // Phones only: an app-style tab bar within thumb reach, so the four things
 // people come for are one tap away from anywhere on the site.
@@ -18,12 +19,16 @@ const TABS: { href: string; label: (t: Dictionary) => string; icon: LucideIcon; 
     icon: Smartphone,
     match: (p) => p.startsWith("/collections/telephones"),
   },
-  {
-    href: "/collections/accessoires",
-    label: (t) => t.common.accessories,
-    icon: Headphones,
-    match: (p) => p.startsWith("/collections/") && !p.startsWith("/collections/telephones"),
-  },
+  ...(ACCESSORIES_OPEN
+    ? [
+        {
+          href: "/collections/accessoires",
+          label: (t: Dictionary) => t.common.accessories,
+          icon: Headphones,
+          match: (p: string) => p.startsWith("/collections/") && !p.startsWith("/collections/telephones"),
+        },
+      ]
+    : []),
   { href: "/reparation", label: (t) => t.common.repair, icon: Wrench, match: (p) => p.startsWith("/reparation") },
   { href: "/cart", label: (t) => t.common.cart, icon: ShoppingBag, match: (p) => p.startsWith("/cart") },
 ];
@@ -38,7 +43,7 @@ export function MobileTabBar() {
       aria-label={t.common.shortcuts}
       className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-paper/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
     >
-      <ul className="mx-auto grid max-w-md grid-cols-5">
+      <ul className={`mx-auto grid max-w-md ${TABS.length === 5 ? "grid-cols-5" : "grid-cols-4"}`}>
         {TABS.map((tab) => {
           const active = tab.match(path);
           return (

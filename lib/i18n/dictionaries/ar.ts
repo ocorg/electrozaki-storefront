@@ -646,6 +646,17 @@ export const ar: Dictionary = {
     footer: "كل أسعارنا",
   },
 
+  comingSoon: {
+    eyebrow: "قريباً على الموقع",
+    title: (name: string) => `${name}: قريباً`,
+    text: "إكسسواراتنا ستصل إلى الموقع قريباً جداً. وهي متوفرة الآن في المتجر بمكناس: راسلنا على واتساب لمعرفة السعر والتوفر، نرد بسرعة.",
+    ask: "اسأل على واتساب",
+    waMessage: (name: string) => `السلام، أبحث عن: ${name}. هل هو متوفر؟`,
+    phones: "عرض الهواتف",
+    repair: "الإصلاح",
+    tile: "قريباً · اسأل على واتساب",
+  },
+
   cartPage: {
     sentTitle: "تم إرسال الطلب",
     reference: (ref: string) => `المرجع: ${ref}`,

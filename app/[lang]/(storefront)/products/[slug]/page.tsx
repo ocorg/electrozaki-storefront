@@ -28,6 +28,9 @@ import { getLocale, getT } from "@/lib/i18n/server";
 import { categoryName, facetOptionName, specRow } from "@/lib/i18n/labels";
 import { alternates } from "@/lib/i18n/seo";
 import { Tag } from "lucide-react";
+import { ACCESSORIES_OPEN } from "@/lib/site";
+import { ComingSoon } from "@/components/storefront/ComingSoon";
+import { artFor } from "@/lib/category-art";
 import { PHONE_SLUGS, getIphone13Offer } from "@/lib/offers/iphone13";
 import { OFFER_COPY, giftList } from "@/lib/offers/iphone13-copy";
 
@@ -48,6 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const [product, t, locale] = await Promise.all([getProductBySlug(slug), getT(), getLocale()]);
   if (!product) return {};
+  if (!product.isPhone && !ACCESSORIES_OPEN) return { title: t.comingSoon.title(product.name), robots: { index: false } };
   const condition = product.isPhone ? (t.grades.label[product.condition] ?? product.condition) : null;
   // The ERP's SEO fields and description are written in French: they're used
   // as-is on the French site only, the other languages get a generated line.
@@ -82,6 +86,9 @@ export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
   const [product, t, locale] = await Promise.all([getProductBySlug(slug), getT(), getLocale()]);
   if (!product) notFound();
+  if (!product.isPhone && !ACCESSORIES_OPEN) {
+    return <ComingSoon name={product.name} art={artFor(product.category.slug, product.category.name)} />;
+  }
   const aisleName = categoryName(t, product.category.slug, product.category.name);
 
   // The same phones sold through the iPhone 13 offer: say so here, so a

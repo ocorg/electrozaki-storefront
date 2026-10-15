@@ -5,7 +5,7 @@ import { getAisles } from "@/lib/db/storefront";
 import { REPAIR_SLUGS } from "@/lib/repair-faq";
 import { LOCALES } from "@/lib/i18n/config";
 import { alternates } from "@/lib/i18n/seo";
-import { absoluteUrl } from "@/lib/site";
+import { OPEN_PRODUCTS, absoluteUrl } from "@/lib/site";
 import { getLiveOffers } from "@/lib/offers/live";
 
 // Rebuilt at most once an hour: products come and go with the ERP sync.
@@ -31,7 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [aisles, products, offers] = await Promise.all([
     getAisles(),
     prisma.product.findMany({
-      where: { published: true, availability: { not: AvailabilityStatus.DISCONTINUED } },
+      where: { published: true, ...OPEN_PRODUCTS, availability: { not: AvailabilityStatus.DISCONTINUED } },
       select: { slug: true, updatedAt: true, images: { select: { url: true }, orderBy: { sortOrder: "asc" }, take: 1 } },
     }),
     getLiveOffers("fr"),

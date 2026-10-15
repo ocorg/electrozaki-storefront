@@ -1,5 +1,6 @@
 import { AvailabilityStatus } from "@/generated/prisma/enums";
 import { prisma } from "./client";
+import { OPEN_PRODUCTS, aisleOpen } from "@/lib/site";
 import { getFeaturedProducts, type PublicProduct } from "./public-products";
 
 // The home page's shop front: which aisles have something on sale, and from
@@ -48,7 +49,7 @@ export async function getAisles(): Promise<AisleStat[]> {
   const byId = new Map(groups.map((g) => [g.categoryId, g]));
 
   return categories
-    .filter((c) => (byId.get(c.id)?._count._all ?? 0) > 0)
+    .filter((c) => (byId.get(c.id)?._count._all ?? 0) > 0 && aisleOpen(c.slug, c.parent?.slug))
     .sort((a, b) => {
       const ga = a.parent?.sortOrder ?? a.sortOrder;
       const gb = b.parent?.sortOrder ?? b.sortOrder;
@@ -73,7 +74,7 @@ export async function getAisles(): Promise<AisleStat[]> {
 export async function getBrands(limit = 14): Promise<string[]> {
   const rows = await prisma.product.groupBy({
     by: ["brand"],
-    where: { ...ON_SALE, brand: { not: null } },
+    where: { ...ON_SALE, ...OPEN_PRODUCTS, brand: { not: null } },
     _count: { _all: true },
   });
   // Brands are typed by hand in the ERP ("APPLE", "Apple", "Hibro", "HIBRO"):
@@ -153,7 +154,7 @@ export async function getShowcasePhones(limit = 6): Promise<ShowcasePhone[]> {
 export async function getHomeShelves(): Promise<{ phones: PublicProduct[]; accessories: PublicProduct[] }> {
   const [phones, accessories] = await Promise.all([
     getFeaturedProducts(8, { isPhone: true }),
-    getFeaturedProducts(12, { isPhone: false }),
+    OPEN_PRODUCTS.isPhone ? Promise.resolve([]) : getFeaturedProducts(12, { isPhone: false }),
   ]);
   return { phones, accessories };
 }

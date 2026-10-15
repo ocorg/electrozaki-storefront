@@ -1,5 +1,6 @@
 import { AvailabilityStatus } from "@/generated/prisma/enums";
 import { prisma } from "./client";
+import { OPEN_PRODUCTS } from "@/lib/site";
 
 // ─────────────────────────────────────────────────────────────────────────
 // THIS IS THE FILE deliverable 1's schema comment pointed to.
@@ -315,7 +316,7 @@ export async function searchProducts(
   return prisma.product.findMany({
     where: {
       AND: [
-        { published: true },
+        { published: true, ...OPEN_PRODUCTS },
         { availability: { not: AvailabilityStatus.DISCONTINUED } },
         ...filterConditions,
       ],
@@ -344,7 +345,7 @@ export async function suggestProducts(query: string, take = 6): Promise<{ items:
   const words = wordConditions(query);
   if (!words.length) return { items: [], total: 0 };
   const where = {
-    AND: [{ published: true }, { availability: { not: AvailabilityStatus.DISCONTINUED } }, ...words],
+    AND: [{ published: true, ...OPEN_PRODUCTS }, { availability: { not: AvailabilityStatus.DISCONTINUED } }, ...words],
   };
   const [rows, total] = await Promise.all([
     prisma.product.findMany({
@@ -396,7 +397,7 @@ export async function getFeaturedProducts(
  */
 export async function getAllPublicProducts(): Promise<PublicProduct[]> {
   return prisma.product.findMany({
-    where: { published: true, availability: { not: AvailabilityStatus.DISCONTINUED } },
+    where: { published: true, ...OPEN_PRODUCTS, availability: { not: AvailabilityStatus.DISCONTINUED } },
     select: PUBLIC_PRODUCT_SELECT,
     orderBy: [{ isPhone: "desc" }, { category: { sortOrder: "asc" } }, { recommendedSalePrice: "asc" }],
   });
@@ -410,6 +411,7 @@ export async function getRelatedProducts(
   return prisma.product.findMany({
     where: {
       published: true,
+      ...OPEN_PRODUCTS,
       availability: AvailabilityStatus.IN_STOCK,
       categoryId: product.category.id,
       id: { not: product.id },

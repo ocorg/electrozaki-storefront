@@ -644,6 +644,17 @@ export const en: Dictionary = {
     footer: "All our prices",
   },
 
+  comingSoon: {
+    eyebrow: "Coming soon",
+    title: (name: string) => `${name}: coming soon`,
+    text: "Our accessories are coming to the website very soon. They're already in the shop in Meknès: message us on WhatsApp for price and availability, we answer quickly.",
+    ask: "Ask on WhatsApp",
+    waMessage: (name: string) => `Hello, I'm looking for: ${name}. Is it available?`,
+    phones: "See phones",
+    repair: "Repair",
+    tile: "Coming soon · ask on WhatsApp",
+  },
+
   cartPage: {
     sentTitle: "Request sent",
     reference: (ref: string) => `Reference: ${ref}`,

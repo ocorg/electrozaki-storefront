@@ -19,7 +19,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { artFor } from "@/lib/category-art";
 import { formatMAD } from "@/lib/format";
 import { REPAIR_TOPIC_ORDER } from "@/lib/repair-faq";
-import { WHATSAPP_URL } from "@/lib/site";
+import { WHATSAPP_URL, ACCESSORIES_OPEN, whatsappLink } from "@/lib/site";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { getRepairTopics } from "@/lib/i18n/repair";
 import { categoryName } from "@/lib/i18n/labels";
@@ -87,9 +87,15 @@ export default async function HomePage() {
               <LinkButton href="/collections/telephones" variant="accent" size="lg" className="px-6 sm:px-8">
                 {t.hero.seePhones} <ArrowRight size={18} aria-hidden className="rtl:rotate-180" />
               </LinkButton>
-              <LinkButton href="/collections/accessoires" variant="outline-dark" size="lg" className="px-6 sm:px-8">
-                {t.common.accessories}
-              </LinkButton>
+              {ACCESSORIES_OPEN ? (
+                <LinkButton href="/collections/accessoires" variant="outline-dark" size="lg" className="px-6 sm:px-8">
+                  {t.common.accessories}
+                </LinkButton>
+              ) : (
+                <LinkButton href="/reparation" variant="outline-dark" size="lg" className="px-6 sm:px-8">
+                  {t.common.repair}
+                </LinkButton>
+              )}
             </div>
 
             <ControlCenter />
@@ -218,6 +224,22 @@ export default async function HomePage() {
               </Link>
             </Reveal>
           ))}
+          {!ACCESSORIES_OPEN && (
+            <Reveal>
+              <a
+                href={whatsappLink(t.comingSoon.waMessage(t.common.accessories))}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-full min-h-[164px] flex-col rounded-[1.5rem] border border-dashed border-ink/20 bg-white p-4 transition-[transform,border-color] duration-500 ease-out-quint hover:-translate-y-1 hover:border-gold/60 sm:p-5"
+              >
+                <span className="flex h-16 w-16 items-center justify-center rounded-[30%] bg-paper">
+                  <DeviceArt kind="case" className="h-12 w-12 text-ink" />
+                </span>
+                <p className="mt-auto pt-4 text-base font-bold leading-tight text-ink">{t.common.accessories}</p>
+                <p className="mt-1 text-xs text-neutral-500">{t.comingSoon.tile}</p>
+              </a>
+            </Reveal>
+          )}
           <Reveal>
             <Link
               href="/reparation"

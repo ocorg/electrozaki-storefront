@@ -627,6 +627,17 @@ export const fr = {
     footer: "Tous nos prix",
   },
 
+  comingSoon: {
+    eyebrow: "Bientôt en ligne",
+    title: (name: string) => `${name} : bientôt disponible`,
+    text: "Nos accessoires arrivent très bientôt sur le site. Ils sont déjà en boutique à Meknès : écrivez-nous sur WhatsApp pour le prix et la disponibilité, on vous répond vite.",
+    ask: "Demander sur WhatsApp",
+    waMessage: (name: string) => `Bonjour, je cherche : ${name}. Est-ce disponible ?`,
+    phones: "Voir les téléphones",
+    repair: "Réparation",
+    tile: "Bientôt en ligne · demandez sur WhatsApp",
+  },
+
   cartPage: {
     sentTitle: "Demande envoyée",
     reference: (ref: string) => `Référence : ${ref}`,

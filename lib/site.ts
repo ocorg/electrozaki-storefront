@@ -10,6 +10,23 @@ export const SHOP = {
   whatsappDisplay: "+212 6 67 65 44 30",
 } as const;
 
+// Accessories aren't sold online yet (photos and texts are being prepared):
+// while false, only phones and repair show on the site, and every accessory
+// aisle or product page says "bientôt disponible" with a WhatsApp button.
+// Set to true to open them everywhere at once.
+export const ACCESSORIES_OPEN = false;
+
+/** The phones aisle; while accessories are closed, the only aisle shown. */
+export const PHONES_AISLE = "telephones";
+
+/** Is this aisle open online? (`parentSlug` for a sub-aisle.) */
+export function aisleOpen(slug: string, parentSlug?: string | null): boolean {
+  return ACCESSORIES_OPEN || slug === PHONES_AISLE || parentSlug === PHONES_AISLE;
+}
+
+/** Product filter for public lists: phones only while accessories are closed. */
+export const OPEN_PRODUCTS: { isPhone?: true } = ACCESSORIES_OPEN ? {} : { isPhone: true };
+
 export const WHATSAPP_URL = `https://wa.me/${SHOP.whatsappNumber}`;
 
 /** WhatsApp link with a pre-written message (e.g. about one product). */

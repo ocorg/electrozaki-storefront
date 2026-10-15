@@ -1,4 +1,5 @@
 "use client";
+import { ACCESSORIES_OPEN } from "@/lib/site";
 
 import { useState, useMemo, useRef, type ReactNode } from "react";
 import Link from "@/components/i18n/Link";
@@ -224,9 +225,15 @@ export default function CartPage() {
           <LinkButton href="/collections/telephones" variant="accent">
             {c.seePhones}
           </LinkButton>
-          <LinkButton href="/collections/accessoires" variant="outline">
+          {ACCESSORIES_OPEN ? (
+            <LinkButton href="/collections/accessoires" variant="outline">
             {t.common.accessories}
           </LinkButton>
+          ) : (
+            <LinkButton href="/reparation" variant="outline">
+              {t.common.repair}
+            </LinkButton>
+          )}
         </div>
         <Link href="/" className="mt-5 text-sm font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">
           {c.backHome}
