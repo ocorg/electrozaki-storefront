@@ -1,8 +1,16 @@
 // Meta (Facebook/Instagram) Pixel: tells Meta Ads what visitors from an ad
 // do on the site, so campaigns can optimise for people who order. Pixel IDs
-// are public (they sit in every page's HTML): Electro Zaki's is set here,
-// NEXT_PUBLIC_META_PIXEL_ID can override it.
-export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() || "1113388254762708";
+// are public (they sit in every page's HTML). Every event goes to each pixel:
+// - 1113388254762708 "Electro Zaki site" (portfolio "Electro Zaki Ancien"),
+//   the one the ad account and its catalogue use;
+// - 2132858377359488 (portfolio "Electro Zaki"), the pixel of the catalogue
+//   "Electro Zaki - electrozaki.ma" there (Meta won't share pixels between
+//   the two portfolios yet).
+// NEXT_PUBLIC_META_PIXEL_ID (comma-separated) can override them.
+export const META_PIXEL_IDS: string[] = (process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() || "1113388254762708,2132858377359488")
+  .split(",")
+  .map((id) => id.trim())
+  .filter(Boolean);
 
 type MetaEvent = "PageView" | "ViewContent" | "AddToCart" | "InitiateCheckout" | "Purchase";
 
@@ -40,7 +48,7 @@ export function catalogId(item: { productId: string; variantId?: string; isPhone
 
 export function metaTrack(event: MetaEvent, params?: Params, eventId?: string): void {
   try {
-    if (!META_PIXEL_ID || typeof window === "undefined") return;
+    if (!META_PIXEL_IDS.length || typeof window === "undefined") return;
     const data = params ? { currency: "MAD", ...params } : undefined;
     const args: unknown[] = eventId ? ["track", event, data ?? {}, { eventID: eventId }] : data ? ["track", event, data] : ["track", event];
     // Not loaded yet (it loads after the page): keep it for MetaPixel to send.
