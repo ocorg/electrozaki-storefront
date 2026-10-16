@@ -31,8 +31,8 @@ import { Tag } from "lucide-react";
 import { ACCESSORIES_OPEN } from "@/lib/site";
 import { ComingSoon } from "@/components/storefront/ComingSoon";
 import { artFor } from "@/lib/category-art";
-import { PHONE_SLUGS, getIphone13Offer } from "@/lib/offers/iphone13";
-import { OFFER_COPY, giftList } from "@/lib/offers/iphone13-copy";
+import { offerForListing } from "@/lib/offers/phone-offers";
+import { OFFER_COPY } from "@/lib/offers/copy";
 
 export const revalidate = 60;
 
@@ -91,14 +91,14 @@ export default async function ProductPage({ params }: Props) {
   }
   const aisleName = categoryName(t, product.category.slug, product.category.name);
 
-  // The same phones sold through the iPhone 13 offer: say so here, so a
-  // visitor who arrives from the catalogue doesn't pay more than the offer.
-  let offerBanner: { text: string; cta: string } | null = null;
-  if (PHONE_SLUGS.includes(product.slug)) {
-    const offer = await getIphone13Offer();
-    if (offer.status === "live" && offer.units.length && offer.fromPrice !== null) {
+  // A phone whose model is on promo: point to the model's promo page, which
+  // has every promo unit of it (all grades and storages) on one page.
+  let offerBanner: { text: string; cta: string; href: string } | null = null;
+  if (product.isPhone) {
+    const offer = await offerForListing(product.slug);
+    if (offer) {
       const c = OFFER_COPY[locale];
-      offerBanner = { text: c.card.banner(formatMAD(offer.fromPrice), giftList(c, offer.included, locale)), cta: c.card.cta };
+      offerBanner = { text: c.card.banner(offer.name, formatMAD(offer.fromPrice)), cta: c.card.cta, href: `/offres/${offer.slug}` };
     }
   }
 
@@ -230,7 +230,7 @@ export default async function ProductPage({ params }: Props) {
       <Breadcrumbs items={crumbs} className="mb-6" />
       {offerBanner && (
         <Link
-          href="/offres/iphone-13"
+          href={offerBanner.href}
           className="group mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-3xl bg-ink px-5 py-4 text-white shadow-[0_20px_40px_-30px_rgb(17_16_19/0.8)]"
         >
           <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[30%] bg-gold text-ink">

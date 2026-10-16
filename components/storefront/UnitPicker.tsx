@@ -168,12 +168,13 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                     <span className="h-3.5 w-3.5 rounded-full border border-black/15" style={{ background: swatch(u.color) }} aria-hidden />
                     {u.color ? colorName(t, u.color) : "-"}
                   </span>
+                  {u.badge && <span className="mt-1 block text-xs font-semibold text-neutral-700">{u.badge}</span>}
                   {b !== null && (
                     <span className="mt-2 flex items-center gap-2 text-sm">
                       <BatteryFull size={16} className={batteryGood(b) ? "text-green-600" : "text-amber-600"} />
                       <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-100">
                         <span
-                          className={`block h-full rounded-full ${b >= 85 ? "bg-green-500" : b >= 80 ? "bg-amber-500" : "bg-red-500"}`}
+                          className={`block h-full rounded-full ${batteryGood(b) ? "bg-green-500" : "bg-amber-500"}`}
                           style={{ width: `${b}%` }}
                         />
                       </span>

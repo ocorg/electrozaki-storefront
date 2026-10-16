@@ -9,9 +9,13 @@ import { ViewBeacon, Countdown, CopyCode, OfferProductCard } from "./OfferParts"
 import { LOCALE_META } from "@/lib/i18n/config";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { alternates } from "@/lib/i18n/seo";
+import { getPhoneOffer } from "@/lib/offers/phone-offers";
+import { PhoneOfferPage, phoneOfferMetadata } from "./PhoneOfferPage";
 
-// Refreshed at once by the ERP on every change (/api/revalidate), and at
-// least every minute so a page opens / closes on time.
+// Two kinds of page share this address: a phone model on promo in the ERP
+// (/offres/iphone-14, lib/offers/phone-offers.ts) and an ERP promo page
+// ("Site web → Pages promo"). Refreshed at once by the ERP on every change
+// (/api/revalidate), and at least every minute so a page opens / closes on time.
 export const revalidate = 60;
 
 type Props = { params: Promise<{ slug: string }> };
@@ -26,7 +30,8 @@ const THEMES = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const [data, locale] = await Promise.all([getLandingPage(slug), getLocale()]);
+  const [offer, data, locale] = await Promise.all([getPhoneOffer(slug), getLandingPage(slug), getLocale()]);
+  if (offer) return phoneOfferMetadata(offer, locale);
   if (!data) return {};
   return {
     title: data.page.title,
@@ -38,7 +43,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function OfferPage({ params }: Props) {
   const { slug } = await params;
-  const [data, t, locale] = await Promise.all([getLandingPage(slug), getT(), getLocale()]);
+  const [offer, t, locale] = await Promise.all([getPhoneOffer(slug), getT(), getLocale()]);
+  if (offer) return <PhoneOfferPage offer={offer} locale={locale} t={t} />;
+  const data = await getLandingPage(slug);
   if (!data) notFound();
   const o = t.offer;
   const { page, status, products } = data;

@@ -8,7 +8,6 @@ import {
   Cable,
   Check,
   CheckCircle2,
-  Gift,
   Headphones,
   Loader2,
   Magnet,
@@ -20,12 +19,10 @@ import {
   Smartphone,
   Sticker,
   Truck,
-  Wrench,
   Zap,
   type LucideIcon,
 } from "lucide-react";
 import { useT } from "@/components/i18n/I18nProvider";
-import { categoryName } from "@/lib/i18n/labels";
 import { ProductVisual } from "@/components/storefront/ProductVisual";
 import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
 import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
@@ -36,15 +33,15 @@ import { findCity } from "@/lib/delivery";
 import { formatMAD } from "@/lib/format";
 import { translateError } from "@/lib/i18n/labels";
 import { whatsappLink } from "@/lib/site";
-import type { OfferAccessory, OfferUnit } from "@/lib/offers/iphone13";
-import type { OfferCopy } from "@/lib/offers/iphone13-copy";
+import type { OfferAddon, PhoneOfferUnit } from "@/lib/offers/phone-offers";
+import type { OfferFormCopy } from "@/lib/offers/copy";
 import { track } from "@/components/analytics/track";
 import { metaTrack } from "@/components/analytics/meta";
-import { submitIphone13Order } from "./actions";
+import { submitOfferOrder } from "./actions";
 
 const ADVANCE = 300;
 
-// Accessories come from the ERP: their icon follows their aisle.
+// Add-ons come from the ERP: their icon follows their aisle.
 const AISLE_ICONS: Record<string, LucideIcon> = {
   pochettes: Smartphone,
   incassables: ShieldCheck,
@@ -58,7 +55,8 @@ const AISLE_ICONS: Record<string, LucideIcon> = {
   casque: Headphones,
   powerbank: BatteryCharging,
 };
-const TRUST_ICONS: LucideIcon[] = [BatteryCharging, Wrench, ShieldCheck, Truck];
+const TRUST_ICONS: LucideIcon[] = [BatteryCharging, ShieldCheck, Check, Truck];
+const GRADE_ORDER = ["NEUF", "TRES_BON", "BON", "PIECES_REMPLACEES"];
 
 /** "{rest}" → value. */
 function fill(text: string, values: Record<string, string>): string {
@@ -68,44 +66,82 @@ function fill(text: string, values: Record<string, string>): string {
 const inputClass =
   "min-h-12 w-full rounded-2xl border border-ink/15 bg-white px-4 text-[15px] focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30";
 
-type Props = {
-  hero: OfferCopy["hero"];
-  copy: OfferCopy["form"];
-  units: OfferUnit[];
-  images: { url: string; altText: string | null }[];
-  included: OfferAccessory[];
-  addons: OfferAccessory[];
-  minBattery: number | null;
+export type OfferHero = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  lead: string;
+  priceLabel: string;
+  instead: string;
+  cta: string;
+  /** first item has a battery icon only when it is about the battery */
+  trust: string[];
+  batteryTrust: boolean;
 };
 
-export function OfferExperience({ hero, copy, units, images, included, addons, minBattery }: Props) {
+type Props = {
+  slug: string;
+  name: string;
+  brand: string;
+  hero: OfferHero;
+  copy: OfferFormCopy;
+  units: PhoneOfferUnit[];
+  images: { url: string; altText: string | null }[];
+  addons: OfferAddon[];
+};
+
+function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={on}
+      className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm transition-colors ${
+        on ? "border-gold-deep bg-gold/15 font-semibold text-ink" : "border-ink/15 bg-white text-neutral-800 hover:border-ink/40"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, images, addons }: Props) {
   const t = useT();
   const formRef = useRef<HTMLDivElement>(null);
 
-  // The unit picker speaks the product page's shape; prices are the offer's.
-  const variants: VariantData[] = useMemo(
-    () =>
-      units.map((u) => ({
-        id: u.id,
-        name: u.name,
-        priceOverride: String(u.price),
-        compareAtPrice: u.normalPrice > u.price ? String(u.normalPrice) : null,
-        color: u.color,
-        storageLabel: null,
-        imageUrl: u.imageUrl,
-        stockQuantity: u.stockQuantity,
-        batteryHealthPercent: u.batteryHealthPercent,
-        batteryGenuine: u.batteryGenuine,
-        screenGenuine: u.screenGenuine,
-        faceIdWorking: u.faceIdWorking,
-        cameraGenuine: u.cameraGenuine,
-        chargingPortGenuine: u.chargingPortGenuine,
-        speakerGenuine: u.speakerGenuine,
-        hasDefects: u.hasDefects,
-        transparencyNotes: null,
-      })),
-    [units]
-  );
+  const grades = useMemo(() => GRADE_ORDER.filter((g) => units.some((u) => u.grade === g)), [units]);
+  const storages = useMemo(() => [...new Set(units.map((u) => u.storage).filter((s): s is string => !!s))], [units]);
+  const [grade, setGrade] = useState("all");
+  const [storage, setStorage] = useState("all");
+
+  // The unit picker speaks the product page's shape. Grade and storage are
+  // chosen above it, and written on each card when the units mix them.
+  const toVariant = (u: PhoneOfferUnit): VariantData => ({
+    id: u.id,
+    name: u.name,
+    priceOverride: String(u.price),
+    compareAtPrice: u.normalPrice > u.price ? String(u.normalPrice) : null,
+    color: u.color,
+    storageLabel: u.storage,
+    imageUrl: u.imageUrl,
+    stockQuantity: u.stockQuantity,
+    batteryHealthPercent: u.batteryHealthPercent,
+    batteryGenuine: u.batteryGenuine,
+    screenGenuine: u.screenGenuine,
+    faceIdWorking: u.faceIdWorking,
+    cameraGenuine: u.cameraGenuine,
+    chargingPortGenuine: u.chargingPortGenuine,
+    speakerGenuine: u.speakerGenuine,
+    hasDefects: u.hasDefects,
+    transparencyNotes: null,
+    badge:
+      [grades.length > 1 ? (t.grades.label[u.grade] ?? u.grade) : null, storages.length > 1 ? u.storage : null]
+        .filter(Boolean)
+        .join(" · ") || undefined,
+  });
+  const inScope = (g: string, s: string) =>
+    units.filter((u) => (g === "all" || u.grade === g) && (s === "all" || u.storage === s)).map(toVariant);
+  const variants = inScope(grade, storage);
 
   // Opens on the best unit's colour: a few cards to choose from instead of
   // every unit in stock (the colour chips are one tap away).
@@ -115,31 +151,21 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
   const [unitId, setUnitId] = useState<string | undefined>(first?.id);
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const [city, setCity] = useState<string | null>(null);
-  const [name, setName] = useState("");
+  const [customer, setCustomer] = useState("");
   const [phone, setPhone] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<{ reference: string; whatsappUrl: string; phone: string } | null>(null);
   const [imageIndex, setImageIndex] = useState<number | null>(null);
 
-  // Labels: the product's catalogue name (as in the shop, the cart and the
-  // ERP order), with what it is underneath. Badges keep the plain words.
-  const label = (a: OfferAccessory) => a.name;
-  const plain = (a: OfferAccessory) => copy.items[a.key]?.title ?? a.name;
-  const hint = (a: OfferAccessory) => {
-    const known = copy.items[a.key];
-    const what = known ? [known.title, known.hint].filter(Boolean).join(" · ") : categoryName(t, a.categorySlug, "");
-    return what && what !== a.name ? what : undefined;
-  };
-
   const unit = units.find((u) => u.id === unitId);
 
-  // Offer page seen: Meta's "ViewContent" (once).
+  // Offer page seen: Meta's "ViewContent" (once), with the catalogue's unit id.
   const viewed = useRef(false);
   useEffect(() => {
     if (viewed.current || !unit) return;
     viewed.current = true;
-    metaTrack("ViewContent", { value: unit.price, content_ids: [unit.id], content_type: "product", content_name: "iPhone 13 128GB" });
+    metaTrack("ViewContent", { value: unit.price, content_ids: [unit.id], content_type: "product", content_name: unit.productName });
   }, [unit]);
   const fee = findCity(city)?.fee ?? 0;
   const addonsTotal = addons.filter((a) => picked.has(a.key)).reduce((s, a) => s + a.price, 0);
@@ -155,10 +181,25 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
         ? { url: unit.imageUrl, altText: null }
         : (gallery[0] ?? null);
 
-  function applyFilters(c: string, b: BatteryRange) {
+  // After any change of filter, keep the chosen phone if it still matches,
+  // else take the best match.
+  function refilter(next: { grade?: string; storage?: string; color?: string; battery?: BatteryRange }) {
+    const g = next.grade ?? grade;
+    const s = next.storage ?? storage;
+    const c = next.color ?? color;
+    const b = next.battery ?? battery;
+    setGrade(g);
+    setStorage(s);
     setColor(c);
     setBattery(b);
-    const matches = matchUnits(variants, c, b);
+    const pool = inScope(g, s);
+    let matches = matchUnits(pool, c, b);
+    // A colour or battery range this grade/storage doesn't have: start over on colour and battery.
+    if (!matches.length && (next.grade !== undefined || next.storage !== undefined)) {
+      setColor("all");
+      setBattery("all");
+      matches = matchUnits(pool, "all", "all");
+    }
     if (!matches.some((u) => u.id === unitId)) setUnitId(matches[0]?.id);
     setImageIndex(null);
   }
@@ -178,10 +219,11 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
     setBusy(true);
     setError(null);
     try {
-      const r = await submitIphone13Order({
+      const r = await submitOfferOrder({
+        slug,
         unitId,
         addons: [...picked],
-        customerName: name,
+        customerName: customer,
         customerPhone: phone,
         deliveryCity: city,
       });
@@ -218,18 +260,8 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
       {/* ── Gallery ── */}
       <div className="md:sticky md:top-28 md:self-start">
         <div className="relative aspect-square overflow-hidden rounded-4xl border border-ink/7 bg-white shadow-[0_30px_60px_-40px_rgb(17_16_19/0.5)]">
-          <ProductVisual image={shown} name="iPhone 13" brand="Apple" isPhone priority size="large" sizes="(min-width: 768px) 50vw, 100vw" />
+          <ProductVisual image={shown} name={name} brand={brand} isPhone priority size="large" sizes="(min-width: 768px) 50vw, 100vw" />
         </div>
-        {/* Under the photo, not on it: product photos carry their own text. */}
-        {included.length > 0 && (
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {included.map((g) => (
-              <li key={g.key} className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3.5 py-2 text-sm font-bold text-gold">
-                <Gift size={15} aria-hidden /> {fill(hero.giftBadge, { item: plain(g) })}
-              </li>
-            ))}
-          </ul>
-        )}
         {gallery.length > 1 && (
           <div className="mt-3 flex gap-2 overflow-x-auto pb-1 scrollbar-none" role="group" aria-label={t.pdp.photos}>
             {gallery.map((img, i) => (
@@ -279,11 +311,11 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
 
         <ul className="mt-5 grid grid-cols-2 gap-2 text-sm text-neutral-800">
           {hero.trust.map((item, i) => {
-            const Icon = TRUST_ICONS[i] ?? Check;
+            const Icon = (hero.batteryTrust ? TRUST_ICONS : TRUST_ICONS.slice(1))[i] ?? Check;
             return (
               <li key={item} className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2.5 ring-1 ring-ink/6">
                 <Icon size={17} aria-hidden className="flex-none text-gold-deep" />
-                {fill(item, { min: String(minBattery ?? 80) })}
+                {item}
               </li>
             );
           })}
@@ -306,9 +338,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
               <p dir="ltr" className="mt-2 font-mono text-sm text-neutral-300 rtl:text-end">
                 {fill(copy.successRef, { ref: done.reference })}
               </p>
-              <p className="mt-4 leading-relaxed text-neutral-200">
-                {fill(copy.successText, { phone: done.phone })}
-              </p>
+              <p className="mt-4 leading-relaxed text-neutral-200">{fill(copy.successText, { phone: done.phone })}</p>
               <ol className="mt-6 space-y-3">
                 {copy.successSteps.map((s, i) => (
                   <li key={s} className="flex items-center gap-3">
@@ -344,13 +374,43 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
               <h2 className="font-display text-2xl font-bold text-ink">{copy.title}</h2>
 
               <div className="mt-5 space-y-5">
+                {grades.length > 1 && (
+                  <div>
+                    <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">{copy.grade}</p>
+                    <div className="flex flex-wrap gap-2">
+                      <Chip on={grade === "all"} onClick={() => refilter({ grade: "all" })}>
+                        {copy.all}
+                      </Chip>
+                      {grades.map((g) => (
+                        <Chip key={g} on={grade === g} onClick={() => refilter({ grade: g })}>
+                          {t.grades.label[g] ?? g}
+                        </Chip>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {storages.length > 1 && (
+                  <div>
+                    <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">{copy.storage}</p>
+                    <div className="flex flex-wrap gap-2">
+                      <Chip on={storage === "all"} onClick={() => refilter({ storage: "all" })}>
+                        {copy.all}
+                      </Chip>
+                      {storages.map((s) => (
+                        <Chip key={s} on={storage === s} onClick={() => refilter({ storage: s })}>
+                          {s}
+                        </Chip>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <UnitPicker
                   units={variants}
                   color={color}
                   battery={battery}
                   selectedId={unitId}
-                  onColor={(c) => applyFilters(c, "all")}
-                  onBattery={(b) => applyFilters(color, b)}
+                  onColor={(c) => refilter({ color: c, battery: "all" })}
+                  onBattery={(b) => refilter({ battery: b })}
                   onSelect={(id) => {
                     setUnitId(id);
                     setImageIndex(null);
@@ -358,29 +418,6 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                 />
                 {condition && <ConditionDashboard {...condition} />}
               </div>
-
-              {/* Free with the phone */}
-              {included.length > 0 && (
-                <section className="mt-7" aria-labelledby="offer-included">
-                  <h3 id="offer-included" className="text-sm font-semibold text-neutral-700">{copy.included}</h3>
-                  <ul className="mt-3 grid gap-2 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
-                    {included.map((item) => {
-                      const Icon = AISLE_ICONS[item.categorySlug] ?? Gift;
-                      return (
-                        <li key={item.key} className="flex items-center gap-3 rounded-2xl bg-gold/10 px-4 py-3 ring-1 ring-gold/40">
-                          <Icon size={20} aria-hidden className="flex-none text-gold-deep" />
-                          <span className="min-w-0 flex-1">
-                            <span className="block text-sm font-semibold text-ink">{label(item)}</span>
-                            {hint(item) && <span className="block text-xs text-neutral-600">{hint(item)}</span>}
-                          </span>
-                          <span className="text-sm text-neutral-500 line-through">{formatMAD(item.price)}</span>
-                          <span className="rounded-full bg-ink px-2.5 py-0.5 text-xs font-bold text-gold">{copy.free}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </section>
-              )}
 
               {/* Suggested add-ons */}
               {addons.length > 0 && (
@@ -391,7 +428,6 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                     {addons.map((a) => {
                       const on = picked.has(a.key);
                       const Icon = AISLE_ICONS[a.categorySlug] ?? Plus;
-                      const sub = hint(a);
                       return (
                         <li key={a.key}>
                           <button
@@ -403,10 +439,7 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                             }`}
                           >
                             <Icon size={20} aria-hidden className="flex-none text-gold-deep" />
-                            <span className="min-w-0 flex-1">
-                              <span className="block text-sm font-semibold text-ink">{label(a)}</span>
-                              {sub && <span className="block text-xs text-neutral-500">{sub}</span>}
-                            </span>
+                            <span className="min-w-0 flex-1 text-sm font-semibold text-ink">{a.name}</span>
                             <span className="flex flex-col items-end gap-1">
                               <span dir="ltr" className="readout text-sm font-bold text-ink">+{formatMAD(a.price)}</span>
                               <span
@@ -448,8 +481,8 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                   autoComplete="name"
                   placeholder={copy.fullName}
                   aria-label={copy.fullName}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={customer}
+                  onChange={(e) => setCustomer(e.target.value)}
                   maxLength={120}
                   className={inputClass}
                 />
@@ -476,20 +509,16 @@ export function OfferExperience({ hero, copy, units, images, included, addons, m
                 <h3 id="offer-summary" className="text-sm font-semibold text-neutral-700">{copy.summary}</h3>
                 <dl className="mt-3 space-y-2 text-sm">
                   <div className="flex justify-between gap-4">
-                    <dt className="text-neutral-700">{copy.phoneLine}</dt>
+                    <dt className="text-neutral-700">
+                      {unit ? `${unit.productName} · ${t.grades.label[unit.grade] ?? unit.grade}` : name}
+                    </dt>
                     <dd className="readout font-semibold">{unit ? formatMAD(unit.price) : "-"}</dd>
                   </div>
-                  {included.length > 0 && (
-                    <div className="flex justify-between gap-4">
-                      <dt className="text-neutral-700">{included.map(label).join(" + ")}</dt>
-                      <dd className="font-semibold text-green-700">{copy.free}</dd>
-                    </div>
-                  )}
                   {addons
                     .filter((a) => picked.has(a.key))
                     .map((a) => (
                       <div key={a.key} className="flex justify-between gap-4">
-                        <dt className="text-neutral-700">{label(a)}</dt>
+                        <dt className="text-neutral-700">{a.name}</dt>
                         <dd className="readout font-semibold">{formatMAD(a.price)}</dd>
                       </div>
                     ))}

@@ -30,6 +30,8 @@ export type VariantData = ConditionData & {
   stockQuantity: number;
   hasDefects: boolean;
   transparencyNotes: string | null;
+  /** shown on the unit's card when units of several listings are mixed (offer pages): "Très bon état · 128GB" */
+  badge?: string;
 };
 
 export type ProductVariantExperienceData = {

@@ -4,13 +4,14 @@ import { landingProductIds, landingStatus } from "@/lib/db/landing";
 import { formatMAD } from "@/lib/format";
 import type { Locale } from "@/lib/i18n/config";
 import { DICTIONARIES } from "@/lib/i18n/dictionaries";
-import { OFFER_SLUG, getIphone13Offer } from "./iphone13";
-import { OFFER_COPY, giftList } from "./iphone13-copy";
+import { getPhoneOffers } from "./phone-offers";
+import { OFFER_COPY } from "./copy";
 
 // Every offer live right now, for the parts of the site that point to them:
 // the header ("Offres" + the top bar), /offres, the home page, the sitemap.
-// An offer is listed only while its ERP promo page is on, within its dates,
-// and has something to sell, so the "Offres" link never leads nowhere.
+// Phone models are listed while they have promo units in stock; ERP promo
+// pages while they are on, within their dates, and have something to sell,
+// so the "Offres" link never leads nowhere.
 
 export type LiveOffer = {
   slug: string;
@@ -19,7 +20,7 @@ export type LiveOffer = {
   title: string;
   teaser: string | null;
   image: string | null;
-  /** "from" price and the normal one it replaces (iPhone 13 offer) */
+  /** "from" price and the normal one it replaces (phone offers) */
   price: number | null;
   normalPrice: number | null;
   /** "-20 %" / "-100 DH" (ERP promo pages) */
@@ -54,29 +55,25 @@ async function loadLiveOffers(locale: Locale): Promise<LiveOffer[]> {
     },
   });
 
-  const offers: LiveOffer[] = [];
-  for (const page of pages.filter((p) => landingStatus(p) === "live")) {
-    const endsAt = page.endsAt?.toISOString() ?? null;
+  // Phone models on promo in the ERP (/offres/iphone-14…): one each.
+  const c = OFFER_COPY[locale];
+  const phoneOffers = await getPhoneOffers();
+  const offers: LiveOffer[] = phoneOffers.map((o) => ({
+    slug: o.slug,
+    href: `/offres/${o.slug}`,
+    title: c.card.title(o.name),
+    teaser: c.card.teaser(formatMAD(o.bestSaving)),
+    image: o.images[0]?.url ?? null,
+    price: o.fromPrice,
+    normalPrice: o.normalFrom,
+    discount: null,
+    endsAt: o.endsAt?.toISOString() ?? null,
+    bar: c.card.bar(o.name, formatMAD(o.fromPrice)),
+  }));
+  const phoneSlugs = new Set(phoneOffers.map((o) => o.slug));
 
-    if (page.slug === OFFER_SLUG) {
-      const offer = await getIphone13Offer();
-      if (offer.status !== "live" || !offer.units.length || offer.fromPrice === null) continue;
-      const c = OFFER_COPY[locale];
-      const gifts = giftList(c, offer.included, locale);
-      offers.push({
-        slug: page.slug,
-        href: `/offres/${page.slug}`,
-        title: c.card.title,
-        teaser: c.card.teaser(gifts),
-        image: offer.images[0]?.url ?? null,
-        price: offer.fromPrice,
-        normalPrice: offer.normalFrom,
-        discount: null,
-        endsAt,
-        bar: c.card.bar(formatMAD(offer.fromPrice), gifts),
-      });
-      continue;
-    }
+  for (const page of pages.filter((p) => landingStatus(p) === "live" && !phoneSlugs.has(p.slug))) {
+    const endsAt = page.endsAt?.toISOString() ?? null;
 
     // ERP promo pages (/offres/[slug]): listed while they have products in stock.
     const ids = await landingProductIds(page.id);
