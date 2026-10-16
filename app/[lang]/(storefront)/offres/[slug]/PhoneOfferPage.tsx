@@ -23,6 +23,7 @@ import { absoluteUrl, SITE_URL } from "@/lib/site";
 import { BATTERY_GOOD_FROM } from "@/lib/battery";
 import type { PhoneOffer } from "@/lib/offers/phone-offers";
 import { OFFER_COPY } from "@/lib/offers/copy";
+import { specRows } from "@/lib/offers/spec-sheet";
 import { ViewBeacon } from "./OfferParts";
 import { PhoneOfferExperience } from "./PhoneOfferExperience";
 
@@ -73,29 +74,13 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
         { icon: Monitor, title: f.displayTitle, text: c.why.display },
         { icon: Camera, title: f.cameraTitle, text: c.why.camera },
         ...(f.videoHours ? [{ icon: BatteryCharging, title: c.why.batteryTitle(f.videoHours), text: c.why.battery }] : []),
-        { icon: Droplets, title: f.durabilityTitle, text: c.why.durability },
+        ...(f.durabilityTitle ? [{ icon: Droplets, title: f.durabilityTitle, text: c.why.durability }] : []),
         ...(f.extra ? [{ icon: Sparkles, title: f.extra, text: c.why.extra }] : []),
       ]
     : [];
 
   // Specs: the sheet's rows, with the storages and memory of the units on promo.
-  const L = c.specs.labels;
-  const specs: [string, string][] = f
-    ? ([
-        [L.display, f.specs.display],
-        [L.chip, f.specs.chip],
-        [L.storage, offer.storages.join(" / ")],
-        ...(offer.rams.length ? [[L.ram, offer.rams.join(" / ")] as [string, string]] : []),
-        [L.rearCameras, f.specs.rearCameras],
-        [L.frontCamera, f.specs.frontCamera],
-        [L.battery, f.specs.battery],
-        [L.charging, f.specs.charging],
-        [L.durability, f.specs.durability],
-        [L.network, f.specs.network],
-        ...(f.specs.sim ? [[L.sim, f.specs.sim] as [string, string]] : []),
-        [L.size, f.specs.size],
-      ] as [string, string][]).filter(([, v]) => v)
-    : [];
+  const specs = f ? specRows(f, locale, { storage: offer.storages.join(" / "), ram: offer.rams.join(" / ") }) : [];
 
   const gradesAnswer = offer.grades.map((g) => `${t.grades.label[g] ?? g} : ${t.grades.hint[g] ?? ""}`).join(" ");
   const faq = [
@@ -247,10 +232,10 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
           {specs.length > 0 && (
             <Reveal>
               <dl className="divide-y divide-ink/7 rounded-3xl bg-white px-5 ring-1 ring-ink/7 sm:px-6">
-                {specs.map(([k, v]) => (
-                  <div key={k} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
-                    <dt className="text-sm font-semibold text-neutral-600">{k}</dt>
-                    <dd dir="ltr" className="text-[15px] text-ink rtl:text-end">{v}</dd>
+                {specs.map((row) => (
+                  <div key={row.label} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
+                    <dt className="text-sm font-semibold text-neutral-600">{row.label}</dt>
+                    <dd className="text-[15px] text-ink">{row.value}</dd>
                   </div>
                 ))}
               </dl>

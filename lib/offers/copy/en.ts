@@ -5,7 +5,7 @@ export const en: OfferCopy = {
   meta: {
     title: (name: string, from: string) => `${name} on promo from ${from}`,
     description: (name: string, from: string) =>
-      `${name} checked by our technicians in Meknes, on promo from ${from}. You choose the exact phone you receive, warranty included, delivery anywhere in Morocco.`,
+      `${name} checked by our technicians in Meknes, on promo from ${from}. You choose the exact phone you receive, 3-month warranty, delivery anywhere in Morocco.`,
   },
 
   hero: {
@@ -16,7 +16,7 @@ export const en: OfferCopy = {
     lead: (name: string, battery: boolean) =>
       `The ${name} at a promo price. Every phone is checked${battery ? ", its battery health measured and shown" : ""}, and you choose the exact one you receive.`,
     trustBattery: "Battery {min}% and up",
-    trust: ["Checked before sale", "Warranty included", "Delivery anywhere in Morocco"],
+    trust: ["Checked before sale", "3-month warranty", "Delivery anywhere in Morocco"],
   },
 
   form: (name: string) => ({
@@ -96,7 +96,18 @@ export const en: OfferCopy = {
       network: "Connectivity",
       sim: "SIM",
       size: "Size and weight",
+      unlock: "Unlock",
+      sound: "Sound",
     },
+    unlocks: {
+      faceid: "Face ID (3D face recognition)",
+      ultrasonic: "In-display fingerprint (ultrasonic)",
+      optical: "In-display fingerprint",
+      side: "Fingerprint on the side button",
+      face: "Face recognition",
+    },
+    stereo: "Stereo speakers",
+    video: (hours: number) => `up to ${hours} h of video`,
   },
 
   box: {
@@ -152,7 +163,7 @@ export const en: OfferCopy = {
     },
     warranty: {
       q: "Is the phone under warranty?",
-      a: "Yes, a warranty is included. Its terms are explained during the confirmation call.",
+      a: "Yes, every phone comes with a 3-month warranty. Its terms are explained during the confirmation call.",
     },
     shop: {
       q: "Can I see it in the shop?",
@@ -162,7 +173,7 @@ export const en: OfferCopy = {
 
   card: {
     title: (name: string) => `${name} on promo`,
-    teaser: (saving: string) => `Up to ${saving} off, warranty included`,
+    teaser: (saving: string) => `Up to ${saving} off, 3-month warranty`,
     bar: (name: string, price: string) => `${name} promo: from ${price}`,
     banner: (name: string, price: string) => `${name} on promo from ${price}: every phone of the promo on one page.`,
     cta: "See the promo",
@@ -170,7 +181,7 @@ export const en: OfferCopy = {
 
   final: {
     title: (name: string) => `Your ${name} is waiting.`,
-    text: "Checked by our technicians, warranty included, delivery anywhere in Morocco.",
+    text: "Checked by our technicians, 3-month warranty, delivery anywhere in Morocco.",
     cta: "Order now",
   },
 };

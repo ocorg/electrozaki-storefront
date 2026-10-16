@@ -33,6 +33,7 @@ import { ComingSoon } from "@/components/storefront/ComingSoon";
 import { artFor } from "@/lib/category-art";
 import { offerForListing } from "@/lib/offers/phone-offers";
 import { OFFER_COPY } from "@/lib/offers/copy";
+import { factsFor, specRows } from "@/lib/offers/spec-sheet";
 
 export const revalidate = 60;
 
@@ -139,6 +140,12 @@ export default async function ProductPage({ params }: Props) {
   }));
 
   const specs = (product.specs ?? {}) as Record<string, string>;
+  // A phone whose model has a fact sheet: one full "Fiche de l'appareil"
+  // (the ERP's RAM and storage included), instead of the short ERP table.
+  const facts = product.isPhone ? factsFor(product.modelKey) : null;
+  const specSheet = facts
+    ? specRows(facts, locale, { storage: specs["Stockage"], ram: specs["RAM"]?.replace(/\s+/g, "") })
+    : undefined;
   const giftOptions = product.compatibleAccessories.filter((c) => c.isGiftOption);
 
   // Prisma Decimal fields (and the whole product/variant shape generally)
@@ -178,6 +185,7 @@ export default async function ProductPage({ params }: Props) {
     recommendedSalePrice: product.recommendedSalePrice.toString(),
     compareAtPrice: product.compareAtPrice?.toString() ?? null,
     description: product.description,
+    specSheet,
     hasDefects: product.hasDefects,
     transparencyNotes: product.transparencyNotes,
     condition: {
@@ -289,7 +297,7 @@ export default async function ProductPage({ params }: Props) {
             </div>
           )}
 
-          {Object.keys(specs).length > 0 && (
+          {!specSheet && Object.keys(specs).length > 0 && (
             <div className="mt-8">
               <h2 className="font-display text-xl font-bold text-ink">{t.productPage.specs}</h2>
               <dl className="mt-3 divide-y divide-ink/7 rounded-[1.25rem] bg-white px-5 ring-1 ring-ink/7">

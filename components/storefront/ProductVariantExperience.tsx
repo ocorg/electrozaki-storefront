@@ -12,6 +12,7 @@ import { ProductVisual } from "@/components/storefront/ProductVisual";
 import { GradeMeter } from "@/components/storefront/GradeMeter";
 import { whatsappLink } from "@/lib/site";
 import { ConditionDashboard, type ConditionData } from "@/components/storefront/ConditionDashboard";
+import type { SpecRow } from "@/lib/offers/spec-sheet";
 import { Select } from "@/components/ui/Select";
 import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
 import { useT } from "@/components/i18n/I18nProvider";
@@ -42,6 +43,8 @@ export type ProductVariantExperienceData = {
   /** grade code (NEUF, TRES_BON, BON, PIECES_REMPLACEES) */
   grade: string;
   isPhone: boolean;
+  /** the model's spec sheet (phones), shown in the "Fiche de l'appareil" */
+  specSheet?: SpecRow[];
   availability: "IN_STOCK" | "OUT_OF_STOCK" | "COMING_SOON" | "DISCONTINUED";
   recommendedSalePrice: string;
   compareAtPrice: string | null;
@@ -183,7 +186,6 @@ export function ProductVariantExperience({ product, variants, images, categorySl
   }
 
   const inStock = product.availability === "IN_STOCK";
-  const usedPhone = product.isPhone && product.grade !== "NEUF";
   const unitsInStock = variants.filter((v) => v.stockQuantity > 0).length;
 
   return (
@@ -259,7 +261,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
           <p className="mt-1.5 text-sm text-neutral-600">{p.priceOfSelected}</p>
         )}
 
-        <ConditionDashboard {...condition} />
+        <ConditionDashboard {...condition} specs={product.specSheet} />
 
         {hasDefects && transparencyNotes && (
           <div className="mt-4 rounded-[1.25rem] border border-amber-300 bg-amber-50 p-4">
@@ -424,7 +426,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
 
         <ul className="mt-6 grid gap-2 text-sm text-neutral-700 sm:grid-cols-3">
           {[
-            { icon: ShieldCheck, text: usedPhone ? p.trustGuarantee : p.trustChecked },
+            { icon: ShieldCheck, text: product.isPhone ? p.trustGuarantee : p.trustChecked },
             { icon: Truck, text: t.common.deliveryEverywhere },
             { icon: Store, text: p.trustShop },
           ].map((item) => (

@@ -7,7 +7,7 @@ export const fr = {
   meta: {
     title: (name: string, from: string) => `${name} en promo dès ${from}`,
     description: (name: string, from: string) =>
-      `${name} vérifié par nos techniciens à Meknès, en promo dès ${from}. Vous choisissez le téléphone exact que vous recevez, garantie incluse, livraison partout au Maroc.`,
+      `${name} vérifié par nos techniciens à Meknès, en promo dès ${from}. Vous choisissez le téléphone exact que vous recevez, garantie 3 mois, livraison partout au Maroc.`,
   },
 
   hero: {
@@ -18,7 +18,7 @@ export const fr = {
     lead: (name: string, battery: boolean) =>
       `Le ${name} à prix promo. Chaque téléphone est vérifié${battery ? ", sa santé de batterie est mesurée et affichée" : ""}, et vous choisissez l'exemplaire exact que vous recevez.`,
     trustBattery: "Batterie {min} % et plus",
-    trust: ["Vérifié avant la vente", "Garantie incluse", "Livraison partout au Maroc"],
+    trust: ["Vérifié avant la vente", "Garantie 3 mois", "Livraison partout au Maroc"],
   },
 
   // Order panel (client). Plain strings; "{x}" = a value filled in there.
@@ -101,7 +101,18 @@ export const fr = {
       network: "Réseau",
       sim: "SIM",
       size: "Dimensions et poids",
+      unlock: "Déverrouillage",
+      sound: "Son",
     },
+    unlocks: {
+      faceid: "Face ID (reconnaissance faciale 3D)",
+      ultrasonic: "Empreinte sous l'écran (ultrasons)",
+      optical: "Empreinte sous l'écran",
+      side: "Empreinte sur le bouton latéral",
+      face: "Reconnaissance faciale",
+    },
+    stereo: "Haut-parleurs stéréo",
+    video: (hours: number) => `jusqu'à ${hours} h de vidéo`,
   },
 
   box: {
@@ -158,7 +169,7 @@ export const fr = {
     },
     warranty: {
       q: "Le téléphone est-il garanti ?",
-      a: "Oui, la garantie est incluse. Ses conditions vous sont précisées lors de l'appel de confirmation.",
+      a: "Oui, chaque téléphone est garanti 3 mois. Les conditions de la garantie vous sont précisées lors de l'appel de confirmation.",
     },
     shop: {
       q: "Puis-je le voir en boutique ?",
@@ -169,7 +180,7 @@ export const fr = {
   // The offer elsewhere on the site: header bar, offers page, home, product page.
   card: {
     title: (name: string) => `${name} en promo`,
-    teaser: (saving: string) => `Jusqu'à ${saving} de remise, garantie incluse`,
+    teaser: (saving: string) => `Jusqu'à ${saving} de remise, garantie 3 mois`,
     bar: (name: string, price: string) => `Promo ${name} : dès ${price}`,
     banner: (name: string, price: string) => `${name} en promo dès ${price} : tous les téléphones de la promo sur une seule page.`,
     cta: "Voir la promo",
@@ -177,7 +188,7 @@ export const fr = {
 
   final: {
     title: (name: string) => `Votre ${name} vous attend.`,
-    text: "Vérifié par nos techniciens, garantie incluse, livraison partout au Maroc.",
+    text: "Vérifié par nos techniciens, garantie 3 mois, livraison partout au Maroc.",
     cta: "Commander maintenant",
   },
 };

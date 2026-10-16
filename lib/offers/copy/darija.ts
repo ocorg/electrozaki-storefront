@@ -5,7 +5,7 @@ export const darija: OfferCopy = {
   meta: {
     title: (name: string, from: string) => `${name} f promo men ${from}`,
     description: (name: string, from: string) =>
-      `${name} mchouf mn 3nd les techniciens dyalna f Mknas, f promo men ${from}. Katkhtar nit téléphone li ghadi iwslek, garantie m3ah, livraison l ga3 lmghrib.`,
+      `${name} mchouf mn 3nd les techniciens dyalna f Mknas, f promo men ${from}. Katkhtar nit téléphone li ghadi iwslek, garantie 3 chhour, livraison l ga3 lmghrib.`,
   },
 
   hero: {
@@ -16,7 +16,7 @@ export const darija: OfferCopy = {
     lead: (name: string, battery: boolean) =>
       `${name} b prix promo. Kol téléphone mchouf${battery ? ", w sa7t l batterie dyalo m9iyssa w bayna" : ""}, w nta li katkhtar nit téléphone li ghadi iwslek.`,
     trustBattery: "Batterie {min}% w ktar",
-    trust: ["Mchouf 9bel l bi3", "Garantie m3ah", "Livraison l ga3 lmghrib"],
+    trust: ["Mchouf 9bel l bi3", "Garantie 3 chhour", "Livraison l ga3 lmghrib"],
   },
 
   form: (name: string) => ({
@@ -96,7 +96,18 @@ export const darija: OfferCopy = {
       network: "Réseau",
       sim: "SIM",
       size: "L 7ajm w l miziane",
+      unlock: "Déverrouillage",
+      sound: "Sout",
     },
+    unlocks: {
+      faceid: "Face ID (kay3ref wjhek b 3D)",
+      ultrasonic: "Empreinte ta7t l'écran (ultrasons)",
+      optical: "Empreinte ta7t l'écran",
+      side: "Empreinte f l bouton jenbi",
+      face: "Reconnaissance faciale",
+    },
+    stereo: "Haut-parleurs stéréo",
+    video: (hours: number) => `7tal ${hours} sa3a d vidéo`,
   },
 
   box: {
@@ -152,7 +163,7 @@ export const darija: OfferCopy = {
     },
     warranty: {
       q: "Wach téléphone fih garantie?",
-      a: "Ah, garantie m3ah. Les conditions dyalha kan9oulouhom lik f l'appel dyal confirmation.",
+      a: "Ah, kol téléphone fih garantie dyal 3 chhour. Les conditions dyalha kan9oulouhom lik f l'appel dyal confirmation.",
     },
     shop: {
       q: "Wach n9der nchoufo f l7anout?",
@@ -162,7 +173,7 @@ export const darija: OfferCopy = {
 
   card: {
     title: (name: string) => `${name} f promo`,
-    teaser: (saving: string) => `7tal ${saving} na9sin, garantie m3ah`,
+    teaser: (saving: string) => `7tal ${saving} na9sin, garantie 3 chhour`,
     bar: (name: string, price: string) => `Promo ${name}: men ${price}`,
     banner: (name: string, price: string) => `${name} f promo men ${price}: ga3 les téléphones dyal promo f page wa7da.`,
     cta: "Chouf promo",
@@ -170,7 +181,7 @@ export const darija: OfferCopy = {
 
   final: {
     title: (name: string) => `${name} dyalek kaytsennak.`,
-    text: "Mchouf mn 3nd les techniciens dyalna, garantie m3ah, livraison l ga3 lmghrib.",
+    text: "Mchouf mn 3nd les techniciens dyalna, garantie 3 chhour, livraison l ga3 lmghrib.",
     cta: "Commandi daba",
   },
 };

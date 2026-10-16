@@ -20,6 +20,7 @@ const PUBLIC_PRODUCT_SELECT = {
   isPhone: true,
   description: true,
   specs: true,
+  modelKey: true,
   recommendedSalePrice: true,
   compareAtPrice: true,
   availability: true,
@@ -111,6 +112,7 @@ export interface PublicProduct {
   isPhone: boolean;
   description: string | null;
   specs: unknown;
+  modelKey: string | null;
   recommendedSalePrice: { toString(): string };
   compareAtPrice: { toString(): string } | null;
   availability: AvailabilityStatus;

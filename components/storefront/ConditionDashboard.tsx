@@ -1,15 +1,8 @@
-import {
-  Ban,
-  ScanFace,
-  MonitorSmartphone,
-  Camera,
-  Plug,
-  Volume2,
-  type LucideIcon,
-} from "lucide-react";
+import { AlertTriangle, Ban, BatteryWarning, Camera, CheckCircle2, MonitorSmartphone, Plug, Volume2, type LucideIcon } from "lucide-react";
 import { useT } from "@/components/i18n/I18nProvider";
 import { batteryGood } from "@/lib/battery";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
+import type { SpecRow } from "@/lib/offers/spec-sheet";
 
 export type ConditionData = {
   batteryHealthPercent: number | null;
@@ -21,98 +14,106 @@ export type ConditionData = {
   speakerGenuine: boolean | null;
 };
 
-type Tile = { key: string; icon: LucideIcon; label: string; value: string; ok: boolean };
+type Issue = { key: string; icon: LucideIcon; text: string };
 
-// Each tile is omitted entirely when its value is null (not applicable —
-// an accessory, or a phone with no Face ID hardware) rather than shown as
-// a false "unknown" or "defective" state.
-function buildTiles(data: ConditionData, t: Dictionary): Tile[] {
-  const c = t.conditionPanel;
-  const tiles: Tile[] = [];
-  // [key, genuine?, icon, label, "replaced" agreeing with the part's gender]
-  const parts: [string, boolean | null, LucideIcon, string, string][] = [
-    ["screen", data.screenGenuine, MonitorSmartphone, c.screen, c.replacedM],
-    ["camera", data.cameraGenuine, Camera, c.camera, c.replacedF],
-    ["port", data.chargingPortGenuine, Plug, c.port, c.replacedM],
-    ["speaker", data.speakerGenuine, Volume2, c.speaker, c.replacedM],
+// Only what differs from a phone as it left the factory is listed: a part
+// that was changed, a Face ID that doesn't work. Saying "Écran : d'origine"
+// reads as "the screen was replaced by an original one", so a part that was
+// never changed isn't listed one by one; "no part replaced" says it once.
+function issuesOf(data: ConditionData, t: Dictionary): Issue[] {
+  const u = t.unitPicker;
+  const parts: [string, boolean | null, LucideIcon, string][] = [
+    ["screen", data.screenGenuine, MonitorSmartphone, u.screenReplaced],
+    ["battery", data.batteryGenuine, BatteryWarning, u.batteryReplaced],
+    ["camera", data.cameraGenuine, Camera, u.cameraReplaced],
+    ["port", data.chargingPortGenuine, Plug, u.portReplaced],
+    ["speaker", data.speakerGenuine, Volume2, u.speakerReplaced],
   ];
-  for (const [key, genuine, icon, label, replaced] of parts) {
-    if (genuine !== null) tiles.push({ key, icon, label, value: genuine ? c.original : replaced, ok: genuine });
-  }
-  if (data.faceIdWorking !== null) {
-    tiles.push({
-      key: "faceId",
-      icon: data.faceIdWorking ? ScanFace : Ban,
-      label: c.faceId,
-      value: data.faceIdWorking ? c.working : c.notWorking,
-      ok: data.faceIdWorking,
-    });
-  }
-  return tiles;
+  const issues: Issue[] = parts.filter(([, genuine]) => genuine === false).map(([key, , icon, text]) => ({ key, icon, text }));
+  if (data.faceIdWorking === false) issues.push({ key: "faceId", icon: Ban, text: t.conditionPanel.faceIdBroken });
+  return issues;
 }
 
-// "Fiche de l'appareil": battery drawn as a big battery gauge, every other
-// part as a checklist row — green check for original/working, amber mark
-// for replaced (the text always says which, colour is only a reinforcement).
-export function ConditionDashboard(props: ConditionData) {
+/**
+ * "Fiche de l'appareil": the battery health as a gauge, what was changed on
+ * this phone (if anything), then the model's full spec sheet (processor,
+ * memory, screen, cameras, unlocking, battery life, sound…).
+ */
+export function ConditionDashboard(props: ConditionData & { specs?: SpecRow[] }) {
   const t = useT();
   const c = t.conditionPanel;
-  const tiles = buildTiles(props, t);
+  const issues = issuesOf(props, t);
   const battery = props.batteryHealthPercent;
-  if (tiles.length === 0 && battery === null) return null;
+  // The ERP says something about the parts: either a list of changes, or "none".
+  const partsKnown =
+    [props.screenGenuine, props.cameraGenuine, props.chargingPortGenuine, props.speakerGenuine, props.batteryGenuine].some((v) => v !== null) ||
+    props.faceIdWorking !== null;
+  const specs = props.specs ?? [];
+  if (battery === null && !partsKnown && specs.length === 0) return null;
 
   const level = battery ?? 0;
   const fill = batteryGood(level) ? "bg-signal" : "bg-amber-500";
   const verdict = level >= 90 ? c.excellent : batteryGood(level) ? c.fair : c.watch;
+  const allGenuine = issues.length === 0;
 
   return (
     <section aria-label={c.aria} className="mt-6 overflow-hidden rounded-[1.5rem] border border-ink/8 bg-white">
       <p className="border-b border-ink/6 px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
         {c.title}
       </p>
-      <div className={`grid ${battery !== null && tiles.length ? "sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]" : ""}`}>
-        {battery !== null && (
-          <div className="flex flex-col justify-center gap-3 border-ink/6 p-5 sm:border-e">
-            <p className="text-sm font-semibold text-neutral-700">{c.batteryHealth}</p>
-            <div className="flex items-center gap-3">
-              <div aria-hidden dir="ltr" className="relative flex h-12 flex-1 rounded-xl border-2 border-ink/70 p-1">
-                <span
-                  className={`h-full rounded-lg ${fill} transition-[width] duration-700 ease-out-quint`}
-                  style={{ width: `${Math.max(6, Math.min(100, level))}%` }}
-                />
-                <span className="absolute -right-[7px] top-1/2 h-5 w-[5px] -translate-y-1/2 rounded-r-md bg-ink/70" />
-              </div>
-              <p dir="ltr" className="readout ms-2 text-3xl font-bold text-ink">
-                {level}
-                <span className="text-lg">%</span>
-              </p>
+
+      {battery !== null && (
+        <div className="flex flex-col gap-3 border-b border-ink/6 p-5">
+          <p className="text-sm font-semibold text-neutral-700">{c.batteryHealth}</p>
+          <div className="flex items-center gap-3">
+            <div aria-hidden dir="ltr" className="relative flex h-12 flex-1 rounded-xl border-2 border-ink/70 p-1">
+              <span
+                className={`h-full rounded-lg ${fill} transition-[width] duration-700 ease-out-quint`}
+                style={{ width: `${Math.max(6, Math.min(100, level))}%` }}
+              />
+              <span className="absolute -right-[7px] top-1/2 h-5 w-[5px] -translate-y-1/2 rounded-r-md bg-ink/70" />
             </div>
-            <p className="text-sm text-neutral-600">
-              {verdict}
-              {props.batteryGenuine === true ? c.batteryOriginal : props.batteryGenuine === false ? c.batteryReplaced : ""}
+            <p dir="ltr" className="readout ms-2 text-3xl font-bold text-ink">
+              {level}
+              <span className="text-lg">%</span>
             </p>
           </div>
-        )}
-        {tiles.length > 0 && (
-          <ul className="divide-y divide-ink/6">
-            {tiles.map((tile) => (
-              <li key={tile.key} className="flex items-center gap-3 px-5 py-3">
-                <tile.icon size={18} aria-hidden className="flex-none text-neutral-600" />
-                <span className="flex-1 text-sm text-neutral-700">{tile.label}</span>
-                <span className={`text-sm font-semibold ${tile.ok ? "text-ink" : "text-amber-800"}`}>{tile.value}</span>
-                <span
-                  aria-hidden
-                  className={`flex h-5 w-5 flex-none items-center justify-center rounded-full text-[11px] font-bold ${
-                    tile.ok ? "bg-signal/15 text-signal" : "bg-amber-100 text-amber-800"
-                  }`}
-                >
-                  {tile.ok ? "✓" : "!"}
-                </span>
+          <p className="text-sm text-neutral-600">
+            {verdict}
+            {props.batteryGenuine === false ? c.batteryReplaced : ""}
+          </p>
+        </div>
+      )}
+
+      {partsKnown && (
+        <ul className="divide-y divide-ink/6 border-b border-ink/6">
+          {allGenuine ? (
+            <li className="flex items-center gap-3 px-5 py-3 text-sm font-semibold text-ink">
+              <CheckCircle2 size={18} aria-hidden className="flex-none text-signal" />
+              {c.noneReplaced}
+            </li>
+          ) : (
+            issues.map((issue) => (
+              <li key={issue.key} className="flex items-center gap-3 px-5 py-3 text-sm font-semibold text-amber-900">
+                <issue.icon size={18} aria-hidden className="flex-none text-amber-700" />
+                <span className="flex-1">{issue.text}</span>
+                <AlertTriangle size={16} aria-hidden className="flex-none text-amber-600" />
               </li>
-            ))}
-          </ul>
-        )}
-      </div>
+            ))
+          )}
+        </ul>
+      )}
+
+      {specs.length > 0 && (
+        <dl className="divide-y divide-ink/6">
+          {specs.map((row) => (
+            <div key={row.label} className="grid gap-0.5 px-5 py-3 sm:grid-cols-[9.5rem_1fr] sm:gap-4">
+              <dt className="text-sm text-neutral-600">{row.label}</dt>
+              <dd className="text-sm font-semibold text-ink">{row.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
     </section>
   );
 }
