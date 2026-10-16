@@ -389,8 +389,8 @@ export const en: Dictionary = {
     title: "Device sheet",
     batteryHealth: "Battery health",
     excellent: "Excellent",
-    fair: "Fair",
-    watch: "Keep an eye on it",
+    fair: "Good",
+    watch: "Replacement advised",
     batteryOriginal: " · original battery",
     batteryReplaced: " · battery replaced",
     screen: "Screen",
@@ -456,6 +456,7 @@ export const en: Dictionary = {
     useBar: "Use the search bar to find a product.",
     noneBefore: "No results. Try another word, or",
     contactWhatsapp: "message us on WhatsApp",
+    refine: "Narrow it down with filters:",
   },
 
   notFound: {

@@ -369,8 +369,8 @@ export const fr = {
     title: "Fiche de l'appareil",
     batteryHealth: "Santé de la batterie",
     excellent: "Excellente",
-    fair: "Correcte",
-    watch: "À surveiller",
+    fair: "Bonne",
+    watch: "Remplacement conseillé",
     batteryOriginal: " · batterie d'origine",
     batteryReplaced: " · batterie remplacée",
     screen: "Écran",
@@ -437,6 +437,7 @@ export const fr = {
     useBar: "Utilisez la barre de recherche pour trouver un produit.",
     noneBefore: "Aucun résultat. Essayez un autre terme, ou",
     contactWhatsapp: "contactez-nous sur WhatsApp",
+    refine: "Affinez avec les filtres :",
   },
 
   notFound: {

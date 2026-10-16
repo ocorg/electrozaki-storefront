@@ -1,5 +1,6 @@
 "use client";
 
+import { batteryGood } from "@/lib/battery";
 import { CONDITION_BARS } from "@/lib/conditions";
 import { useT } from "@/components/i18n/I18nProvider";
 
@@ -59,7 +60,8 @@ export function BatteryLevel({
   label?: string;
 }) {
   const t = useT();
-  const color = percent >= 85 ? "bg-signal" : percent >= 80 ? "bg-amber-500" : "bg-red-600";
+  // 80 % and up is a good battery; below, iOS advises a replacement (lib/battery.ts).
+  const color = batteryGood(percent) ? "bg-signal" : "bg-amber-500";
   return (
     <span className="inline-flex items-center gap-1.5">
       <span className="sr-only">{t.grades.battery}</span>

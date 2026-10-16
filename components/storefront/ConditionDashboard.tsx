@@ -8,6 +8,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useT } from "@/components/i18n/I18nProvider";
+import { batteryGood } from "@/lib/battery";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 export type ConditionData = {
@@ -61,8 +62,8 @@ export function ConditionDashboard(props: ConditionData) {
   if (tiles.length === 0 && battery === null) return null;
 
   const level = battery ?? 0;
-  const fill = level >= 85 ? "bg-signal" : level >= 80 ? "bg-amber-500" : "bg-red-600";
-  const verdict = level >= 85 ? c.excellent : level >= 80 ? c.fair : c.watch;
+  const fill = batteryGood(level) ? "bg-signal" : "bg-amber-500";
+  const verdict = level >= 90 ? c.excellent : batteryGood(level) ? c.fair : c.watch;
 
   return (
     <section aria-label={c.aria} className="mt-6 overflow-hidden rounded-[1.5rem] border border-ink/8 bg-white">

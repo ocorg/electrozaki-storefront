@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useT } from "@/components/i18n/I18nProvider";
 import { colorName } from "@/lib/i18n/labels";
+import { batteryGood } from "@/lib/battery";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { BatteryFull, Check } from "lucide-react";
 import { formatMAD, savingOf } from "@/lib/format";
@@ -169,7 +170,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                   </span>
                   {b !== null && (
                     <span className="mt-2 flex items-center gap-2 text-sm">
-                      <BatteryFull size={16} className={b >= 85 ? "text-green-600" : b >= 80 ? "text-amber-600" : "text-red-600"} />
+                      <BatteryFull size={16} className={batteryGood(b) ? "text-green-600" : "text-amber-600"} />
                       <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-100">
                         <span
                           className={`block h-full rounded-full ${b >= 85 ? "bg-green-500" : b >= 80 ? "bg-amber-500" : "bg-red-500"}`}

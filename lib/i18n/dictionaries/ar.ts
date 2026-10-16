@@ -393,8 +393,8 @@ export const ar: Dictionary = {
     title: "بطاقة الجهاز",
     batteryHealth: "صحة البطارية",
     excellent: "ممتازة",
-    fair: "مقبولة",
-    watch: "تحتاج متابعة",
+    fair: "جيدة",
+    watch: "يُنصح باستبدالها",
     batteryOriginal: " · بطارية أصلية",
     batteryReplaced: " · بطارية مستبدلة",
     screen: "الشاشة",
@@ -459,6 +459,7 @@ export const ar: Dictionary = {
     useBar: "استعمل شريط البحث للعثور على منتج.",
     noneBefore: "لا نتائج. جرّب كلمة أخرى، أو",
     contactWhatsapp: "راسلنا على واتساب",
+    refine: "دقّق البحث بالفلاتر:",
   },
 
   notFound: {

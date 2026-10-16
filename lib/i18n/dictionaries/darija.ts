@@ -376,7 +376,7 @@ export const darija: Dictionary = {
     batteryHealth: "Sa7t l batterie",
     excellent: "Top",
     fair: "Mzyana",
-    watch: "Rd balek",
+    watch: "Mzyan tbeddelha",
     batteryOriginal: " · batterie d'origine",
     batteryReplaced: " · batterie mbeddla",
     screen: "L'écran",
@@ -441,6 +441,7 @@ export const darija: Dictionary = {
     useBar: "Sta3mel barre dyal l9elba bach tl9a chi produit.",
     noneBefore: "Walou. Jreb kelma khra, wla",
     contactWhatsapp: "kteb lina f WhatsApp",
+    refine: "Ster b les filtres:",
   },
 
   notFound: {
