@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, useTransition, type ReactNode } from "react";
 import Form from "next/form";
-import { ChevronDown, Search, SlidersHorizontal, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ChevronDown, Loader2, Search, SlidersHorizontal, X } from "lucide-react";
 import type { CategoryFilterOptions } from "@/lib/db/public-products";
 import Link from "@/components/i18n/Link";
 import { useLocalePath, useT } from "@/components/i18n/I18nProvider";
@@ -11,6 +12,7 @@ import { formatMAD } from "@/lib/format";
 import { artFor } from "@/lib/category-art";
 import { DeviceArt } from "@/components/storefront/DeviceArt";
 import { GradeMeter } from "@/components/storefront/GradeMeter";
+import { batteryGood } from "@/lib/battery";
 
 export type FilterValues = {
   brand?: string;
@@ -119,6 +121,31 @@ export function CatalogBar({ options, basePath, defaults, guide }: Props) {
   };
   const toggle = (k: Key, v: string) => href({ [k]: current[k] === v ? undefined : v });
 
+  // Search as you type: the results follow the box 300 ms after the last
+  // key (Enter still searches at once). The other filters are kept.
+  const router = useRouter();
+  const [searching, startSearch] = useTransition();
+  const [text, setText] = useState(current.q ?? "");
+  const pushed = useRef(current.q ?? "");
+  useEffect(() => {
+    // The search changed from elsewhere (a pill, "clear all", back button).
+    if ((current.q ?? "") !== pushed.current) {
+      pushed.current = current.q ?? "";
+      setText(current.q ?? "");
+    }
+  }, [current.q]);
+  useEffect(() => {
+    const q = text.trim();
+    if (q === pushed.current) return;
+    const timer = setTimeout(() => {
+      pushed.current = q;
+      startSearch(() => router.replace(withLocale(href({ q: q || undefined })), { scroll: false }));
+    }, 300);
+    return () => clearTimeout(timer);
+    // href and withLocale only change with the address, which this effect follows through `pushed`.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
+
   // After a filter change, bring the top of the results back into view
   // (the bar is sticky, so the visitor may be deep in the old grid).
   const firstRender = useRef(true);
@@ -173,10 +200,12 @@ export function CatalogBar({ options, basePath, defaults, guide }: Props) {
       <div className="catalog-bar sticky top-(--header-h) z-30 -mx-4 border-b border-ink/10 bg-paper/85 px-4 py-3 backdrop-blur-xl">
         <div className="flex items-center gap-2">
           <Form
-            key={qs}
             action={action}
             scroll={false}
-            onSubmit={(e) => dropEmptyFields(e.currentTarget)}
+            onSubmit={(e) => {
+              pushed.current = text.trim();
+              dropEmptyFields(e.currentTarget);
+            }}
             className="min-w-0 flex-1"
             role="search"
           >
@@ -185,27 +214,31 @@ export function CatalogBar({ options, basePath, defaults, guide }: Props) {
               k === "q" ? null : <input key={k} type="hidden" name={k} value={v} />
             )}
             <label className="group flex h-12 items-center gap-2.5 rounded-full bg-white ps-4 pe-1.5 ring-1 ring-ink/10 transition-shadow focus-within:ring-2 focus-within:ring-ink">
-              <Search size={18} className="flex-none text-neutral-500" aria-hidden />
+              {searching ? (
+                <Loader2 size={18} className="flex-none animate-spin text-neutral-500" aria-hidden />
+              ) : (
+                <Search size={18} className="flex-none text-neutral-500" aria-hidden />
+              )}
               <span className="sr-only">{t.filters.searchLabel}</span>
               <input
-                key={current.q ?? ""}
                 type="search"
                 name="q"
-                defaultValue={current.q ?? ""}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
                 maxLength={60}
                 enterKeyHint="search"
                 placeholder={phones ? t.filters.searchPhones : t.filters.searchAccessories}
                 className="min-w-0 flex-1 bg-transparent text-[15px] text-ink placeholder:text-neutral-500 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
               />
-              {current.q && (
-                <Link
-                  href={href({ q: undefined })}
-                  scroll={false}
+              {text && (
+                <button
+                  type="button"
+                  onClick={() => setText("")}
                   aria-label={t.filters.clearSearch}
                   className="flex h-9 w-9 flex-none items-center justify-center rounded-full text-neutral-500 hover:bg-paper hover:text-ink"
                 >
                   <X size={16} aria-hidden />
-                </Link>
+                </button>
               )}
             </label>
           </Form>
@@ -594,7 +627,7 @@ function RadioRow({ name, value, checked, children }: { name: string; value: str
 
 /** A battery outline filled to `level` %, or empty for "any". */
 function Battery({ level }: { level: number | null }) {
-  const fill = level === null ? "bg-transparent" : level >= 85 ? "bg-signal" : "bg-amber-500";
+  const fill = level === null ? "bg-transparent" : batteryGood(level) ? "bg-signal" : "bg-amber-500";
   return (
     <span aria-hidden dir="ltr" className="relative flex h-5 w-9 items-center rounded-[5px] p-0.5 ring-2 ring-ink/70 group-has-checked:ring-white/80">
       <span className={`h-full rounded-xs ${fill}`} style={{ width: level === null ? 0 : `${level}%` }} />

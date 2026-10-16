@@ -206,7 +206,7 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
           </nav>
 
           <div className="ms-auto flex items-center gap-1 sm:gap-2">
-            <SearchBox className="hidden w-56 sm:block md:hidden lg:block lg:w-44 xl:w-64" placeholder={t.common.searchPlaceholder} />
+            <SearchBox className="header-search hidden w-56 sm:block md:hidden lg:block lg:w-44 xl:w-64" placeholder={t.common.searchPlaceholder} />
 
             <div className="hidden md:block">
               <LanguageSwitcher />
@@ -241,8 +241,9 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
           </div>
         </div>
 
-        {/* Phones and portrait tablets: search under the logo row. */}
-        <div className="px-4 pb-3 sm:hidden md:block lg:hidden">
+        {/* Phones and portrait tablets: search under the logo row. Both header
+            searches step aside on an aisle, which has its own (globals.css). */}
+        <div className="header-search px-4 pb-3 sm:hidden md:block lg:hidden">
           <SearchBox placeholder={t.common.searchPlaceholder} />
         </div>
 

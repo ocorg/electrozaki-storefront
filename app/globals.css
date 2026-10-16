@@ -419,3 +419,9 @@ html:has(.sheet[open]) {
     transform: none;
   }
 }
+
+/* An aisle has its own search bar (CatalogBar), right under the header:
+   the header's search would be a second box doing the same thing. */
+body:has(.catalog-bar) .header-search {
+  display: none;
+}
