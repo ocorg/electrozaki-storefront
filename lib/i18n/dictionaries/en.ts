@@ -47,6 +47,9 @@ export const en: Dictionary = {
   footer: {
     address: "Boulevard Al Massira Al Khadra, Ouislane, Meknes",
     findUs: "See the map",
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    blurbPhonesOnly: (city: string) =>
+      `New and used phones and repairs in ${city}. Every used phone is sold with its condition and battery shown.`,
     blurb: (city: string) =>
       `New and used phones, accessories and repairs in ${city}. Every used phone is sold with its condition and battery shown.`,
     services: "Services",

@@ -49,6 +49,9 @@ export const fr = {
   footer: {
     address: "Boulevard Al Massira Al Khadra, Ouislane, Meknès",
     findUs: "Voir le plan",
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    blurbPhonesOnly: (city: string) =>
+      `Téléphones neufs et d'occasion et réparation à ${city}. Chaque téléphone d'occasion est vendu avec son état et sa batterie affichés.`,
     blurb: (city: string) =>
       `Téléphones neufs et d'occasion, accessoires et réparation à ${city}. Chaque téléphone d'occasion est vendu avec son état et sa batterie affichés.`,
     services: "Services",

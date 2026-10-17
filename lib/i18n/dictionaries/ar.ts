@@ -48,6 +48,9 @@ export const ar: Dictionary = {
   footer: {
     address: "شارع المسيرة الخضراء، ويسلان، مكناس",
     findUs: "شاهد الخريطة",
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    blurbPhonesOnly: (city: string) =>
+      `هواتف جديدة ومستعملة وإصلاح في ${city}. كل هاتف مستعمل يُباع مع عرض حالته وبطاريته.`,
     blurb: (city: string) =>
       `هواتف جديدة ومستعملة، إكسسوارات وإصلاح في ${city}. كل هاتف مستعمل يُباع مع عرض حالته وبطاريته.`,
     services: "الخدمات",

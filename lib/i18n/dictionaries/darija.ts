@@ -50,6 +50,9 @@ export const darija: Dictionary = {
   footer: {
     address: "Boulevard Al Massira Al Khadra, Ouislane, Mknas",
     findUs: "Chouf lkharita",
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    blurbPhonesOnly: (city: string) =>
+      `Tilifounat jdad w mosta3mlin w tasli7 f ${city}. Kol téléphone mosta3mel kaytba3 w l7ala w l batterie dyalo bayna.`,
     blurb: (city: string) =>
       `Tilifounat jdad w mosta3mlin, accessoires w tasli7 f ${city}. Kol téléphone mosta3mel kaytba3 w l7ala w l batterie dyalo bayna.`,
     services: "Services",

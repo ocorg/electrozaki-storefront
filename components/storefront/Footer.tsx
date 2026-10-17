@@ -2,7 +2,7 @@ import { MapPin, MessageCircle } from "lucide-react";
 import Link from "@/components/i18n/Link";
 import { AnchorButton } from "@/components/ui/Button";
 import { SocialLinks } from "@/components/storefront/SocialLinks";
-import { SHOP, WHATSAPP_URL } from "@/lib/site";
+import { ACCESSORIES_OPEN, SHOP, WHATSAPP_URL } from "@/lib/site";
 import { getT } from "@/lib/i18n/server";
 import { categoryName } from "@/lib/i18n/labels";
 import type { AisleStat } from "@/lib/db/storefront";
@@ -22,7 +22,7 @@ export async function Footer({ aisles }: { aisles: AisleStat[] }) {
                 ELECTRO <span className="text-gold">ZAKI</span>
               </span>
             </p>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed">{t.footer.blurb(t.common.city)}</p>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed">{(ACCESSORIES_OPEN ? t.footer.blurb : t.footer.blurbPhonesOnly)(t.common.city)}</p>
           </div>
 
           <div>
