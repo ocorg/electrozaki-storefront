@@ -17,11 +17,12 @@ import { PhoneOfferPage, phoneOfferMetadata } from "./PhoneOfferPage";
 // (/offres/iphone-14, lib/offers/phone-offers.ts), a brand's promos
 // (/offres/iphone, every model of it) and an ERP promo page
 // ("Site web → Pages promo"). Refreshed at once by the ERP on every change
-// (/api/revalidate), and at least every minute so a page opens / closes on time.
-export const revalidate = 60;
+// (/api/revalidate), and at least every 15 minutes so a scheduled page opens /
+// closes on time (each refresh costs a render: Vercel bills the CPU).
+export const revalidate = 900;
 
 // Pages are built on their first visit and then served from the cache
-// (refreshed every 60 s and at once by the ERP): without this, Next renders
+// (refreshed every 15 min and at once by the ERP): without this, Next renders
 // every visit from scratch, with a database round trip each time.
 export async function generateStaticParams() {
   return [];

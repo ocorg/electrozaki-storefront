@@ -9,8 +9,8 @@ import { alternates } from "@/lib/i18n/seo";
 import { getLiveOffers } from "@/lib/offers/live";
 
 // Every offer on right now, for visitors who didn't come from a campaign.
-// Same 60 s cache as the offer pages; the ERP refreshes it on every change.
-export const revalidate = 60;
+// Same 15 min cache as the offer pages; the ERP refreshes it on every change.
+export const revalidate = 900;
 
 export async function generateMetadata(): Promise<Metadata> {
   const [t, locale] = await Promise.all([getT(), getLocale()]);

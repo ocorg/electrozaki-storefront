@@ -24,9 +24,9 @@ import { categoryName, facetOptionName, facetQuestion } from "@/lib/i18n/labels"
 import { BUDGET_BANDS, MODEL_GROUP, budgetOf, hasOption, matchesSelection, optionsIn, readBudget, readSelection } from "@/lib/facets";
 import { alternates } from "@/lib/i18n/seo";
 
-// A 60s cache keeps pages fast; the ERP also asks for an immediate refresh
+// An hour's cache keeps pages fast and cheap; the ERP asks for an immediate refresh
 // (/api/revalidate) whenever stock or presentation changes.
-export const revalidate = 60;
+export const revalidate = 3600;
 
 const PER_PAGE = 24;
 

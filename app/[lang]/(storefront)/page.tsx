@@ -25,7 +25,7 @@ import { getRepairTopics } from "@/lib/i18n/repair";
 import { categoryName } from "@/lib/i18n/labels";
 import { alternates } from "@/lib/i18n/seo";
 
-export const revalidate = 60;
+export const revalidate = 900;
 
 export async function generateMetadata(): Promise<Metadata> {
   return { alternates: alternates(await getLocale(), "/") };

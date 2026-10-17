@@ -30,7 +30,7 @@ import { OfferFaq, OfferFinal, OfferSteps } from "./OfferSections";
 // A phone model's promo page (/offres/<model>): the promo units, ordered
 // without leaving the page, then why the model, its battery, its specs,
 // how ordering works and the questions people ask. Live stock and prices
-// (60 s cache, refreshed at once by the ERP).
+// (15 min cache, refreshed at once by the ERP).
 
 export function phoneOfferMetadata(offer: PhoneOffer, locale: Locale): Metadata {
   const c = OFFER_COPY[locale];
