@@ -1,6 +1,14 @@
 import "dotenv/config";
 import { prisma } from "../lib/db/client";
 
+// Demo products must never reach the live shop: the seed runs only when
+// asked for explicitly AND the database is not the production one.
+const PRODUCTION_HOST = "ep-still-tree";
+if (process.env.ALLOW_DEMO_SEED !== "yes" || (process.env.DATABASE_URL ?? "").includes(PRODUCTION_HOST)) {
+  console.error("Seed refused: set ALLOW_DEMO_SEED=yes and point DATABASE_URL at a test database (never production).");
+  process.exit(1);
+}
+
 // Demo data for internal review only — NOT for the public launch. Real
 // catalog entry replaces every one of these once you're ready to go live.
 //

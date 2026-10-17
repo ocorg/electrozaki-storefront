@@ -30,6 +30,9 @@ export const revalidate = 60;
 
 const PER_PAGE = 24;
 
+// The grades a phone can have (anything else in ?condition= is ignored).
+const GRADES = new Set(["NEUF", "TRES_BON", "BON", "PIECES_REMPLACEES"]);
+
 // Next.js 16: both params and searchParams are Promises now.
 type Props = {
   params: Promise<{ slug: string }>;
@@ -86,7 +89,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
     q: str(filterParams.q),
     promo: filterParams.promo === "1" || undefined,
     maxPrice: int(filterParams.maxPrice),
-    condition: phones ? str(filterParams.condition) : undefined,
+    condition: phones && GRADES.has(filterParams.condition ?? "") ? filterParams.condition : undefined,
     minBatteryHealth: phones ? int(filterParams.minBattery) : undefined,
     storage: phones ? str(filterParams.storage) : undefined,
     subcategory: phones ? undefined : str(filterParams.type),

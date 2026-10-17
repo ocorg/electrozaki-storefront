@@ -28,6 +28,9 @@ const SECURITY_HEADERS = [
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   // The site uses none of these APIs (the receipt "photo" is a file input).
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
+  // HTTPS only, for a year: a browser that has seen the site never tries it
+  // over plain HTTP again (no includeSubDomains: the mail host may need HTTP).
+  { key: "Strict-Transport-Security", value: "max-age=31536000" },
 ];
 
 const nextConfig: NextConfig = {

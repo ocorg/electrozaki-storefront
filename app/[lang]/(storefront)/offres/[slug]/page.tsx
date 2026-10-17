@@ -40,6 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const [offer, data, locale] = await Promise.all([getPhoneOffer(slug), getLandingPage(slug), getLocale()]);
   if (offer) return phoneOfferMetadata(offer, locale);
   if (!data) return {};
+  // A page switched off or outside its dates shows nothing of its offer.
+  if (data.status !== "live") return { robots: { index: false } };
   return {
     title: data.page.title,
     description: data.page.subtitle ?? undefined,

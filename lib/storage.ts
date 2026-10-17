@@ -92,7 +92,10 @@ export async function uploadReceiptImage(file: File): Promise<UploadReceiptResul
 async function store(bucket: string, body: Buffer, ext: "webp" | "pdf", contentType: string): Promise<UploadReceiptResult> {
   try {
     const key = `receipts/${Date.now()}-${crypto.randomUUID()}.${ext}`;
-    await r2Client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body, ContentType: contentType }));
+    // A PDF is a customer's file, opened by staff: download it, never render
+    // it inline in the browser (a crafted PDF could carry script).
+    const disposition = contentType === "application/pdf" ? "attachment; filename=\"recu.pdf\"" : undefined;
+    await r2Client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body, ContentType: contentType, ContentDisposition: disposition }));
     return { ok: true, key, token: sign(key) };
   } catch {
     return { ok: false, error: "Échec de l'envoi du reçu. Réessayez." };

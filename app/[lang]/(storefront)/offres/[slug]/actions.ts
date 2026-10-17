@@ -17,6 +17,7 @@ import { findCity, estimateDelivery } from "@/lib/delivery";
 import { buildWhatsAppOrderLink } from "@/lib/whatsapp";
 import { getPhoneOffer, resolveOfferUnit } from "@/lib/offers/phone-offers";
 import { notifyErp } from "@/lib/erp-notify";
+import { errors as frErrors } from "@/lib/i18n/dictionaries/fr-errors";
 
 // Counted from the browser (the page itself is cached), a few per visitor
 // per hour at most, so reloading can't inflate the ERP's visit figures.
@@ -71,10 +72,11 @@ export async function submitOfferOrder(input: OrderInput): Promise<Result> {
   const unit = await resolveOfferUnit(slug, String(input.unitId ?? ""));
   if (!unit) return { ok: false, error: UNIT_GONE };
 
-  // Same customer, same phone, a few minutes later (a double tap, or a retry
-  // after a lost connection): hand back that order instead of a duplicate.
-  const repeat = await recentOrderFor(contact.data.customerPhone, unit.id);
-  if (repeat) return { ok: true, reference: repeat.id.slice(0, 8).toUpperCase(), whatsappUrl: repeat.whatsappUrl };
+  // Same phone, same unit, a few minutes later (a double tap, or a retry
+  // after a lost connection): no duplicate, and nothing of that order is
+  // handed back — the phone number alone doesn't prove who is asking, and
+  // the reference opens the order's tracking page.
+  if (await recentOrderExists(contact.data.customerPhone, unit.id)) return { ok: false, error: ALREADY_ORDERED };
 
   if (await phoneOrderLimitReached(contact.data.customerPhone)) return { ok: false, error: PHONE_ORDER_LIMIT_MESSAGE };
 
@@ -135,44 +137,16 @@ export async function submitOfferOrder(input: OrderInput): Promise<Result> {
 }
 
 const REPEAT_WINDOW_MINUTES = 30;
+const ALREADY_ORDERED = frErrors.alreadyOrdered;
 const digits = (phone: string) => phone.replace(/\D/g, "").slice(-9);
 
-/** A still-new offer order for this phone and this unit, placed in the last minutes. */
-async function recentOrderFor(phone: string, unitId: string) {
+/** A still-new order for this phone and this unit, placed in the last minutes. */
+async function recentOrderExists(phone: string, unitId: string): Promise<boolean> {
   const since = new Date(Date.now() - REPEAT_WINDOW_MINUTES * 60_000);
   const orders = await prisma.orderRequest.findMany({
     where: { status: "NEW", createdAt: { gte: since }, items: { some: { variantId: unitId } } },
-    select: {
-      id: true,
-      customerName: true,
-      customerPhone: true,
-      deliveryCity: true,
-      deliveryFee: true,
-      deliveryEstimate: true,
-      deliveryUnavailable: true,
-      items: { select: { productNameSnapshot: true, quantity: true, priceAtRequest: true } },
-    },
-    orderBy: { createdAt: "desc" },
-    take: 5,
+    select: { customerPhone: true },
+    take: 10,
   });
-  const match = orders.find((o) => digits(o.customerPhone) === digits(phone));
-  if (!match) return null;
-  const whatsappUrl = buildWhatsAppOrderLink(
-    match.customerName,
-    match.items.map((i) => ({ productName: i.productNameSnapshot, quantity: i.quantity, price: Number(i.priceAtRequest) })),
-    {
-      reference: match.id.slice(0, 8).toUpperCase(),
-      requiresAdvance: true,
-      receiptUploaded: false,
-      delivery: match.deliveryCity
-        ? {
-            city: match.deliveryCity,
-            fee: Number(match.deliveryFee),
-            estimate: match.deliveryEstimate ? match.deliveryEstimate.toISOString().slice(0, 10) : null,
-            unavailable: match.deliveryUnavailable,
-          }
-        : undefined,
-    }
-  );
-  return { id: match.id, whatsappUrl };
+  return orders.some((o) => digits(o.customerPhone) === digits(phone));
 }

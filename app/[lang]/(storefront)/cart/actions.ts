@@ -70,21 +70,13 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
     unavailable: !estimate.deliverable,
   };
 
-  let promoCodeId: string | undefined;
-  let discountAmount = 0;
-  if (input.promoCode) {
-    const promoResult = await validatePromoCode(String(input.promoCode), cart.subtotal);
-    if (!promoResult.ok) return { ok: false, error: promoResult.error };
-    promoCodeId = promoResult.promoCodeId;
-    discountAmount = promoResult.discountAmount;
-  }
-
   let receiptKey: string | undefined;
   if (input.receipt) {
-    if (!verifyReceiptToken(String(input.receipt.key), String(input.receipt.token))) {
+    const key = String(input.receipt.key);
+    if (!verifyReceiptToken(key, String(input.receipt.token))) {
       return { ok: false, error: "Reçu invalide. Merci de le déposer à nouveau." };
     }
-    receiptKey = input.receipt.key;
+    receiptKey = key;
   }
 
   const parsed = orderRequestSchema.safeParse({
@@ -98,6 +90,19 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
   });
   if (!parsed.success) {
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Certains champs sont invalides." };
+  }
+
+  // The promo code last, once the order is otherwise valid (a broken form
+  // isn't a free guess at codes), and at most 3 orders with a code per
+  // connection a day, so throwaway orders can't use up a capped code.
+  let promoCodeId: string | undefined;
+  let discountAmount = 0;
+  if (input.promoCode) {
+    if (!(await allowRequest("promo_order"))) return { ok: false, error: RATE_LIMIT_MESSAGE };
+    const promoResult = await validatePromoCode(String(input.promoCode), cart.subtotal);
+    if (!promoResult.ok) return { ok: false, error: promoResult.error };
+    promoCodeId = promoResult.promoCodeId;
+    discountAmount = promoResult.discountAmount;
   }
 
   let order;
@@ -151,7 +156,8 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
 // WhatsApp, so the staff queue can distinguish "submitted" from
 // "customer also opened WhatsApp" at a glance.
 export async function confirmWhatsAppOpened(orderRequestId: string): Promise<void> {
-  await markWhatsAppOpened(String(orderRequestId));
+  if (!(await allowRequest("whatsapp"))) return;
+  await markWhatsAppOpened(String(orderRequestId).slice(0, 40));
 }
 
 type UploadResult = { ok: true; key: string; token: string } | { ok: false; error: string };

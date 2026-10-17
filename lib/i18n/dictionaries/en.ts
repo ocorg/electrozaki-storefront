@@ -915,6 +915,7 @@ export const en: Dictionary = {
   },
 
   errors: {
+    alreadyOrdered: "Your order for this phone is already registered. We'll call you very soon to confirm it.",
     orderNotFound: "No order found with this reference and phone. The reference has 8 characters (e.g. 3F7K2Q9A) and is in your confirmation message.",
     rateLimit: "Too many attempts. Please try again in an hour or message us on WhatsApp.",
     chooseCity: "Please choose your delivery town from the list.",

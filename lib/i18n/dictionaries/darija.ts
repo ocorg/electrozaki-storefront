@@ -898,6 +898,7 @@ export const darija: Dictionary = {
   },
 
   errors: {
+    alreadyOrdered: "L commande dyalek l had téléphone deja mtsjla. Ghadi n3ayto lik dghya bach nconfirmiwha.",
     orderNotFound: "Ma l9ina 7ta commande b had la référence w had téléphone. La référence fiha 8 7orouf (bhal 3F7K2Q9A), kayna f message dyal confirmation.",
     rateLimit: "Bzzaf dyal les tentatives. 3awed men b3d sa3a wla kteb lina f WhatsApp.",
     chooseCity: "Khtar lmdina dyal livraison mn la liste 3afak.",

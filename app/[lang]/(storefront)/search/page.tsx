@@ -17,17 +17,21 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // Next.js 16: searchParams is also a Promise, same as params.
 type Props = {
-  searchParams: Promise<{ q?: string; maxPrice?: string; brand?: string; tag?: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
+// One short text per parameter: a repeated one (?q=a&q=b) arrives as a list.
+const one = (v: string | string[] | undefined, max: number) => (typeof v === "string" && v.trim() ? v.trim().slice(0, max) : undefined);
+
 export default async function SearchPage({ searchParams }: Props) {
-  const { q, maxPrice, brand, tag } = await searchParams;
-  const query = q?.trim() ?? "";
+  const params = await searchParams;
+  const query = one(params.q, 60) ?? "";
+  const price = Number(one(params.maxPrice, 9));
 
   const filters = {
-    maxPrice: maxPrice ? Number(maxPrice) : undefined,
-    brand: brand || undefined,
-    tag: tag || undefined,
+    maxPrice: Number.isFinite(price) && price > 0 ? price : undefined,
+    brand: one(params.brand, 40),
+    tag: one(params.tag, 40),
   };
   const hasFilters = Boolean(filters.maxPrice || filters.brand || filters.tag);
 

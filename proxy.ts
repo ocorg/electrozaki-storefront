@@ -1,5 +1,5 @@
 import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server";
-import { classifyBot, isProbe } from "@/lib/bots";
+import { classifyBot, isProbe, probeName } from "@/lib/bots";
 import { DEFAULT_LOCALE, isLocale, LOCALE_COOKIE, type Locale } from "@/lib/i18n/config";
 
 // Runs before every page: counts robots for the ERP's "Bouclier" statistics,
@@ -96,10 +96,6 @@ function preferredLocale(request: NextRequest): { locale: Locale; stated: boolea
 }
 
 // "/wp-login.php" → "wp-login.php": what was being looked for, not the full URL.
-function probeName(pathname: string): string {
-  return (pathname.split("/").filter(Boolean)[0] ?? "/").toLowerCase().slice(0, 40);
-}
-
 export const config = {
   // Not for the build's own files, images and icons (never asked for by name
   // by a probe, and far too many to count).

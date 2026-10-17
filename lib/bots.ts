@@ -8,7 +8,7 @@ export type BotCategory = "ai" | "search" | "social" | "seo" | "monitor" | "scri
 // Most specific first: "Applebot-Extended" is an AI crawler, "Applebot" a search engine.
 const RULES: [BotCategory, RegExp][] = [
   ["ai", /(gptbot|chatgpt-user|oai-searchbot|claudebot|claude-user|claude-searchbot|anthropic-ai|ccbot|perplexitybot|perplexity-user|google-extended|applebot-extended|amazonbot|bytespider|meta-externalagent|cohere-ai|diffbot|youbot|mistralai-user|timpibot|imagesiftbot)/i],
-  ["search", /(googlebot|google-inspectiontool|storebot-google|adsbot-google|mediapartners-google|bingbot|bingpreview|applebot|yandex\w*|duckduckbot|duckassistbot|baiduspider|slurp|qwantbot|qwantify|seznambot|petalbot|sogou|exabot)/i],
+  ["search", /(googlebot|google-inspectiontool|storebot-google|adsbot-google|mediapartners-google|bingbot|bingpreview|applebot|yandex|duckduckbot|duckassistbot|baiduspider|slurp|qwantbot|qwantify|seznambot|petalbot|sogou|exabot)/i],
   // Link previewers only — not the apps' own in-app browsers (Instagram,
   // TikTok, Snapchat… open links for real people with their name in the UA).
   ["social", /(facebookexternalhit|facebookcatalog|meta-externalfetcher|whatsapp\/|telegrambot|twitterbot|linkedinbot|pinterestbot|slackbot|discordbot|skypeuripreview|redditbot|tiktokspider|iframely|embedly)/i],
@@ -36,6 +36,17 @@ const PROBE = /(\.(php\d?|asp|aspx|jsp|cgi|env|git|sql|bak|old|ini|ya?ml|config|
 
 export function isProbe(pathname: string): boolean {
   return PROBE.test(pathname);
+}
+
+/**
+ * A probe's name for the counter: the file type or path prefix it matched,
+ * from the fixed list above, never the requested path itself (that would
+ * let a caller add one database row per invented name).
+ */
+export function probeName(pathname: string): string {
+  const m = pathname.match(PROBE);
+  if (!m) return "other";
+  return m[2] ? `.${m[2].toLowerCase()}` : (m[4] ?? "other").toLowerCase().replace(/[/.]+$/, "");
 }
 
 /** What kind of screen, for the device breakdown. */

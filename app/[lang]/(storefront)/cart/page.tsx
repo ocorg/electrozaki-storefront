@@ -162,7 +162,8 @@ export default function CartPage() {
     metaTrack(
       "Purchase",
       { value: discountedTotal, content_ids: items.map(catalogId), content_type: "product", num_items: items.reduce((n, i) => n + i.quantity, 0) },
-      result.orderRequestId
+      // The public reference, not the internal id (Meta is a third party).
+      result.orderRequestId.slice(0, 8).toUpperCase()
     );
     setConfirmation(result);
     clear();

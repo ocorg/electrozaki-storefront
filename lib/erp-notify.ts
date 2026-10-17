@@ -8,7 +8,9 @@ import { after } from "next/server";
 export function notifyErp() {
   const url = process.env.ERP_NOTIFY_URL;
   const secret = process.env.REVALIDATE_SECRET;
-  if (!url || !secret) return;
+  // The secret only ever travels over HTTPS, and never follows a redirect
+  // to another address.
+  if (!url || !secret || !url.startsWith("https://")) return;
   after(async () => {
     try {
       const res = await fetch(url, {
@@ -16,6 +18,7 @@ export function notifyErp() {
         headers: { "x-site-secret": secret },
         signal: AbortSignal.timeout(8000),
         cache: "no-store",
+        redirect: "error",
       });
       if (!res.ok) console.error("[erp-notify] refused:", res.status);
     } catch (err) {
