@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
+import Link from "@/components/i18n/Link";
 import { Check, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
 import { formatMAD, savingOf } from "@/lib/format";
@@ -45,6 +46,13 @@ export type ProductVariantExperienceData = {
   isPhone: boolean;
   /** the model's spec sheet (phones), shown in the "Fiche de l'appareil" */
   specSheet?: SpecRow[];
+  /** phones: every colour the model has had (out-of-stock ones are crossed out) */
+  modelColors?: string[];
+  /** phones: the model's other listings, one per grade / storage (sold-out ones crossed out) */
+  siblings?: {
+    grades: { grade: string; slug: string; available: boolean; current: boolean }[];
+    storages: { label: string; slug: string; available: boolean; current: boolean }[];
+  };
   availability: "IN_STOCK" | "OUT_OF_STOCK" | "COMING_SOON" | "DISCONTINUED";
   recommendedSalePrice: string;
   compareAtPrice: string | null;
@@ -301,7 +309,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
                         onClick={() => handleSelectColor(color)}
                         disabled={fullyOut}
                         aria-pressed={selectedColor === color}
-                        className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
+                        className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:border-dashed disabled:text-neutral-400 disabled:line-through ${
                           selectedColor === color ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
                         }`}
                       >
@@ -339,8 +347,16 @@ export function ProductVariantExperience({ product, variants, images, categorySl
               </fieldset>
             )}
 
+            {product.siblings && product.siblings.grades.length > 1 && (
+              <SiblingRow label={p.conditionRow} unavailable={t.unitPicker.unavailable} options={product.siblings.grades.map((g) => ({ ...g, label: t.grades.label[g.grade] ?? g.grade }))} />
+            )}
+            {product.siblings && product.siblings.storages.length > 1 && (
+              <SiblingRow label={p.storage} unavailable={t.unitPicker.unavailable} options={product.siblings.storages} />
+            )}
+
             {unitMode && (
               <UnitPicker
+                allColors={product.modelColors}
                 units={variants}
                 color={unitColor}
                 battery={unitBattery}
@@ -479,5 +495,50 @@ export function ProductVariantExperience({ product, variants, images, categorySl
         {children}
       </div>
     </>
+  );
+}
+
+// The same model's other listings (another grade, another storage): links,
+// the current one marked, the sold-out ones crossed out and not clickable.
+function SiblingRow({
+  label,
+  unavailable,
+  options,
+}: {
+  label: string;
+  unavailable: string;
+  options: { label: string; slug: string; available: boolean; current: boolean }[];
+}) {
+  return (
+    <div>
+      <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">{label}</p>
+      <div className="flex flex-wrap gap-2">
+        {options.map((o) =>
+          o.current ? (
+            <span key={o.slug} aria-current="true" className="inline-flex min-h-11 items-center rounded-full border border-ink bg-ink px-4 text-sm font-semibold text-white">
+              {o.label}
+            </span>
+          ) : o.available ? (
+            <Link
+              key={o.slug}
+              href={`/products/${o.slug}`}
+              className="inline-flex min-h-11 items-center rounded-full border border-ink/15 bg-white px-4 text-sm font-semibold text-ink transition-colors hover:border-ink/40"
+            >
+              {o.label}
+            </Link>
+          ) : (
+            <span
+              key={o.slug}
+              aria-disabled="true"
+              title={unavailable}
+              className="inline-flex min-h-11 cursor-not-allowed items-center rounded-full border border-dashed border-ink/15 bg-paper px-4 text-sm text-neutral-400 line-through"
+            >
+              {o.label}
+              <span className="sr-only"> ({unavailable})</span>
+            </span>
+          )
+        )}
+      </div>
+    </div>
   );
 }

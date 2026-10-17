@@ -320,6 +320,7 @@ export const fr = {
   },
 
   pdp: {
+    conditionRow: "État",
     photos: "Photos",
     photo: (n: number) => `Photo ${n}`,
     inStock: "En stock à Meknès",
@@ -352,6 +353,7 @@ export const fr = {
   },
 
   unitPicker: {
+    unavailable: "indisponible",
     color: "Couleur",
     battery: "Batterie",
     all: "Toutes",

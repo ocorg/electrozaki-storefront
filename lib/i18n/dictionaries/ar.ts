@@ -342,6 +342,7 @@ export const ar: Dictionary = {
   },
 
   pdp: {
+    conditionRow: "الحالة",
     photos: "الصور",
     photo: (n: number) => `الصورة ${n}`,
     inStock: "متوفر في مكناس",
@@ -374,6 +375,7 @@ export const ar: Dictionary = {
   },
 
   unitPicker: {
+    unavailable: "غير متوفر",
     color: "اللون",
     battery: "البطارية",
     all: "الكل",

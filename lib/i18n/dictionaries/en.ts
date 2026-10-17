@@ -338,6 +338,7 @@ export const en: Dictionary = {
   },
 
   pdp: {
+    conditionRow: "Condition",
     photos: "Photos",
     photo: (n: number) => `Photo ${n}`,
     inStock: "In stock in Meknes",
@@ -370,6 +371,7 @@ export const en: Dictionary = {
   },
 
   unitPicker: {
+    unavailable: "unavailable",
     color: "Colour",
     battery: "Battery",
     all: "All",

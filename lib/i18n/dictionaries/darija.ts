@@ -324,6 +324,7 @@ export const darija: Dictionary = {
   },
 
   pdp: {
+    conditionRow: "L7ala",
     photos: "Tsawer",
     photo: (n: number) => `Tswira ${n}`,
     inStock: "Kayn f Mknas",
@@ -356,6 +357,7 @@ export const darija: Dictionary = {
   },
 
   unitPicker: {
+    unavailable: "ma kaynch",
     color: "Couleur",
     battery: "Batterie",
     all: "Kolchi",

@@ -5,6 +5,7 @@ import { landingStatus } from "@/lib/db/landing";
 import { MAX_QTY } from "@/lib/db/cart-pricing";
 import { ACCESSORIES_OPEN } from "@/lib/site";
 import { MODEL_FACTS, type ModelFacts } from "./models";
+import { getModelOptions } from "@/lib/db/model-options";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Phone offer pages (/offres/<model>): one page per phone model that has
@@ -87,6 +88,8 @@ export type PhoneOffer = {
   /** biggest saving on one unit, DH */
   bestSaving: number;
   storages: string[];
+  /** every grade, storage and colour the model has had (sold-out ones are shown crossed out) */
+  options: { grades: string[]; storages: string[]; colors: string[] };
   /** memory of the units' listings ("8GB"), when the ERP gives it */
   rams: string[];
   grades: string[];
@@ -221,9 +224,15 @@ async function loadPhoneOffers(): Promise<PhoneOffer[]> {
     const storages = [...new Set(units.map((u) => u.storage).filter((s): s is string => !!s))].sort(
       (a, b) => parseInt(a) * (/TB|To/i.test(a) ? 1024 : 1) - parseInt(b) * (/TB|To/i.test(b) ? 1024 : 1)
     );
+    const all = await getModelOptions(modelKey);
     offers.push({
       slug,
       modelKey,
+      options: {
+        grades: GRADE_ORDER.filter((g) => all.listings.some((l) => l.grade === g)),
+        storages: [...new Set(all.listings.map((l) => l.storage).filter((x): x is string => !!x))],
+        colors: all.colors,
+      },
       brandKey: modelKey.split("|")[0],
       name,
       brand: group[0].brand ?? "",

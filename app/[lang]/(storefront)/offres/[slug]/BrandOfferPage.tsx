@@ -112,6 +112,7 @@ export function BrandOfferPage({ brand, locale, t }: { brand: BrandOffer; locale
           addons={[]}
           sheets={sheets}
           models={brand.models.map((m) => ({ slug: m.slug, name: m.name }))}
+          options={Object.fromEntries(brand.models.map((m) => [m.slug, m.options]))}
         />
       </div>
 

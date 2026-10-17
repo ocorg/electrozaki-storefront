@@ -34,6 +34,7 @@ import { artFor } from "@/lib/category-art";
 import { offerForListing } from "@/lib/offers/phone-offers";
 import { OFFER_COPY } from "@/lib/offers/copy";
 import { factsFor, specRows } from "@/lib/offers/spec-sheet";
+import { getModelOptions, type ModelListing } from "@/lib/db/model-options";
 import { InspectionReport } from "@/components/storefront/InspectionReport";
 
 export const revalidate = 60;
@@ -154,6 +155,11 @@ export default async function ProductPage({ params }: Props) {
   const specSheet = facts
     ? specRows(facts, locale, { storage: specs["Stockage"], ram: specs["RAM"]?.replace(/\s+/g, "") })
     : undefined;
+
+  // A phone's other options: every colour of the model, and its other
+  // listings (grade, storage), the sold-out ones shown crossed out.
+  const modelOptions = product.isPhone && product.modelKey ? await getModelOptions(product.modelKey) : null;
+  const siblings = modelOptions ? modelSiblings(modelOptions.listings, product.slug) : undefined;
   const giftOptions = product.compatibleAccessories.filter((c) => c.isGiftOption);
 
   // Prisma Decimal fields (and the whole product/variant shape generally)
@@ -194,6 +200,8 @@ export default async function ProductPage({ params }: Props) {
     compareAtPrice: product.compareAtPrice?.toString() ?? null,
     description: product.description,
     specSheet,
+    modelColors: modelOptions?.colors,
+    siblings,
     hasDefects: product.hasDefects,
     transparencyNotes: product.transparencyNotes,
     condition: {
@@ -381,4 +389,37 @@ export default async function ProductPage({ params }: Props) {
       )}
     </div>
   );
+}
+
+const GRADE_ORDER = ["NEUF", "TRES_BON", "BON", "PIECES_REMPLACEES"];
+
+/**
+ * The listing's neighbours: the same storage in every grade, and the same
+ * grade in every storage (with the RAM when it differs), one option each.
+ */
+function modelSiblings(listings: ModelListing[], slug: string) {
+  const me = listings.find((l) => l.slug === slug);
+  if (!me) return undefined;
+  const pick = (group: ModelListing[]) =>
+    group.find((l) => l.slug === slug) ?? group.find((l) => l.available) ?? group[0];
+
+  const sameStorage = listings.filter((l) => l.storage === me.storage);
+  const grades = GRADE_ORDER.flatMap((g) => {
+    const group = sameStorage.filter((l) => l.grade === g);
+    if (!group.length) return [];
+    const l = pick(group);
+    return [{ grade: g, slug: l.slug, available: l.available, current: l.slug === slug }];
+  });
+
+  const sameGrade = listings.filter((l) => l.grade === me.grade);
+  const rams = new Set(sameGrade.map((l) => l.ram));
+  const labelOf = (l: ModelListing) => [l.storage ?? "?", rams.size > 1 && l.ram ? `${l.ram} RAM` : null].filter(Boolean).join(" · ");
+  const byLabel = new Map<string, ModelListing[]>();
+  for (const l of sameGrade) byLabel.set(labelOf(l), [...(byLabel.get(labelOf(l)) ?? []), l]);
+  const storages = [...byLabel].map(([label, group]) => {
+    const l = pick(group);
+    return { label, slug: l.slug, available: l.available, current: l.slug === slug };
+  });
+
+  return { grades, storages };
 }

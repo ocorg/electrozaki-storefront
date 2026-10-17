@@ -144,6 +144,7 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
           images={offer.images}
           addons={offer.addons}
           sheets={{ [offer.slug]: sheet }}
+          options={{ [offer.slug]: offer.options }}
         />
       </div>
 

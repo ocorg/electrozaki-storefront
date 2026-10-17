@@ -60,24 +60,48 @@ type Props = {
   onColor: (c: string) => void;
   onBattery: (b: BatteryRange) => void;
   onSelect: (id: string) => void;
+  /** every colour the model has had: the ones with no phone here show crossed out */
+  allColors?: string[];
 };
 
-function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
+// An option out of stock stays visible, crossed out and not selectable, so
+// the customer sees what the model comes in (and that it isn't here now).
+export function OptionChip({
+  on,
+  onClick,
+  disabled = false,
+  unavailableLabel,
+  children,
+}: {
+  on: boolean;
+  onClick: () => void;
+  disabled?: boolean;
+  unavailableLabel?: string;
+  children: React.ReactNode;
+}) {
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
       aria-pressed={on}
+      aria-disabled={disabled || undefined}
+      title={disabled ? unavailableLabel : undefined}
       className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm transition-colors ${
-        on ? "border-gold-deep bg-gold/15 font-semibold text-ink" : "border-ink/15 bg-white text-neutral-800 hover:border-ink/40"
+        disabled
+          ? "cursor-not-allowed border-dashed border-ink/15 bg-paper text-neutral-400 line-through decoration-neutral-400"
+          : on
+            ? "border-gold-deep bg-gold/15 font-semibold text-ink"
+            : "border-ink/15 bg-white text-neutral-800 hover:border-ink/40"
       }`}
     >
       {children}
+      {disabled && unavailableLabel && <span className="sr-only">({unavailableLabel})</span>}
     </button>
   );
 }
+const Chip = OptionChip;
 
-export function UnitPicker({ units, color, battery, selectedId, onColor, onBattery, onSelect }: Props) {
+export function UnitPicker({ units, color, battery, selectedId, onColor, onBattery, onSelect, allColors = [] }: Props) {
   const t = useT();
   const label = (c: string) => (c === NO_COLOR ? t.unitPicker.other : colorName(t, c));
   const inStock = useMemo(() => units.filter((u) => u.stockQuantity > 0), [units]);
@@ -88,12 +112,18 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
       const c = u.color ?? NO_COLOR;
       counts.set(c, (counts.get(c) ?? 0) + 1);
     }
-    return [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "fr"));
-  }, [inStock]);
+    const here = [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "fr"));
+    // The model's other colours, after the ones in stock, with no phone (0).
+    const missing = allColors.filter((c) => !counts.has(c)).map((c) => [c, 0] as [string, number]);
+    return [...here, ...missing];
+  }, [inStock, allColors]);
 
   const byColor = inStock.filter((u) => color === "all" || (u.color ?? NO_COLOR) === color);
-  // Only ranges that have a unit; how many is never shown (stock is private).
-  const ranges = RANGES.filter((r) => byColor.some((u) => r.test(u.batteryHealthPercent)));
+  // Every battery range ("not stated" only when a unit has none), the empty
+  // ones crossed out; how many is never shown (stock is private).
+  const hasRange = (r: (typeof RANGES)[number]) => byColor.some((u) => r.test(u.batteryHealthPercent));
+  const ranges = RANGES.filter((r) => r.key !== "na" || hasRange(r));
+  const anyBattery = byColor.some((u) => u.batteryHealthPercent !== null);
   const matching = matchUnits(units, color, battery);
 
   return (
@@ -105,8 +135,8 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
             <Chip on={color === "all"} onClick={() => onColor("all")}>
               {t.unitPicker.all}
             </Chip>
-            {colors.map(([c]) => (
-              <Chip key={c} on={color === c} onClick={() => onColor(c)}>
+            {colors.map(([c, n]) => (
+              <Chip key={c} on={color === c} onClick={() => onColor(c)} disabled={n === 0} unavailableLabel={t.unitPicker.unavailable}>
                 <span className="h-4 w-4 rounded-full border border-black/15" style={{ background: swatch(c) }} aria-hidden />
                 {label(c)}
               </Chip>
@@ -115,7 +145,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
         </div>
       )}
 
-      {ranges.length > 1 && (
+      {anyBattery && ranges.filter(hasRange).length >= 1 && (
         <div>
           <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">
             {colors.length > 1 ? "2. " : ""}{t.unitPicker.battery}
@@ -125,7 +155,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
               {t.unitPicker.all}
             </Chip>
             {ranges.map((r) => (
-              <Chip key={r.key} on={battery === r.key} onClick={() => onBattery(r.key)}>
+              <Chip key={r.key} on={battery === r.key} onClick={() => onBattery(r.key)} disabled={!hasRange(r)} unavailableLabel={t.unitPicker.unavailable}>
                 {t.unitPicker.ranges[r.key]}
               </Chip>
             ))}

@@ -25,7 +25,7 @@ import {
 import { useT } from "@/components/i18n/I18nProvider";
 import Link from "@/components/i18n/Link";
 import { ProductVisual } from "@/components/storefront/ProductVisual";
-import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
+import { OptionChip, UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
 import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
 import type { VariantData } from "@/components/storefront/ProductVariantExperience";
 import { DeliveryPicker } from "@/components/cart/DeliveryPicker";
@@ -95,7 +95,15 @@ type Props = {
   sheets: Record<string, SpecRow[]>;
   /** a brand page's models (chosen above grade and storage) */
   models?: { slug: string; name: string }[];
+  /** per model (offer slug): every grade, storage and colour it has had, the sold-out ones shown crossed out */
+  options?: Record<string, OfferOptions>;
 };
+
+export type OfferOptions = { grades: string[]; storages: string[]; colors: string[] };
+
+// "128 Go" and "128GB" are the same storage.
+const storageKey = (s: string) => s.replace(/\s/g, "").toUpperCase().replace(/GO$/, "GB").replace(/TO$/, "TB");
+const storageSize = (s: string) => parseInt(s) * (/TB|To/i.test(s) ? 1024 : 1);
 
 function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
@@ -112,7 +120,7 @@ function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; chi
   );
 }
 
-export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, images, addons, sheets, models = [] }: Props) {
+export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, images, addons, sheets, models = [], options = {} }: Props) {
   const t = useT();
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -122,6 +130,20 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
   const [storage, setStorage] = useState("all");
   const [model, setModel] = useState("all");
   const manyModels = models.length > 1;
+
+  // The chips above the picker: every grade and storage the chosen model
+  // (or, on a brand page, any model) has had; those with no unit in stock
+  // stay, crossed out.
+  const scopeUnits = units.filter((u) => model === "all" || u.offerSlug === model);
+  const scopeOptions = model === "all" ? Object.values(options) : options[model] ? [options[model]] : [];
+  const gradeChips = GRADE_ORDER.filter((g) => scopeUnits.some((u) => u.grade === g) || scopeOptions.some((o) => o.grades.includes(g)));
+  const storageChips = (() => {
+    const out = new Map<string, string>();
+    for (const s of scopeUnits.map((u) => u.storage).filter((x): x is string => !!x)) if (!out.has(storageKey(s))) out.set(storageKey(s), s);
+    for (const s of scopeOptions.flatMap((o) => o.storages)) if (!out.has(storageKey(s))) out.set(storageKey(s), s);
+    return [...out.values()].sort((a, b) => storageSize(a) - storageSize(b));
+  })();
+  const scopeColors = [...new Set(scopeOptions.flatMap((o) => o.colors))];
 
   // The unit picker speaks the product page's shape. Grade and storage are
   // chosen above it, and written on each card when the units mix them.
@@ -205,7 +227,15 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
     setStorage(s);
     setColor(c);
     setBattery(b);
-    const pool = inScope(g, s, m);
+    let pool = inScope(g, s, m);
+    // A grade with no unit in the chosen storage (or the reverse): drop the other filter.
+    if (!pool.length) {
+      const g2 = next.grade !== undefined ? g : "all";
+      const s2 = next.storage !== undefined ? s : "all";
+      setGrade(g2);
+      setStorage(s2);
+      pool = inScope(g2, s2, m);
+    }
     let matches = matchUnits(pool, c, b);
     // A colour or battery range this grade/storage doesn't have: start over on colour and battery.
     if (!matches.length && (next.model !== undefined || next.grade !== undefined || next.storage !== undefined)) {
@@ -413,38 +443,51 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                     </div>
                   </div>
                 )}
-                {grades.length > 1 && (
+                {gradeChips.length > 1 && (
                   <div>
                     <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">{copy.grade}</p>
                     <div className="flex flex-wrap gap-2">
                       <Chip on={grade === "all"} onClick={() => refilter({ grade: "all" })}>
                         {copy.all}
                       </Chip>
-                      {grades.map((g) => (
-                        <Chip key={g} on={grade === g} onClick={() => refilter({ grade: g })}>
+                      {gradeChips.map((g) => (
+                        <OptionChip
+                          key={g}
+                          on={grade === g}
+                          onClick={() => refilter({ grade: g })}
+                          disabled={!scopeUnits.some((u) => u.grade === g)}
+                          unavailableLabel={t.unitPicker.unavailable}
+                        >
                           {t.grades.label[g] ?? g}
-                        </Chip>
+                        </OptionChip>
                       ))}
                     </div>
                   </div>
                 )}
-                {storages.length > 1 && (
+                {storageChips.length > 1 && (
                   <div>
                     <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">{copy.storage}</p>
                     <div className="flex flex-wrap gap-2">
                       <Chip on={storage === "all"} onClick={() => refilter({ storage: "all" })}>
                         {copy.all}
                       </Chip>
-                      {storages.map((s) => (
-                        <Chip key={s} on={storage === s} onClick={() => refilter({ storage: s })}>
+                      {storageChips.map((s) => (
+                        <OptionChip
+                          key={s}
+                          on={storage === s}
+                          onClick={() => refilter({ storage: s })}
+                          disabled={!scopeUnits.some((u) => u.storage === s)}
+                          unavailableLabel={t.unitPicker.unavailable}
+                        >
                           {s}
-                        </Chip>
+                        </OptionChip>
                       ))}
                     </div>
                   </div>
                 )}
                 <UnitPicker
                   units={variants}
+                  allColors={scopeColors}
                   color={color}
                   battery={battery}
                   selectedId={unitId}
