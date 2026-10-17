@@ -23,6 +23,11 @@ export const FEED_COLUMNS = [
   "image_link",
   "brand",
   "product_type",
+  // For the product sets in Commerce Manager (filter "custom label 0…3"):
+  "custom_label_0", // condition: "Très bon état", "Pièces remplacées"…
+  "custom_label_1", // phones: "Pièces d'origine" or "Pièces remplacées"
+  "custom_label_2", // "Promo" when the item has a "was" price
+  "custom_label_3", // phone model: "iphone 14", "samsung galaxy s24 ultra"
 ] as const;
 
 type Row = Record<(typeof FEED_COLUMNS)[number], string>;
@@ -55,25 +60,34 @@ export function feedRows(products: PublicProduct[], imageFallback: (slug: string
     const grade = GRADE[p.condition] ?? "";
     const condition = p.condition === "NEUF" ? "new" : "used";
     const cover = p.images[0]?.url ?? imageFallback(p.slug);
+    const labels = (was: number | null, pay: number) => ({
+      custom_label_0: grade,
+      custom_label_1: p.isPhone && grade ? (p.condition === "PIECES_REMPLACEES" ? "Pièces remplacées" : "Pièces d'origine") : "",
+      custom_label_2: was !== null && was > pay ? "Promo" : "",
+      custom_label_3: p.isPhone ? (p.modelKey?.split("|")[1] ?? "") : "",
+    });
     const shop = "Vendu par Electro Zaki à Meknès, livraison partout au Maroc, paiement à la livraison.";
 
     const units = p.isPhone ? p.variants.filter((v) => v.stockQuantity > 0) : [];
     if (units.length) {
       for (const v of units) {
         const battery = v.batteryHealthPercent ?? p.batteryHealthPercent;
+        const pay = num(v.priceOverride) ?? num(p.recommendedSalePrice)!;
         const details = [grade, v.color, battery != null && p.condition !== "NEUF" ? `batterie ${battery} %` : null].filter(Boolean).join(", ");
         rows.push({
           id: v.id,
           item_group_id: p.id,
-          title: plain(`${p.name}${v.color ? ` ${v.color}` : ""}`).slice(0, 150),
+          // The condition in the title: the ad's product card shows it.
+          title: plain(`${p.name}${v.color ? ` ${v.color}` : ""}${grade ? ` · ${grade}` : ""}`).slice(0, 150),
           description: plain(`${p.name} : ${details}. ${v.hasDefects && v.transparencyNotes ? `${v.transparencyNotes}. ` : ""}${shop}`).slice(0, 5000),
           availability: "in stock",
           condition,
-          ...prices(num(v.priceOverride) ?? num(p.recommendedSalePrice)!, num(v.compareAtPrice)),
+          ...prices(pay, num(v.compareAtPrice)),
           link,
           image_link: v.imageUrl ?? cover,
           brand,
           product_type: type,
+          ...labels(num(v.compareAtPrice), pay),
         });
       }
       continue;
@@ -91,6 +105,7 @@ export function feedRows(products: PublicProduct[], imageFallback: (slug: string
       image_link: cover,
       brand,
       product_type: type,
+      ...labels(num(p.compareAtPrice), num(p.recommendedSalePrice)!),
     });
   }
   return rows;
