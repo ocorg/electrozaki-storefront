@@ -14,7 +14,7 @@ import {
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import type { ModelFacts } from "@/lib/offers/models";
 
-// "Contrôle Zaki": what the technicians check on every used phone before it
+// "Contrôle Electro Zaki": what the technicians check on every used phone before it
 // is put on sale (the shop's own list, all brands). The list follows the
 // phone: Face ID or the fingerprint reader, the iCloud or Google/Samsung
 // account, the OLED burn-in check only on an OLED screen; the score counts

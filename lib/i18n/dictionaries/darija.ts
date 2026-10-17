@@ -371,7 +371,7 @@ export const darija: Dictionary = {
   },
 
   inspection: {
-    eyebrow: "Contrôle Zaki",
+    eyebrow: "Contrôle Electro Zaki",
     title: (n: number) => `${n} point mchoufin 9bel l bi3.`,
     intro: "Kol téléphone mosta3mel kaydouz 3la les techniciens dyalna 9bel ma ytl3 l bi3, ay marque kan. Ila chi pièce tbeddlat, mktouba f la fiche dyalo.",
     score: "point mchoufin",

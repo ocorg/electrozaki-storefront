@@ -385,7 +385,7 @@ export const en: Dictionary = {
   },
 
   inspection: {
-    eyebrow: "Zaki Check",
+    eyebrow: "Electro Zaki Check",
     title: (n: number) => `${n} points checked before it's sold.`,
     intro: "Every used phone goes through our technicians' hands before it's put on sale, whatever the brand. If a part was replaced, its page says so.",
     score: "points checked",

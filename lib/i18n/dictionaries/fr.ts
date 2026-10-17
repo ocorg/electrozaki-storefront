@@ -365,7 +365,7 @@ export const fr = {
   },
 
   inspection: {
-    eyebrow: "Contrôle Zaki",
+    eyebrow: "Contrôle Electro Zaki",
     title: (n: number) => `${n} points vérifiés avant la vente.`,
     intro: "Chaque téléphone d'occasion passe entre les mains de nos techniciens avant d'être mis en vente, quelle que soit la marque. Si une pièce a été remplacée, c'est écrit sur sa fiche.",
     score: "points vérifiés",
