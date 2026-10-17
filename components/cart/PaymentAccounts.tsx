@@ -56,7 +56,7 @@ export function PaymentAccounts() {
               return (
                 <div key={id} className="flex items-center justify-between gap-2 rounded-md bg-paper px-2.5 py-1.5">
                   <div className="min-w-0">
-                    <dt className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+                    <dt className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
                       {d.label}
                     </dt>
                     <dd dir="ltr" className="readout select-all break-words text-[13px] font-semibold text-ink">

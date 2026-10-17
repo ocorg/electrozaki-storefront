@@ -55,7 +55,7 @@ export async function ProductCard({
         />
         <div className="absolute inset-x-2 top-2 z-3 flex items-start justify-between gap-2">
           {isSoldOut || isComingSoon ? (
-            <span className="rounded-full bg-ink/90 px-2.5 py-1 text-[11px] font-semibold text-white">
+            <span className="rounded-full bg-ink/90 px-2.5 py-1 text-xs font-semibold text-white">
               {isComingSoon ? t.product.comingSoon : t.product.soldOut}
             </span>
           ) : (
@@ -64,7 +64,7 @@ export async function ProductCard({
             <span />
           )}
           {(saving !== null || unitPromo) && (
-            <span dir={saving !== null ? "ltr" : undefined} className="rounded-full bg-red-600 px-2.5 py-1 font-mono text-[11px] font-bold text-white">
+            <span dir={saving !== null ? "ltr" : undefined} className="rounded-full bg-red-600 px-2.5 py-1 font-mono text-xs font-bold text-white">
               {saving !== null ? `-${formatMAD(saving)}` : t.product.promo}
             </span>
           )}
@@ -72,7 +72,7 @@ export async function ProductCard({
       </div>
 
       <div className="flex flex-1 flex-col px-3.5 pb-3.5 pt-3 sm:px-4 sm:pb-4">
-        <p className="min-h-4 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+        <p className="min-h-4 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-500">
           {product.brand ?? categoryName(t, product.category.slug, product.category.name)}
         </p>
         <h3 className="mt-0.5 line-clamp-2 min-h-[2.6em] text-[15px] font-semibold leading-snug text-ink" title={product.name}>
@@ -102,7 +102,7 @@ export async function ProductCard({
 
         <div className="mt-auto flex items-end justify-between gap-2 pt-3">
           <p className="leading-none">
-            {fromPrice && <span className="mb-1 block text-[11px] font-medium text-neutral-500">{t.product.fromPrice}</span>}
+            {fromPrice && <span className="mb-1 block text-xs font-medium text-neutral-500">{t.product.fromPrice}</span>}
             <span className="readout text-lg font-bold text-ink sm:text-xl">
               {formatMAD(product.recommendedSalePrice.toString())}
             </span>

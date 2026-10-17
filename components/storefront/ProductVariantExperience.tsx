@@ -286,7 +286,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
           <div className="mt-7 space-y-5">
             {hasColorVariants && (
               <fieldset>
-                <legend className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
+                <legend className="mb-2 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">
                   {p.color}{selectedColor ? ` · ${colorName(t, selectedColor)}` : ""}
                 </legend>
                 <div className="flex flex-wrap gap-2">
@@ -316,7 +316,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
 
             {hasColorVariants && hasStorageVariants && selectedColor && (
               <fieldset>
-                <legend className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">{p.storage}</legend>
+                <legend className="mb-2 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">{p.storage}</legend>
                 <div className="flex flex-wrap gap-2">
                   {storagesForColor(selectedColor).map((storage) => {
                     const disabled = comboDisabled(selectedColor, storage);

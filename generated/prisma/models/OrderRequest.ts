@@ -48,6 +48,10 @@ export type OrderRequestMinAggregateOutputType = {
   deliveryEstimate: Date | null
   deliveryUnavailable: boolean | null
   status: $Enums.OrderRequestStatus | null
+  erpDeliveryId: string | null
+  shippingStatus: $Enums.ShippingStatus | null
+  trackingNumber: string | null
+  shippingUpdatedAt: Date | null
   totalEstimate: runtime.Decimal | null
   whatsappOpenedAt: Date | null
   notes: string | null
@@ -74,6 +78,10 @@ export type OrderRequestMaxAggregateOutputType = {
   deliveryEstimate: Date | null
   deliveryUnavailable: boolean | null
   status: $Enums.OrderRequestStatus | null
+  erpDeliveryId: string | null
+  shippingStatus: $Enums.ShippingStatus | null
+  trackingNumber: string | null
+  shippingUpdatedAt: Date | null
   totalEstimate: runtime.Decimal | null
   whatsappOpenedAt: Date | null
   notes: string | null
@@ -100,6 +108,10 @@ export type OrderRequestCountAggregateOutputType = {
   deliveryEstimate: number
   deliveryUnavailable: number
   status: number
+  erpDeliveryId: number
+  shippingStatus: number
+  trackingNumber: number
+  shippingUpdatedAt: number
   totalEstimate: number
   whatsappOpenedAt: number
   notes: number
@@ -140,6 +152,10 @@ export type OrderRequestMinAggregateInputType = {
   deliveryEstimate?: true
   deliveryUnavailable?: true
   status?: true
+  erpDeliveryId?: true
+  shippingStatus?: true
+  trackingNumber?: true
+  shippingUpdatedAt?: true
   totalEstimate?: true
   whatsappOpenedAt?: true
   notes?: true
@@ -166,6 +182,10 @@ export type OrderRequestMaxAggregateInputType = {
   deliveryEstimate?: true
   deliveryUnavailable?: true
   status?: true
+  erpDeliveryId?: true
+  shippingStatus?: true
+  trackingNumber?: true
+  shippingUpdatedAt?: true
   totalEstimate?: true
   whatsappOpenedAt?: true
   notes?: true
@@ -192,6 +212,10 @@ export type OrderRequestCountAggregateInputType = {
   deliveryEstimate?: true
   deliveryUnavailable?: true
   status?: true
+  erpDeliveryId?: true
+  shippingStatus?: true
+  trackingNumber?: true
+  shippingUpdatedAt?: true
   totalEstimate?: true
   whatsappOpenedAt?: true
   notes?: true
@@ -305,6 +329,10 @@ export type OrderRequestGroupByOutputType = {
   deliveryEstimate: Date | null
   deliveryUnavailable: boolean
   status: $Enums.OrderRequestStatus
+  erpDeliveryId: string | null
+  shippingStatus: $Enums.ShippingStatus | null
+  trackingNumber: string | null
+  shippingUpdatedAt: Date | null
   totalEstimate: runtime.Decimal
   whatsappOpenedAt: Date | null
   notes: string | null
@@ -354,6 +382,10 @@ export type OrderRequestWhereInput = {
   deliveryEstimate?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   deliveryUnavailable?: Prisma.BoolFilter<"OrderRequest"> | boolean
   status?: Prisma.EnumOrderRequestStatusFilter<"OrderRequest"> | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  shippingStatus?: Prisma.EnumShippingStatusNullableFilter<"OrderRequest"> | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  shippingUpdatedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   totalEstimate?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
@@ -383,6 +415,10 @@ export type OrderRequestOrderByWithRelationInput = {
   deliveryEstimate?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryUnavailable?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  erpDeliveryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  shippingStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  trackingNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  shippingUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   totalEstimate?: Prisma.SortOrder
   whatsappOpenedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -415,6 +451,10 @@ export type OrderRequestWhereUniqueInput = Prisma.AtLeast<{
   deliveryEstimate?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   deliveryUnavailable?: Prisma.BoolFilter<"OrderRequest"> | boolean
   status?: Prisma.EnumOrderRequestStatusFilter<"OrderRequest"> | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  shippingStatus?: Prisma.EnumShippingStatusNullableFilter<"OrderRequest"> | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  shippingUpdatedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   totalEstimate?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
@@ -444,6 +484,10 @@ export type OrderRequestOrderByWithAggregationInput = {
   deliveryEstimate?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryUnavailable?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  erpDeliveryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  shippingStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  trackingNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  shippingUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   totalEstimate?: Prisma.SortOrder
   whatsappOpenedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -478,6 +522,10 @@ export type OrderRequestScalarWhereWithAggregatesInput = {
   deliveryEstimate?: Prisma.DateTimeNullableWithAggregatesFilter<"OrderRequest"> | Date | string | null
   deliveryUnavailable?: Prisma.BoolWithAggregatesFilter<"OrderRequest"> | boolean
   status?: Prisma.EnumOrderRequestStatusWithAggregatesFilter<"OrderRequest"> | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
+  shippingStatus?: Prisma.EnumShippingStatusNullableWithAggregatesFilter<"OrderRequest"> | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
+  shippingUpdatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"OrderRequest"> | Date | string | null
   totalEstimate?: Prisma.DecimalWithAggregatesFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"OrderRequest"> | Date | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"OrderRequest"> | string | null
@@ -504,6 +552,10 @@ export type OrderRequestCreateInput = {
   deliveryEstimate?: Date | string | null
   deliveryUnavailable?: boolean
   status?: $Enums.OrderRequestStatus
+  erpDeliveryId?: string | null
+  shippingStatus?: $Enums.ShippingStatus | null
+  trackingNumber?: string | null
+  shippingUpdatedAt?: Date | string | null
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
@@ -531,6 +583,10 @@ export type OrderRequestUncheckedCreateInput = {
   deliveryEstimate?: Date | string | null
   deliveryUnavailable?: boolean
   status?: $Enums.OrderRequestStatus
+  erpDeliveryId?: string | null
+  shippingStatus?: $Enums.ShippingStatus | null
+  trackingNumber?: string | null
+  shippingUpdatedAt?: Date | string | null
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
@@ -558,6 +614,10 @@ export type OrderRequestUpdateInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -585,6 +645,10 @@ export type OrderRequestUncheckedUpdateInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -612,6 +676,10 @@ export type OrderRequestCreateManyInput = {
   deliveryEstimate?: Date | string | null
   deliveryUnavailable?: boolean
   status?: $Enums.OrderRequestStatus
+  erpDeliveryId?: string | null
+  shippingStatus?: $Enums.ShippingStatus | null
+  trackingNumber?: string | null
+  shippingUpdatedAt?: Date | string | null
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
@@ -638,6 +706,10 @@ export type OrderRequestUpdateManyMutationInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -662,6 +734,10 @@ export type OrderRequestUncheckedUpdateManyInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -688,6 +764,10 @@ export type OrderRequestCountOrderByAggregateInput = {
   deliveryEstimate?: Prisma.SortOrder
   deliveryUnavailable?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  erpDeliveryId?: Prisma.SortOrder
+  shippingStatus?: Prisma.SortOrder
+  trackingNumber?: Prisma.SortOrder
+  shippingUpdatedAt?: Prisma.SortOrder
   totalEstimate?: Prisma.SortOrder
   whatsappOpenedAt?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -720,6 +800,10 @@ export type OrderRequestMaxOrderByAggregateInput = {
   deliveryEstimate?: Prisma.SortOrder
   deliveryUnavailable?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  erpDeliveryId?: Prisma.SortOrder
+  shippingStatus?: Prisma.SortOrder
+  trackingNumber?: Prisma.SortOrder
+  shippingUpdatedAt?: Prisma.SortOrder
   totalEstimate?: Prisma.SortOrder
   whatsappOpenedAt?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -746,6 +830,10 @@ export type OrderRequestMinOrderByAggregateInput = {
   deliveryEstimate?: Prisma.SortOrder
   deliveryUnavailable?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  erpDeliveryId?: Prisma.SortOrder
+  shippingStatus?: Prisma.SortOrder
+  trackingNumber?: Prisma.SortOrder
+  shippingUpdatedAt?: Prisma.SortOrder
   totalEstimate?: Prisma.SortOrder
   whatsappOpenedAt?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -789,6 +877,10 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type EnumOrderRequestStatusFieldUpdateOperationsInput = {
   set?: $Enums.OrderRequestStatus
+}
+
+export type NullableEnumShippingStatusFieldUpdateOperationsInput = {
+  set?: $Enums.ShippingStatus | null
 }
 
 export type EnumAdvancePaymentStatusFieldUpdateOperationsInput = {
@@ -903,6 +995,10 @@ export type OrderRequestCreateWithoutItemsInput = {
   deliveryEstimate?: Date | string | null
   deliveryUnavailable?: boolean
   status?: $Enums.OrderRequestStatus
+  erpDeliveryId?: string | null
+  shippingStatus?: $Enums.ShippingStatus | null
+  trackingNumber?: string | null
+  shippingUpdatedAt?: Date | string | null
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
@@ -929,6 +1025,10 @@ export type OrderRequestUncheckedCreateWithoutItemsInput = {
   deliveryEstimate?: Date | string | null
   deliveryUnavailable?: boolean
   status?: $Enums.OrderRequestStatus
+  erpDeliveryId?: string | null
+  shippingStatus?: $Enums.ShippingStatus | null
+  trackingNumber?: string | null
+  shippingUpdatedAt?: Date | string | null
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
@@ -971,6 +1071,10 @@ export type OrderRequestUpdateWithoutItemsInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -997,6 +1101,10 @@ export type OrderRequestUncheckedUpdateWithoutItemsInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1023,6 +1131,10 @@ export type OrderRequestCreateWithoutPromoCodeInput = {
   deliveryEstimate?: Date | string | null
   deliveryUnavailable?: boolean
   status?: $Enums.OrderRequestStatus
+  erpDeliveryId?: string | null
+  shippingStatus?: $Enums.ShippingStatus | null
+  trackingNumber?: string | null
+  shippingUpdatedAt?: Date | string | null
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
@@ -1049,6 +1161,10 @@ export type OrderRequestUncheckedCreateWithoutPromoCodeInput = {
   deliveryEstimate?: Date | string | null
   deliveryUnavailable?: boolean
   status?: $Enums.OrderRequestStatus
+  erpDeliveryId?: string | null
+  shippingStatus?: $Enums.ShippingStatus | null
+  trackingNumber?: string | null
+  shippingUpdatedAt?: Date | string | null
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
@@ -1104,6 +1220,10 @@ export type OrderRequestScalarWhereInput = {
   deliveryEstimate?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   deliveryUnavailable?: Prisma.BoolFilter<"OrderRequest"> | boolean
   status?: Prisma.EnumOrderRequestStatusFilter<"OrderRequest"> | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  shippingStatus?: Prisma.EnumShippingStatusNullableFilter<"OrderRequest"> | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
+  shippingUpdatedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   totalEstimate?: Prisma.DecimalFilter<"OrderRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.DateTimeNullableFilter<"OrderRequest"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"OrderRequest"> | string | null
@@ -1130,6 +1250,10 @@ export type OrderRequestCreateWithoutLandingPageInput = {
   deliveryEstimate?: Date | string | null
   deliveryUnavailable?: boolean
   status?: $Enums.OrderRequestStatus
+  erpDeliveryId?: string | null
+  shippingStatus?: $Enums.ShippingStatus | null
+  trackingNumber?: string | null
+  shippingUpdatedAt?: Date | string | null
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
@@ -1156,6 +1280,10 @@ export type OrderRequestUncheckedCreateWithoutLandingPageInput = {
   deliveryEstimate?: Date | string | null
   deliveryUnavailable?: boolean
   status?: $Enums.OrderRequestStatus
+  erpDeliveryId?: string | null
+  shippingStatus?: $Enums.ShippingStatus | null
+  trackingNumber?: string | null
+  shippingUpdatedAt?: Date | string | null
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
@@ -1208,6 +1336,10 @@ export type OrderRequestCreateManyPromoCodeInput = {
   deliveryEstimate?: Date | string | null
   deliveryUnavailable?: boolean
   status?: $Enums.OrderRequestStatus
+  erpDeliveryId?: string | null
+  shippingStatus?: $Enums.ShippingStatus | null
+  trackingNumber?: string | null
+  shippingUpdatedAt?: Date | string | null
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
@@ -1233,6 +1365,10 @@ export type OrderRequestUpdateWithoutPromoCodeInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1259,6 +1395,10 @@ export type OrderRequestUncheckedUpdateWithoutPromoCodeInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1285,6 +1425,10 @@ export type OrderRequestUncheckedUpdateManyWithoutPromoCodeInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1310,6 +1454,10 @@ export type OrderRequestCreateManyLandingPageInput = {
   deliveryEstimate?: Date | string | null
   deliveryUnavailable?: boolean
   status?: $Enums.OrderRequestStatus
+  erpDeliveryId?: string | null
+  shippingStatus?: $Enums.ShippingStatus | null
+  trackingNumber?: string | null
+  shippingUpdatedAt?: Date | string | null
   totalEstimate: runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Date | string | null
   notes?: string | null
@@ -1335,6 +1483,10 @@ export type OrderRequestUpdateWithoutLandingPageInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1361,6 +1513,10 @@ export type OrderRequestUncheckedUpdateWithoutLandingPageInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1387,6 +1543,10 @@ export type OrderRequestUncheckedUpdateManyWithoutLandingPageInput = {
   deliveryEstimate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryUnavailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumOrderRequestStatusFieldUpdateOperationsInput | $Enums.OrderRequestStatus
+  erpDeliveryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingStatus?: Prisma.NullableEnumShippingStatusFieldUpdateOperationsInput | $Enums.ShippingStatus | null
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalEstimate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whatsappOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1443,6 +1603,10 @@ export type OrderRequestSelect<ExtArgs extends runtime.Types.Extensions.Internal
   deliveryEstimate?: boolean
   deliveryUnavailable?: boolean
   status?: boolean
+  erpDeliveryId?: boolean
+  shippingStatus?: boolean
+  trackingNumber?: boolean
+  shippingUpdatedAt?: boolean
   totalEstimate?: boolean
   whatsappOpenedAt?: boolean
   notes?: boolean
@@ -1473,6 +1637,10 @@ export type OrderRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   deliveryEstimate?: boolean
   deliveryUnavailable?: boolean
   status?: boolean
+  erpDeliveryId?: boolean
+  shippingStatus?: boolean
+  trackingNumber?: boolean
+  shippingUpdatedAt?: boolean
   totalEstimate?: boolean
   whatsappOpenedAt?: boolean
   notes?: boolean
@@ -1501,6 +1669,10 @@ export type OrderRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   deliveryEstimate?: boolean
   deliveryUnavailable?: boolean
   status?: boolean
+  erpDeliveryId?: boolean
+  shippingStatus?: boolean
+  trackingNumber?: boolean
+  shippingUpdatedAt?: boolean
   totalEstimate?: boolean
   whatsappOpenedAt?: boolean
   notes?: boolean
@@ -1529,6 +1701,10 @@ export type OrderRequestSelectScalar = {
   deliveryEstimate?: boolean
   deliveryUnavailable?: boolean
   status?: boolean
+  erpDeliveryId?: boolean
+  shippingStatus?: boolean
+  trackingNumber?: boolean
+  shippingUpdatedAt?: boolean
   totalEstimate?: boolean
   whatsappOpenedAt?: boolean
   notes?: boolean
@@ -1545,7 +1721,7 @@ export type OrderRequestSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerName" | "customerPhone" | "deliveryAddress" | "deliveryCity" | "deliveryFee" | "deliveryEstimate" | "deliveryUnavailable" | "status" | "totalEstimate" | "whatsappOpenedAt" | "notes" | "requiresAdvance" | "advancePaymentStatus" | "receiptKey" | "receiptUrl" | "receiptUploadedAt" | "dataConsentAccepted" | "promoCodeId" | "discountAmount" | "landingPageId" | "createdAt" | "updatedAt", ExtArgs["result"]["orderRequest"]>
+export type OrderRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerName" | "customerPhone" | "deliveryAddress" | "deliveryCity" | "deliveryFee" | "deliveryEstimate" | "deliveryUnavailable" | "status" | "erpDeliveryId" | "shippingStatus" | "trackingNumber" | "shippingUpdatedAt" | "totalEstimate" | "whatsappOpenedAt" | "notes" | "requiresAdvance" | "advancePaymentStatus" | "receiptKey" | "receiptUrl" | "receiptUploadedAt" | "dataConsentAccepted" | "promoCodeId" | "discountAmount" | "landingPageId" | "createdAt" | "updatedAt", ExtArgs["result"]["orderRequest"]>
 export type OrderRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   promoCode?: boolean | Prisma.OrderRequest$promoCodeArgs<ExtArgs>
   items?: boolean | Prisma.OrderRequest$itemsArgs<ExtArgs>
@@ -1578,6 +1754,10 @@ export type $OrderRequestPayload<ExtArgs extends runtime.Types.Extensions.Intern
     deliveryEstimate: Date | null
     deliveryUnavailable: boolean
     status: $Enums.OrderRequestStatus
+    erpDeliveryId: string | null
+    shippingStatus: $Enums.ShippingStatus | null
+    trackingNumber: string | null
+    shippingUpdatedAt: Date | null
     totalEstimate: runtime.Decimal
     whatsappOpenedAt: Date | null
     notes: string | null
@@ -2027,6 +2207,10 @@ export interface OrderRequestFieldRefs {
   readonly deliveryEstimate: Prisma.FieldRef<"OrderRequest", 'DateTime'>
   readonly deliveryUnavailable: Prisma.FieldRef<"OrderRequest", 'Boolean'>
   readonly status: Prisma.FieldRef<"OrderRequest", 'OrderRequestStatus'>
+  readonly erpDeliveryId: Prisma.FieldRef<"OrderRequest", 'String'>
+  readonly shippingStatus: Prisma.FieldRef<"OrderRequest", 'ShippingStatus'>
+  readonly trackingNumber: Prisma.FieldRef<"OrderRequest", 'String'>
+  readonly shippingUpdatedAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
   readonly totalEstimate: Prisma.FieldRef<"OrderRequest", 'Decimal'>
   readonly whatsappOpenedAt: Prisma.FieldRef<"OrderRequest", 'DateTime'>
   readonly notes: Prisma.FieldRef<"OrderRequest", 'String'>

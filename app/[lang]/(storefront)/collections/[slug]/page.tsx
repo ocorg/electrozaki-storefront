@@ -231,7 +231,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
             <DeviceArt kind={artFor(slug, category.name)} className="h-28 w-28 text-ink" />
             {fromPrice !== null && (
               <p className="text-end">
-                <span className="block font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-600">
+                <span className="block font-mono text-xs font-semibold uppercase tracking-[0.16em] text-neutral-600">
                   {t.common.fromLong}
                 </span>
                 <span className="readout mt-1 block text-5xl font-bold text-ink">{formatMAD(fromPrice)}</span>

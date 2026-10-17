@@ -23,6 +23,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useT } from "@/components/i18n/I18nProvider";
+import Link from "@/components/i18n/Link";
 import { ProductVisual } from "@/components/storefront/ProductVisual";
 import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
 import { ConditionDashboard } from "@/components/storefront/ConditionDashboard";
@@ -358,6 +359,12 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
               >
                 <MessageCircle size={18} aria-hidden /> {copy.whatsapp}
               </a>
+              <Link
+                href={`/commande/suivi?ref=${done.reference}`}
+                className="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/25 px-6 text-sm font-semibold text-white"
+              >
+                <Truck size={17} aria-hidden /> {t.orderTracking.success}
+              </Link>
             </div>
           ) : units.length === 0 ? (
             <div className="mt-8 rounded-4xl bg-ink/5 p-6">
@@ -379,7 +386,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
               <div className="mt-5 space-y-5">
                 {grades.length > 1 && (
                   <div>
-                    <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">{copy.grade}</p>
+                    <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">{copy.grade}</p>
                     <div className="flex flex-wrap gap-2">
                       <Chip on={grade === "all"} onClick={() => refilter({ grade: "all" })}>
                         {copy.all}
@@ -394,7 +401,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                 )}
                 {storages.length > 1 && (
                   <div>
-                    <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">{copy.storage}</p>
+                    <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">{copy.storage}</p>
                     <div className="flex flex-wrap gap-2">
                       <Chip on={storage === "all"} onClick={() => refilter({ storage: "all" })}>
                         {copy.all}

@@ -59,7 +59,7 @@ export async function AisleGuide({
     <section aria-labelledby="guide-title" className="mt-6 overflow-hidden rounded-[1.75rem] bg-ink text-white sm:mt-8">
       <div className="flex flex-col gap-3 px-5 pb-4 pt-5 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:px-7 sm:pt-6">
         <div className="min-w-0">
-          <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-gold-bright">{t.guide.eyebrow}</p>
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-gold-bright">{t.guide.eyebrow}</p>
           <h2 id="guide-title" className="font-display mt-1 text-2xl font-extrabold leading-tight sm:text-3xl">
             {t.guide.title}
           </h2>
@@ -134,7 +134,7 @@ export async function AisleGuide({
                           <Choice option={o} className="min-h-11 rounded-full px-4">
                             <span className={o.detail ? "leading-tight" : undefined}>
                               <span className="block text-sm font-semibold">{o.label}</span>
-                              {o.detail && <span className="readout block text-[11px] opacity-70">{o.detail}</span>}
+                              {o.detail && <span className="readout block text-xs opacity-70">{o.detail}</span>}
                             </span>
                           </Choice>
                         </li>
@@ -216,7 +216,7 @@ function Tile({ option, art }: { option: GuideOption; art: ArtKind }) {
         }`}
       >
         <span className="min-w-0 truncate">{option.label}</span>
-        {option.on ? <Check size={14} strokeWidth={3} aria-hidden /> : <span className="readout text-[11px] font-semibold opacity-60">{option.count}</span>}
+        {option.on ? <Check size={14} strokeWidth={3} aria-hidden /> : <span className="readout text-xs font-semibold opacity-60">{option.count}</span>}
       </span>
     </Choice>
   );

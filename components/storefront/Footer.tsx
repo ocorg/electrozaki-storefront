@@ -42,6 +42,7 @@ export async function Footer({ aisles }: { aisles: AisleStat[] }) {
             <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">{t.footer.services}</p>
             <ul className="mt-4 grid gap-0.5 text-sm">
               <li><Link href="/reparation" className={linkClass}>{t.common.repair}</Link></li>
+              <li><Link href="/commande/suivi" className={linkClass}>{t.orderTracking.footer}</Link></li>
               <li><Link href="/reparation/suivi" className={linkClass}>{t.common.trackRepair}</Link></li>
               <li><Link href="/prix" className={linkClass}>{t.pricesPage.footer}</Link></li>
               <li><Link href="/contact" className={linkClass}>{t.common.contact}</Link></li>

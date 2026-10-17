@@ -79,7 +79,7 @@ export function ProductVisual({
       >
         <div
           className={`relative flex flex-col rounded-[1.6em] border-[0.35em] border-ink bg-ink-2 shadow-[0_18px_40px_-18px_rgb(17_16_19/0.6)] transition-transform duration-700 ease-out-quint group-hover:-translate-y-1 group-hover:rotate-[-2deg] ${
-            large ? "h-[78%] text-[20px]" : "h-[80%] text-[10px] sm:text-[11px]"
+            large ? "h-[78%] text-[20px]" : "h-[80%] text-[10px] sm:text-xs"
           } aspect-9/19`}
         >
           <span className="mx-auto mt-[0.6em] h-[0.9em] w-[3.2em] rounded-full bg-black" />
@@ -115,7 +115,7 @@ export function ProductVisual({
           {specs.map((s) => (
             <span
               key={s}
-              className={`rounded-full border border-ink/10 bg-white font-mono font-semibold text-ink ${large ? "px-3 py-1 text-sm" : "px-2 py-0.5 text-[11px]"}`}
+              className={`rounded-full border border-ink/10 bg-white font-mono font-semibold text-ink ${large ? "px-3 py-1 text-sm" : "px-2 py-0.5 text-xs"}`}
             >
               {s}
             </span>

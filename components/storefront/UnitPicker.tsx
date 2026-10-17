@@ -100,7 +100,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
     <div className="space-y-4">
       {colors.length > 1 && (
         <div>
-          <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">1. {t.unitPicker.color}</p>
+          <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">1. {t.unitPicker.color}</p>
           <div className="flex flex-wrap gap-2">
             <Chip on={color === "all"} onClick={() => onColor("all")}>
               {t.unitPicker.all}
@@ -117,7 +117,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
 
       {ranges.length > 1 && (
         <div>
-          <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
+          <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">
             {colors.length > 1 ? "2. " : ""}{t.unitPicker.battery}
           </p>
           <div className="flex flex-wrap gap-2">
@@ -134,7 +134,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
       )}
 
       <div>
-        <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
+        <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">
           {t.unitPicker.choose}
         </p>
         {matching.length === 0 ? (

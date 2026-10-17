@@ -51,7 +51,7 @@ export function MobileTabBar() {
               <Link
                 href={tab.href}
                 aria-current={active ? "page" : undefined}
-                className={`relative flex min-h-15 flex-col items-center justify-center gap-0.5 text-[11px] font-semibold transition-colors ${
+                className={`relative flex min-h-15 flex-col items-center justify-center gap-0.5 text-xs font-semibold transition-colors ${
                   active ? "text-ink" : "text-neutral-500"
                 }`}
               >

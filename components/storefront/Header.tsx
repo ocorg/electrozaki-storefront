@@ -221,7 +221,7 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
               {totalItems > 0 && (
                 <span
                   key={totalItems}
-                  className="absolute inset-e-0.5 top-0.5 inline-flex h-5 min-w-5 animate-[notif-in_0.5s_var(--ease-spring)] items-center justify-center rounded-full bg-gold px-1 text-[11px] font-bold text-gold-foreground ring-2 ring-paper"
+                  className="absolute inset-e-0.5 top-0.5 inline-flex h-5 min-w-5 animate-[notif-in_0.5s_var(--ease-spring)] items-center justify-center rounded-full bg-gold px-1 text-xs font-bold text-gold-foreground ring-2 ring-paper"
                 >
                   {totalItems}
                 </span>
@@ -264,7 +264,7 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
                   >
                     <Tag size={20} className="flex-none" aria-hidden />
                     <span className="min-w-0 flex-1">
-                      <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider">
+                      <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
                         <LiveDot /> {t.offers.nav}
                       </span>
                       <span className="block truncate text-sm font-semibold">{o.bar}</span>
@@ -279,14 +279,14 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
                 )}
               </div>
             )}
-            <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-500">{t.common.aisles}</p>
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-neutral-500">{t.common.aisles}</p>
             <div className="mt-3 grid grid-cols-4 gap-x-2 gap-y-4">
               {aisles.map((a) => (
                 <Link key={a.slug} href={`/collections/${a.slug}`} className="flex flex-col items-center gap-1.5 text-center">
                   <span className="flex h-14 w-14 items-center justify-center rounded-[30%] bg-white shadow-[0_6px_16px_-10px_rgb(17_16_19/0.5)] ring-1 ring-ink/5">
                     <DeviceArt kind={artFor(a.slug, a.name)} className="h-9 w-9 text-ink" />
                   </span>
-                  <span className="line-clamp-2 text-[11px] font-semibold leading-tight text-neutral-800">{name(a)}</span>
+                  <span className="line-clamp-2 text-xs font-semibold leading-tight text-neutral-800">{name(a)}</span>
                 </Link>
               ))}
             </div>

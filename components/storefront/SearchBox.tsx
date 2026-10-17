@@ -184,12 +184,12 @@ export function SearchBox({ className = "", placeholder }: {
                         )}
                       </span>
                       <span className="min-w-0 flex-1">
-                        {p.brand && <span className="block text-[11px] uppercase tracking-wide text-neutral-500">{p.brand}</span>}
+                        {p.brand && <span className="block text-xs uppercase tracking-wide text-neutral-500">{p.brand}</span>}
                         <span className="block text-sm font-medium leading-snug text-neutral-900 line-clamp-2">{p.name}</span>
                         {p.isPhone && <span className="text-xs text-neutral-500">{t.grades.label[p.condition] ?? p.condition}</span>}
                       </span>
                       <span className="shrink-0 text-end">
-                        {p.fromPrice && <span className="block text-[11px] text-neutral-500">{t.common.from}</span>}
+                        {p.fromPrice && <span className="block text-xs text-neutral-500">{t.common.from}</span>}
                         <span className="block text-sm font-bold text-ink">{formatMAD(p.price)}</span>
                         {p.compareAtPrice && <span className="block text-xs text-neutral-500 line-through">{formatMAD(p.compareAtPrice)}</span>}
                       </span>

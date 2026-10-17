@@ -70,7 +70,7 @@ export default async function HomePage() {
       <section aria-labelledby="hero-title" className="on-dark pcb relative overflow-hidden text-white">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 pb-16 pt-12 sm:pt-16 lg:grid-cols-[1.1fr_1fr] lg:gap-6 lg:pb-20 lg:pt-20">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-200">
+            <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-neutral-200">
               <span className="h-1.5 w-1.5 rounded-full bg-whatsapp shadow-[0_0_0_3px_rgb(37_211_102/0.25)]" aria-hidden />
               {hero.eyebrow}
             </p>

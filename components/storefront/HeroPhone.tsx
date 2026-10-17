@@ -41,7 +41,7 @@ function Notification({ phone, dimmed = false }: { phone: ShowcasePhone; dimmed?
           <span className="normal-case tracking-normal">{t.hero.inStock}</span>
         </span>
         <span className="block truncate text-[13px] font-bold text-white">{phone.name}</span>
-        <span className="flex items-center justify-between gap-2 text-[11px] text-white/75">
+        <span className="flex items-center justify-between gap-2 text-xs text-white/75">
           <span className="truncate">{detail}</span>
           <span className="readout flex-none font-bold text-gold-bright">
             {phone.fromPrice ? `${t.common.from} ` : ""}
@@ -91,7 +91,7 @@ export function HeroPhone({ phones }: { phones: ShowcasePhone[] }) {
               <p className="font-display text-[64px] font-bold leading-none tracking-tight sm:text-[72px]">
                 {time || " "}
               </p>
-              <p className="mt-1 text-[11px] font-medium text-white/60">{t.hero.lockCaption}</p>
+              <p className="mt-1 text-xs font-medium text-white/60">{t.hero.lockCaption}</p>
             </div>
 
             {/* Wallpaper: the brand mark, faint. */}

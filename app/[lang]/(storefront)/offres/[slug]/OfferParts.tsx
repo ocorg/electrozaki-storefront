@@ -41,7 +41,7 @@ export function Countdown({ endsAt }: { endsAt: string }) {
   const cell = (v: number, label: string) => (
     <div className="min-w-14 rounded-lg bg-black/25 px-2 py-1.5 text-center">
       <div className="text-xl font-bold tabular-nums">{String(v).padStart(2, "0")}</div>
-      <div className="text-[10px] uppercase tracking-wider opacity-80">{label}</div>
+      <div className="text-xs uppercase tracking-wider opacity-80">{label}</div>
     </div>
   );
   return (

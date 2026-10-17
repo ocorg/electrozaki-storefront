@@ -65,7 +65,7 @@ export function InspectionReport({
             <PackageCheck size={28} aria-hidden />
           </span>
           <div>
-            <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-gold">{c.newEyebrow}</p>
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-gold">{c.newEyebrow}</p>
             <h2 id="sealed" className="font-display text-2xl font-bold">{c.newTitle}</h2>
           </div>
         </div>
@@ -98,7 +98,7 @@ export function InspectionReport({
           </p>
         </div>
         <div className="min-w-0 flex-1">
-          <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-gold">{c.eyebrow}</p>
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-gold">{c.eyebrow}</p>
           <h2 id="inspection" className="font-display mt-1 text-2xl font-bold leading-tight sm:text-3xl">
             {c.title(total)}
           </h2>

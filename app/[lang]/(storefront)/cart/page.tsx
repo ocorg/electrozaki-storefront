@@ -204,7 +204,13 @@ export default function CartPage() {
             </li>
           ))}
         </ol>
-        <div className="mt-6">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+          <Link
+            href={`/commande/suivi?ref=${confirmation.orderRequestId.slice(0, 8).toUpperCase()}`}
+            className="text-sm font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4"
+          >
+            {t.orderTracking.success}
+          </Link>
           <Link href="/" className="text-sm text-neutral-500 underline">
             {c.backHome}
           </Link>

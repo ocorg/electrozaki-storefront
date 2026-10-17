@@ -11,7 +11,7 @@ export async function ControlCenter() {
   const t = await getT();
   return (
     <div className="mt-12 max-w-xl border-t border-white/10 pt-6">
-      <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-300">{t.controlCenter.title}</p>
+      <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-neutral-300">{t.controlCenter.title}</p>
       <ul aria-label={t.controlCenter.aria} className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
         {t.controlCenter.tiles.map(({ title, value }, i) => {
           const Icon = ICONS[i];

@@ -87,7 +87,7 @@ export default async function ReparationPage() {
       <section aria-labelledby="repair-title" className="on-dark pcb relative overflow-hidden text-white">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 pb-16 pt-12 sm:pt-16 lg:grid-cols-[1.25fr_1fr] lg:pb-20 lg:pt-20">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-200">
+            <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-neutral-200">
               {r.eyebrow}
             </p>
             <h1 id="repair-title" className="font-display mt-6 text-[2.7rem] font-extrabold leading-[0.95] sm:text-[4rem] xl:text-[4.8rem]">

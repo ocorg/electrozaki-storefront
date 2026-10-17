@@ -18,7 +18,7 @@ export async function ComingSoon({ name, art }: { name: string; art: ArtKind }) 
       <span className="flex h-24 w-24 items-center justify-center rounded-[30%] bg-white ring-1 ring-ink/10">
         <DeviceArt kind={art} className="h-16 w-16 text-ink" />
       </span>
-      <p className="mt-6 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-gold-deep">{s.eyebrow}</p>
+      <p className="mt-6 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-gold-deep">{s.eyebrow}</p>
       <h1 className="font-display mt-2 text-4xl font-extrabold leading-tight text-ink sm:text-5xl">{s.title(name)}</h1>
       <p className="mt-4 text-neutral-600">{s.text}</p>
       <AnchorButton

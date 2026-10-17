@@ -58,7 +58,7 @@ export function ConditionDashboard(props: ConditionData & { specs?: SpecRow[] })
 
   return (
     <section aria-label={c.aria} className="mt-6 overflow-hidden rounded-[1.5rem] border border-ink/8 bg-white">
-      <p className="border-b border-ink/6 px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
+      <p className="border-b border-ink/6 px-5 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">
         {c.title}
       </p>
 

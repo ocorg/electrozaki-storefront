@@ -37,7 +37,7 @@ export function OfferCard({ offer, t, intl, priority = false }: { offer: LiveOff
       </div>
 
       <div className="flex flex-col justify-center gap-3 p-6 sm:p-8">
-        <p className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-gold">
+        <p className="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-gold">
           <span className="relative flex h-2 w-2" aria-hidden>
             <span className="absolute inline-flex h-full w-full rounded-full bg-gold opacity-75 motion-safe:animate-ping" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />

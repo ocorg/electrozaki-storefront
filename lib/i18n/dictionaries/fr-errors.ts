@@ -3,6 +3,7 @@
 // message, without pulling the whole French dictionary into every page.
 
 export const errors = {
+  orderNotFound: "Aucune commande trouvée avec cette référence et ce téléphone. La référence fait 8 caractères (ex. 3F7K2Q9A), elle figure dans votre message de confirmation.",
   rateLimit: "Trop de tentatives. Merci de réessayer dans une heure ou de nous écrire sur WhatsApp.",
   chooseCity: "Merci de choisir votre ville de livraison dans la liste.",
   invalidReceipt: "Reçu invalide. Merci de le déposer à nouveau.",

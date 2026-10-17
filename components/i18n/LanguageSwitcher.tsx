@@ -98,7 +98,7 @@ export function LanguageChips() {
   const targets = useTargets();
   return (
     <div>
-      <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-500">{t.common.language}</p>
+      <p className="font-mono text-xs font-semibold uppercase tracking-wider text-neutral-500">{t.common.language}</p>
       <ul className="mt-3 grid grid-cols-4 gap-2">
         {targets.map((l) => {
           const on = l.locale === locale;

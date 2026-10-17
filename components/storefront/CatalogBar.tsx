@@ -273,7 +273,7 @@ export function CatalogBar({ options, basePath, defaults, guide }: Props) {
             <span className="hidden sm:inline">{t.filters.filters}</span>
             <span className="sr-only sm:hidden">{t.filters.filters}</span>
             {sheetCount > 0 && (
-              <span className="readout flex h-5 min-w-5 items-center justify-center rounded-full bg-gold px-1 text-[11px] font-bold text-ink">
+              <span className="readout flex h-5 min-w-5 items-center justify-center rounded-full bg-gold px-1 text-xs font-bold text-ink">
                 {sheetCount}
                 <span className="sr-only"> {t.filters.active}</span>
               </span>
@@ -575,7 +575,7 @@ function QuickChip({ href, on, children }: { href: string; on: boolean; children
 function Group({ title, hint, children }: { title: string; hint?: string; children: ReactNode }) {
   return (
     <fieldset>
-      <legend className="mb-2.5 flex w-full items-baseline justify-between font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-600">
+      <legend className="mb-2.5 flex w-full items-baseline justify-between font-mono text-xs font-semibold uppercase tracking-[0.16em] text-neutral-600">
         {title}
         {hint && <span className="normal-case tracking-normal text-neutral-500">{hint}</span>}
       </legend>

@@ -47,6 +47,19 @@ export const OrderRequestStatus = {
 export type OrderRequestStatus = (typeof OrderRequestStatus)[keyof typeof OrderRequestStatus]
 
 
+export const ShippingStatus = {
+  CONFIRMING: 'CONFIRMING',
+  AWAITING_ADVANCE: 'AWAITING_ADVANCE',
+  PREPARING: 'PREPARING',
+  IN_TRANSIT: 'IN_TRANSIT',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED',
+  RETURNED: 'RETURNED'
+} as const
+
+export type ShippingStatus = (typeof ShippingStatus)[keyof typeof ShippingStatus]
+
+
 export const FacetDisplay = {
   CHIPS: 'CHIPS',
   TILES: 'TILES',
