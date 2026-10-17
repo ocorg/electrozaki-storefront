@@ -117,19 +117,6 @@ export const en: OfferCopy = {
     note: "No charger included.",
   },
 
-  checks: {
-    eyebrow: "Checked by our technicians",
-    title: "Tested before it's sold.",
-    items: (iphone: boolean) => [
-      "Battery health",
-      "Screen and touch",
-      iphone ? "Face ID" : "Fingerprint and unlock",
-      "Front and rear cameras",
-      "Speakers and mics",
-      "Network, Wi-Fi and Bluetooth",
-    ],
-  },
-
   steps: {
     eyebrow: "How it works",
     title: "Order in 4 steps.",

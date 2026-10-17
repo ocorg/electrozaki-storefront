@@ -12,7 +12,7 @@ import { ProductVisual } from "@/components/storefront/ProductVisual";
 import { GradeMeter } from "@/components/storefront/GradeMeter";
 import { whatsappLink } from "@/lib/site";
 import { ConditionDashboard, type ConditionData } from "@/components/storefront/ConditionDashboard";
-import type { SpecRow } from "@/lib/offers/spec-sheet";
+import type { SpecRow } from "@/lib/offers/spec-row";
 import { Select } from "@/components/ui/Select";
 import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
 import { useT } from "@/components/i18n/I18nProvider";

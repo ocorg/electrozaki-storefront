@@ -122,19 +122,6 @@ export const fr = {
     note: "Le chargeur n'est pas inclus.",
   },
 
-  checks: {
-    eyebrow: "Vérifié par nos techniciens",
-    title: "Contrôlé avant la vente.",
-    items: (iphone: boolean) => [
-      "Santé de la batterie",
-      "Écran et tactile",
-      iphone ? "Face ID" : "Empreinte et déverrouillage",
-      "Caméras avant et arrière",
-      "Haut-parleurs et micros",
-      "Réseau, Wi-Fi et Bluetooth",
-    ],
-  },
-
   steps: {
     eyebrow: "Comment ça se passe",
     title: "Commander en 4 étapes.",

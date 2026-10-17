@@ -34,6 +34,7 @@ import { artFor } from "@/lib/category-art";
 import { offerForListing } from "@/lib/offers/phone-offers";
 import { OFFER_COPY } from "@/lib/offers/copy";
 import { factsFor, specRows } from "@/lib/offers/spec-sheet";
+import { InspectionReport } from "@/components/storefront/InspectionReport";
 
 export const revalidate = 60;
 
@@ -258,6 +259,9 @@ export default async function ProductPage({ params }: Props) {
           images={product.images.map((i) => ({ url: i.url, altText: i.altText }))}
           categorySlug={product.category.slug}
         >
+          {product.isPhone && (
+            <InspectionReport t={t} facts={facts} brand={product.brand} isNew={product.condition === "NEUF"} compact className="mt-8" />
+          )}
           {fiche.length > 0 && (
             <div className="mt-8">
               <h2 className="font-display text-xl font-bold text-ink">{t.guide.ficheTitle}</h2>

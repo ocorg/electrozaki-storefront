@@ -2,11 +2,12 @@ import type { Locale } from "@/lib/i18n/config";
 import { OFFER_COPY } from "./copy";
 import { MODEL_FACTS, type ModelFacts } from "./models";
 import { offerSlug } from "./phone-offers";
+import type { SpecRow } from "./spec-row";
 
 // A phone model's spec sheet as translated rows: the "Fiche de l'appareil"
-// on product pages and the specs table of the promo pages.
+// on product pages and promo pages.
 
-export type SpecRow = { label: string; value: string };
+export { STORAGE_SLOT, type SpecRow } from "./spec-row";
 
 // The sheets are written with French technical words; the English site
 // gets them in English (Arabic and Darija readers know the French terms).
@@ -25,7 +26,6 @@ const EN_TERMS: [RegExp, string][] = [
   [/bouton Action/g, "Action button"],
   [/S Pen intégré/g, "built-in S Pen"],
   [/cœurs/g, "cores"],
-  [/\bcores\b/g, "cores"],
 ];
 
 export function localizeSpec(value: string, locale: Locale): string {

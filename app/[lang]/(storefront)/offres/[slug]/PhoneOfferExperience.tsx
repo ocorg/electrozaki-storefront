@@ -35,6 +35,7 @@ import { translateError } from "@/lib/i18n/labels";
 import { whatsappLink } from "@/lib/site";
 import type { OfferAddon, PhoneOfferUnit } from "@/lib/offers/phone-offers";
 import type { OfferFormCopy } from "@/lib/offers/copy";
+import { STORAGE_SLOT, type SpecRow } from "@/lib/offers/spec-row";
 import { track } from "@/components/analytics/track";
 import { metaTrack } from "@/components/analytics/meta";
 import { submitOfferOrder } from "./actions";
@@ -88,6 +89,8 @@ type Props = {
   units: PhoneOfferUnit[];
   images: { url: string; altText: string | null }[];
   addons: OfferAddon[];
+  /** the model's spec sheet; the storage row holds STORAGE_SLOT */
+  sheet: SpecRow[];
 };
 
 function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
@@ -105,7 +108,7 @@ function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; chi
   );
 }
 
-export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, images, addons }: Props) {
+export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, images, addons, sheet }: Props) {
   const t = useT();
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -416,7 +419,14 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                     setImageIndex(null);
                   }}
                 />
-                {condition && <ConditionDashboard {...condition} />}
+                {condition && (
+                  <ConditionDashboard
+                    {...condition}
+                    specs={sheet
+                      .map((row) => (row.value === STORAGE_SLOT ? { ...row, value: unit?.storage ?? "" } : row))
+                      .filter((row) => row.value)}
+                  />
+                )}
               </div>
 
               {/* Suggested add-ons */}

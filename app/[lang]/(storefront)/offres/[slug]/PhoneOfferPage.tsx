@@ -23,7 +23,8 @@ import { absoluteUrl, SITE_URL } from "@/lib/site";
 import { BATTERY_GOOD_FROM } from "@/lib/battery";
 import type { PhoneOffer } from "@/lib/offers/phone-offers";
 import { OFFER_COPY } from "@/lib/offers/copy";
-import { specRows } from "@/lib/offers/spec-sheet";
+import { STORAGE_SLOT, specRows } from "@/lib/offers/spec-sheet";
+import { InspectionReport } from "@/components/storefront/InspectionReport";
 import { ViewBeacon } from "./OfferParts";
 import { PhoneOfferExperience } from "./PhoneOfferExperience";
 
@@ -79,8 +80,9 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
       ]
     : [];
 
-  // Specs: the sheet's rows, with the storages and memory of the units on promo.
-  const specs = f ? specRows(f, locale, { storage: offer.storages.join(" / "), ram: offer.rams.join(" / ") }) : [];
+  // The model's spec sheet, shown in the order panel's "Fiche de l'appareil"
+  // with the chosen phone's storage in its slot.
+  const sheet = f ? specRows(f, locale, { storage: STORAGE_SLOT, ram: offer.rams.join(" / ") }) : [];
 
   const gradesAnswer = offer.grades.map((g) => `${t.grades.label[g] ?? g} : ${t.grades.hint[g] ?? ""}`).join(" ");
   const faq = [
@@ -142,6 +144,7 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
           units={offer.units}
           images={offer.images}
           addons={offer.addons}
+          sheet={sheet}
         />
       </div>
 
@@ -213,12 +216,14 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
         </section>
       )}
 
-      {/* ── Specs + what's in the parcel ── */}
-      <section aria-labelledby="specs" className="bg-paper-2/60">
-        <div className={`mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:py-24 ${specs.length ? "lg:grid-cols-[1fr_1.4fr]" : ""}`}>
+      {/* ── The technicians' check + what's in the parcel ── */}
+      <section aria-label={c.box.title} className="bg-paper-2/60">
+        <div className="mx-auto max-w-7xl space-y-6 px-4 py-20 sm:py-24">
           <Reveal>
-            <SectionHeading id="specs" eyebrow={c.specs.eyebrow} title={c.specs.title(name)} />
-            <div className="mt-8 rounded-3xl bg-white p-6 ring-1 ring-ink/7">
+            <InspectionReport t={t} facts={f} brand={offer.brand} isNew={offer.grades.every((g) => g === "NEUF")} />
+          </Reveal>
+          <Reveal>
+            <div className="max-w-xl rounded-3xl bg-white p-6 ring-1 ring-ink/7">
               <p className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-gold-deep">
                 <Package size={16} aria-hidden /> {c.box.eyebrow}
               </p>
@@ -229,22 +234,10 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
               <p className="mt-4 rounded-2xl bg-gold/10 px-4 py-3 text-sm text-neutral-700">{c.box.note}</p>
             </div>
           </Reveal>
-          {specs.length > 0 && (
-            <Reveal>
-              <dl className="divide-y divide-ink/7 rounded-3xl bg-white px-5 ring-1 ring-ink/7 sm:px-6">
-                {specs.map((row) => (
-                  <div key={row.label} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
-                    <dt className="text-sm font-semibold text-neutral-600">{row.label}</dt>
-                    <dd className="text-[15px] text-ink">{row.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </Reveal>
-          )}
         </div>
       </section>
 
-      {/* ── Checks + how ordering works ── */}
+      {/* ── How ordering works ── */}
       <section aria-labelledby="steps" className="mx-auto max-w-7xl px-4 py-20 sm:py-24">
         <Reveal>
           <SectionHeading id="steps" eyebrow={c.steps.eyebrow} title={c.steps.title} />
@@ -261,22 +254,6 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
           ))}
         </ol>
 
-        <Reveal>
-          <div className="mt-12 rounded-4xl border border-ink/8 bg-white p-6 sm:p-8">
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-gold-deep">{c.checks.eyebrow}</p>
-            <p className="font-display mt-2 text-2xl font-bold text-ink">{c.checks.title}</p>
-            <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {c.checks.items(iphone || offer.brand.toLowerCase() === "apple").map((item) => (
-                <li key={item} className="flex items-center gap-2 text-neutral-800">
-                  <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-signal/15 text-signal">
-                    <Check size={14} aria-hidden />
-                  </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal>
       </section>
 
       {/* ── FAQ ── */}

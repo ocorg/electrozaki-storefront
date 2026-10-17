@@ -117,19 +117,6 @@ export const darija: OfferCopy = {
     note: "Chargeur ma kaynch.",
   },
 
-  checks: {
-    eyebrow: "Mchouf mn 3nd les techniciens dyalna",
-    title: "Mtesti 9bel l bi3.",
-    items: (iphone: boolean) => [
-      "Sa7t l batterie",
-      "L'écran w tactile",
-      iphone ? "Face ID" : "L'empreinte w déverrouillage",
-      "Caméras l9ddam w l lor",
-      "Haut-parleurs w micros",
-      "Réseau, Wi-Fi w Bluetooth",
-    ],
-  },
-
   steps: {
     eyebrow: "Kifach katdouz",
     title: "Commandi f 4 étapes.",

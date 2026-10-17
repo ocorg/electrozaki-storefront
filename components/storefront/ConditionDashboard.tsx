@@ -2,7 +2,7 @@ import { AlertTriangle, Ban, BatteryWarning, Camera, CheckCircle2, MonitorSmartp
 import { useT } from "@/components/i18n/I18nProvider";
 import { batteryGood } from "@/lib/battery";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
-import type { SpecRow } from "@/lib/offers/spec-sheet";
+import type { SpecRow } from "@/lib/offers/spec-row";
 
 export type ConditionData = {
   batteryHealthPercent: number | null;
