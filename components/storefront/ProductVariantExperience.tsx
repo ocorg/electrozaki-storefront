@@ -515,14 +515,14 @@ function SiblingRow({
       <div className="flex flex-wrap gap-2">
         {options.map((o) =>
           o.current ? (
-            <span key={o.slug} aria-current="true" className="inline-flex min-h-11 items-center rounded-full border border-ink bg-ink px-4 text-sm font-semibold text-white">
+            <span key={o.slug} aria-current="true" className="inline-flex min-h-11 items-center rounded-full border border-gold-deep bg-gold/15 px-4 text-sm font-semibold text-ink">
               {o.label}
             </span>
           ) : o.available ? (
             <Link
               key={o.slug}
               href={`/products/${o.slug}`}
-              className="inline-flex min-h-11 items-center rounded-full border border-ink/15 bg-white px-4 text-sm font-semibold text-ink transition-colors hover:border-ink/40"
+              className="inline-flex min-h-11 items-center rounded-full border border-ink/15 bg-white px-4 text-sm text-neutral-800 transition-colors hover:border-ink/40"
             >
               {o.label}
             </Link>
@@ -531,7 +531,7 @@ function SiblingRow({
               key={o.slug}
               aria-disabled="true"
               title={unavailable}
-              className="inline-flex min-h-11 cursor-not-allowed items-center rounded-full border border-dashed border-ink/15 bg-paper px-4 text-sm text-neutral-400 line-through"
+              className="inline-flex min-h-11 cursor-not-allowed items-center rounded-full border border-dashed border-ink/15 bg-paper px-4 text-sm text-neutral-400 line-through decoration-neutral-400"
             >
               {o.label}
               <span className="sr-only"> ({unavailable})</span>
