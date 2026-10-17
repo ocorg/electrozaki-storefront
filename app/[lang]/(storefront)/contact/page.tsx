@@ -110,7 +110,7 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
-        <SocialLinks tone="light" className="mt-4" />
+        <SocialLinks className="mt-4" />
       </section>
 
       <div>
