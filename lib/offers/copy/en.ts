@@ -20,6 +20,7 @@ export const en: OfferCopy = {
   },
 
   form: (name: string) => ({
+    model: "Model",
     title: `Your ${name}`,
     grade: "Condition",
     storage: "Storage",
@@ -164,6 +165,25 @@ export const en: OfferCopy = {
     bar: (name: string, price: string) => `${name} promo: from ${price}`,
     banner: (name: string, price: string) => `${name} on promo from ${price}`,
     cta: "See the promo",
+  },
+
+  brand: {
+    metaTitle: (name: string, from: string) => `${name} deals from ${from}`,
+    metaDescription: (name: string, from: string, n: number) =>
+      `Every ${name} on promo at Electro Zaki in Meknes, from ${from}: ${n} models, every phone checked, 3-month warranty, delivery anywhere in Morocco.`,
+    eyebrow: "Electro Zaki promo · In stock in Meknes",
+    title: (name: string) => `${name} deals`,
+    lead: (name: string, n: number) =>
+      `${n} ${name} models on promo, on one page. Choose the model, the condition and the exact phone you receive: each one is checked by our technicians.`,
+    modelsTitle: "The models on promo",
+    modelsIntro: "Each model also has its own page, with its full specifications.",
+    phones: (n: number) => `${n} phone${n > 1 ? "s" : ""} on promo`,
+    from: "from",
+    upTo: (saving: string) => `up to ${saving} off`,
+    seeModel: "See the model",
+    cardTitle: (name: string) => `All ${name} deals`,
+    cardTeaser: (n: number) => `${n} models on promo on one page`,
+    finalTitle: (name: string) => `Your ${name} on promo is waiting.`,
   },
 
   final: {

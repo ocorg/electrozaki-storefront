@@ -23,6 +23,7 @@ export const fr = {
 
   // Order panel (client). Plain strings; "{x}" = a value filled in there.
   form: (name: string) => ({
+    model: "Modèle",
     title: `Votre ${name}`,
     grade: "État",
     storage: "Stockage",
@@ -171,6 +172,26 @@ export const fr = {
     bar: (name: string, price: string) => `Promo ${name} : dès ${price}`,
     banner: (name: string, price: string) => `${name} en promo dès ${price}`,
     cta: "Voir la promo",
+  },
+
+  // Brand pages (/offres/iphone, /offres/samsung): every model on promo.
+  brand: {
+    metaTitle: (name: string, from: string) => `Promos ${name} dès ${from}`,
+    metaDescription: (name: string, from: string, n: number) =>
+      `Tous les ${name} en promo chez Electro Zaki à Meknès, dès ${from} : ${n} modèles, chaque téléphone vérifié, garantie 3 mois, livraison partout au Maroc.`,
+    eyebrow: "Promos Electro Zaki · Stock à Meknès",
+    title: (name: string) => `Promos ${name}`,
+    lead: (name: string, n: number) =>
+      `${n} modèles de ${name} en promo, sur une seule page. Choisissez le modèle, l'état et le téléphone exact que vous recevez : chacun est vérifié par nos techniciens.`,
+    modelsTitle: "Les modèles en promo",
+    modelsIntro: "Chaque modèle a aussi sa page, avec sa fiche technique complète.",
+    phones: (n: number) => `${n} téléphone${n > 1 ? "s" : ""} en promo`,
+    from: "dès",
+    upTo: (saving: string) => `jusqu'à -${saving}`,
+    seeModel: "Voir le modèle",
+    cardTitle: (name: string) => `Toutes les promos ${name}`,
+    cardTeaser: (n: number) => `${n} modèles en promo sur une seule page`,
+    finalTitle: (name: string) => `Votre ${name} en promo vous attend.`,
   },
 
   final: {

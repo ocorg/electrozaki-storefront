@@ -82,6 +82,7 @@ export type OfferHero = {
 };
 
 type Props = {
+  /** the page's slug: a model (/offres/iphone-14) or a brand (/offres/iphone) */
   slug: string;
   name: string;
   brand: string;
@@ -90,8 +91,10 @@ type Props = {
   units: PhoneOfferUnit[];
   images: { url: string; altText: string | null }[];
   addons: OfferAddon[];
-  /** the model's spec sheet; the storage row holds STORAGE_SLOT */
-  sheet: SpecRow[];
+  /** each model's spec sheet, by its offer slug; the storage row holds STORAGE_SLOT */
+  sheets: Record<string, SpecRow[]>;
+  /** a brand page's models (chosen above grade and storage) */
+  models?: { slug: string; name: string }[];
 };
 
 function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
@@ -109,7 +112,7 @@ function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; chi
   );
 }
 
-export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, images, addons, sheet }: Props) {
+export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, images, addons, sheets, models = [] }: Props) {
   const t = useT();
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -117,6 +120,8 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
   const storages = useMemo(() => [...new Set(units.map((u) => u.storage).filter((s): s is string => !!s))], [units]);
   const [grade, setGrade] = useState("all");
   const [storage, setStorage] = useState("all");
+  const [model, setModel] = useState("all");
+  const manyModels = models.length > 1;
 
   // The unit picker speaks the product page's shape. Grade and storage are
   // chosen above it, and written on each card when the units mix them.
@@ -139,13 +144,15 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
     hasDefects: u.hasDefects,
     transparencyNotes: null,
     badge:
-      [grades.length > 1 ? (t.grades.label[u.grade] ?? u.grade) : null, storages.length > 1 ? u.storage : null]
+      [manyModels ? u.model : null, grades.length > 1 ? (t.grades.label[u.grade] ?? u.grade) : null, storages.length > 1 ? u.storage : null]
         .filter(Boolean)
         .join(" · ") || undefined,
   });
-  const inScope = (g: string, s: string) =>
-    units.filter((u) => (g === "all" || u.grade === g) && (s === "all" || u.storage === s)).map(toVariant);
-  const variants = inScope(grade, storage);
+  const inScope = (g: string, s: string, m: string) =>
+    units
+      .filter((u) => (m === "all" || u.offerSlug === m) && (g === "all" || u.grade === g) && (s === "all" || u.storage === s))
+      .map(toVariant);
+  const variants = inScope(grade, storage, model);
 
   // Opens on the best unit's colour: a few cards to choose from instead of
   // every unit in stock (the colour chips are one tap away).
@@ -187,19 +194,21 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
 
   // After any change of filter, keep the chosen phone if it still matches,
   // else take the best match.
-  function refilter(next: { grade?: string; storage?: string; color?: string; battery?: BatteryRange }) {
+  function refilter(next: { model?: string; grade?: string; storage?: string; color?: string; battery?: BatteryRange }) {
+    const m = next.model ?? model;
     const g = next.grade ?? grade;
     const s = next.storage ?? storage;
     const c = next.color ?? color;
     const b = next.battery ?? battery;
+    setModel(m);
     setGrade(g);
     setStorage(s);
     setColor(c);
     setBattery(b);
-    const pool = inScope(g, s);
+    const pool = inScope(g, s, m);
     let matches = matchUnits(pool, c, b);
     // A colour or battery range this grade/storage doesn't have: start over on colour and battery.
-    if (!matches.length && (next.grade !== undefined || next.storage !== undefined)) {
+    if (!matches.length && (next.model !== undefined || next.grade !== undefined || next.storage !== undefined)) {
       setColor("all");
       setBattery("all");
       matches = matchUnits(pool, "all", "all");
@@ -224,7 +233,9 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
     setError(null);
     try {
       const r = await submitOfferOrder({
-        slug,
+        // The unit's model page sells it; a brand page is where it came from.
+        slug: unit?.offerSlug ?? slug,
+        via: slug,
         unitId,
         addons: [...picked],
         customerName: customer,
@@ -294,7 +305,10 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
 
         {unit && (
           <div className="mt-5">
-            <p className="text-sm font-medium text-neutral-600">{hero.priceLabel}</p>
+            <p className="text-sm font-medium text-neutral-600">
+              {hero.priceLabel}
+              {manyModels && <span className="font-semibold text-ink"> · {unit.model}</span>}
+            </p>
             <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
               <p dir="ltr" className="readout text-5xl font-bold leading-none text-ink">
                 {formatMAD(unit.price)}
@@ -384,6 +398,21 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
               <h2 className="font-display text-2xl font-bold text-ink">{copy.title}</h2>
 
               <div className="mt-5 space-y-5">
+                {manyModels && (
+                  <div>
+                    <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">{copy.model}</p>
+                    <div className="flex flex-wrap gap-2">
+                      <Chip on={model === "all"} onClick={() => refilter({ model: "all" })}>
+                        {copy.all}
+                      </Chip>
+                      {models.map((m) => (
+                        <Chip key={m.slug} on={model === m.slug} onClick={() => refilter({ model: m.slug })}>
+                          {m.name}
+                        </Chip>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {grades.length > 1 && (
                   <div>
                     <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">{copy.grade}</p>
@@ -429,7 +458,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                 {condition && (
                   <ConditionDashboard
                     {...condition}
-                    specs={sheet
+                    specs={(unit ? (sheets[unit.offerSlug] ?? []) : [])
                       .map((row) => (row.value === STORAGE_SLOT ? { ...row, value: unit?.storage ?? "" } : row))
                       .filter((row) => row.value)}
                   />

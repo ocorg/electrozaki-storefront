@@ -35,6 +35,9 @@ export function offerSlug(modelKey: string): string {
 export type PhoneOfferUnit = {
   id: string;
   productId: string;
+  /** the model's offer page (/offres/<offerSlug>), and its name ("iPhone 14") */
+  offerSlug: string;
+  model: string;
   /** the listing's name, e.g. "iPhone 14 128GB" (cart, order, summary) */
   productName: string;
   name: string;
@@ -64,6 +67,8 @@ export type OfferAddon = { key: string; productId: string; name: string; categor
 export type PhoneOffer = {
   slug: string;
   modelKey: string;
+  /** "apple", "samsung"… (the modelKey's brand) */
+  brandKey: string;
   /** "iPhone 14 Pro" */
   name: string;
   brand: string;
@@ -170,6 +175,8 @@ async function loadPhoneOffers(): Promise<PhoneOffer[]> {
     const slug = offerSlug(modelKey);
     const page = pageBySlug.get(slug);
     if (page && landingStatus(page) !== "live") continue; // switched off in the ERP
+    const facts = MODEL_FACTS[slug] ?? null;
+    const name = facts?.name ?? modelName(group[0].name, group[0].brand);
 
     const units: PhoneOfferUnit[] = group.flatMap((p) =>
       p.variants.map((v) => {
@@ -178,6 +185,8 @@ async function loadPhoneOffers(): Promise<PhoneOffer[]> {
         return {
           id: v.id,
           productId: p.id,
+          offerSlug: slug,
+          model: name,
           productName: p.name,
           name: v.name,
           grade: p.condition,
@@ -209,14 +218,14 @@ async function loadPhoneOffers(): Promise<PhoneOffer[]> {
       .slice(0, 8);
 
     const cheapest = units.reduce((min, u) => (u.price < min.price ? u : min));
-    const facts = MODEL_FACTS[slug] ?? null;
     const storages = [...new Set(units.map((u) => u.storage).filter((s): s is string => !!s))].sort(
       (a, b) => parseInt(a) * (/TB|To/i.test(a) ? 1024 : 1) - parseInt(b) * (/TB|To/i.test(b) ? 1024 : 1)
     );
     offers.push({
       slug,
       modelKey,
-      name: facts?.name ?? modelName(group[0].name, group[0].brand),
+      brandKey: modelKey.split("|")[0],
+      name,
       brand: group[0].brand ?? "",
       facts,
       pageId: page?.id ?? null,
@@ -254,6 +263,80 @@ export const getPhoneOffer = cache(async (slug: string): Promise<PhoneOffer | nu
   if (!offer) return null;
   return { ...offer, addons: await offerAddons(offer) };
 });
+
+// ── Brand pages (/offres/iphone, /offres/samsung) ───────────────────────
+// Every promo unit of a brand on one page, for a campaign that advertises a
+// single link. Built from the model offers above (so a model switched off
+// in the ERP is left out here too); an ERP promo page with the brand
+// page's slug switches the whole page off and counts its visits and orders.
+
+export const BRAND_PAGES: Record<string, { slug: string; name: string }> = {
+  apple: { slug: "iphone", name: "iPhone" },
+  samsung: { slug: "samsung", name: "Samsung Galaxy" },
+  xiaomi: { slug: "xiaomi", name: "Xiaomi" },
+  honor: { slug: "honor", name: "Honor" },
+};
+
+export type BrandOffer = {
+  slug: string;
+  brandKey: string;
+  /** "iPhone", "Samsung Galaxy" */
+  name: string;
+  brand: string;
+  pageId: string | null;
+  endsAt: Date | null;
+  /** the brand's model offers, biggest saving first */
+  models: PhoneOffer[];
+  units: PhoneOfferUnit[];
+  images: { url: string; altText: string | null }[];
+  fromPrice: number;
+  normalFrom: number;
+  bestSaving: number;
+  storages: string[];
+  grades: string[];
+};
+
+async function loadBrandOffers(): Promise<BrandOffer[]> {
+  const offers = await getPhoneOffers();
+  const brands = Object.entries(BRAND_PAGES).filter(([key]) => offers.some((o) => o.brandKey === key));
+  const pages = await prisma.landingPage.findMany({
+    where: { slug: { in: brands.map(([, b]) => b.slug) } },
+    select: { id: true, slug: true, active: true, startsAt: true, endsAt: true },
+  });
+  const out: BrandOffer[] = [];
+  for (const [key, b] of brands) {
+    const page = pages.find((p) => p.slug === b.slug);
+    if (page && landingStatus(page) !== "live") continue;
+    const models = offers.filter((o) => o.brandKey === key);
+    const units = models.flatMap((o) => o.units);
+    const cheapest = units.reduce((min, u) => (u.price < min.price ? u : min));
+    out.push({
+      slug: b.slug,
+      brandKey: key,
+      name: b.name,
+      brand: models[0].brand,
+      pageId: page?.id ?? null,
+      endsAt: page?.endsAt ?? null,
+      models,
+      units,
+      // One photo per model, then the rest.
+      images: [...models.map((o) => o.images[0]).filter(Boolean), ...models.flatMap((o) => o.images.slice(1))].slice(0, 10),
+      fromPrice: cheapest.price,
+      normalFrom: cheapest.normalPrice,
+      bestSaving: Math.max(...models.map((o) => o.bestSaving)),
+      storages: [...new Set(models.flatMap((o) => o.storages))],
+      grades: GRADE_ORDER.filter((g) => units.some((u) => u.grade === g)),
+    });
+  }
+  return out;
+}
+
+/** Every brand page live right now (brands with at least one model on promo). */
+export const getBrandOffers = cache(loadBrandOffers);
+
+export async function getBrandOffer(slug: string): Promise<BrandOffer | null> {
+  return (await getBrandOffers()).find((b) => b.slug === slug) ?? null;
+}
 
 /** The offer a listing's units are sold through (product page banner). */
 export async function offerForListing(listingSlug: string): Promise<PhoneOffer | null> {

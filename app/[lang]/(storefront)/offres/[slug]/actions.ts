@@ -15,7 +15,7 @@ import { priceCart, type CartLineInput, type PricedLine } from "@/lib/db/cart-pr
 import { createOrderRequest } from "@/lib/db/order-requests";
 import { findCity, estimateDelivery } from "@/lib/delivery";
 import { buildWhatsAppOrderLink } from "@/lib/whatsapp";
-import { getPhoneOffer, resolveOfferUnit } from "@/lib/offers/phone-offers";
+import { getBrandOffer, getPhoneOffer, resolveOfferUnit } from "@/lib/offers/phone-offers";
 import { notifyErp } from "@/lib/erp-notify";
 import { errors as frErrors } from "@/lib/i18n/dictionaries/fr-errors";
 
@@ -44,7 +44,10 @@ const contactSchema = z.object({
 });
 
 type OrderInput = {
+  /** the unit's model offer */
   slug: string;
+  /** the page the order was placed on, when a brand page (/offres/iphone) */
+  via?: string;
   unitId: string;
   addons: string[];
   customerName: string;
@@ -68,6 +71,10 @@ export async function submitOfferOrder(input: OrderInput): Promise<Result> {
   const slug = String(input.slug ?? "");
   const offer = await getPhoneOffer(slug);
   if (!offer) return { ok: false, error: OFFER_ENDED };
+  // Placed on a brand page: the order counts for that page (its campaign).
+  const viaSlug = typeof input.via === "string" && input.via !== slug ? input.via.slice(0, 40) : null;
+  const brandPage = viaSlug ? await getBrandOffer(viaSlug) : null;
+  const pagePath = brandPage ? `/offres/${brandPage.slug}` : `/offres/${offer.slug}`;
 
   const unit = await resolveOfferUnit(slug, String(input.unitId ?? ""));
   if (!unit) return { ok: false, error: UNIT_GONE };
@@ -114,14 +121,14 @@ export async function submitOfferOrder(input: OrderInput): Promise<Result> {
   const order = await createOrderRequest({
     customerName: contact.data.customerName,
     customerPhone: contact.data.customerPhone,
-    notes: `Promo ${offer.name} (/offres/${offer.slug}). Adresse exacte à prendre lors de l'appel de confirmation. Avance de ${ADVANCE} DH à régler avant expédition.`,
+    notes: `Promo ${offer.name} (${pagePath}). Adresse exacte à prendre lors de l'appel de confirmation. Avance de ${ADVANCE} DH à régler avant expédition.`,
     // A phone: the advance applies. No receipt yet: it's arranged on the call.
     requiresAdvance: true,
     // The form says the customer will be called to confirm; nothing else is stored.
     dataConsentAccepted: true,
     lines: priced,
     delivery,
-    landingPageId: offer.pageId ?? undefined,
+    landingPageId: (brandPage ? brandPage.pageId : offer.pageId) ?? undefined,
   });
 
   notifyErp();

@@ -9,11 +9,13 @@ import { ViewBeacon, Countdown, CopyCode, OfferProductCard } from "./OfferParts"
 import { LOCALE_META } from "@/lib/i18n/config";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { alternates } from "@/lib/i18n/seo";
-import { getPhoneOffer } from "@/lib/offers/phone-offers";
+import { getBrandOffer, getPhoneOffer } from "@/lib/offers/phone-offers";
+import { BrandOfferPage, brandOfferMetadata } from "./BrandOfferPage";
 import { PhoneOfferPage, phoneOfferMetadata } from "./PhoneOfferPage";
 
-// Two kinds of page share this address: a phone model on promo in the ERP
-// (/offres/iphone-14, lib/offers/phone-offers.ts) and an ERP promo page
+// Three kinds of page share this address: a phone model on promo in the ERP
+// (/offres/iphone-14, lib/offers/phone-offers.ts), a brand's promos
+// (/offres/iphone, every model of it) and an ERP promo page
 // ("Site web → Pages promo"). Refreshed at once by the ERP on every change
 // (/api/revalidate), and at least every minute so a page opens / closes on time.
 export const revalidate = 60;
@@ -39,6 +41,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const [offer, data, locale] = await Promise.all([getPhoneOffer(slug), getLandingPage(slug), getLocale()]);
   if (offer) return phoneOfferMetadata(offer, locale);
+  const brand = await getBrandOffer(slug);
+  if (brand) return brandOfferMetadata(brand, locale);
   if (!data) return {};
   // A page switched off or outside its dates shows nothing of its offer.
   if (data.status !== "live") return { robots: { index: false } };
@@ -54,6 +58,8 @@ export default async function OfferPage({ params }: Props) {
   const { slug } = await params;
   const [offer, t, locale] = await Promise.all([getPhoneOffer(slug), getT(), getLocale()]);
   if (offer) return <PhoneOfferPage offer={offer} locale={locale} t={t} />;
+  const brand = await getBrandOffer(slug);
+  if (brand) return <BrandOfferPage brand={brand} locale={locale} t={t} />;
   const data = await getLandingPage(slug);
   if (!data) notFound();
   const o = t.offer;

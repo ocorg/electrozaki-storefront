@@ -20,6 +20,7 @@ export const darija: OfferCopy = {
   },
 
   form: (name: string) => ({
+    model: "Modèle",
     title: `${name} dyalek`,
     grade: "L7ala",
     storage: "Stockage",
@@ -164,6 +165,25 @@ export const darija: OfferCopy = {
     bar: (name: string, price: string) => `Promo ${name}: men ${price}`,
     banner: (name: string, price: string) => `${name} f promo men ${price}`,
     cta: "Chouf promo",
+  },
+
+  brand: {
+    metaTitle: (name: string, from: string) => `Promos ${name} men ${from}`,
+    metaDescription: (name: string, from: string, n: number) =>
+      `Ga3 les ${name} f promo 3nd Electro Zaki f Mknas, men ${from}: ${n} modèles, kol téléphone mchouf, garantie 3 chhour, livraison l ga3 lmghrib.`,
+    eyebrow: "Promo Electro Zaki · Kayn f Mknas",
+    title: (name: string) => `Promos ${name}`,
+    lead: (name: string, n: number) =>
+      `${n} modèles dyal ${name} f promo, f page wa7da. Khtar l modèle, l7ala w nit téléphone li ghadi iwslek: kol wa7ed mchouf mn 3nd les techniciens dyalna.`,
+    modelsTitle: "Les modèles li f promo",
+    modelsIntro: "Kol modèle 3ndo 7ta l page dyalo, b la fiche technique kamla.",
+    phones: (n: number) => `${n} téléphone f promo`,
+    from: "men",
+    upTo: (saving: string) => `7tal ${saving} na9sin`,
+    seeModel: "Chouf l modèle",
+    cardTitle: (name: string) => `Ga3 les promos ${name}`,
+    cardTeaser: (n: number) => `${n} modèles f promo f page wa7da`,
+    finalTitle: (name: string) => `${name} dyalek f promo kaytsennak.`,
   },
 
   final: {

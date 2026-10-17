@@ -4,7 +4,7 @@ import { landingProductIds, landingStatus } from "@/lib/db/landing";
 import { formatMAD } from "@/lib/format";
 import type { Locale } from "@/lib/i18n/config";
 import { DICTIONARIES } from "@/lib/i18n/dictionaries";
-import { getPhoneOffers } from "./phone-offers";
+import { getBrandOffers, getPhoneOffers } from "./phone-offers";
 import { OFFER_COPY } from "./copy";
 
 // Every offer live right now, for the parts of the site that point to them:
@@ -55,10 +55,23 @@ async function loadLiveOffers(locale: Locale): Promise<LiveOffer[]> {
     },
   });
 
-  // Phone models on promo in the ERP (/offres/iphone-14…): one each.
+  // Brand pages first (/offres/iphone…: every model of the brand), then the
+  // phone models on promo in the ERP (/offres/iphone-14…): one each.
   const c = OFFER_COPY[locale];
-  const phoneOffers = await getPhoneOffers();
-  const offers: LiveOffer[] = phoneOffers.map((o) => ({
+  const [brandOffers, phoneOffers] = await Promise.all([getBrandOffers(), getPhoneOffers()]);
+  const offers: LiveOffer[] = brandOffers.map((b) => ({
+    slug: b.slug,
+    href: `/offres/${b.slug}`,
+    title: c.brand.cardTitle(b.name),
+    teaser: c.brand.cardTeaser(b.models.length),
+    image: b.images[0]?.url ?? null,
+    price: b.fromPrice,
+    normalPrice: b.normalFrom,
+    discount: null,
+    endsAt: b.endsAt?.toISOString() ?? null,
+    bar: c.card.bar(b.name, formatMAD(b.fromPrice)),
+  }));
+  offers.push(...phoneOffers.map((o) => ({
     slug: o.slug,
     href: `/offres/${o.slug}`,
     title: c.card.title(o.name),
@@ -69,8 +82,8 @@ async function loadLiveOffers(locale: Locale): Promise<LiveOffer[]> {
     discount: null,
     endsAt: o.endsAt?.toISOString() ?? null,
     bar: c.card.bar(o.name, formatMAD(o.fromPrice)),
-  }));
-  const phoneSlugs = new Set(phoneOffers.map((o) => o.slug));
+  })));
+  const phoneSlugs = new Set([...brandOffers.map((b) => b.slug), ...phoneOffers.map((o) => o.slug)]);
 
   for (const page of pages.filter((p) => landingStatus(p) === "live" && !phoneSlugs.has(p.slug))) {
     const endsAt = page.endsAt?.toISOString() ?? null;

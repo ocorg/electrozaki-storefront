@@ -20,6 +20,7 @@ export const ar: OfferCopy = {
   },
 
   form: (name: string) => ({
+    model: "الطراز",
     title: `هاتفك ${name}`,
     grade: "الحالة",
     storage: "السعة",
@@ -164,6 +165,25 @@ export const ar: OfferCopy = {
     bar: (name: string, price: string) => `تخفيض ${name}: ابتداءً من ${price}`,
     banner: (name: string, price: string) => `${name} في التخفيض ابتداءً من ${price}`,
     cta: "شاهد التخفيض",
+  },
+
+  brand: {
+    metaTitle: (name: string, from: string) => `تخفيضات ${name} ابتداءً من ${from}`,
+    metaDescription: (name: string, from: string, n: number) =>
+      `كل هواتف ${name} في التخفيض لدى إلكترو زكي في مكناس، ابتداءً من ${from}: ${n} طرازات، كل هاتف مفحوص، ضمان 3 أشهر، والتوصيل لكل المغرب.`,
+    eyebrow: "تخفيض إلكترو زكي · متوفر في مكناس",
+    title: (name: string) => `تخفيضات ${name}`,
+    lead: (name: string, n: number) =>
+      `${n} طرازات من ${name} في التخفيض، في صفحة واحدة. اختر الطراز والحالة والهاتف بعينه الذي ستستلمه: كل هاتف مفحوص من طرف تقنيينا.`,
+    modelsTitle: "الطرازات في التخفيض",
+    modelsIntro: "لكل طراز صفحته أيضًا، مع مواصفاته الكاملة.",
+    phones: (n: number) => `${n} هاتف في التخفيض`,
+    from: "ابتداءً من",
+    upTo: (saving: string) => `تخفيض حتى ${saving}`,
+    seeModel: "عرض الطراز",
+    cardTitle: (name: string) => `كل تخفيضات ${name}`,
+    cardTeaser: (n: number) => `${n} طرازات في التخفيض في صفحة واحدة`,
+    finalTitle: (name: string) => `هاتفك ${name} المخفّض في انتظارك.`,
   },
 
   final: {
