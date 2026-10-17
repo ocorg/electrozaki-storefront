@@ -3,6 +3,8 @@
 
 export const fr = {
   meta: {
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    phonesOnly: { title: "Electro Zaki | Téléphones et réparation à Meknès", description: "Téléphones neufs et d'occasion (iPhone, Samsung, Xiaomi) et réparation à Meknès. État et batterie affichés pour chaque téléphone, garantie 3 mois, livraison partout au Maroc." },
     title: "Electro Zaki | Téléphones & accessoires à Meknès",
     description:
       "Téléphones neufs et d'occasion (iPhone, Samsung, Xiaomi), coques, chargeurs, câbles, écouteurs et réparation à Meknès. État et batterie affichés pour chaque téléphone, livraison partout au Maroc.",
@@ -43,6 +45,8 @@ export const fr = {
   },
 
   footer: {
+    address: "Boulevard Al Massira Al Khadra, Ouislane, Meknès",
+    findUs: "Voir le plan",
     blurb: (city: string) =>
       `Téléphones neufs et d'occasion, accessoires et réparation à ${city}. Chaque téléphone d'occasion est vendu avec son état et sa batterie affichés.`,
     services: "Services",
@@ -131,6 +135,8 @@ export const fr = {
   },
 
   hero: {
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    phonesOnly: { eyebrow: "Téléphones · Réparation", title: ["Téléphones", "& réparation", "à Meknès."], lead: "iPhone, Samsung, Xiaomi, neufs et d'occasion - l'état et la batterie de chaque appareil affichés avant l'achat. Garantie 3 mois, et réparation sur place." },
     eyebrow: "Téléphones · Accessoires · Réparation",
     title: ["Téléphones", "& accessoires", "à Meknès."],
     lead: "iPhone, Samsung, Xiaomi, neufs et d'occasion - l'état et la batterie de chaque appareil affichés avant l'achat. Coques, chargeurs, câbles, écouteurs, et réparation sur place.",
@@ -415,6 +421,7 @@ export const fr = {
   },
 
   conditionPanel: {
+    specsToggle: (n: number) => `Fiche technique complète (${n})`,
     aria: "État de l'appareil",
     title: "Fiche de l'appareil",
     batteryHealth: "Santé de la batterie",
@@ -587,6 +594,14 @@ export const fr = {
   },
 
   contact: {
+    address: "Boulevard Al Massira Al Khadra, Ouislane, Meknès",
+    landmark: "En face de la station de taxis Hamirya",
+    hoursTitle: "Horaires",
+    hours: ["Tous les jours : 10h - minuit", "Vendredi : 9h - 12h, puis 15h - minuit"],
+    shopTitle: "La boutique",
+    shopIntro: "Passez voir les téléphones avant d'acheter, déposer le vôtre en réparation, ou récupérer votre commande.",
+    mapTitle: "Carte : la boutique Electro Zaki à Meknès",
+    directions: "Itinéraire",
     metaTitle: "Contact",
     metaDescription: "Écrivez à Electro Zaki, Meknès : WhatsApp ou formulaire. Téléphones, accessoires, réparation.",
     sentTitle: "Message envoyé",

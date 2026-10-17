@@ -1,5 +1,5 @@
 import { createElement } from "react";
-import { SHOP, SITE_URL, WHATSAPP_URL, absoluteUrl } from "@/lib/site";
+import { SHOP, SITE_URL, SOCIAL, WHATSAPP_URL, absoluteUrl } from "@/lib/site";
 import { LOCALE_META, localePath, type Locale } from "@/lib/i18n/config";
 
 // schema.org structured data (Google rich results): the store itself on
@@ -27,12 +27,21 @@ export function storeJsonLd(locale: Locale): Json {
     logo: absoluteUrl("/logo-mark.png"),
     image: absoluteUrl("/opengraph-image"),
     telephone: `+${SHOP.whatsappNumber}`,
-    sameAs: [WHATSAPP_URL],
+    sameAs: [WHATSAPP_URL, ...Object.values(SOCIAL)],
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Boulevard Al Massira Al Khadra, Ouislane (en face de la station de taxis Hamirya)",
       addressLocality: SHOP.city,
       addressCountry: SHOP.country,
     },
+    geo: { "@type": "GeoCoordinates", latitude: SHOP.geo.latitude, longitude: SHOP.geo.longitude },
+    hasMap: SHOP.mapsUrl,
+    // Every day 10:00 to midnight; Friday 9:00-12:00 and 15:00 to midnight.
+    openingHoursSpecification: [
+      { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Sunday"], opens: "10:00", closes: "23:59" },
+      { "@type": "OpeningHoursSpecification", dayOfWeek: "Friday", opens: "09:00", closes: "12:00" },
+      { "@type": "OpeningHoursSpecification", dayOfWeek: "Friday", opens: "15:00", closes: "23:59" },
+    ],
     areaServed: { "@type": "Country", name: "Maroc" },
     currenciesAccepted: "MAD",
     paymentAccepted: "Cash, Bank transfer",

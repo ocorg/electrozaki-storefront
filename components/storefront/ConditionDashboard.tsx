@@ -1,4 +1,4 @@
-import { AlertTriangle, Ban, BatteryWarning, Camera, CheckCircle2, MonitorSmartphone, Plug, Volume2, type LucideIcon } from "lucide-react";
+import { AlertTriangle, Ban, BatteryWarning, Camera, ChevronDown, CheckCircle2, MonitorSmartphone, Plug, Volume2, type LucideIcon } from "lucide-react";
 import { useT } from "@/components/i18n/I18nProvider";
 import { batteryGood } from "@/lib/battery";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
@@ -104,15 +104,26 @@ export function ConditionDashboard(props: ConditionData & { specs?: SpecRow[] })
         </ul>
       )}
 
+      {/* The full sheet folds away: on a phone it would push the "add to
+          cart" button several screens down. <bdi> keeps a Latin value
+          ("12 MP TrueDepth") in order on the Arabic site. */}
       {specs.length > 0 && (
-        <dl className="divide-y divide-ink/6">
-          {specs.map((row) => (
-            <div key={row.label} className="grid gap-0.5 px-5 py-3 sm:grid-cols-[9.5rem_1fr] sm:gap-4">
-              <dt className="text-sm text-neutral-600">{row.label}</dt>
-              <dd className="text-sm font-semibold text-ink">{row.value}</dd>
-            </div>
-          ))}
-        </dl>
+        <details className="group">
+          <summary className="flex min-h-12 cursor-pointer list-none items-center gap-2 px-5 py-3 text-sm font-semibold text-ink marker:content-none hover:bg-paper/60 [&::-webkit-details-marker]:hidden">
+            <span className="flex-1">{c.specsToggle(specs.length)}</span>
+            <ChevronDown size={18} aria-hidden className="flex-none text-neutral-500 transition-transform duration-300 group-open:rotate-180" />
+          </summary>
+          <dl className="divide-y divide-ink/6 border-t border-ink/6">
+            {specs.map((row) => (
+              <div key={row.label} className="grid gap-0.5 px-5 py-3 sm:grid-cols-[9.5rem_1fr] sm:gap-4">
+                <dt className="text-sm text-neutral-600">{row.label}</dt>
+                <dd className="text-sm font-semibold text-ink">
+                  <bdi>{row.value}</bdi>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </details>
       )}
     </section>
   );

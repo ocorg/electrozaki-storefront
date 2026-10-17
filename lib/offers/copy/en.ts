@@ -162,7 +162,7 @@ export const en: OfferCopy = {
     title: (name: string) => `${name} on promo`,
     teaser: (saving: string) => `Up to ${saving} off, 3-month warranty`,
     bar: (name: string, price: string) => `${name} promo: from ${price}`,
-    banner: (name: string, price: string) => `${name} on promo from ${price}: every phone of the promo on one page.`,
+    banner: (name: string, price: string) => `${name} on promo from ${price}`,
     cta: "See the promo",
   },
 

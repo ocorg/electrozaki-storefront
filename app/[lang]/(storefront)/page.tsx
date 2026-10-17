@@ -61,6 +61,8 @@ export default async function HomePage() {
   const phonePhoto = showcase.find((p) => p.image);
   const name = (a: { slug: string; name: string }) => categoryName(t, a.slug, a.name);
   const h = t.home;
+  // While accessories aren't online, the hero speaks of phones and repair only.
+  const hero = ACCESSORIES_OPEN ? t.hero : { ...t.hero, ...t.hero.phonesOnly };
 
   return (
     <div>
@@ -70,19 +72,19 @@ export default async function HomePage() {
           <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-200">
               <span className="h-1.5 w-1.5 rounded-full bg-whatsapp shadow-[0_0_0_3px_rgb(37_211_102/0.25)]" aria-hidden />
-              {t.hero.eyebrow}
+              {hero.eyebrow}
             </p>
             <h1
               id="hero-title"
               className="font-display mt-6 text-[2.9rem] font-extrabold leading-[0.95] sm:text-[4.2rem] xl:text-[5.2rem]"
             >
-              {t.hero.title[0]} <br />
-              {t.hero.title[1]} <br />
+              {hero.title[0]} <br />
+              {hero.title[1]} <br />
               <span className="bg-linear-to-r from-gold-bright via-gold to-gold-bright bg-clip-text text-transparent">
-                {t.hero.title[2]}
+                {hero.title[2]}
               </span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-300">{t.hero.lead}</p>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-300">{hero.lead}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <LinkButton href="/collections/telephones" variant="accent" size="lg" className="px-6 sm:px-8">
                 {t.hero.seePhones} <ArrowRight size={18} aria-hidden className="rtl:rotate-180" />

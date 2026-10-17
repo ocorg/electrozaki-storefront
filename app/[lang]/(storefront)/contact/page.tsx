@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Clock, MapPin, MessageCircle, Navigation } from "lucide-react";
 import { submitContactMessage } from "./actions";
 import { Button } from "@/components/ui/Button";
-import { WHATSAPP_URL } from "@/lib/site";
+import { SocialLinks } from "@/components/storefront/SocialLinks";
+import { SHOP, WHATSAPP_URL } from "@/lib/site";
 import { useT } from "@/components/i18n/I18nProvider";
 import { translateError } from "@/lib/i18n/labels";
 
@@ -57,7 +58,62 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="mx-auto max-w-lg px-4 py-16">
+    <div data-no-floating-wa className="mx-auto grid max-w-5xl gap-10 px-4 py-12 sm:py-16 md:grid-cols-2">
+      {/* The shop: customers like to know it exists before paying an advance. */}
+      <section id="boutique" aria-labelledby="shop-title" className="scroll-mt-28">
+        <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-gold-deep">{SHOP.city}</p>
+        <h2 id="shop-title" className="font-display mt-1 text-2xl font-bold text-ink sm:text-3xl">{c.shopTitle}</h2>
+        <p className="mt-3 text-neutral-600">{c.shopIntro}</p>
+        <div className="mt-5 overflow-hidden rounded-3xl border border-ink/10 bg-white">
+          <iframe
+            src={SHOP.mapEmbed}
+            title={c.mapTitle}
+            className="block aspect-4/3 w-full border-0"
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        </div>
+        <div className="mt-4 grid gap-2 sm:grid-cols-2">
+          <a
+            href={SHOP.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-12 items-center justify-center gap-2 rounded-full bg-ink px-5 text-sm font-semibold text-white transition-colors hover:bg-ink-3"
+          >
+            <Navigation size={17} aria-hidden /> {c.directions}
+          </a>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-12 items-center justify-center gap-2 rounded-full bg-whatsapp px-5 text-sm font-semibold text-ink"
+          >
+            <MessageCircle size={17} aria-hidden /> <span dir="ltr">{SHOP.whatsappDisplay}</span>
+          </a>
+        </div>
+        <div className="mt-5 grid gap-4 rounded-3xl bg-white p-5 ring-1 ring-ink/7 sm:grid-cols-2">
+          <div className="flex gap-3">
+            <MapPin size={18} aria-hidden className="mt-0.5 flex-none text-gold-deep" />
+            <p className="text-sm">
+              <span className="block font-semibold text-ink">{c.address}</span>
+              <span className="text-neutral-600">{c.landmark}</span>
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <Clock size={18} aria-hidden className="mt-0.5 flex-none text-gold-deep" />
+            <div className="text-sm">
+              <p className="font-semibold text-ink">{c.hoursTitle}</p>
+              {c.hours.map((line) => (
+                <p key={line} className="text-neutral-600">{line}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+        <SocialLinks tone="light" className="mt-4" />
+      </section>
+
+      <div>
       <h1 className="text-2xl font-bold sm:text-3xl">{c.title}</h1>
       <p className="mt-3 text-neutral-600">
         {c.introBefore}{" "}
@@ -110,6 +166,7 @@ export default function ContactPage() {
           {submitting ? c.sending : c.send}
         </Button>
       </form>
+      </div>
     </div>
   );
 }

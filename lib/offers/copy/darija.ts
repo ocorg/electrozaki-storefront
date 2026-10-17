@@ -162,7 +162,7 @@ export const darija: OfferCopy = {
     title: (name: string) => `${name} f promo`,
     teaser: (saving: string) => `7tal ${saving} na9sin, garantie 3 chhour`,
     bar: (name: string, price: string) => `Promo ${name}: men ${price}`,
-    banner: (name: string, price: string) => `${name} f promo men ${price}: ga3 les téléphones dyal promo f page wa7da.`,
+    banner: (name: string, price: string) => `${name} f promo men ${price}`,
     cta: "Chouf promo",
   },
 

@@ -4,6 +4,8 @@ import type { Dictionary } from "./fr";
 // digits, the way prices and phone numbers are written in Morocco.
 export const ar: Dictionary = {
   meta: {
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    phonesOnly: { title: "إلكترو زكي | هواتف وإصلاح في مكناس", description: "هواتف جديدة ومستعملة (iPhone و Samsung و Xiaomi) وإصلاح الهواتف في مكناس. حالة كل هاتف وبطاريته معروضة، ضمان 3 أشهر، والتوصيل إلى جميع أنحاء المغرب." },
     title: "إلكترو زكي | هواتف وإكسسوارات في مكناس",
     description:
       "هواتف جديدة ومستعملة (iPhone و Samsung و Xiaomi)، أغلفة وشواحن وكابلات وسماعات، وإصلاح الهواتف في مكناس. حالة كل هاتف وبطاريته معروضة، والتوصيل إلى جميع أنحاء المغرب.",
@@ -44,6 +46,8 @@ export const ar: Dictionary = {
   },
 
   footer: {
+    address: "شارع المسيرة الخضراء، ويسلان، مكناس",
+    findUs: "شاهد الخريطة",
     blurb: (city: string) =>
       `هواتف جديدة ومستعملة، إكسسوارات وإصلاح في ${city}. كل هاتف مستعمل يُباع مع عرض حالته وبطاريته.`,
     services: "الخدمات",
@@ -128,6 +132,8 @@ export const ar: Dictionary = {
   },
 
   hero: {
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    phonesOnly: { eyebrow: "هواتف · إصلاح", title: ["هواتف", "وإصلاح", "في مكناس."], lead: "iPhone و Samsung و Xiaomi، جديدة ومستعملة - حالة كل جهاز وبطاريته معروضة قبل الشراء. ضمان 3 أشهر، وإصلاح في عين المكان." },
     eyebrow: "هواتف · إكسسوارات · إصلاح",
     title: ["هواتف", "وإكسسوارات", "في مكناس."],
     lead: "iPhone و Samsung و Xiaomi، جديدة ومستعملة - حالة كل جهاز وبطاريته معروضة قبل الشراء. أغلفة وشواحن وكابلات وسماعات، وإصلاح في عين المكان.",
@@ -439,6 +445,7 @@ export const ar: Dictionary = {
   },
 
   conditionPanel: {
+    specsToggle: (n: number) => `المواصفات الكاملة (${n})`,
     aria: "حالة الجهاز",
     title: "بطاقة الجهاز",
     batteryHealth: "صحة البطارية",
@@ -609,6 +616,14 @@ export const ar: Dictionary = {
   },
 
   contact: {
+    address: "شارع المسيرة الخضراء، ويسلان، مكناس",
+    landmark: "مقابل محطة الطاكسيات Hamirya",
+    hoursTitle: "أوقات العمل",
+    hours: ["كل يوم: من 10 صباحًا إلى منتصف الليل", "الجمعة: من 9 إلى 12 ظهرًا، ثم من 3 مساءً إلى منتصف الليل"],
+    shopTitle: "المتجر",
+    shopIntro: "تفضل لرؤية الهواتف قبل الشراء، أو لإصلاح هاتفك، أو لاستلام طلبك.",
+    mapTitle: "خريطة: متجر إلكترو زكي في مكناس",
+    directions: "الاتجاهات",
     metaTitle: "اتصل بنا",
     metaDescription: "راسل إلكترو زكي، مكناس: عبر واتساب أو الاستمارة. هواتف، إكسسوارات، إصلاح.",
     sentTitle: "تم إرسال الرسالة",

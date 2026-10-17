@@ -6,6 +6,8 @@ import type { Dictionary } from "./fr";
 // (téléphone, batterie, livraison…).
 export const darija: Dictionary = {
   meta: {
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    phonesOnly: { title: "Electro Zaki | Tilifounat w tasli7 f Mknas", description: "Tilifounat jdad w mosta3mlin (iPhone, Samsung, Xiaomi) w tasli7 f Mknas. L7ala w l batterie dyal kol téléphone bayna, garantie 3 chhour, w livraison l ga3 lmghrib." },
     title: "Electro Zaki | Tilifounat w accessoires f Mknas",
     description:
       "Tilifounat jdad w mosta3mlin (iPhone, Samsung, Xiaomi), coques, chargeurs, cables, écouteurs w tasli7 f Mknas. L7ala w l batterie dyal kol téléphone bayna, w livraison l ga3 lmghrib.",
@@ -46,6 +48,8 @@ export const darija: Dictionary = {
   },
 
   footer: {
+    address: "Boulevard Al Massira Al Khadra, Ouislane, Mknas",
+    findUs: "Chouf lkharita",
     blurb: (city: string) =>
       `Tilifounat jdad w mosta3mlin, accessoires w tasli7 f ${city}. Kol téléphone mosta3mel kaytba3 w l7ala w l batterie dyalo bayna.`,
     services: "Services",
@@ -130,6 +134,8 @@ export const darija: Dictionary = {
   },
 
   hero: {
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    phonesOnly: { eyebrow: "Tilifounat · Tasli7", title: ["Tilifounat", "w tasli7", "f Mknas."], lead: "iPhone, Samsung, Xiaomi, jdad w mosta3mlin - l7ala w l batterie dyal kol appareil bayna 9bel ma tchri. Garantie 3 chhour, w tasli7 f l7in." },
     eyebrow: "Tilifounat · Accessoires · Tasli7",
     title: ["Tilifounat", "w accessoires", "f Mknas."],
     lead: "iPhone, Samsung, Xiaomi, jdad w mosta3mlin - l7ala w l batterie dyal kol appareil bayna 9bel ma tchri. Coques, chargeurs, cables, écouteurs, w tasli7 f l7in.",
@@ -421,6 +427,7 @@ export const darija: Dictionary = {
   },
 
   conditionPanel: {
+    specsToggle: (n: number) => `Fiche technique kamla (${n})`,
     aria: "L7ala dyal l'appareil",
     title: "La fiche dyal l'appareil",
     batteryHealth: "Sa7t l batterie",
@@ -591,6 +598,14 @@ export const darija: Dictionary = {
   },
 
   contact: {
+    address: "Boulevard Al Massira Al Khadra, Ouislane, Mknas",
+    landmark: "Mgabel la station dyal taxis Hamirya",
+    hoursTitle: "Lw9at",
+    hours: ["Kol nhar: men 10 sba7 7tal 12 d lil", "Jem3a: men 9 l 12 d nhar, w men 3 d l3chiya 7tal 12 d lil"],
+    shopTitle: "L7anout",
+    shopIntro: "Dowz tchouf tilifounat 9bel ma techri, jib dyalek ytsla7, wla jib l commande dyalek.",
+    mapTitle: "Lkharita: l7anout dyal Electro Zaki f Mknas",
+    directions: "Tri9",
     metaTitle: "Contact",
     metaDescription: "Kteb l Electro Zaki, Mknas: WhatsApp wla formulaire. Tilifounat, accessoires, tasli7.",
     sentTitle: "Message tsifet",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { Check, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
@@ -188,6 +188,18 @@ export function ProductVariantExperience({ product, variants, images, categorySl
   const inStock = product.availability === "IN_STOCK";
   const unitsInStock = variants.filter((v) => v.stockQuantity > 0).length;
 
+  // The buy bar (phones) shows while the main "add to cart" button is out of sight.
+  const buyRef = useRef<HTMLDivElement>(null);
+  const [buyOutOfSight, setBuyOutOfSight] = useState(false);
+  useEffect(() => {
+    const el = buyRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(([entry]) => setBuyOutOfSight(!entry.isIntersecting));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [inStock]);
+  const buyBar = inStock && buyOutOfSight;
+
   return (
     <>
       {/* ── Gallery ── */}
@@ -355,7 +367,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
               </Select>
             )}
 
-            <div className="flex items-stretch gap-3">
+            <div ref={buyRef} className="flex items-stretch gap-3">
               {!unitMode && maxQuantity > 1 && (
                 <div className="flex items-center rounded-full border border-ink/15 bg-white" role="group" aria-label={p.quantity}>
                   <button
@@ -398,6 +410,26 @@ export function ProductVariantExperience({ product, variants, images, categorySl
             <span role="status" className="sr-only">
               {justAdded ? p.addedStatus(product.name) : ""}
             </span>
+
+            {/* Phones: the price and the button stay at hand while the
+                customer reads the page (above the tab bar). */}
+            {buyBar && (
+              <div
+                data-buy-bar
+                className="fixed inset-x-0 bottom-[calc(61px+env(safe-area-inset-bottom))] z-30 flex items-center gap-3 border-t border-ink/10 bg-paper/95 px-4 py-2.5 backdrop-blur-xl md:hidden"
+              >
+                <div className="min-w-0 flex-1">
+                  <p dir="ltr" className="readout text-lg font-bold leading-tight text-ink rtl:text-end">{formatMAD(price)}</p>
+                  {saving !== null && wasPrice && (
+                    <p dir="ltr" className="readout text-xs text-neutral-500 line-through rtl:text-end">{formatMAD(wasPrice)}</p>
+                  )}
+                </div>
+                <Button onClick={handleAdd} disabled={variantOutOfStock} variant="accent" className="min-h-12 px-6">
+                  {justAdded ? <Check size={18} aria-hidden /> : <ShoppingBag size={18} aria-hidden />}
+                  {variantOutOfStock ? p.soldOut : justAdded ? p.added : p.addToCart}
+                </Button>
+              </div>
+            )}
 
             <a
               href={whatsappLink(p.waQuestion(product.name, selectedVariant?.name))}

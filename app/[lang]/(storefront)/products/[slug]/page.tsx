@@ -38,6 +38,13 @@ import { InspectionReport } from "@/components/storefront/InspectionReport";
 
 export const revalidate = 60;
 
+// Pages are built on their first visit and then served from the cache
+// (refreshed every 60 s and at once by the ERP): without this, Next renders
+// every visit from scratch, with a database round trip each time.
+export async function generateStaticParams() {
+  return [];
+}
+
 // Next.js 16: `params` is a Promise and must be awaited.
 type Props = { params: Promise<{ slug: string }> };
 

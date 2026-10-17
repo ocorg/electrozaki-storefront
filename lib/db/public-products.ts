@@ -385,12 +385,33 @@ export async function getFeaturedProducts(
   limit = 8,
   where: { isPhone?: boolean } = {}
 ): Promise<PublicProduct[]> {
-  return prisma.product.findMany({
+  const rows = await prisma.product.findMany({
     where: { availability: AvailabilityStatus.IN_STOCK, published: true, ...where },
     select: PUBLIC_PRODUCT_SELECT,
     orderBy: [{ images: { _count: "desc" } }, { createdAt: "desc" }],
-    take: limit,
+    take: limit * 3,
   });
+  return bestFirst(rows).slice(0, limit);
+}
+
+const GRADE_RANK: Record<string, number> = { NEUF: 0, TRES_BON: 1, BON: 2, PIECES_REMPLACEES: 3 };
+
+/**
+ * A shop window's order: photographed first, then the best condition, then
+ * promos, then newest (the query's order). The first phones a visitor sees
+ * set the tone: a "pièces remplacées" unit shouldn't lead.
+ */
+export function bestFirst<T extends { condition: string; compareAtPrice?: unknown; images?: unknown[] }>(rows: T[]): T[] {
+  return rows
+    .map((r, i) => ({ r, i }))
+    .sort(
+      (a, b) =>
+        Number(!!b.r.images?.length) - Number(!!a.r.images?.length) ||
+        (GRADE_RANK[a.r.condition] ?? 9) - (GRADE_RANK[b.r.condition] ?? 9) ||
+        Number(!!b.r.compareAtPrice) - Number(!!a.r.compareAtPrice) ||
+        a.i - b.i
+    )
+    .map(({ r }) => r);
 }
 
 /**

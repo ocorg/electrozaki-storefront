@@ -169,7 +169,7 @@ export const fr = {
     title: (name: string) => `${name} en promo`,
     teaser: (saving: string) => `Jusqu'à ${saving} de remise, garantie 3 mois`,
     bar: (name: string, price: string) => `Promo ${name} : dès ${price}`,
-    banner: (name: string, price: string) => `${name} en promo dès ${price} : tous les téléphones de la promo sur une seule page.`,
+    banner: (name: string, price: string) => `${name} en promo dès ${price}`,
     cta: "Voir la promo",
   },
 

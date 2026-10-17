@@ -162,7 +162,7 @@ export const ar: OfferCopy = {
     title: (name: string) => `${name} في التخفيض`,
     teaser: (saving: string) => `تخفيض حتى ${saving}، مع ضمان 3 أشهر`,
     bar: (name: string, price: string) => `تخفيض ${name}: ابتداءً من ${price}`,
-    banner: (name: string, price: string) => `${name} في التخفيض ابتداءً من ${price}: كل هواتف التخفيض في صفحة واحدة.`,
+    banner: (name: string, price: string) => `${name} في التخفيض ابتداءً من ${price}`,
     cta: "شاهد التخفيض",
   },
 

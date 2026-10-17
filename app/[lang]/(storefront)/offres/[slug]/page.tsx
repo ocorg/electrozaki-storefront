@@ -18,6 +18,13 @@ import { PhoneOfferPage, phoneOfferMetadata } from "./PhoneOfferPage";
 // (/api/revalidate), and at least every minute so a page opens / closes on time.
 export const revalidate = 60;
 
+// Pages are built on their first visit and then served from the cache
+// (refreshed every 60 s and at once by the ERP): without this, Next renders
+// every visit from scratch, with a database round trip each time.
+export async function generateStaticParams() {
+  return [];
+}
+
 type Props = { params: Promise<{ slug: string }> };
 
 // Per-page colour set chosen in the ERP.

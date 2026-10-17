@@ -3,6 +3,8 @@ import type { Dictionary } from "./fr";
 // English. Prices stay in DH, the way they're written in Morocco.
 export const en: Dictionary = {
   meta: {
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    phonesOnly: { title: "Electro Zaki | Phones and repairs in Meknes", description: "New and used phones (iPhone, Samsung, Xiaomi) and repairs in Meknes. Condition and battery shown for every phone, 3-month warranty, delivery anywhere in Morocco." },
     title: "Electro Zaki | Phones & accessories in Meknes",
     description:
       "New and used phones (iPhone, Samsung, Xiaomi), cases, chargers, cables, earphones and repairs in Meknes. Condition and battery shown for every phone, delivery anywhere in Morocco.",
@@ -43,6 +45,8 @@ export const en: Dictionary = {
   },
 
   footer: {
+    address: "Boulevard Al Massira Al Khadra, Ouislane, Meknes",
+    findUs: "See the map",
     blurb: (city: string) =>
       `New and used phones, accessories and repairs in ${city}. Every used phone is sold with its condition and battery shown.`,
     services: "Services",
@@ -127,6 +131,8 @@ export const en: Dictionary = {
   },
 
   hero: {
+    // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
+    phonesOnly: { eyebrow: "Phones · Repairs", title: ["Phones", "& repairs", "in Meknes."], lead: "iPhone, Samsung, Xiaomi, new and used - the condition and battery of every device shown before you buy. 3-month warranty, and repairs on site." },
     eyebrow: "Phones · Accessories · Repairs",
     title: ["Phones", "& accessories", "in Meknes."],
     lead: "iPhone, Samsung, Xiaomi, new and used - the condition and battery of every device shown before you buy. Cases, chargers, cables, earphones, and repairs on site.",
@@ -435,6 +441,7 @@ export const en: Dictionary = {
   },
 
   conditionPanel: {
+    specsToggle: (n: number) => `Full specifications (${n})`,
     aria: "Device condition",
     title: "Device sheet",
     batteryHealth: "Battery health",
@@ -606,6 +613,14 @@ export const en: Dictionary = {
   },
 
   contact: {
+    address: "Boulevard Al Massira Al Khadra, Ouislane, Meknes",
+    landmark: "Across from the Hamirya taxi station",
+    hoursTitle: "Opening hours",
+    hours: ["Every day: 10 am - midnight", "Friday: 9 am - 12 pm, then 3 pm - midnight"],
+    shopTitle: "The shop",
+    shopIntro: "Come and see the phones before you buy, drop yours off for repair, or pick up your order.",
+    mapTitle: "Map: the Electro Zaki shop in Meknes",
+    directions: "Directions",
     metaTitle: "Contact",
     metaDescription: "Write to Electro Zaki, Meknes: WhatsApp or form. Phones, accessories, repairs.",
     sentTitle: "Message sent",

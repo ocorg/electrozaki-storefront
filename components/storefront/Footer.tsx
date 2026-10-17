@@ -1,6 +1,7 @@
 import { MapPin, MessageCircle } from "lucide-react";
 import Link from "@/components/i18n/Link";
 import { AnchorButton } from "@/components/ui/Button";
+import { SocialLinks } from "@/components/storefront/SocialLinks";
 import { SHOP, WHATSAPP_URL } from "@/lib/site";
 import { getT } from "@/lib/i18n/server";
 import { categoryName } from "@/lib/i18n/labels";
@@ -54,10 +55,12 @@ export async function Footer({ aisles }: { aisles: AisleStat[] }) {
             <AnchorButton href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" variant="whatsapp" size="sm" className="mt-4">
               <MessageCircle size={17} aria-hidden /> <span dir="ltr">{SHOP.whatsappDisplay}</span>
             </AnchorButton>
-            <p className="mt-5 flex items-center gap-1.5 text-sm">
+            <Link href="/contact#boutique" className="mt-5 flex items-center gap-1.5 text-sm underline-offset-4 hover:underline">
               <MapPin size={15} className="text-gold" aria-hidden />
-              {t.common.city}, {t.common.country}
-            </p>
+              {t.common.city}, {t.common.country} · {t.footer.findUs}
+            </Link>
+            <p className="mt-1 ps-6 text-xs text-neutral-400">{t.footer.address}</p>
+            <SocialLinks className="mt-5" />
           </div>
         </div>
       </div>

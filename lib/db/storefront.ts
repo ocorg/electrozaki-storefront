@@ -1,7 +1,7 @@
 import { AvailabilityStatus } from "@/generated/prisma/enums";
 import { prisma } from "./client";
 import { OPEN_PRODUCTS, aisleOpen } from "@/lib/site";
-import { getFeaturedProducts, type PublicProduct } from "./public-products";
+import { getFeaturedProducts, type PublicProduct, bestFirst } from "./public-products";
 
 // The home page's shop front: which aisles have something on sale, and from
 // what price. Read-only, public fields only (no `internal` relation).
@@ -129,7 +129,7 @@ export async function getShowcasePhones(limit = 6): Promise<ShowcasePhone[]> {
 
   const seen = new Set<string>();
   const out: ShowcasePhone[] = [];
-  for (const r of rows) {
+  for (const r of bestFirst(rows)) {
     if (seen.has(r.name)) continue;
     seen.add(r.name);
     const units = r.variants

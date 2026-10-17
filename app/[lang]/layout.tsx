@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { Bricolage_Grotesque, JetBrains_Mono, Manrope } from "next/font/google";
 import localFont from "next/font/local";
-import { SHOP, SITE_URL } from "@/lib/site";
+import { ACCESSORIES_OPEN, SHOP, SITE_URL } from "@/lib/site";
 import { isLocale, LOCALE_META, LOCALES } from "@/lib/i18n/config";
 import { DICTIONARIES } from "@/lib/i18n/dictionaries";
 import { I18nProvider } from "@/components/i18n/I18nProvider";
@@ -61,18 +61,20 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const t = DICTIONARIES[lang];
+  // While accessories aren't online, the site describes phones and repair only.
+  const meta = ACCESSORIES_OPEN ? t.meta : t.meta.phonesOnly;
   return {
     metadataBase: new URL(SITE_URL),
     // Every page's tab reads "Page | Electro Zaki" (pages give only their own name).
-    title: { default: t.meta.title, template: `%s | ${SHOP.name}` },
-    description: t.meta.description,
+    title: { default: meta.title, template: `%s | ${SHOP.name}` },
+    description: meta.description,
     applicationName: SHOP.name,
     openGraph: {
       type: "website",
       locale: LOCALE_META[lang].ogLocale,
       siteName: SHOP.name,
-      title: t.meta.title,
-      description: t.meta.description,
+      title: meta.title,
+      description: meta.description,
     },
     twitter: { card: "summary_large_image" },
     formatDetection: { telephone: false },
