@@ -1,6 +1,8 @@
 // French — the source dictionary. Every other language is typed against
 // this one (see ./index.ts). Functions are for text that embeds a value.
 
+import { errors } from "./fr-errors";
+
 export const fr = {
   meta: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
@@ -870,48 +872,7 @@ export const fr = {
   // uploads, form validation). The server always answers in French; the
   // page swaps in the visitor's language with translateError() (lib/i18n/labels).
   // Each French text here must match the server's word for word.
-  errors: {
-    rateLimit: "Trop de tentatives. Merci de réessayer dans une heure ou de nous écrire sur WhatsApp.",
-    chooseCity: "Merci de choisir votre ville de livraison dans la liste.",
-    invalidReceipt: "Reçu invalide. Merci de le déposer à nouveau.",
-    invalidFields: "Certains champs sont invalides.",
-    invalidFieldsShort: "Champs invalides.",
-    promoExhausted: "Ce code a atteint sa limite d'utilisation.",
-    noFile: "Aucun fichier sélectionné.",
-    itemGone: "Un article de votre panier n'est plus disponible. Merci de le retirer.",
-    chooseOption: (name: string) => `Merci de choisir une option pour « ${name} ».`,
-    lowStock: (name: string) => `Stock insuffisant pour « ${name} ». Merci de réduire la quantité.`,
-    enterPromo: "Entrez un code promo.",
-    invalidPromo: "Code promo invalide.",
-    promoNotYet: "Ce code n'est pas encore actif.",
-    promoExpired: "Ce code a expiré.",
-    promoMin: (amount: string) => `Ce code nécessite un panier d'au moins ${amount} MAD.`,
-    fileTooBig: "Fichier trop volumineux (5 Mo maximum).",
-    receiptType: "Le reçu doit être une photo (JPG, PNG) ou un PDF.",
-    storageOff: "Le stockage des reçus n'est pas configuré.",
-    badPdf: "Ce fichier n'est pas un PDF valide.",
-    badImage: "Image illisible. Essayez une photo JPG ou PNG, ou le PDF du virement.",
-    uploadFailed: "Échec de l'envoi du reçu. Réessayez.",
-    fullName: "Merci d'indiquer votre nom complet.",
-    badPhone: "Numéro de téléphone invalide (ex: 06XXXXXXXX).",
-    fullAddress: "Merci d'indiquer une adresse complète.",
-    consent: "Merci d'accepter le traitement de vos données pour continuer.",
-    receiptFirst: "Merci de déposer votre reçu de virement avant de confirmer.",
-    yourName: "Merci d'indiquer votre nom.",
-    messageShort: "Le message est trop court.",
-    phoneOrEmail: "Merci d'indiquer un téléphone ou un email pour qu'on puisse vous répondre.",
-    pickProblem: "Sélectionnez au moins un problème.",
-    brandModel: "Indiquez la marque et le modèle de l'appareil.",
-    describeQuestion: "Décrivez votre question en quelques mots.",
-    trackNotFound:
-      "Aucune demande ou réparation trouvée avec ce numéro et ce téléphone. Vérifiez le numéro : DEM-… (reçu en ligne) ou REP-… (bon de dépôt).",
-    trackLocked:
-      "Trop d'essais pour ce numéro de téléphone aujourd'hui. Réessayez demain ou écrivez-nous sur WhatsApp avec votre numéro de demande.",
-    quoteClosed: "Ce devis n'attend plus de réponse. Contactez-nous sur WhatsApp si besoin.",
-    offerEnded: "Cette offre n'est plus disponible.",
-    offerUnitGone: "Ce téléphone vient d'être réservé. Merci d'en choisir un autre.",
-    phoneOrderLimit: "Vous avez déjà passé plusieurs commandes avec ce numéro aujourd'hui. Nous vous appelons très vite, ou écrivez-nous sur WhatsApp.",
-  },
+  errors,
 
   // Spec labels as typed in the ERP → shown label.
   specKeys: { "État": "État", Stockage: "Stockage", RAM: "RAM" } as Record<string, string>,

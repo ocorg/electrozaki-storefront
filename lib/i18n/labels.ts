@@ -1,5 +1,5 @@
 import type { Dictionary } from "./dictionaries";
-import { fr } from "./dictionaries/fr";
+import { errors as frErrors } from "./dictionaries/fr-errors";
 
 /** A category's name in the visitor's language, or the ERP's own name for a slug with no translation yet. */
 export function categoryName(t: Dictionary, slug: string, fallback: string): string {
@@ -45,7 +45,7 @@ const ERROR_PATTERNS: [RegExp, (t: Dictionary, value: string) => string][] = [
 
 /** A server message (always French) in the visitor's language; unknown messages pass through as sent. */
 export function translateError(t: Dictionary, message: string): string {
-  for (const [key, french] of Object.entries(fr.errors)) {
+  for (const [key, french] of Object.entries(frErrors)) {
     if (french === message) {
       const translated = t.errors[key as keyof Dictionary["errors"]];
       return typeof translated === "string" ? translated : message;
