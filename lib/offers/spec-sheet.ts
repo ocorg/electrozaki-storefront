@@ -37,6 +37,10 @@ export function factsFor(modelKey: string | null | undefined): ModelFacts | null
   return modelKey ? (MODEL_FACTS[offerSlug(modelKey)] ?? null) : null;
 }
 
+/** Single-SIM models (the Galaxy Ultras sold here): said in the description too, not only in the sheet. */
+export const SINGLE_SIM_NOTE = "Version 1 SIM : un seul emplacement pour carte SIM physique (nano-SIM), compatible eSIM.";
+export const isSingleSim = (facts: ModelFacts | null) => !!facts?.specs.sim?.startsWith("1 ");
+
 /**
  * The rows, in reading order. `storage` and `ram` come from the listing(s)
  * (the ERP), the rest from the model's sheet.

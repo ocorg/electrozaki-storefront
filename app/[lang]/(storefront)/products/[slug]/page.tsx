@@ -33,7 +33,7 @@ import { ComingSoon } from "@/components/storefront/ComingSoon";
 import { artFor } from "@/lib/category-art";
 import { offerForListing } from "@/lib/offers/phone-offers";
 import { OFFER_COPY } from "@/lib/offers/copy";
-import { factsFor, specRows } from "@/lib/offers/spec-sheet";
+import { SINGLE_SIM_NOTE, factsFor, isSingleSim, specRows } from "@/lib/offers/spec-sheet";
 import { getModelOptions, type ModelListing } from "@/lib/db/model-options";
 import { InspectionReport } from "@/components/storefront/InspectionReport";
 
@@ -198,7 +198,7 @@ export default async function ProductPage({ params }: Props) {
     availability: product.availability,
     recommendedSalePrice: product.recommendedSalePrice.toString(),
     compareAtPrice: product.compareAtPrice?.toString() ?? null,
-    description: product.description,
+    description: product.description || (isSingleSim(facts) ? SINGLE_SIM_NOTE : null),
     specSheet,
     modelColors: modelOptions?.colors,
     siblings,

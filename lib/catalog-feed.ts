@@ -1,5 +1,6 @@
 import type { PublicProduct } from "@/lib/db/public-products";
 import { absoluteUrl } from "@/lib/site";
+import { SINGLE_SIM_NOTE, factsFor, isSingleSim } from "@/lib/offers/spec-sheet";
 
 // The shop's catalogue as Meta Commerce Manager reads it (a "data feed":
 // one CSV row per item, with Meta's own column names). Meta collects it on a
@@ -66,7 +67,10 @@ export function feedRows(products: PublicProduct[], imageFallback: (slug: string
       custom_label_2: was !== null && was > pay ? "Promo" : "",
       custom_label_3: p.isPhone ? (p.modelKey?.split("|")[1] ?? "") : "",
     });
-    const shop = "Vendu par Electro Zaki à Meknès, livraison partout au Maroc, paiement à la livraison.";
+    const shop = p.isPhone
+      ? "Vendu par Electro Zaki à Meknès, livraison partout au Maroc : avance de 300 DH pour confirmer, le reste à la livraison."
+      : "Vendu par Electro Zaki à Meknès, livraison partout au Maroc, paiement à la livraison.";
+    const sim = p.isPhone && isSingleSim(factsFor(p.modelKey)) ? `${SINGLE_SIM_NOTE} ` : "";
 
     const units = p.isPhone ? p.variants.filter((v) => v.stockQuantity > 0) : [];
     if (units.length) {
@@ -79,7 +83,7 @@ export function feedRows(products: PublicProduct[], imageFallback: (slug: string
           item_group_id: p.id,
           // The condition in the title: the ad's product card shows it.
           title: plain(`${p.name}${v.color ? ` ${v.color}` : ""}${grade ? ` · ${grade}` : ""}`).slice(0, 150),
-          description: plain(`${p.name} : ${details}. ${v.hasDefects && v.transparencyNotes ? `${v.transparencyNotes}. ` : ""}${shop}`).slice(0, 5000),
+          description: plain(`${p.name} : ${details}. ${sim}${v.hasDefects && v.transparencyNotes ? `${v.transparencyNotes}. ` : ""}${shop}`).slice(0, 5000),
           availability: "in stock",
           condition,
           ...prices(pay, num(v.compareAtPrice)),
@@ -97,7 +101,7 @@ export function feedRows(products: PublicProduct[], imageFallback: (slug: string
       id: p.id,
       item_group_id: "",
       title: plain(p.name).slice(0, 150),
-      description: plain(`${p.name} (${type}${p.isPhone && grade ? `, ${grade}` : ""}). ${p.description ? `${p.description} ` : ""}${shop}`).slice(0, 5000),
+      description: plain(`${p.name} (${type}${p.isPhone && grade ? `, ${grade}` : ""}). ${p.description ? `${p.description} ` : sim}${shop}`).slice(0, 5000),
       availability: p.availability === "IN_STOCK" ? "in stock" : p.availability === "COMING_SOON" ? "preorder" : "out of stock",
       condition,
       ...prices(num(p.recommendedSalePrice)!, num(p.compareAtPrice)),
