@@ -205,7 +205,11 @@ const ALIASES: [RegExp, string][] = [
   [/ماكس/g, " max "],
   [/بلس/g, " plus "],
   [/نوت/g, " note "],
+  [/عادي|العادي|نورمال/g, " "],
 ];
+// Words that say "the base model" ("iPhone 13 normal", as on the ads):
+// no listing contains them, so they would make the search find nothing.
+const FILLER_WORDS = new Set(["normal", "normale", "simple", "standard", "classique"]);
 const ARABIC_DIGITS = /[٠-٩۰-۹]/g;
 
 /**
@@ -223,7 +227,7 @@ export function searchWords(q: string | null | undefined): string[] {
     .replace(/([a-z]{3,})(\d)/g, "$1 $2")
     .replace(/(\d)([a-z]{3,})/g, "$1 $2")
     .split(/[^a-z0-9]+/)
-    .filter((w) => w.length > 0)
+    .filter((w) => w.length > 0 && !FILLER_WORDS.has(w))
     .slice(0, 6);
 }
 
