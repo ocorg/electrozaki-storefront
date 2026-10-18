@@ -5,11 +5,11 @@ import Image from "next/image";
 import {
   ArrowDown,
   BatteryCharging,
+  AlertCircle,
   Cable,
   Check,
   CheckCircle2,
   Headphones,
-  Loader2,
   Magnet,
   MessageCircle,
   Phone,
@@ -105,6 +105,14 @@ export type OfferOptions = { grades: string[]; storages: string[]; colors: strin
 const storageKey = (s: string) => s.replace(/\s/g, "").toUpperCase().replace(/GO$/, "GB").replace(/TO$/, "TB");
 const storageSize = (s: string) => parseInt(s) * (/TB|To/i.test(s) ? 1024 : 1);
 
+function MissingHint({ text }: { text: string }) {
+  return (
+    <p role="alert" className="mb-3 flex items-center gap-2 rounded-2xl bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-700 ring-1 ring-red-200">
+      <AlertCircle size={16} aria-hidden className="flex-none" /> {text}
+    </p>
+  );
+}
+
 function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
     <button
@@ -188,6 +196,8 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
   const [phone, setPhone] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // What's missing, shown right at the field the page scrolls to.
+  const [missingAt, setMissingAt] = useState<{ id: string; text: string } | null>(null);
   const [done, setDone] = useState<{ reference: string; whatsappUrl: string; phone: string } | null>(null);
   const [imageIndex, setImageIndex] = useState<number | null>(null);
 
@@ -258,6 +268,24 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
 
   async function submit(e: FormEvent) {
     e.preventDefault();
+    // Something missing: say what, and bring it into view (a dead button
+    // would look like the tap was lost).
+    const missing: [string, string] | null = !unitId
+      ? [copy.needUnit, "offer-units"]
+      : !city
+        ? [copy.needCity, "offer-city"]
+        : !customer.trim()
+          ? [copy.needName, "offer-name"]
+          : !phone.trim()
+            ? [copy.needPhone, "offer-phone"]
+            : null;
+    if (missing) {
+      setMissingAt({ id: missing[1], text: missing[0] });
+      const el = document.getElementById(missing[1]);
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (el instanceof HTMLInputElement) el.focus({ preventScroll: true });
+      return;
+    }
     if (!unitId || !city) return;
     setBusy(true);
     setError(null);
@@ -424,10 +452,11 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
               </a>
             </div>
           ) : (
-            <form onSubmit={submit} className="mt-8 rounded-4xl border border-ink/8 bg-white p-4 shadow-[0_30px_60px_-45px_rgb(17_16_19/0.45)] sm:p-6">
+            <form onSubmit={submit} noValidate className="mt-8 rounded-4xl border border-ink/8 bg-white p-4 shadow-[0_30px_60px_-45px_rgb(17_16_19/0.45)] sm:p-6">
               <h2 className="font-display text-2xl font-bold text-ink">{copy.title}</h2>
 
-              <div className="mt-5 space-y-5">
+              <div id="offer-units" className="mt-5 scroll-mt-28 space-y-5">
+                {missingAt?.id === "offer-units" && <MissingHint text={missingAt.text} />}
                 {manyModels && (
                   <div>
                     <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">{copy.model}</p>
@@ -549,7 +578,8 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
               )}
 
               {/* Delivery: the town sets the fee and the date */}
-              <section className="mt-7">
+              <section id="offer-city" className="mt-7 scroll-mt-28">
+                {missingAt?.id === "offer-city" && <MissingHint text={missingAt.text} />}
                 <h3 className="mb-3 text-sm font-semibold text-neutral-700">{copy.delivery}</h3>
                 <DeliveryPicker
                   value={city}
@@ -557,6 +587,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                     // Choosing a town = starting to order (once per visit).
                     if (c && !city && unit) metaTrack("InitiateCheckout", { value: unit.price, content_ids: [unit.id], content_type: "product" });
                     setCity(c);
+                    setMissingAt(null);
                   }}
                 />
               </section>
@@ -564,20 +595,26 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
               {/* Contact */}
               <section className="mt-7 space-y-3" aria-labelledby="offer-contact">
                 <h3 id="offer-contact" className="text-sm font-semibold text-neutral-700">{copy.contact}</h3>
+                {(missingAt?.id === "offer-name" || missingAt?.id === "offer-phone") && <MissingHint text={missingAt.text} />}
                 <input
+                  id="offer-name"
                   type="text"
                   required
                   autoComplete="name"
                   placeholder={copy.fullName}
                   aria-label={copy.fullName}
                   value={customer}
-                  onChange={(e) => setCustomer(e.target.value)}
+                  onChange={(e) => {
+                    setCustomer(e.target.value);
+                    setMissingAt(null);
+                  }}
                   maxLength={120}
                   className={inputClass}
                 />
                 <div className="relative">
                   <Phone size={17} aria-hidden className="pointer-events-none absolute inset-s-4 top-1/2 -translate-y-1/2 text-neutral-400" />
                   <input
+                    id="offer-phone"
                     type="tel"
                     required
                     dir="ltr"
@@ -586,7 +623,10 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                     placeholder={copy.phone}
                     aria-label={copy.phone}
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      setMissingAt(null);
+                    }}
                     maxLength={20}
                     className={`${inputClass} ps-11 rtl:text-end`}
                   />
@@ -643,11 +683,9 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                 </p>
               )}
 
-              <Button type="submit" variant="accent" size="lg" disabled={busy || !unitId || !city} className="mt-5 w-full">
+              <Button type="submit" variant="accent" size="lg" loading={busy} className="mt-5 w-full">
                 {busy ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" aria-hidden /> {copy.sending}
-                  </>
+                  copy.sending
                 ) : (
                   <>
                     {copy.submit} {unit && city ? <span className="readout">· {formatMAD(total)}</span> : null}

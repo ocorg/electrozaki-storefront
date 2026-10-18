@@ -14,6 +14,7 @@ export const darija: Dictionary = {
   },
 
   common: {
+    pageLoading: "Kantchargiw l-page…",
     skipToContent: "Doz l contenu",
     homeAria: "Electro Zaki | l'accueil",
     mainNav: "Menu principal",
@@ -529,6 +530,11 @@ export const darija: Dictionary = {
   },
 
   notFound: {
+    errorEyebrow: "Chi mouchkil technique sghir",
+    errorTitle: "Had l-page ma bghatch tban.",
+    errorText: "Machi ghaltek. 3awd mn ba3d chwiya; ila b9a, kteb lina f WhatsApp w ghadi njawbouk dghya.",
+    errorRetry: "3awd",
+    errorWhatsapp: "Kteb lina f WhatsApp",
     eyebrow: "Erreur 404 · Makaynach réseau",
     title: "Had la page ma fihach réseau.",
     text: "Yemken l produit tba3, wla l lien tbeddel. Walakin rayonat dyalna mazal hna.",
@@ -601,6 +607,9 @@ export const darija: Dictionary = {
   },
 
   diagnostic: {
+    needDevice: "Khtar l-marque w kteb l-modèle bach tkmel.",
+    needProblem: "Khtar mouchkil wa7ed 3la l-a9al bach tkmel.",
+    needQuestion: "Ch-r7 so2al dyalek f chi kalimat bach tkmel.",
     sent: "Demande tsiftat",
     yourRef: "Numéro dyal demande dyalek",
     noteIt: "Kteb 3ndek: m3a téléphone dyalek, bih kattba3 demande dyalek.",
@@ -864,6 +873,8 @@ export const darija: Dictionary = {
   },
 
   searchBox: {
+    error: "L-b7ath ma jawbch. Chouf l-connexion dyalek.",
+    retry: "3awd",
     label: "9elleb 3la produit",
     clear: "Mse7",
     submit: "9elleb",
@@ -900,6 +911,7 @@ export const darija: Dictionary = {
   },
 
   errors: {
+    network: "Ma kayn 7ta jawab mn s-serveur. Chouf l-connexion w 3awd; ila b9a, kteb lina f WhatsApp.",
     alreadyOrdered: "L commande dyalek l had téléphone deja mtsjla. Ghadi n3ayto lik dghya bach nconfirmiwha.",
     orderNotFound: "Ma l9ina 7ta commande b had la référence w had téléphone. La référence fiha 8 7orouf (bhal 3F7K2Q9A), kayna f message dyal confirmation.",
     rateLimit: "Bzzaf dyal les tentatives. 3awed men b3d sa3a wla kteb lina f WhatsApp.",

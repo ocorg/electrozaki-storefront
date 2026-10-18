@@ -110,8 +110,12 @@ export default function CartPage() {
   async function handleApplyPromo() {
     setPromoError(null);
     setApplyingPromo(true);
-    const result = await applyPromoCode(promoInput, items);
+    const result = await applyPromoCode(promoInput, items).catch(() => null);
     setApplyingPromo(false);
+    if (!result) {
+      setPromoError(t.errors.network);
+      return;
+    }
 
     if (!result.ok) {
       setPromoError(translateError(t, result.error));
@@ -139,6 +143,8 @@ export default function CartPage() {
     setError(null);
     setSubmitting(true);
 
+    // No answer (connection lost): say so, instead of a button stuck on
+    // "sending" forever.
     const result = await submitOrderRequest({
       items,
       customerName,
@@ -149,9 +155,13 @@ export default function CartPage() {
       receipt: receipt ?? undefined,
       dataConsentAccepted,
       promoCode: appliedPromo?.code,
-    });
+    }).catch(() => null);
 
     setSubmitting(false);
+    if (!result) {
+      setError(t.errors.network);
+      return;
+    }
 
     if (!result.ok) {
       setError(translateError(t, result.error));
@@ -323,12 +333,16 @@ export default function CartPage() {
                 onChange={(e) => setPromoInput(e.target.value)}
                 className="min-h-11 flex-1 rounded-lg border border-black/15 px-3 uppercase focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
               />
-              <Button type="button" variant="outline" disabled={applyingPromo || !promoInput.trim()} onClick={handleApplyPromo}>
-                {applyingPromo ? "…" : c.apply}
+              <Button type="button" variant="outline" loading={applyingPromo} disabled={!promoInput.trim()} onClick={handleApplyPromo}>
+                {c.apply}
               </Button>
             </div>
           )}
-          {promoError && <p className="mt-2 text-sm text-red-600">{promoError}</p>}
+          {promoError && (
+            <p role="alert" className="mt-2 text-sm text-red-700">
+              {promoError}
+            </p>
+          )}
 
           <div className="mt-4 space-y-1 border-t border-black/10 pt-4">
             {discountAmount > 0 && (
@@ -583,7 +597,7 @@ export default function CartPage() {
             <Button type="button" variant="outline" onClick={() => goTo(1)} className="flex-1">
               {c.back}
             </Button>
-            <Button type="button" variant="accent" disabled={submitting} onClick={handleConfirm} className="flex-1">
+            <Button type="button" variant="accent" loading={submitting} onClick={handleConfirm} className="flex-1">
               {submitting ? c.sending : c.confirm}
             </Button>
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useId, useRef, useState, useTransition, type KeyboardEvent } from "react";
 import Link from "@/components/i18n/Link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -9,6 +9,7 @@ import { formatMAD } from "@/lib/format";
 import { useLocalePath, useT } from "@/components/i18n/I18nProvider";
 import type { SearchSuggestion } from "@/lib/db/public-products";
 import { WHATSAPP_URL } from "@/lib/site";
+import { useNavPending } from "@/components/ui/NavProgress";
 
 // Header search with live product suggestions as the customer types; Enter
 // (or "Voir les N résultats") opens the full results page.
@@ -24,36 +25,43 @@ export function SearchBox({ className = "", placeholder }: {
   const box = useRef<HTMLDivElement>(null);
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [items, setItems] = useState<SearchSuggestion[]>([]);
   const [total, setTotal] = useState(0);
   const [active, setActive] = useState(-1);
+  // The text the shown suggestions answer, and the one whose search failed:
+  // until the answer for exactly what is typed arrives, the panel says it is
+  // searching (never "nothing found" for a search that hasn't run yet).
+  const [answered, setAnswered] = useState("");
+  const [failed, setFailed] = useState("");
+  const [retry, setRetry] = useState(0);
+  const [navigating, startNavigation] = useTransition();
+  useNavPending(navigating);
 
   const query = q.trim();
+  const loading = query.length >= 2 && answered !== query && failed !== query;
 
   // Suggestions, 250 ms after the last key
   useEffect(() => {
     if (query.length < 2) return; // the panel only shows from 2 characters
     const ctrl = new AbortController();
     const timer = setTimeout(async () => {
-      setLoading(true);
       try {
         const r = await fetch(`/api/search?q=${encodeURIComponent(query)}`, { signal: ctrl.signal });
+        if (!r.ok) throw new Error(String(r.status));
         const data = (await r.json()) as { items: SearchSuggestion[]; total: number };
         setItems(data.items ?? []);
         setTotal(data.total ?? 0);
         setActive(-1);
+        setAnswered(query);
       } catch {
-        /* aborted or offline: keep the last suggestions */
-      } finally {
-        setLoading(false);
+        if (!ctrl.signal.aborted) setFailed(query);
       }
     }, 250);
     return () => {
       clearTimeout(timer);
       ctrl.abort();
     };
-  }, [query]);
+  }, [query, retry]);
 
   // Close when tapping elsewhere
   useEffect(() => {
@@ -64,10 +72,17 @@ export function SearchBox({ className = "", placeholder }: {
     return () => document.removeEventListener("pointerdown", onDown);
   }, []);
 
+  // Opening a page: the keyboard closes and the bar at the top runs until
+  // the page is there.
+  function navigate(href: string) {
+    setOpen(false);
+    (document.activeElement as HTMLElement | null)?.blur();
+    startNavigation(() => router.push(withLocale(href)));
+  }
+
   function goToResults() {
     if (!query) return;
-    setOpen(false);
-    router.push(withLocale(`/search?q=${encodeURIComponent(query)}`));
+    navigate(`/search?q=${encodeURIComponent(query)}`);
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
@@ -81,8 +96,7 @@ export function SearchBox({ className = "", placeholder }: {
     } else if (e.key === "Enter") {
       e.preventDefault();
       if (active >= 0 && items[active]) {
-        setOpen(false);
-        router.push(withLocale(`/products/${items[active].slug}`));
+        navigate(`/products/${items[active].slug}`);
       } else goToResults();
     } else if (e.key === "Escape") {
       setOpen(false);
@@ -153,9 +167,23 @@ export function SearchBox({ className = "", placeholder }: {
           role="listbox"
           className="absolute inset-e-0 top-full z-50 mt-1.5 max-h-[70vh] w-full overflow-y-auto rounded-2xl border border-ink/10 bg-white shadow-[0_30px_60px_-25px_rgb(17_16_19/0.45)] sm:w-[24rem]"
         >
-          {loading && items.length === 0 ? (
-            <p className="flex items-center gap-2 px-4 py-4 text-sm text-neutral-500">
-              <Loader2 size={16} className="animate-spin" /> {s.loading}
+          {failed === query ? (
+            <div className="px-4 py-4 text-sm text-neutral-700" role="alert">
+              {s.error}{" "}
+              <button
+                type="button"
+                onClick={() => {
+                  setFailed("");
+                  setRetry((n) => n + 1);
+                }}
+                className="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-2"
+              >
+                {s.retry}
+              </button>
+            </div>
+          ) : loading && (items.length === 0 || answered.length < 2) ? (
+            <p role="status" className="flex items-center gap-2 px-4 py-4 text-sm text-neutral-500">
+              <Loader2 size={16} className="animate-spin" aria-hidden /> {s.loading}
             </p>
           ) : items.length === 0 ? (
             <div className="px-4 py-4 text-sm text-neutral-600">
@@ -167,6 +195,11 @@ export function SearchBox({ className = "", placeholder }: {
             </div>
           ) : (
             <>
+              {loading && (
+                <p role="status" className="flex items-center gap-2 border-b border-black/5 px-4 py-2 text-xs text-neutral-500">
+                  <Loader2 size={14} className="animate-spin" aria-hidden /> {s.loading}
+                </p>
+              )}
               <ul className="divide-y divide-black/5">
                 {items.map((p, i) => (
                   <li key={p.slug} id={`${listId}-${i}`} role="option" aria-selected={i === active}>

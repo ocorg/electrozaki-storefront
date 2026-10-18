@@ -49,6 +49,8 @@ export const fr = {
     consent: "En confirmant, vous acceptez qu'Electro Zaki vous appelle pour finaliser la commande.",
     needUnit: "Choisissez votre téléphone ci-dessus",
     needCity: "Choisissez votre ville de livraison",
+    needName: "Indiquez votre nom complet",
+    needPhone: "Indiquez votre numéro de téléphone",
     successTitle: "Commande reçue, merci !",
     successRef: "Référence : {ref}",
     successText: "Nous vous appelons très vite au {phone} pour confirmer la commande, l'adresse et l'avance de 300 DH.",

@@ -1,3 +1,4 @@
+import { Loader2 } from "lucide-react";
 import Link from "@/components/i18n/Link";
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ComponentProps } from "react";
 
@@ -26,19 +27,35 @@ const SIZE_CLASSES: Record<ButtonSize, string> = {
 };
 
 const BASE =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-[background-color,box-shadow,transform,border-color,filter] duration-200 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-40 disabled:shadow-none";
+  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-[background-color,box-shadow,transform,border-color,filter] duration-200 active:scale-[0.97]";
+// Unavailable: faded. Working (loading): stays solid with a spinner, so the
+// tap visibly went through, and can't be tapped twice.
+const DISABLED = "disabled:pointer-events-none disabled:opacity-40 disabled:shadow-none";
+const LOADING = "pointer-events-none cursor-wait";
 
-export function buttonClasses(variant: ButtonVariant = "primary", size: ButtonSize = "md", className = "") {
-  return `${BASE} ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} ${className}`.trim();
+export function buttonClasses(variant: ButtonVariant = "primary", size: ButtonSize = "md", className = "", loading = false) {
+  return `${BASE} ${loading ? LOADING : DISABLED} ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} ${className}`.trim();
 }
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  /** Working: a spinner replaces the icon, the label stays, a second tap does nothing. */
+  loading?: boolean;
 };
 
-export function Button({ variant = "primary", size = "md", className, ...props }: ButtonProps) {
-  return <button className={buttonClasses(variant, size, className)} {...props} />;
+export function Button({ variant = "primary", size = "md", className, loading = false, disabled, children, ...props }: ButtonProps) {
+  return (
+    <button
+      className={buttonClasses(variant, size, className, loading)}
+      disabled={disabled || loading}
+      aria-busy={loading || undefined}
+      {...props}
+    >
+      {loading && <Loader2 size={18} className="flex-none animate-spin" aria-hidden />}
+      {children}
+    </button>
+  );
 }
 
 type LinkButtonProps = ComponentProps<typeof Link> & {

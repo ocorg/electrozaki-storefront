@@ -13,6 +13,7 @@ export const fr = {
   },
 
   common: {
+    pageLoading: "Chargement de la page…",
     skipToContent: "Aller au contenu",
     homeAria: "Electro Zaki | accueil",
     mainNav: "Navigation principale",
@@ -527,6 +528,11 @@ export const fr = {
   },
 
   notFound: {
+    errorEyebrow: "Petit souci technique",
+    errorTitle: "Cette page n'a pas pu s'afficher.",
+    errorText: "Ce n'est pas de votre faute. Réessayez dans un instant ; si ça continue, écrivez-nous sur WhatsApp, on vous répond vite.",
+    errorRetry: "Réessayer",
+    errorWhatsapp: "Nous écrire sur WhatsApp",
     eyebrow: "Erreur 404 · Pas de réseau",
     title: "Cette page ne capte pas.",
     text: "Le produit a peut-être été vendu, ou le lien a changé. Nos rayons, eux, sont bien là.",
@@ -599,6 +605,9 @@ export const fr = {
   } as Record<string, string>,
 
   diagnostic: {
+    needDevice: "Choisissez la marque et écrivez le modèle pour continuer.",
+    needProblem: "Choisissez au moins un problème pour continuer.",
+    needQuestion: "Décrivez votre question en quelques mots pour continuer.",
     sent: "Demande envoyée",
     yourRef: "Votre numéro de demande",
     noteIt: "Notez-le : avec votre téléphone, il permet de suivre votre demande.",
@@ -869,6 +878,8 @@ export const fr = {
   },
 
   searchBox: {
+    error: "La recherche n'a pas répondu. Vérifiez votre connexion.",
+    retry: "Réessayer",
     label: "Rechercher un produit",
     clear: "Effacer",
     submit: "Rechercher",

@@ -45,6 +45,8 @@ export const darija: OfferCopy = {
     consent: "Mnin katconfirmer, rak mwafe9 belli Electro Zaki y3ayet lik bach ykmmel l commande.",
     needUnit: "Khtar téléphone dyalek l fou9",
     needCity: "Khtar lmdina dyal livraison",
+    needName: "Kteb smitek kamla",
+    needPhone: "Kteb nmrat t-téléphone dyalek",
     successTitle: "Commande wslatna, choukran!",
     successRef: "Référence: {ref}",
     successText: "Ghadi n3ayto lik dghya f {phone} bach nconfirmiw l commande, l'adresse w l3arboun dyal 300 DH.",

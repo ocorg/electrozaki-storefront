@@ -22,6 +22,11 @@ export default function ContactPage() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    // No way to answer: say so (instead of a dead button).
+    if (!phone.trim() && !email.trim()) {
+      setError(c.oneOfTwo);
+      return;
+    }
     setError(null);
     setSubmitting(true);
 
@@ -30,9 +35,13 @@ export default function ContactPage() {
       phone: phone || undefined,
       email: email || undefined,
       message,
-    });
+    }).catch(() => null);
 
     setSubmitting(false);
+    if (!result) {
+      setError(t.errors.network);
+      return;
+    }
 
     if (!result.ok) {
       setError(translateError(t, result.error));
@@ -160,9 +169,13 @@ export default function ContactPage() {
           className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
         />
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && (
+          <p role="alert" className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
+            {error}
+          </p>
+        )}
 
-        <Button type="submit" disabled={submitting || (!phone.trim() && !email.trim())} className="w-full">
+        <Button type="submit" loading={submitting} className="w-full">
           {submitting ? c.sending : c.send}
         </Button>
       </form>

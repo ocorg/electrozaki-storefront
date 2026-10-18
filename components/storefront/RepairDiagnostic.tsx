@@ -34,6 +34,12 @@ export function RepairDiagnostic() {
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // A "Next" tapped with something missing says what (instead of a dead button).
+  const [hint, setHint] = useState<string | null>(null);
+  const next = (to: number, missing: string | null) => {
+    setHint(missing);
+    if (!missing) setStep(to);
+  };
   const [done, setDone] = useState<string | null>(null);
 
   const isConsult = kind === "CONSULTATION";
@@ -62,8 +68,12 @@ export function RepairDiagnostic() {
       problemAreas,
       preferredSlot: preferredSlot || undefined,
       notes: notes || undefined,
-    });
+    }).catch(() => null);
     setSubmitting(false);
+    if (!result) {
+      setError(t.errors.network);
+      return;
+    }
     if (!result.ok) {
       setError(translateError(t, result.error));
       return;
@@ -160,18 +170,22 @@ export function RepairDiagnostic() {
           />
         )}
         <div className="mt-4 flex gap-2">
-          <Button type="button" variant="outline" onClick={() => setStep(0)} className="flex-1">
+          <Button type="button" variant="outline" onClick={() => next(0, null)} className="flex-1">
             {d.back}
           </Button>
           <Button
             type="button"
-            disabled={!isConsult && (!deviceBrand || !deviceModel.trim())}
-            onClick={() => setStep(2)}
+            onClick={() => next(2, !isConsult && (!deviceBrand || !deviceModel.trim()) ? d.needDevice : null)}
             className="flex-1"
           >
             {d.next}
           </Button>
         </div>
+        {hint && (
+          <p role="alert" className="mt-3 text-sm font-medium text-red-700">
+            {hint}
+          </p>
+        )}
       </div>
     );
   }
@@ -233,18 +247,22 @@ export function RepairDiagnostic() {
           </>
         )}
         <div className="mt-4 flex gap-2">
-          <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1">
+          <Button type="button" variant="outline" onClick={() => next(1, null)} className="flex-1">
             {d.back}
           </Button>
           <Button
             type="button"
-            disabled={isConsult ? notes.trim().length < 5 : problemAreas.length === 0}
-            onClick={() => setStep(3)}
+            onClick={() => next(3, isConsult ? (notes.trim().length < 5 ? d.needQuestion : null) : problemAreas.length === 0 ? d.needProblem : null)}
             className="flex-1"
           >
             {d.next}
           </Button>
         </div>
+        {hint && (
+          <p role="alert" className="mt-3 text-sm font-medium text-red-700">
+            {hint}
+          </p>
+        )}
       </div>
     );
   }
@@ -282,12 +300,16 @@ export function RepairDiagnostic() {
           className="w-full rounded-lg border border-black/15 px-3 py-2 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
         />
       )}
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && (
+        <p role="alert" className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
+        </p>
+      )}
       <div className="flex gap-2">
-        <Button type="button" variant="outline" onClick={() => setStep(2)} className="flex-1">
+        <Button type="button" variant="outline" onClick={() => next(2, null)} className="flex-1">
           {d.back}
         </Button>
-        <Button type="submit" variant="accent" disabled={submitting} className="flex-1">
+        <Button type="submit" variant="accent" loading={submitting} className="flex-1">
           {submitting ? d.sending : isConsult ? d.askConsult : d.askEstimate}
         </Button>
       </div>

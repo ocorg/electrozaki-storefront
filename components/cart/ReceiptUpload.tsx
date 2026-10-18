@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { CheckCircle2, Upload } from "lucide-react";
+import { CheckCircle2, Loader2, Upload } from "lucide-react";
 import { uploadReceipt } from "@/app/[lang]/(storefront)/cart/actions";
 import { compressImage } from "@/lib/compress-image";
 import { useT } from "@/components/i18n/I18nProvider";
@@ -73,7 +73,9 @@ export function ReceiptUpload({ onUploadedAction }: Props) {
             <p className="mt-1 text-xs text-neutral-500">{r.replace}</p>
           </>
         ) : status === "uploading" ? (
-          <p className="text-sm text-neutral-500">{r.uploading}</p>
+          <p role="status" className="flex items-center gap-2 text-sm font-medium text-neutral-600">
+            <Loader2 size={20} className="animate-spin text-gold-deep" aria-hidden /> {r.uploading}
+          </p>
         ) : (
           <>
             <Upload size={30} className="text-neutral-400" />
@@ -85,7 +87,11 @@ export function ReceiptUpload({ onUploadedAction }: Props) {
         )}
       </label>
 
-      {status === "error" && error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+      {status === "error" && error && (
+        <p role="alert" className="mt-2 text-sm font-medium text-red-700">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

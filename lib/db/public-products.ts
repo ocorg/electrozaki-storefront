@@ -189,13 +189,33 @@ const ON_PROMO = {
   ],
 };
 
+// How customers also write the brands and models: in Arabic letters, and a
+// few common typos. Turned into the catalogue's words before searching.
+const ALIASES: [RegExp, string][] = [
+  [/[آأإا]يفون|[آا]يفن/g, " iphone "],
+  [/\b(?:ipone|iphon(?!e)|ifone|aifon|ayfon|aiphone)/g, " iphone "],
+  [/سامسون[جغكگ]|سامسنج/g, " samsung "],
+  [/\b(?:samsong|samsumg|samsun(?!g))/g, " samsung "],
+  [/[جغكگ]ا?لا?كسي/g, " galaxy "],
+  [/ش[يا]?اومي|شومي/g, " xiaomi "],
+  [/ريدمي|ردمي/g, " redmi "],
+  [/هونو?ر/g, " honor "],
+  [/[اأ]لترا/g, " ultra "],
+  [/برو/g, " pro "],
+  [/ماكس/g, " max "],
+  [/بلس/g, " plus "],
+  [/نوت/g, " note "],
+];
+const ARABIC_DIGITS = /[٠-٩۰-۹]/g;
+
 /**
  * What a customer types, as words: lower-case, accents removed, letters and
  * digits split ("iPhone13" → "iphone 13"), 6 words at most.
  */
 export function searchWords(q: string | null | undefined): string[] {
-  return (q ?? "")
-    .toLowerCase()
+  let text = (q ?? "").toLowerCase().replace(ARABIC_DIGITS, (d) => String((d.charCodeAt(0) & 0xf) % 10));
+  for (const [re, word] of ALIASES) text = text.replace(re, word);
+  return text
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     // "iphone13" → "iphone 13", "13pro" → "13 pro"; model codes ("a16", "s23")

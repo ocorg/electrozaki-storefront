@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "@/components/i18n/Link";
 import { Check, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
@@ -207,6 +208,15 @@ export function ProductVariantExperience({ product, variants, images, categorySl
     return () => observer.disconnect();
   }, [inStock]);
   const buyBar = inStock && buyOutOfSight;
+  // While it shows, the page gets room at the bottom so the end of the
+  // footer isn't hidden behind it (globals.css, html[data-has-buy-bar]).
+  useEffect(() => {
+    if (!buyBar) return;
+    document.documentElement.dataset.hasBuyBar = "";
+    return () => {
+      delete document.documentElement.dataset.hasBuyBar;
+    };
+  }, [buyBar]);
 
   return (
     <>
@@ -429,9 +439,12 @@ export function ProductVariantExperience({ product, variants, images, categorySl
 
             {/* Phones: the price and the button stay at hand while the
                 customer reads the page (above the tab bar). */}
-            {buyBar && (
-              <div
-                data-buy-bar
+            {/* Rendered at the root of the page: inside the column, the
+                column's spacing (margins) would lift it off the tab bar. */}
+            {buyBar &&
+              createPortal(
+                <div
+                  data-buy-bar
                 className="fixed inset-x-0 bottom-[calc(61px+env(safe-area-inset-bottom))] z-30 flex items-center gap-3 border-t border-ink/10 bg-paper/95 px-4 py-2.5 backdrop-blur-xl md:hidden"
               >
                 <div className="min-w-0 flex-1">
@@ -444,8 +457,9 @@ export function ProductVariantExperience({ product, variants, images, categorySl
                   {justAdded ? <Check size={18} aria-hidden /> : <ShoppingBag size={18} aria-hidden />}
                   {variantOutOfStock ? p.soldOut : justAdded ? p.added : p.addToCart}
                 </Button>
-              </div>
-            )}
+                </div>,
+                document.body
+              )}
 
             <a
               href={whatsappLink(p.waQuestion(product.name, selectedVariant?.name))}

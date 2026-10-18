@@ -9,6 +9,7 @@ import Link from "@/components/i18n/Link";
 import { useLocalePath, useT } from "@/components/i18n/I18nProvider";
 import { categoryName } from "@/lib/i18n/labels";
 import { formatMAD } from "@/lib/format";
+import { useNavPending } from "@/components/ui/NavProgress";
 import { artFor } from "@/lib/category-art";
 import { DeviceArt } from "@/components/storefront/DeviceArt";
 import { GradeMeter } from "@/components/storefront/GradeMeter";
@@ -71,16 +72,6 @@ function uniqueBrands(brands: string[]): string[] {
   return [...byKey.values()].sort((a, b) => a.localeCompare(b, "fr"));
 }
 
-// A form submits every field, empty ones too ("?sort=&storage=…"). Disabled
-// fields are left out, and next/form builds the URL after onSubmit — so
-// disabling the empty ones keeps the address clean and shareable.
-function dropEmptyFields(form: HTMLFormElement) {
-  for (const el of Array.from(form.elements)) {
-    if (el instanceof HTMLSelectElement && !el.value) el.disabled = true;
-    if (el instanceof HTMLInputElement && !el.value && (el.type !== "radio" || el.checked)) el.disabled = true;
-  }
-}
-
 /**
  * The catalogue's command bar: search, sort, one-tap quick chips and the
  * active filters as removable pills, with every other filter in a settings
@@ -127,20 +118,31 @@ export function CatalogBar({ options, basePath, defaults, guide }: Props) {
   const [searching, startSearch] = useTransition();
   const [text, setText] = useState(current.q ?? "");
   const pushed = useRef(current.q ?? "");
+  // Every search this box sent: when one of them lands after the customer
+  // typed more, it must not put the older text back in the box.
+  const sent = useRef(new Set<string>());
+  useNavPending(searching);
   useEffect(() => {
+    const q = current.q ?? "";
+    if (sent.current.has(q)) {
+      if (q === pushed.current) sent.current.clear();
+      return;
+    }
     // The search changed from elsewhere (a pill, "clear all", back button).
-    if ((current.q ?? "") !== pushed.current) {
-      pushed.current = current.q ?? "";
-      setText(current.q ?? "");
+    if (q !== pushed.current) {
+      pushed.current = q;
+      setText(q);
     }
   }, [current.q]);
+  const search = (q: string) => {
+    pushed.current = q;
+    sent.current.add(q);
+    startSearch(() => router.replace(withLocale(href({ q: q || undefined })), { scroll: false }));
+  };
   useEffect(() => {
     const q = text.trim();
     if (q === pushed.current) return;
-    const timer = setTimeout(() => {
-      pushed.current = q;
-      startSearch(() => router.replace(withLocale(href({ q: q || undefined })), { scroll: false }));
-    }, 300);
+    const timer = setTimeout(() => search(q), 300);
     return () => clearTimeout(timer);
     // href and withLocale only change with the address, which this effect follows through `pushed`.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -203,8 +205,11 @@ export function CatalogBar({ options, basePath, defaults, guide }: Props) {
             action={action}
             scroll={false}
             onSubmit={(e) => {
-              pushed.current = text.trim();
-              dropEmptyFields(e.currentTarget);
+              // Enter: search now, and close the phone keyboard so the
+              // results can be seen.
+              e.preventDefault();
+              (document.activeElement as HTMLElement | null)?.blur();
+              search(text.trim());
             }}
             className="min-w-0 flex-1"
             role="search"
@@ -353,8 +358,15 @@ export function CatalogBar({ options, basePath, defaults, guide }: Props) {
           action={action}
           scroll={false}
           onSubmit={(e) => {
-            dropEmptyFields(e.currentTarget);
+            // Apply: close the sheet at once and load the results in the
+            // background (the bar at the top runs meanwhile). Empty fields
+            // stay out of the address so it stays clean and shareable.
+            e.preventDefault();
+            const params = new URLSearchParams();
+            for (const [k, v] of new FormData(e.currentTarget)) if (typeof v === "string" && v) params.append(k, v);
             sheetRef.current?.close();
+            const s = params.toString();
+            startSearch(() => router.replace(withLocale(s ? `${basePath}?${s}` : basePath), { scroll: false }));
           }}
           className="flex h-full max-h-[inherit] flex-col"
         >

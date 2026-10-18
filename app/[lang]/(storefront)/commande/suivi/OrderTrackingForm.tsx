@@ -36,9 +36,10 @@ export function OrderTrackingForm({ initialRef }: { initialRef: string }) {
     e.preventDefault();
     setBusy(true);
     setError(null);
-    const r = await lookupOrder(ref, phone);
+    const r = await lookupOrder(ref, phone).catch(() => null);
     setBusy(false);
-    if (r.ok) setOrder(r.order);
+    if (!r) setError(t.errors.network);
+    else if (r.ok) setOrder(r.order);
     else {
       setOrder(null);
       setError(translateError(t, r.error));
@@ -82,8 +83,8 @@ export function OrderTrackingForm({ initialRef }: { initialRef: string }) {
           className={`${inputClass} rtl:text-end`}
           autoComplete="tel"
         />
-        <Button type="submit" variant="accent" size="lg" disabled={busy} className="w-full">
-          <Search size={17} aria-hidden /> {busy ? o.searching : o.submit}
+        <Button type="submit" variant="accent" size="lg" loading={busy} className="w-full">
+          {!busy && <Search size={17} aria-hidden />} {busy ? o.searching : o.submit}
         </Button>
         <p className="text-xs text-neutral-500">{o.whereRef}</p>
         {error && (

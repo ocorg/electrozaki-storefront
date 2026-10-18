@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import { CartProvider } from "@/components/cart/CartContext";
 import { Header } from "@/components/storefront/Header";
 import { Footer } from "@/components/storefront/Footer";
@@ -11,6 +11,7 @@ import { MetaPixel } from "@/components/analytics/MetaPixel";
 import { JsonLd, storeJsonLd } from "@/lib/json-ld";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { getLiveOffers } from "@/lib/offers/live";
+import { NavProgress } from "@/components/ui/NavProgress";
 
 export default async function StorefrontLayout({ children }: { children: ReactNode }) {
   const [categories, aisles, t, locale] = await Promise.all([getAllCategories(), getAisles(), getT(), getLocale()]);
@@ -18,6 +19,9 @@ export default async function StorefrontLayout({ children }: { children: ReactNo
 
   return (
     <CartProvider>
+      <Suspense>
+        <NavProgress />
+      </Suspense>
       <a
         href="#contenu"
         className="sr-only z-100 rounded-full bg-ink font-semibold text-white focus:px-5 focus:py-3 focus:not-sr-only focus:fixed focus:inset-s-4 focus:top-4"

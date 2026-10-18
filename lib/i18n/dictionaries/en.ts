@@ -11,6 +11,7 @@ export const en: Dictionary = {
   },
 
   common: {
+    pageLoading: "Loading the page…",
     skipToContent: "Skip to content",
     homeAria: "Electro Zaki | home",
     mainNav: "Main navigation",
@@ -544,6 +545,11 @@ export const en: Dictionary = {
   },
 
   notFound: {
+    errorEyebrow: "A small technical hitch",
+    errorTitle: "This page couldn't be shown.",
+    errorText: "It's not your fault. Try again in a moment; if it keeps happening, write to us on WhatsApp and we'll answer quickly.",
+    errorRetry: "Try again",
+    errorWhatsapp: "Write to us on WhatsApp",
     eyebrow: "Error 404 · No signal",
     title: "This page has no signal.",
     text: "The product may have been sold, or the link has changed. Our aisles are still right here.",
@@ -616,6 +622,9 @@ export const en: Dictionary = {
   },
 
   diagnostic: {
+    needDevice: "Choose the brand and type the model to continue.",
+    needProblem: "Choose at least one problem to continue.",
+    needQuestion: "Describe your question in a few words to continue.",
     sent: "Request sent",
     yourRef: "Your request number",
     noteIt: "Write it down: with your phone number, it lets you track your request.",
@@ -881,6 +890,8 @@ export const en: Dictionary = {
   },
 
   searchBox: {
+    error: "The search didn't respond. Check your connection.",
+    retry: "Try again",
     label: "Search for a product",
     clear: "Clear",
     submit: "Search",
@@ -917,6 +928,7 @@ export const en: Dictionary = {
   },
 
   errors: {
+    network: "No answer from the server. Check your connection and try again; if it keeps happening, write to us on WhatsApp.",
     alreadyOrdered: "Your order for this phone is already registered. We'll call you very soon to confirm it.",
     orderNotFound: "No order found with this reference and phone. The reference has 8 characters (e.g. 3F7K2Q9A) and is in your confirmation message.",
     rateLimit: "Too many attempts. Please try again in an hour or message us on WhatsApp.",

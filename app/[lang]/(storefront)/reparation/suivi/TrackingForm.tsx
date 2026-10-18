@@ -27,14 +27,16 @@ export function TrackingForm({ initialRef }: { initialRef: string }) {
   const [repair, setRepair] = useState<TrackedRepair | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [answering, setAnswering] = useState<boolean | null>(null);
 
   async function search(e: FormEvent) {
     e.preventDefault();
     setBusy(true);
     setError(null);
-    const r = await lookupRepair(ref, phone);
+    const r = await lookupRepair(ref, phone).catch(() => null);
     setBusy(false);
-    if (r.ok) setRepair(r.repair);
+    if (!r) setError(t.errors.network);
+    else if (r.ok) setRepair(r.repair);
     else {
       setRepair(null);
       setError(translateError(t, r.error));
@@ -45,10 +47,12 @@ export function TrackingForm({ initialRef }: { initialRef: string }) {
     if (!repair) return;
     const text = accept ? tf.confirmAccept(formatMAD(repair.quoteAmount ?? 0)) : tf.confirmRefuse;
     if (!window.confirm(text)) return;
-    setBusy(true);
-    const r = await answerQuote(repair.ref, phone, accept);
-    setBusy(false);
-    if (r.ok) setRepair(r.repair);
+    setError(null);
+    setAnswering(accept);
+    const r = await answerQuote(repair.ref, phone, accept).catch(() => null);
+    setAnswering(null);
+    if (!r) setError(t.errors.network);
+    else if (r.ok) setRepair(r.repair);
     else setError(translateError(t, r.error));
   }
 
@@ -81,10 +85,14 @@ export function TrackingForm({ initialRef }: { initialRef: string }) {
           onChange={(e) => setPhone(e.target.value)}
           className={inputClass}
         />
-        <Button type="submit" disabled={busy} className="w-full">
-          <Search size={16} /> {busy ? tf.searching : tf.submit}
+        <Button type="submit" loading={busy} className="w-full">
+          {!busy && <Search size={16} aria-hidden />} {busy ? tf.searching : tf.submit}
         </Button>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && (
+          <p role="alert" className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
+            {error}
+          </p>
+        )}
       </form>
 
       {repair && (
@@ -135,11 +143,11 @@ export function TrackingForm({ initialRef }: { initialRef: string }) {
                 </p>
               ) : (
                 <div className="grid grid-cols-2 gap-2">
-                  <Button type="button" variant="accent" disabled={busy} onClick={() => answer(true)}>
-                    <ThumbsUp size={16} /> {tf.accept}
+                  <Button type="button" variant="accent" loading={answering === true} disabled={answering === false} onClick={() => answer(true)}>
+                    {answering !== true && <ThumbsUp size={16} aria-hidden />} {tf.accept}
                   </Button>
-                  <Button type="button" variant="outline" disabled={busy} onClick={() => answer(false)}>
-                    <ThumbsDown size={16} /> {tf.refuse}
+                  <Button type="button" variant="outline" loading={answering === false} disabled={answering === true} onClick={() => answer(false)}>
+                    {answering !== false && <ThumbsDown size={16} aria-hidden />} {tf.refuse}
                   </Button>
                 </div>
               )}

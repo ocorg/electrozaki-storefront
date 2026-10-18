@@ -45,6 +45,8 @@ export const en: OfferCopy = {
     consent: "By confirming, you agree that Electro Zaki will call you to finalise the order.",
     needUnit: "Choose your phone above",
     needCity: "Choose your delivery town",
+    needName: "Enter your full name",
+    needPhone: "Enter your phone number",
     successTitle: "Order received, thank you!",
     successRef: "Reference: {ref}",
     successText: "We'll call you very soon on {phone} to confirm the order, the address and the 300 DH deposit.",

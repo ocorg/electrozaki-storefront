@@ -14,7 +14,7 @@ import { DeviceArt } from "@/components/storefront/DeviceArt";
 import { Pagination } from "@/components/storefront/Pagination";
 import { SearchTracker } from "@/components/analytics/SearchTracker";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import { AnchorButton } from "@/components/ui/Button";
+import { AnchorButton, LinkButton } from "@/components/ui/Button";
 import { artFor } from "@/lib/category-art";
 import { formatMAD } from "@/lib/format";
 import { aisleOpen, whatsappLink } from "@/lib/site";
@@ -336,15 +336,22 @@ export default async function CollectionPage({ params, searchParams }: Props) {
                 <p className="mt-2 max-w-md text-neutral-600">
                   {filtered ? t.collection.emptyFilteredText : t.collection.emptyText}
                 </p>
-                <AnchorButton
-                  href={whatsappLink(t.collection.waLookingFor(title, filters.q))}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="whatsapp"
-                  className="mt-6"
-                >
-                  <MessageCircle size={18} aria-hidden /> {t.collection.askWhatsapp}
-                </AnchorButton>
+                <div className="mt-6 flex flex-wrap justify-center gap-3">
+                  {/* Nothing for these filters: one tap back to the whole aisle. */}
+                  {filtered && (
+                    <LinkButton href={basePath} variant="outline" scroll={false}>
+                      {t.filters.clearAll}
+                    </LinkButton>
+                  )}
+                  <AnchorButton
+                    href={whatsappLink(t.collection.waLookingFor(title, filters.q))}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="whatsapp"
+                  >
+                    <MessageCircle size={18} aria-hidden /> {t.collection.askWhatsapp}
+                  </AnchorButton>
+                </div>
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
