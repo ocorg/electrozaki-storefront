@@ -211,7 +211,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                       <span dir="ltr" className="tabular-nums font-medium">{b} %</span>
                     </span>
                   )}
-                  <span className={`mt-2 block text-xs ${parts.length ? "text-amber-800" : "text-green-700"}`}>
+                  <span className={`mt-2 block text-xs ${parts.length ? "text-amber-800" : "text-green-800"}`}>
                     {parts.length ? parts.join(" · ") : t.unitPicker.originalParts}
                   </span>
                   <span className="mt-2 flex flex-wrap items-baseline gap-x-2">

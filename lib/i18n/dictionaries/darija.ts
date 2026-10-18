@@ -7,14 +7,13 @@ import type { Dictionary } from "./fr";
 export const darija: Dictionary = {
   meta: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
-    phonesOnly: { title: "Electro Zaki | Tilifounat w tasli7 f Mknas", description: "Tilifounat jdad w mosta3mlin (iPhone, Samsung, Xiaomi) w tasli7 f Mknas. L7ala w l batterie dyal kol téléphone bayna, garantie 3 chhour, w livraison l ga3 lmghrib." },
+    phonesOnly: { title: "iPhone w Samsung mosta3mlin f Mknas | Electro Zaki", description: "iPhone, Samsung w Xiaomi mosta3mlin w jdad f Mknas: l7ala w l batterie bayna, garantie 3 chhour, tasli7 f l7anout. Livraison l ga3 lmghrib." },
     title: "Electro Zaki | Tilifounat w accessoires f Mknas",
     description:
       "Tilifounat jdad w mosta3mlin (iPhone, Samsung, Xiaomi), coques, chargeurs, cables, écouteurs w tasli7 f Mknas. L7ala w l batterie dyal kol téléphone bayna, w livraison l ga3 lmghrib.",
   },
 
   common: {
-    pageLoading: "Kantchargiw l-page…",
     skipToContent: "Doz l contenu",
     homeAria: "Electro Zaki | l'accueil",
     mainNav: "Menu principal",
@@ -164,6 +163,7 @@ export const darija: Dictionary = {
   breadcrumbs: { aria: "Fin nta" },
 
   pagination: {
+    titleSuffix: (n: number) => `page ${n}`,
     aria: "Pages",
     previous: "Page li 9bel",
     next: "Page li mn b3d",
@@ -317,11 +317,12 @@ export const darija: Dictionary = {
     sameAisle: "F nfs rayon.",
     alsoSee: "Chouf 7ta hado.",
     wholeAisle: (name: string) => `Ga3 rayon ${name}`,
-    metaTitle: (name: string, condition: string | null) => (condition ? `${name} - ${condition}` : name),
+    metaTitle: (name: string, condition: string | null, used: boolean, price: string) =>
+      used ? `${name} mosta3mal, ${condition} - ${price}` : condition ? `${name} jdid - ${price}` : `${name} - ${price}`,
     metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
-      `${name}${condition ? ` (${condition})` : ""} b ${price} 3nd Electro Zaki, Mknas.${
-        used ? " L7ala w l batterie bayna l kol wa7ed." : ""
-      } Livraison l ga3 lmghrib.`,
+      `${name}${used ? " mosta3mal" : condition ? " jdid" : ""}${used && condition ? ` (${condition})` : ""} b ${price} 3nd Electro Zaki, Mknas. ${
+        used ? "L7ala, l batterie w l pièces bayna, garantie 3 chhour. " : condition ? "Jdid, msdoud, garantie 3 chhour. " : ""
+      }Livraison l ga3 lmghrib.`,
   },
 
   pdp: {
@@ -651,8 +652,8 @@ export const darija: Dictionary = {
     shopIntro: "Dowz tchouf tilifounat 9bel ma techri, jib dyalek ytsla7, wla jib l commande dyalek.",
     mapTitle: "Lkharita: l7anout dyal Electro Zaki f Mknas",
     directions: "Tri9",
-    metaTitle: "Contact",
-    metaDescription: "Kteb l Electro Zaki, Mknas: WhatsApp wla formulaire. Tilifounat, accessoires, tasli7.",
+    metaTitle: "Contact w l3onwan dyal l7anout f Mknas",
+    metaDescription: "Electro Zaki, boulevard Al Massira Al Khadra, Ouislane, Mknas (9bel station dyal taxi Hamirya). M7loul kol nhar. WhatsApp: +212 6 67 65 44 30.",
     sentTitle: "Message tsifet",
     sentBefore: "Ghadi njawbok dghya. Ila bghiti jawab f l7in, kteb lina f",
     title: "Tassel bina",
@@ -855,8 +856,8 @@ export const darija: Dictionary = {
   offers: {
     nav: "Offres",
     live: "offre khddama",
-    metaTitle: "Les offres dyal daba",
-    metaDescription: "Les offres li khddamin 3nd Electro Zaki, Mknas: tilifounat w accessoires b prix mn9oussin, livraison l ga3 lmghrib.",
+    metaTitle: "Promos dyal tilifounat f Mknas: iPhone, Samsung",
+    metaDescription: "Les promos li khddamin 3nd Electro Zaki, Mknas: iPhone w Samsung mchoufin b prix mn9oussin, garantie 3 chhour, livraison l ga3 lmghrib.",
     eyebrow: "Les offres dyal daba",
     title: "Ahsan l offres dyal l7anout.",
     intro: "Prix mn9oussin 3la tilifounat w accessoires mkhtarin, l wa9t m7dod.",

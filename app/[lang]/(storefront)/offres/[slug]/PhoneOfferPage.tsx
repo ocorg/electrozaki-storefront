@@ -16,7 +16,7 @@ import { JsonLd } from "@/lib/json-ld";
 import { LOCALE_META, localePath, type Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { alternates } from "@/lib/i18n/seo";
-import { formatMAD } from "@/lib/format";
+import { formatMADText } from "@/lib/format";
 import { absoluteUrl, SITE_URL } from "@/lib/site";
 import { BATTERY_GOOD_FROM } from "@/lib/battery";
 import type { PhoneOffer } from "@/lib/offers/phone-offers";
@@ -35,8 +35,8 @@ import { OfferFaq, OfferFinal, OfferSteps } from "./OfferSections";
 export function phoneOfferMetadata(offer: PhoneOffer, locale: Locale): Metadata {
   const c = OFFER_COPY[locale];
   const alt = alternates(locale, `/offres/${offer.slug}`);
-  const title = c.meta.title(offer.name, formatMAD(offer.fromPrice));
-  const description = c.meta.description(offer.name, formatMAD(offer.fromPrice));
+  const title = c.meta.title(offer.name, formatMADText(offer.fromPrice));
+  const description = c.meta.description(offer.name, formatMADText(offer.fromPrice));
   const cover = offer.images[0];
   return {
     title,
@@ -100,7 +100,7 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
     "@type": "Product",
     name,
     brand: { "@type": "Brand", name: offer.brand },
-    description: c.meta.description(name, formatMAD(offer.fromPrice)),
+    description: c.meta.description(name, formatMADText(offer.fromPrice)),
     image: offer.images.map((i) => absoluteUrl(i.url)),
     url,
     inLanguage: LOCALE_META[locale].htmlLang,

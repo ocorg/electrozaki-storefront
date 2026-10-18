@@ -12,6 +12,12 @@ export function formatMAD(amount: number | string): string {
   return `‎${GROUPED.format(value).replace(/[\s ]/g, " ")} DH`;
 }
 
+/** formatMAD for page titles and descriptions: without the invisible
+ * direction mark (it's for the page layout; Google could show it). */
+export function formatMADText(amount: number | string): string {
+  return formatMAD(amount).replace(/‎/g, "");
+}
+
 // DH saved, or null (not 0) when there's nothing to advertise — a
 // compareAtPrice that isn't actually higher than the price isn't a discount.
 export function savingOf(

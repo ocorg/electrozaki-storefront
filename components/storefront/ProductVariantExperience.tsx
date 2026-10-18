@@ -264,7 +264,12 @@ export function ProductVariantExperience({ product, variants, images, categorySl
         {product.brand && (
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-gold-deep">{product.brand}</p>
         )}
-        <h1 className="font-display mt-2 text-[2.2rem] font-extrabold leading-[1.02] text-ink sm:text-5xl">{product.name}</h1>
+        <h1 className="font-display mt-2 text-[2.2rem] font-extrabold leading-[1.02] text-ink sm:text-5xl">
+          {product.name}
+          {/* The condition is in the meter just below; in the heading too for
+              search engines and screen readers ("iPhone 13 128GB - Très bon état"). */}
+          {product.isPhone && <span className="sr-only"> - {product.conditionLabel}</span>}
+        </h1>
 
         <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
           {product.isPhone ? <GradeMeter grade={product.grade} size="md" /> : <Badge>{product.conditionLabel}</Badge>}

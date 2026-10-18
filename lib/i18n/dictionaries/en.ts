@@ -4,14 +4,13 @@ import type { Dictionary } from "./fr";
 export const en: Dictionary = {
   meta: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
-    phonesOnly: { title: "Electro Zaki | Phones and repairs in Meknes", description: "New and used phones (iPhone, Samsung, Xiaomi) and repairs in Meknes. Condition and battery shown for every phone, 3-month warranty, delivery anywhere in Morocco." },
+    phonesOnly: { title: "Used iPhone and Samsung in Meknes | Electro Zaki", description: "Used and new iPhone, Samsung and Xiaomi in Meknes: condition and battery shown, 3-month warranty, repairs on site. Delivery anywhere in Morocco." },
     title: "Electro Zaki | Phones & accessories in Meknes",
     description:
       "New and used phones (iPhone, Samsung, Xiaomi), cases, chargers, cables, earphones and repairs in Meknes. Condition and battery shown for every phone, delivery anywhere in Morocco.",
   },
 
   common: {
-    pageLoading: "Loading the page…",
     skipToContent: "Skip to content",
     homeAria: "Electro Zaki | home",
     mainNav: "Main navigation",
@@ -161,6 +160,7 @@ export const en: Dictionary = {
   breadcrumbs: { aria: "Breadcrumb" },
 
   pagination: {
+    titleSuffix: (n: number) => `page ${n}`,
     aria: "Pages",
     previous: "Previous page",
     next: "Next page",
@@ -331,11 +331,12 @@ export const en: Dictionary = {
     sameAisle: "In the same aisle.",
     alsoSee: "You may also like.",
     wholeAisle: (name: string) => `All ${name}`,
-    metaTitle: (name: string, condition: string | null) => (condition ? `${name} (${condition})` : name),
+    metaTitle: (name: string, condition: string | null, used: boolean, price: string) =>
+      used ? `Used ${name}, ${condition?.toLowerCase()} - ${price}` : condition ? `New ${name} - ${price}` : `${name} - ${price}`,
     metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
-      `${name}${condition ? ` (${condition.toLowerCase()})` : ""} for ${price} at Electro Zaki, Meknes.${
-        used ? " Condition and battery shown for every unit." : ""
-      } Delivery anywhere in Morocco.`,
+      `${used ? "Used " : condition ? "New " : ""}${name}${used && condition ? ` (${condition.toLowerCase()})` : ""} for ${price} at Electro Zaki, Meknes. ${
+        used ? "Condition, battery and parts shown, 3-month warranty. " : condition ? "New, sealed, 3-month warranty. " : ""
+      }Delivery anywhere in Morocco.`,
   },
 
   pdp: {
@@ -666,8 +667,8 @@ export const en: Dictionary = {
     shopIntro: "Come and see the phones before you buy, drop yours off for repair, or pick up your order.",
     mapTitle: "Map: the Electro Zaki shop in Meknes",
     directions: "Directions",
-    metaTitle: "Contact",
-    metaDescription: "Write to Electro Zaki, Meknes: WhatsApp or form. Phones, accessories, repairs.",
+    metaTitle: "Contact and shop address in Meknes",
+    metaDescription: "Electro Zaki, Boulevard Al Massira Al Khadra, Ouislane, Meknes (opposite the Hamirya taxi station). Open every day. WhatsApp: +212 6 67 65 44 30.",
     sentTitle: "Message sent",
     sentBefore: "We'll reply soon. For an immediate answer, contact us on",
     title: "Contact us",
@@ -872,8 +873,8 @@ export const en: Dictionary = {
   offers: {
     nav: "Offers",
     live: "offer on now",
-    metaTitle: "Current offers",
-    metaDescription: "Current offers at Electro Zaki, Meknes: phones and accessories at reduced prices, delivery anywhere in Morocco.",
+    metaTitle: "Phone deals in Meknes: iPhone, Samsung",
+    metaDescription: "Current deals at Electro Zaki, Meknes: checked iPhone and Samsung phones at reduced prices, 3-month warranty, delivery anywhere in Morocco.",
     eyebrow: "Current offers",
     title: "The shop's best deals.",
     intro: "Reduced prices on a selection of phones and accessories, for a limited time.",

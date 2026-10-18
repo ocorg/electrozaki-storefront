@@ -186,7 +186,7 @@ function Choice({ option, className, children }: { option: GuideOption; classNam
     <Link
       href={option.href}
       scroll={false}
-      aria-pressed={option.on}
+      aria-current={option.on ? "true" : undefined}
       className={`${base} ${
         option.on ? "bg-gold text-ink" : "bg-white/8 text-white ring-1 ring-white/12 hover:bg-white/14 hover:ring-white/30"
       }`}

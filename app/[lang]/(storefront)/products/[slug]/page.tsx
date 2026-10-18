@@ -20,7 +20,8 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CONDITION_SCHEMA } from "@/lib/conditions";
 import { MAX_QTY } from "@/lib/db/cart-pricing";
-import { formatMAD } from "@/lib/format";
+import { formatMAD, formatMADText } from "@/lib/format";
+import { CITIES } from "@/lib/delivery/cities.generated";
 import { JsonLd } from "@/lib/json-ld";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 import { LOCALE_META, localePath } from "@/lib/i18n/config";
@@ -57,6 +58,20 @@ function lowestPrice(product: NonNullable<Awaited<ReturnType<typeof getProductBy
   return units.length ? Math.min(...units) : Number(product.recommendedSalePrice.toString());
 }
 
+// Delivery anywhere in Morocco with Ameex: the fee depends on the town
+// (lib/delivery), shipped the same or next working day, 1 to 3 days on the way.
+const FEES = CITIES.map((c) => c.fee);
+const SHIPPING_DETAILS = {
+  "@type": "OfferShippingDetails",
+  shippingDestination: { "@type": "DefinedRegion", addressCountry: "MA" },
+  shippingRate: { "@type": "MonetaryAmount", currency: "MAD", minValue: Math.min(...FEES), maxValue: Math.max(...FEES) },
+  deliveryTime: {
+    "@type": "ShippingDeliveryTime",
+    handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 1, unitCode: "DAY" },
+    transitTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 3, unitCode: "DAY" },
+  },
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const [product, t, locale] = await Promise.all([getProductBySlug(slug), getT(), getLocale()]);
@@ -66,15 +81,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // The ERP's SEO fields and description are written in French: they're used
   // as-is on the French site only, the other languages get a generated line.
   const french = locale === "fr";
-  const title = (french && product.metaTitle) || t.productPage.metaTitle(product.name, condition);
-  const description =
-    (french && (product.metaDescription ?? product.description)) ||
-    t.productPage.metaDescription(
-      product.name,
-      condition,
-      formatMAD(lowestPrice(product)),
-      product.isPhone && product.condition !== "NEUF"
-    );
+  // (not the description itself: it's often a technical note, the same on
+  // several listings, like the Ultras' SIM note).
+  const used = product.isPhone && product.condition !== "NEUF";
+  const price = formatMADText(lowestPrice(product));
+  const title = (french && product.metaTitle) || t.productPage.metaTitle(product.name, condition, used, price);
+  const description = (french && product.metaDescription) || t.productPage.metaDescription(product.name, condition, price, used);
   const cover = product.images[0];
   const alt = alternates(locale, `/products/${slug}`);
   return {
@@ -219,8 +231,18 @@ export default async function ProductPage({ params }: Props) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: product.name,
-    description: product.description ?? undefined,
+    // The condition in the name: the same model is often listed in two or
+    // three conditions, each its own page.
+    name: product.isPhone ? `${product.name} - ${t.grades.label[product.condition] ?? product.condition}` : product.name,
+    description:
+      product.description ||
+      t.productPage.metaDescription(
+        product.name,
+        product.isPhone ? (t.grades.label[product.condition] ?? product.condition) : null,
+        formatMADText(lowestPrice(product)),
+        product.isPhone && product.condition !== "NEUF"
+      ),
+    sku: product.id,
     brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
     category: aisleName,
     image: product.images.map((i) => absoluteUrl(i.url)),
@@ -239,6 +261,7 @@ export default async function ProductPage({ params }: Props) {
             ? "https://schema.org/PreOrder"
             : "https://schema.org/OutOfStock",
       seller: { "@id": `${SITE_URL}/#store` },
+      shippingDetails: SHIPPING_DETAILS,
     },
   };
 

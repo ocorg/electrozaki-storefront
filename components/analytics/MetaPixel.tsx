@@ -5,8 +5,10 @@ import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { META_PIXEL_IDS, metaTrack } from "./meta";
 
-// Loads Meta's Pixel after the page is interactive and counts one PageView
-// per page shown (the site changes pages without full reloads).
+// Loads Meta's Pixel once the page has loaded and the phone is idle (it
+// weighed ~1 s of processing on a mid-range phone, delaying the page's text),
+// and counts one PageView per page shown (the site changes pages without
+// full reloads). Events from before it's ready wait in window.__metaPending.
 export function MetaPixel() {
   const pathname = usePathname();
   const last = useRef<string | null>(null);
@@ -21,7 +23,7 @@ export function MetaPixel() {
 
   if (!META_PIXEL_IDS.length) return null;
   return (
-    <Script id="meta-pixel" strategy="afterInteractive">
+    <Script id="meta-pixel" strategy="lazyOnload">
       {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;

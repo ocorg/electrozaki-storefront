@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ChevronDown } from "lucide-react";
 import { isRepairSlug } from "@/lib/repair-faq";
 import { getRepairTopics } from "@/lib/i18n/repair";
+import { repairSeo } from "@/lib/i18n/repair/seo";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { alternates } from "@/lib/i18n/seo";
 import { LinkButton } from "@/components/ui/Button";
@@ -17,13 +18,12 @@ type Props = { params: Promise<{ topic: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { topic } = await params;
   if (!isRepairSlug(topic)) return {};
-  const [topics, t, locale] = await Promise.all([getRepairTopics(), getT(), getLocale()]);
+  const [topics, locale] = await Promise.all([getRepairTopics(), getLocale()]);
   const data = topics[topic];
-  // Meta descriptions are cut around 155 characters in results: end on a word.
-  const description = data.intro.length > 155 ? `${data.intro.slice(0, 152).replace(/\s+\S*$/, "")}…` : data.intro;
+  const { title, description } = repairSeo(locale, topic);
   const alt = alternates(locale, `/reparation/${topic}`);
   return {
-    title: t.repairTopic.metaTitle(data.title),
+    title,
     description,
     alternates: alt,
     openGraph: { title: `${data.title} | Electro Zaki`, description, url: alt.canonical },

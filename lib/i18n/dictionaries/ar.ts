@@ -5,14 +5,13 @@ import type { Dictionary } from "./fr";
 export const ar: Dictionary = {
   meta: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
-    phonesOnly: { title: "إلكترو زكي | هواتف وإصلاح في مكناس", description: "هواتف جديدة ومستعملة (iPhone و Samsung و Xiaomi) وإصلاح الهواتف في مكناس. حالة كل هاتف وبطاريته معروضة، ضمان 3 أشهر، والتوصيل إلى جميع أنحاء المغرب." },
+    phonesOnly: { title: "ايفون وسامسونج مستعمل في مكناس | إلكترو زكي", description: "هواتف iPhone و Samsung و Xiaomi مستعملة وجديدة في مكناس: الحالة والبطارية معروضة، ضمان 3 أشهر، وإصلاح في المحل. التوصيل إلى جميع أنحاء المغرب." },
     title: "إلكترو زكي | هواتف وإكسسوارات في مكناس",
     description:
       "هواتف جديدة ومستعملة (iPhone و Samsung و Xiaomi)، أغلفة وشواحن وكابلات وسماعات، وإصلاح الهواتف في مكناس. حالة كل هاتف وبطاريته معروضة، والتوصيل إلى جميع أنحاء المغرب.",
   },
 
   common: {
-    pageLoading: "جارٍ تحميل الصفحة…",
     skipToContent: "الانتقال إلى المحتوى",
     homeAria: "إلكترو زكي | الصفحة الرئيسية",
     mainNav: "القائمة الرئيسية",
@@ -162,6 +161,7 @@ export const ar: Dictionary = {
   breadcrumbs: { aria: "مسار التنقل" },
 
   pagination: {
+    titleSuffix: (n: number) => `الصفحة ${n}`,
     aria: "الصفحات",
     previous: "الصفحة السابقة",
     next: "الصفحة التالية",
@@ -335,11 +335,12 @@ export const ar: Dictionary = {
     sameAisle: "في نفس القسم.",
     alsoSee: "قد يعجبك أيضًا.",
     wholeAisle: (name: string) => `كل قسم ${name}`,
-    metaTitle: (name: string, condition: string | null) => (condition ? `${name} - ${condition}` : name),
+    metaTitle: (name: string, condition: string | null, used: boolean, price: string) =>
+      used ? `${name} مستعمل، ${condition} - ${price}` : condition ? `${name} جديد - ${price}` : `${name} - ${price}`,
     metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
-      `${name}${condition ? ` (${condition})` : ""} بـ ${price} عند إلكترو زكي، مكناس.${
-        used ? " الحالة والبطارية معروضتان لكل وحدة." : ""
-      } التوصيل إلى جميع أنحاء المغرب.`,
+      `${name}${used ? " مستعمل" : condition ? " جديد" : ""}${used && condition ? ` (${condition})` : ""} بـ ${price} عند إلكترو زكي، مكناس. ${
+        used ? "الحالة والبطارية والقطع معروضة، ضمان 3 أشهر. " : condition ? "جديد ومغلق، ضمان 3 أشهر. " : ""
+      }التوصيل إلى جميع أنحاء المغرب.`,
   },
 
   pdp: {
@@ -669,8 +670,8 @@ export const ar: Dictionary = {
     shopIntro: "تفضل لرؤية الهواتف قبل الشراء، أو لإصلاح هاتفك، أو لاستلام طلبك.",
     mapTitle: "خريطة: متجر إلكترو زكي في مكناس",
     directions: "الاتجاهات",
-    metaTitle: "اتصل بنا",
-    metaDescription: "راسل إلكترو زكي، مكناس: عبر واتساب أو الاستمارة. هواتف، إكسسوارات، إصلاح.",
+    metaTitle: "اتصل بنا وعنوان المحل في مكناس",
+    metaDescription: "إلكترو زكي، شارع المسيرة الخضراء، ويسلان، مكناس (مقابل محطة طاكسيات الحميرية). مفتوح كل يوم. واتساب: ‎+212 6 67 65 44 30.",
     sentTitle: "تم إرسال الرسالة",
     sentBefore: "سنرد عليك قريبًا. للحصول على رد فوري، راسلنا على",
     title: "اتصل بنا",
@@ -873,8 +874,8 @@ export const ar: Dictionary = {
   offers: {
     nav: "العروض",
     live: "عرض جارٍ",
-    metaTitle: "عروض اللحظة",
-    metaDescription: "العروض الجارية عند إلكترو زكي، مكناس: هواتف وإكسسوارات بأسعار مخفّضة، والتوصيل إلى جميع أنحاء المغرب.",
+    metaTitle: "تخفيضات الهواتف في مكناس: iPhone و Samsung",
+    metaDescription: "التخفيضات الجارية عند إلكترو زكي، مكناس: هواتف iPhone و Samsung مفحوصة بأسعار مخفّضة، ضمان 3 أشهر، والتوصيل إلى جميع أنحاء المغرب.",
     eyebrow: "عروض اللحظة",
     title: "أفضل صفقات المتجر.",
     intro: "أسعار مخفّضة على تشكيلة من الهواتف والإكسسوارات، لفترة محدودة.",

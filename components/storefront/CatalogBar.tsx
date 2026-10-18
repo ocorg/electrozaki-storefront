@@ -573,7 +573,7 @@ function QuickChip({ href, on, children }: { href: string; on: boolean; children
     <Link
       href={href}
       scroll={false}
-      aria-pressed={on}
+      aria-current={on ? "true" : undefined}
       className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3.5 text-[13px] font-semibold transition-colors ${
         on ? "bg-ink text-white" : "bg-white text-ink ring-1 ring-ink/10 hover:ring-ink/30"
       }`}

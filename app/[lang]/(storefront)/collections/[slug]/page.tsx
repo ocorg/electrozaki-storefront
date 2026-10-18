@@ -51,7 +51,9 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!aisleOpen(slug, category.parent?.slug)) return { title: t.comingSoon.title(name), robots: { index: false } };
   const blurb = t.aisleBlurb[slug] ?? null;
   const isPhones = slug === "telephones";
-  const title = isPhones ? t.collection.metaPhonesTitle : t.collection.metaAisleTitle(name);
+  const base = isPhones ? t.collection.metaPhonesTitle : t.collection.metaAisleTitle(name);
+  // Page 2, 3…: their own title (otherwise every page of the aisle has the same one).
+  const title = Number.isInteger(pageNo) && pageNo > 1 ? `${base} - ${t.pagination.titleSuffix(pageNo)}` : base;
   const description = isPhones ? t.collection.metaPhonesDescription : t.collection.metaAisleDescription(name, blurb);
   const alt = alternates(locale, path);
   return {
@@ -225,7 +227,13 @@ export default async function CollectionPage({ params, searchParams }: Props) {
         <div className="mx-auto grid max-w-7xl items-end gap-6 px-4 pb-8 pt-8 sm:pt-10 md:grid-cols-[1fr_auto]">
           <div>
             <Breadcrumbs items={crumbs} />
-            <h1 className="font-display mt-4 text-[2.4rem] font-extrabold leading-none text-ink sm:text-6xl">{title}</h1>
+            {/* The phones aisle says what it sells, in the words people search
+                ("téléphones d'occasion Meknès"), not just "Téléphones". */}
+            {phones ? (
+              <h1 className="font-display mt-4 text-[2rem] font-extrabold leading-[1.05] text-ink sm:text-5xl">{t.collection.metaPhonesTitle}</h1>
+            ) : (
+              <h1 className="font-display mt-4 text-[2.4rem] font-extrabold leading-none text-ink sm:text-6xl">{title}</h1>
+            )}
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg">
               {phones ? t.collection.introPhones : t.collection.introAisle(t.aisleBlurb[slug] ?? null, title)}
             </p>

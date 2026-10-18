@@ -6,14 +6,13 @@ import { errors } from "./fr-errors";
 export const fr = {
   meta: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
-    phonesOnly: { title: "Electro Zaki | Téléphones et réparation à Meknès", description: "Téléphones neufs et d'occasion (iPhone, Samsung, Xiaomi) et réparation à Meknès. État et batterie affichés pour chaque téléphone, garantie 3 mois, livraison partout au Maroc." },
+    phonesOnly: { title: "iPhone et Samsung d'occasion à Meknès | Electro Zaki", description: "iPhone, Samsung et Xiaomi d'occasion et neufs à Meknès : état et batterie affichés, garantie 3 mois, réparation sur place. Livraison partout au Maroc." },
     title: "Electro Zaki | Téléphones & accessoires à Meknès",
     description:
       "Téléphones neufs et d'occasion (iPhone, Samsung, Xiaomi), coques, chargeurs, câbles, écouteurs et réparation à Meknès. État et batterie affichés pour chaque téléphone, livraison partout au Maroc.",
   },
 
   common: {
-    pageLoading: "Chargement de la page…",
     skipToContent: "Aller au contenu",
     homeAria: "Electro Zaki | accueil",
     mainNav: "Navigation principale",
@@ -167,6 +166,7 @@ export const fr = {
   breadcrumbs: { aria: "Fil d'Ariane" },
 
   pagination: {
+    titleSuffix: (n: number) => `page ${n}`,
     aria: "Pages",
     previous: "Page précédente",
     next: "Page suivante",
@@ -221,7 +221,7 @@ export const fr = {
       "iPhone, Samsung, Xiaomi, Honor… neufs et d'occasion. Chaque téléphone d'occasion est vendu à l'unité, avec son état, sa batterie et ses pièces affichés.",
     introAisle: (blurb: string | null, name: string) =>
       `${blurb ? `${blurb}. ` : ""}${name} en stock à Meknès, livraison partout au Maroc.`,
-    metaPhonesTitle: "Téléphones neufs et d'occasion à Meknès",
+    metaPhonesTitle: "Téléphones d'occasion et neufs à Meknès",
     metaPhonesDescription:
       "iPhone, Samsung, Xiaomi neufs et d'occasion à Meknès : état, batterie et pièces affichés pour chaque téléphone. Livraison partout au Maroc.",
     metaAisleTitle: (name: string) => `${name} - accessoires téléphone à Meknès`,
@@ -313,11 +313,13 @@ export const fr = {
     sameAisle: "Dans le même rayon.",
     alsoSee: "À voir aussi.",
     wholeAisle: (name: string) => `Tout le rayon ${name}`,
-    metaTitle: (name: string, condition: string | null) => (condition ? `${name} ${condition.toLowerCase()}` : name),
+    // Search wording: "iPhone 13 128GB d'occasion", with the price (shown in Google's results).
+    metaTitle: (name: string, condition: string | null, used: boolean, price: string) =>
+      used ? `${name} d'occasion, ${condition?.toLowerCase()} - ${price}` : condition ? `${name} neuf - ${price}` : `${name} - ${price}`,
     metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
-      `${name}${condition ? ` (${condition.toLowerCase()})` : ""} à ${price} chez Electro Zaki, Meknès.${
-        used ? " État et batterie affichés pour chaque unité." : ""
-      } Livraison partout au Maroc.`,
+      `${name}${used ? " d'occasion" : condition ? " neuf" : ""}${used && condition ? ` (${condition.toLowerCase()})` : ""} à ${price} chez Electro Zaki, Meknès. ${
+        used ? "État, batterie et pièces affichés, garantie 3 mois. " : condition ? "Neuf, scellé, garantie 3 mois. " : ""
+      }Livraison partout au Maroc.`,
   },
 
   pdp: {
@@ -649,8 +651,8 @@ export const fr = {
     shopIntro: "Passez voir les téléphones avant d'acheter, déposer le vôtre en réparation, ou récupérer votre commande.",
     mapTitle: "Carte : la boutique Electro Zaki à Meknès",
     directions: "Itinéraire",
-    metaTitle: "Contact",
-    metaDescription: "Écrivez à Electro Zaki, Meknès : WhatsApp ou formulaire. Téléphones, accessoires, réparation.",
+    metaTitle: "Contact et adresse de la boutique à Meknès",
+    metaDescription: "Electro Zaki, boulevard Al Massira Al Khadra, Ouislane, Meknès (en face de la station de taxis Hamirya). Ouvert tous les jours. WhatsApp : +212 6 67 65 44 30.",
     sentTitle: "Message envoyé",
     sentBefore: "Nous vous répondrons rapidement. Pour une réponse immédiate, contactez-nous sur",
     title: "Contactez-nous",
@@ -859,9 +861,8 @@ export const fr = {
   offers: {
     nav: "Offres",
     live: "offre en cours",
-    metaTitle: "Offres du moment",
-    metaDescription:
-      "Les offres en cours chez Electro Zaki, Meknès : téléphones et accessoires à prix réduit, livraison partout au Maroc.",
+    metaTitle: "Promos téléphones à Meknès : iPhone, Samsung",
+    metaDescription: "Les promos en cours chez Electro Zaki, Meknès : iPhone et Samsung vérifiés, à prix réduit, garantie 3 mois et livraison partout au Maroc.",
     eyebrow: "Offres du moment",
     title: "Les bons plans de la boutique.",
     intro: "Des prix réduits sur une sélection de téléphones et d'accessoires, pour une durée limitée.",

@@ -6,8 +6,11 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      // Private or per-visitor pages: the cart, search results, the API.
-      disallow: ["/api/", "/cart", "/search"],
+      // Private or per-visitor pages: the cart, search results, order and
+      // repair tracking, the API. Every page lives under its language
+      // (/fr/cart, /ar/search…), hence the "/*/" (a bare "/cart" matched
+      // nothing).
+      disallow: ["/api/", "/*/cart", "/*/search", "/*/commande/suivi", "/*/reparation/suivi"],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,

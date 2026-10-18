@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "@/components/i18n/Link";
@@ -6,10 +6,11 @@ import { Truck, ShieldCheck, MessageCircle } from "lucide-react";
 import { getLandingPage } from "@/lib/db/landing";
 import { LinkButton } from "@/components/ui/Button";
 import { ViewBeacon, Countdown, CopyCode, OfferProductCard } from "./OfferParts";
-import { LOCALE_META } from "@/lib/i18n/config";
+import { LOCALE_META, localePath } from "@/lib/i18n/config";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { alternates } from "@/lib/i18n/seo";
-import { getBrandOffer, getPhoneOffer } from "@/lib/offers/phone-offers";
+import { BRAND_PAGES, getBrandOffer, getPhoneOffer } from "@/lib/offers/phone-offers";
+import { MODEL_FACTS } from "@/lib/offers/models";
 import { BrandOfferPage, brandOfferMetadata } from "./BrandOfferPage";
 import { PhoneOfferPage, phoneOfferMetadata } from "./PhoneOfferPage";
 
@@ -55,12 +56,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+// A model's or a brand's promo that has ended: its phones in the aisle
+// instead of a 404 (the address lives on in ads, WhatsApp messages and
+// Google's results). Temporary: the promo may come back.
+function endedOfferTarget(slug: string): string | null {
+  const facts = MODEL_FACTS[slug];
+  if (facts) return `/collections/telephones?q=${encodeURIComponent(facts.name)}`;
+  const brand = Object.entries(BRAND_PAGES).find(([, b]) => b.slug === slug);
+  return brand ? `/collections/telephones?brand=${brand[0]}` : null;
+}
+
 export default async function OfferPage({ params }: Props) {
   const { slug } = await params;
   const [offer, t, locale] = await Promise.all([getPhoneOffer(slug), getT(), getLocale()]);
   if (offer) return <PhoneOfferPage offer={offer} locale={locale} t={t} />;
   const brand = await getBrandOffer(slug);
   if (brand) return <BrandOfferPage brand={brand} locale={locale} t={t} />;
+  const ended = endedOfferTarget(slug);
+  if (ended) redirect(localePath(locale, ended));
   const data = await getLandingPage(slug);
   if (!data) notFound();
   const o = t.offer;

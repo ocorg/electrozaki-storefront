@@ -9,7 +9,7 @@ import { JsonLd } from "@/lib/json-ld";
 import { LOCALE_META, localePath, type Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { alternates } from "@/lib/i18n/seo";
-import { formatMAD } from "@/lib/format";
+import { formatMAD, formatMADText } from "@/lib/format";
 import { absoluteUrl } from "@/lib/site";
 import { BATTERY_GOOD_FROM } from "@/lib/battery";
 import type { BrandOffer } from "@/lib/offers/phone-offers";
@@ -27,8 +27,8 @@ import { OfferFaq, OfferFinal, OfferSteps } from "./OfferSections";
 export function brandOfferMetadata(brand: BrandOffer, locale: Locale): Metadata {
   const c = OFFER_COPY[locale];
   const alt = alternates(locale, `/offres/${brand.slug}`);
-  const title = c.brand.metaTitle(brand.name, formatMAD(brand.fromPrice));
-  const description = c.brand.metaDescription(brand.name, formatMAD(brand.fromPrice), brand.models.length);
+  const title = c.brand.metaTitle(brand.name, formatMADText(brand.fromPrice));
+  const description = c.brand.metaDescription(brand.name, formatMADText(brand.fromPrice), brand.models.length);
   const cover = brand.images[0];
   return {
     title,
