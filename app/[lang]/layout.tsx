@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     description: meta.description,
     applicationName: SHOP.name,
     // Google Search Console ownership (property https://electrozaki.ma).
-    verification: { google: "DOJkouDS-toL1j5G6v26M1UhgrulDVlF4xhPdYE05G0" },
+    verification: { google: "SkFjSKU71HfmtFqWb12mSiluAGD8ovSBItfNfhXFqqk" },
     openGraph: {
       type: "website",
       locale: LOCALE_META[lang].ogLocale,
