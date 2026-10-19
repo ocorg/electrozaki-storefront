@@ -1,5 +1,7 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
+import { pingIndexNow } from "@/lib/indexnow";
 
 // Called by the ERP right after it changes catalog data (stock sync,
 // photos, prices, packs…) so the public pages refresh at once instead of
@@ -22,5 +24,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Non autorisé" }, { status: 401 });
   }
   revalidatePath("/", "layout");
+  // Then tell the search engines that take it (Bing…) what changed.
+  after(pingIndexNow);
   return Response.json({ ok: true });
 }
