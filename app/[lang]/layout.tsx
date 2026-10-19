@@ -69,6 +69,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     title: { default: meta.title, template: `%s | ${SHOP.name}` },
     description: meta.description,
     applicationName: SHOP.name,
+    // Google Search Console ownership (property https://electrozaki.ma).
+    verification: { google: "DOJkouDS-toL1j5G6v26M1UhgrulDVlF4xhPdYE05G0" },
     openGraph: {
       type: "website",
       locale: LOCALE_META[lang].ogLocale,
