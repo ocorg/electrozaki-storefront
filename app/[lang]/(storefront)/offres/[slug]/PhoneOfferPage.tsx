@@ -27,16 +27,26 @@ import { ViewBeacon } from "./OfferParts";
 import { PhoneOfferExperience } from "./PhoneOfferExperience";
 import { OfferFaq, OfferFinal, OfferSteps } from "./OfferSections";
 
-// A phone model's promo page (/offres/<model>): the promo units, ordered
-// without leaving the page, then why the model, its battery, its specs,
-// how ordering works and the questions people ask. Live stock and prices
-// (15 min cache, refreshed at once by the ERP).
+// A phone model's page, in two modes:
+// - "promo" (/offres/<model>): the promo units, for ads and campaigns;
+// - "model" (/telephones/<model>): every unit in stock, the page meant to be
+//   found in Google ("iPhone 13 d'occasion"). A promo page names it as its
+//   canonical, so the two don't compete in search results.
+// Units ordered without leaving the page, then why the model, its battery,
+// its specs, how ordering works and the questions people ask. Live stock
+// and prices (cached, refreshed at once by the ERP).
 
-export function phoneOfferMetadata(offer: PhoneOffer, locale: Locale): Metadata {
+export type PhonePageMode = "promo" | "model";
+
+const isNewOnly = (offer: PhoneOffer) => offer.grades.length > 0 && offer.grades.every((g) => g === "NEUF");
+
+export function phoneOfferMetadata(offer: PhoneOffer, locale: Locale, mode: PhonePageMode = "promo"): Metadata {
   const c = OFFER_COPY[locale];
-  const alt = alternates(locale, `/offres/${offer.slug}`);
-  const title = c.meta.title(offer.name, formatMADText(offer.fromPrice));
-  const description = c.meta.description(offer.name, formatMADText(offer.fromPrice));
+  const alt = alternates(locale, `/telephones/${offer.slug}`);
+  const from = formatMADText(offer.fromPrice);
+  const isNew = isNewOnly(offer);
+  const title = mode === "model" ? c.model.metaTitle(offer.name, from, isNew) : c.meta.title(offer.name, from);
+  const description = mode === "model" ? c.model.metaDescription(offer.name, from, isNew) : c.meta.description(offer.name, from);
   const cover = offer.images[0];
   return {
     title,
@@ -53,8 +63,9 @@ export function phoneOfferMetadata(offer: PhoneOffer, locale: Locale): Metadata 
   };
 }
 
-export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale: Locale; t: Dictionary }) {
+export function PhoneOfferPage({ offer, locale, t, mode = "promo" }: { offer: PhoneOffer; locale: Locale; t: Dictionary; mode?: PhonePageMode }) {
   const c = OFFER_COPY[locale];
+  const isNew = isNewOnly(offer);
   const f = offer.facts;
   const name = offer.name;
   const iphone = f?.batteryHealth ?? false;
@@ -94,13 +105,25 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
     c.faq.shop,
   ];
 
-  const url = absoluteUrl(localePath(locale, `/offres/${offer.slug}`));
+  const url = absoluteUrl(localePath(locale, mode === "model" ? `/telephones/${offer.slug}` : `/offres/${offer.slug}`));
+  const crumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: t.common.home, item: absoluteUrl(localePath(locale, "/")) },
+      { "@type": "ListItem", position: 2, name: t.common.phones, item: absoluteUrl(localePath(locale, "/collections/telephones")) },
+      { "@type": "ListItem", position: 3, name, item: absoluteUrl(localePath(locale, `/telephones/${offer.slug}`)) },
+    ],
+  };
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name,
     brand: { "@type": "Brand", name: offer.brand },
-    description: c.meta.description(name, formatMADText(offer.fromPrice)),
+    description:
+      mode === "model"
+        ? c.model.metaDescription(name, formatMADText(offer.fromPrice), isNew)
+        : c.meta.description(name, formatMADText(offer.fromPrice)),
     image: offer.images.map((i) => absoluteUrl(i.url)),
     url,
     inLanguage: LOCALE_META[locale].htmlLang,
@@ -111,7 +134,7 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
       lowPrice: String(offer.fromPrice),
       highPrice: String(Math.max(...offer.units.map((u) => u.price))),
       offerCount: offer.units.length,
-      itemCondition: "https://schema.org/UsedCondition",
+      itemCondition: isNew ? "https://schema.org/NewCondition" : "https://schema.org/UsedCondition",
       availability: "https://schema.org/InStock",
       seller: { "@id": `${SITE_URL}/#store` },
     },
@@ -120,7 +143,8 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
   return (
     <div>
       <JsonLd data={jsonLd} />
-      {offer.pageId && <ViewBeacon pageId={offer.pageId} />}
+      {mode === "model" && <JsonLd data={crumbs} />}
+      {mode === "promo" && offer.pageId && <ViewBeacon pageId={offer.pageId} />}
 
       {/* ── Offer and order, first thing on the page ── */}
       <div className="mx-auto max-w-7xl px-4 pb-16 pt-6 sm:pt-10">
@@ -129,11 +153,11 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
           name={name}
           brand={offer.brand}
           hero={{
-            eyebrow: c.hero.eyebrow,
-            title: name,
+            eyebrow: mode === "model" ? c.model.eyebrow : c.hero.eyebrow,
+            title: mode === "model" ? c.model.title(name, isNew) : name,
             subtitle,
-            lead: c.hero.lead(name, batteryShown),
-            priceLabel: c.hero.priceLabel,
+            lead: mode === "model" ? c.model.lead(name, batteryShown) : c.hero.lead(name, batteryShown),
+            priceLabel: mode === "model" ? c.model.priceLabel : c.hero.priceLabel,
             instead: c.hero.instead,
             cta: c.hero.cta,
             trust,
@@ -145,6 +169,7 @@ export function PhoneOfferPage({ offer, locale, t }: { offer: PhoneOffer; locale
           addons={offer.addons}
           sheets={{ [offer.slug]: sheet }}
           options={{ [offer.slug]: offer.options }}
+          kind={mode}
         />
       </div>
 

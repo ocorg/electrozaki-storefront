@@ -15,6 +15,7 @@ import { Pagination } from "@/components/storefront/Pagination";
 import { SearchTracker } from "@/components/analytics/SearchTracker";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { AnchorButton, LinkButton } from "@/components/ui/Button";
+import { getModelPages } from "@/lib/offers/phone-offers";
 import { artFor } from "@/lib/category-art";
 import { formatMAD } from "@/lib/format";
 import { aisleOpen, whatsappLink } from "@/lib/site";
@@ -75,6 +76,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
     return <ComingSoon name={categoryName(t, slug, category.name)} art={artFor(slug, category.name)} />;
   }
 
+  const models = slug === "telephones" ? [...(await getModelPages())].sort((a, b) => b.units.length - a.units.length) : [];
   const [options, aisles, t, groups] = await Promise.all([
     getCategoryFilterOptions(slug),
     getAisles(),
@@ -237,6 +239,24 @@ export default async function CollectionPage({ params, searchParams }: Props) {
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg">
               {phones ? t.collection.introPhones : t.collection.introAisle(t.aisleBlurb[slug] ?? null, title)}
             </p>
+            {/* Each model's own page (every unit of it in stock), most stocked first. */}
+            {phones && models.length > 1 && (
+              <nav aria-label={t.collection.byModel} className="mt-5">
+                <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-neutral-600">{t.collection.byModel}</p>
+                <ul className="flex flex-wrap gap-2">
+                  {models.map((m) => (
+                    <li key={m.slug}>
+                      <Link
+                        href={`/telephones/${m.slug}`}
+                        className="inline-flex min-h-10 items-center rounded-full bg-white px-3.5 text-[13px] font-semibold text-ink ring-1 ring-ink/10 transition-shadow hover:ring-ink/30"
+                      >
+                        {m.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
           </div>
           <div className="hidden items-center gap-4 md:flex">
             <DeviceArt kind={artFor(slug, category.name)} className="h-28 w-28 text-ink" />

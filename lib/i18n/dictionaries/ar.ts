@@ -212,6 +212,7 @@ export const ar: Dictionary = {
   },
 
   collection: {
+    byModel: "حسب الطراز",
     introPhones:
       "iPhone و Samsung و Xiaomi و Honor… جديدة ومستعملة. كل هاتف مستعمل يُباع بالوحدة، مع عرض حالته وبطاريته وقطعه.",
     introAisle: (blurb: string | null, name: string) =>

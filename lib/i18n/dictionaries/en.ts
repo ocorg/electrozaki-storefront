@@ -211,6 +211,7 @@ export const en: Dictionary = {
   },
 
   collection: {
+    byModel: "By model",
     introPhones:
       "iPhone, Samsung, Xiaomi, Honor… new and used. Every used phone is sold one by one, with its condition, battery and parts shown.",
     introAisle: (blurb: string | null, name: string) =>

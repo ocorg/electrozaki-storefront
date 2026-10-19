@@ -122,6 +122,8 @@ const UNIT_SELECT = {
 
 /** A promo unit that can be sold: in stock, on promo in the ERP, on a published listing in stock. */
 const PROMO_UNIT = { stockQuantity: { gt: 0 }, compareAtPrice: { not: null } } as const;
+/** Any unit that can be sold (a model's own page, /telephones/<model>). */
+const IN_STOCK_UNIT = { stockQuantity: { gt: 0 } } as const;
 const LISTING = { isPhone: true, published: true, availability: AvailabilityStatus.IN_STOCK, modelKey: { not: null } } as const;
 
 function storageOf(p: { name: string; specs: unknown }, v: { storageLabel: string | null }): string | null {
@@ -137,9 +139,13 @@ function modelName(listingName: string, brand: string | null): string {
   return brand && noStorage.toLowerCase().startsWith(`${brand.toLowerCase()} `) ? noStorage.slice(brand.length + 1) : noStorage;
 }
 
-async function loadPhoneOffers(): Promise<PhoneOffer[]> {
+// "promo": the units on promo, for /offres/<model> (an ERP promo page with
+// the same slug can switch it off). "model": every unit in stock, for the
+// model's permanent page /telephones/<model>.
+async function loadOffers(kind: "promo" | "model"): Promise<PhoneOffer[]> {
+  const unitFilter = kind === "promo" ? PROMO_UNIT : IN_STOCK_UNIT;
   const listings = await prisma.product.findMany({
-    where: { ...LISTING, variants: { some: PROMO_UNIT } },
+    where: { ...LISTING, variants: { some: unitFilter } },
     select: {
       id: true,
       slug: true,
@@ -156,7 +162,7 @@ async function loadPhoneOffers(): Promise<PhoneOffer[]> {
       chargingPortGenuine: true,
       speakerGenuine: true,
       images: { select: { url: true, altText: true }, orderBy: { sortOrder: "asc" } },
-      variants: { where: PROMO_UNIT, select: UNIT_SELECT },
+      variants: { where: unitFilter, select: UNIT_SELECT },
     },
   });
 
@@ -167,10 +173,13 @@ async function loadPhoneOffers(): Promise<PhoneOffer[]> {
   }
 
   const slugs = [...byModel.keys()].map(offerSlug);
-  const pages = await prisma.landingPage.findMany({
-    where: { slug: { in: slugs } },
-    select: { id: true, slug: true, active: true, startsAt: true, endsAt: true },
-  });
+  const pages =
+    kind === "promo"
+      ? await prisma.landingPage.findMany({
+          where: { slug: { in: slugs } },
+          select: { id: true, slug: true, active: true, startsAt: true, endsAt: true },
+        })
+      : [];
   const pageBySlug = new Map(pages.map((p) => [p.slug, p]));
 
   const offers: PhoneOffer[] = [];
@@ -264,7 +273,17 @@ async function loadPhoneOffers(): Promise<PhoneOffer[]> {
 }
 
 /** Every phone offer live right now (read once per page render). */
-export const getPhoneOffers = cache(loadPhoneOffers);
+export const getPhoneOffers = cache(() => loadOffers("promo"));
+
+/** Every phone model with units in stock: their permanent pages (/telephones/<model>). */
+export const getModelPages = cache(() => loadOffers("model"));
+
+/** One model's page, with its add-ons; null when nothing of it is in stock. */
+export const getModelPage = cache(async (slug: string): Promise<PhoneOffer | null> => {
+  const model = (await getModelPages()).find((o) => o.slug === slug);
+  if (!model) return null;
+  return { ...model, addons: await offerAddons(model) };
+});
 
 /** One model's offer, with its add-ons; null when it has no promo unit in stock. */
 export const getPhoneOffer = cache(async (slug: string): Promise<PhoneOffer | null> => {
@@ -397,9 +416,9 @@ export async function offerAddons(offer: Pick<PhoneOffer, "listingSlugs" | "fact
 }
 
 /** Server-side check for an order: the unit must be a promo unit of this model, in stock right now. */
-export async function resolveOfferUnit(slug: string, unitId: string) {
+export async function resolveOfferUnit(slug: string, unitId: string, kind: "promo" | "model" = "promo") {
   const variant = await prisma.productVariant.findFirst({
-    where: { id: unitId, ...PROMO_UNIT, product: LISTING },
+    where: { id: unitId, ...(kind === "promo" ? PROMO_UNIT : IN_STOCK_UNIT), product: LISTING },
     select: { id: true, productId: true, product: { select: { modelKey: true } } },
   });
   if (!variant?.product.modelKey || offerSlug(variant.product.modelKey) !== slug) return null;

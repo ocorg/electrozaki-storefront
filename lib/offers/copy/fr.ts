@@ -196,6 +196,21 @@ export const fr = {
     finalTitle: (name: string) => `Votre ${name} en promo vous attend.`,
   },
 
+  // A model's permanent page (/telephones/<model>): every unit in stock.
+  model: {
+    metaTitle: (name: string, from: string, isNew: boolean) => `${name} ${isNew ? "neuf" : "d'occasion"} à Meknès, dès ${from}`,
+    metaDescription: (name: string, from: string, isNew: boolean) =>
+      isNew
+        ? `${name} neuf en stock à Meknès dès ${from} : scellé, garantie 3 mois, livraison partout au Maroc.`
+        : `${name} d'occasion en stock à Meknès dès ${from} : état, batterie et pièces affichés pour chaque téléphone, garantie 3 mois, livraison partout au Maroc.`,
+    eyebrow: "Electro Zaki · En stock à Meknès",
+    title: (name: string, isNew: boolean) => `${name} ${isNew ? "neuf" : "d'occasion"}`,
+    priceLabel: "Prix",
+    lead: (name: string, battery: boolean) =>
+      `Tous nos ${name} en stock, sur une seule page. Chaque téléphone est vérifié${battery ? ", sa santé de batterie est mesurée et affichée" : ""}, et vous choisissez l'exemplaire exact que vous recevez.`,
+    onPromo: "En promo en ce moment",
+  },
+
   final: {
     title: (name: string) => `Votre ${name} vous attend.`,
     text: "Vérifié par nos techniciens, garantie 3 mois, livraison partout au Maroc.",

@@ -95,6 +95,8 @@ type Props = {
   sheets: Record<string, SpecRow[]>;
   /** a brand page's models (chosen above grade and storage) */
   models?: { slug: string; name: string }[];
+  /** "model": the model's own page (/telephones/<model>), every unit in stock */
+  kind?: "promo" | "model";
   /** per model (offer slug): every grade, storage and colour it has had, the sold-out ones shown crossed out */
   options?: Record<string, OfferOptions>;
 };
@@ -128,7 +130,7 @@ function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; chi
   );
 }
 
-export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, images, addons, sheets, models = [], options = {} }: Props) {
+export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, images, addons, sheets, models = [], options = {}, kind = "promo" }: Props) {
   const t = useT();
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -293,6 +295,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
       const r = await submitOfferOrder({
         // The unit's model page sells it; a brand page is where it came from.
         slug: unit?.offerSlug ?? slug,
+        kind,
         via: slug,
         unitId,
         addons: [...picked],

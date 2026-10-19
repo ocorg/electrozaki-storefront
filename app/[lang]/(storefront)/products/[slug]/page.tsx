@@ -32,7 +32,7 @@ import { Tag } from "lucide-react";
 import { ACCESSORIES_OPEN } from "@/lib/site";
 import { ComingSoon } from "@/components/storefront/ComingSoon";
 import { artFor } from "@/lib/category-art";
-import { offerForListing } from "@/lib/offers/phone-offers";
+import { offerForListing, offerSlug } from "@/lib/offers/phone-offers";
 import { OFFER_COPY } from "@/lib/offers/copy";
 import { SINGLE_SIM_NOTE, factsFor, isSingleSim, specRows } from "@/lib/offers/spec-sheet";
 import { getModelOptions, type ModelListing } from "@/lib/db/model-options";
@@ -265,9 +265,12 @@ export default async function ProductPage({ params }: Props) {
     },
   };
 
+  // A phone's model page sits between the aisle and the listing
+  // (Téléphones › iPhone 13 › iPhone 13 128GB): every unit of the model.
   const crumbs = [
     { name: t.common.home, path: "/" },
     { name: aisleName, path: `/collections/${product.category.slug}` },
+    ...(facts && product.modelKey ? [{ name: facts.name, path: `/telephones/${offerSlug(product.modelKey)}` }] : []),
     { name: product.name, path: `/products/${product.slug}` },
   ];
 

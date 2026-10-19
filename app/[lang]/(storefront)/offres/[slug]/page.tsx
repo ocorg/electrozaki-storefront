@@ -56,12 +56,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// A model's or a brand's promo that has ended: its phones in the aisle
-// instead of a 404 (the address lives on in ads, WhatsApp messages and
-// Google's results). Temporary: the promo may come back.
+// A model's or a brand's promo that has ended: the model's own page (which
+// itself falls back to the aisle when none is in stock), or the brand's
+// phones in the aisle, instead of a 404 (the address lives on in ads,
+// WhatsApp messages and Google's results). Temporary: the promo may come back.
 function endedOfferTarget(slug: string): string | null {
-  const facts = MODEL_FACTS[slug];
-  if (facts) return `/collections/telephones?q=${encodeURIComponent(facts.name)}`;
+  if (MODEL_FACTS[slug]) return `/telephones/${slug}`;
   const brand = Object.entries(BRAND_PAGES).find(([, b]) => b.slug === slug);
   return brand ? `/collections/telephones?brand=${brand[0]}` : null;
 }

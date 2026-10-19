@@ -188,6 +188,20 @@ export const en: OfferCopy = {
     finalTitle: (name: string) => `Your ${name} on promo is waiting.`,
   },
 
+  model: {
+    metaTitle: (name: string, from: string, isNew: boolean) => `${isNew ? "New" : "Used"} ${name} in Meknes, from ${from}`,
+    metaDescription: (name: string, from: string, isNew: boolean) =>
+      isNew
+        ? `New ${name} in stock in Meknes from ${from}: sealed, 3-month warranty, delivery anywhere in Morocco.`
+        : `Used ${name} in stock in Meknes from ${from}: condition, battery and parts shown for every phone, 3-month warranty, delivery anywhere in Morocco.`,
+    eyebrow: "Electro Zaki · In stock in Meknes",
+    title: (name: string, isNew: boolean) => `${isNew ? "New" : "Used"} ${name}`,
+    priceLabel: "Price",
+    lead: (name: string, battery: boolean) =>
+      `All our ${name} in stock, on one page. Every phone is checked${battery ? ", its battery health measured and shown" : ""}, and you choose the exact phone you receive.`,
+    onPromo: "On promo right now",
+  },
+
   final: {
     title: (name: string) => `Your ${name} is waiting.`,
     text: "Checked by our technicians, 3-month warranty, delivery anywhere in Morocco.",

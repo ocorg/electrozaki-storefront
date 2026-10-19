@@ -188,6 +188,20 @@ export const ar: OfferCopy = {
     finalTitle: (name: string) => `هاتفك ${name} المخفّض في انتظارك.`,
   },
 
+  model: {
+    metaTitle: (name: string, from: string, isNew: boolean) => `${name} ${isNew ? "جديد" : "مستعمل"} في مكناس، ابتداءً من ${from}`,
+    metaDescription: (name: string, from: string, isNew: boolean) =>
+      isNew
+        ? `${name} جديد متوفر في مكناس ابتداءً من ${from}: مغلق، ضمان 3 أشهر، والتوصيل إلى جميع أنحاء المغرب.`
+        : `${name} مستعمل متوفر في مكناس ابتداءً من ${from}: الحالة والبطارية والقطع معروضة لكل هاتف، ضمان 3 أشهر، والتوصيل إلى جميع أنحاء المغرب.`,
+    eyebrow: "إلكترو زكي · متوفر في مكناس",
+    title: (name: string, isNew: boolean) => `${name} ${isNew ? "جديد" : "مستعمل"}`,
+    priceLabel: "الثمن",
+    lead: (name: string, battery: boolean) =>
+      `كل هواتف ${name} المتوفرة لدينا في صفحة واحدة. كل هاتف مفحوص${battery ? "، وصحة بطاريته مقاسة ومعروضة" : ""}، وتختار الهاتف بعينه الذي ستستلمه.`,
+    onPromo: "في التخفيض حاليًا",
+  },
+
   final: {
     title: (name: string) => `هاتفك ${name} في انتظارك.`,
     text: "مفحوص من طرف تقنيينا، مع ضمان 3 أشهر، والتوصيل لكل المغرب.",

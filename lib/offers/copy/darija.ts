@@ -188,6 +188,20 @@ export const darija: OfferCopy = {
     finalTitle: (name: string) => `${name} dyalek f promo kaytsennak.`,
   },
 
+  model: {
+    metaTitle: (name: string, from: string, isNew: boolean) => `${name} ${isNew ? "jdid" : "mosta3mal"} f Mknas, men ${from}`,
+    metaDescription: (name: string, from: string, isNew: boolean) =>
+      isNew
+        ? `${name} jdid kayn f Mknas men ${from}: msdoud, garantie 3 chhour, livraison l ga3 lmghrib.`
+        : `${name} mosta3mal kayn f Mknas men ${from}: l7ala, l batterie w l pièces bayna l kol téléphone, garantie 3 chhour, livraison l ga3 lmghrib.`,
+    eyebrow: "Electro Zaki · Kayn f Mknas",
+    title: (name: string, isNew: boolean) => `${name} ${isNew ? "jdid" : "mosta3mal"}`,
+    priceLabel: "Taman",
+    lead: (name: string, battery: boolean) =>
+      `Ga3 les ${name} li 3ndna f page wa7da. Kol téléphone mchouf${battery ? ", w s-sa7a dyal l batterie m9yassa w bayna" : ""}, w nta li katkhtar nit téléphone li ghadi iwslek.`,
+    onPromo: "F promo daba",
+  },
+
   final: {
     title: (name: string) => `${name} dyalek kaytsennak.`,
     text: "Mchouf mn 3nd les techniciens dyalna, garantie 3 chhour, livraison l ga3 lmghrib.",
