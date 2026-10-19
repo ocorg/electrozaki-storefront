@@ -34,9 +34,10 @@ export function proxy(request: NextRequest, event: NextFetchEvent) {
 
   if (!needsLocale(pathname)) return NextResponse.next();
 
-  // Google's ownership check (Search Console) reads the tag on the home
-  // address itself: it gets the French home page there instead of a redirect.
-  if (pathname === "/" && /Google-Site-Verification/i.test(request.headers.get("user-agent") ?? "")) {
+  // Google's robots (Search Console's ownership check reads the tag on the
+  // home address itself) get the French home page there instead of a
+  // redirect. Same page as /fr, which stays the canonical address.
+  if (pathname === "/" && /Google/i.test(request.headers.get("user-agent") ?? "")) {
     const url = request.nextUrl.clone();
     url.pathname = `/${DEFAULT_LOCALE}`;
     return NextResponse.rewrite(url);
