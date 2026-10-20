@@ -45,6 +45,7 @@ export async function Footer({ aisles }: { aisles: AisleStat[] }) {
               <li><Link href="/commande/suivi" className={linkClass}>{t.orderTracking.footer}</Link></li>
               <li><Link href="/reparation/suivi" className={linkClass}>{t.common.trackRepair}</Link></li>
               <li><Link href="/prix" className={linkClass}>{t.pricesPage.footer}</Link></li>
+              <li><Link href="/guides" className={linkClass}>{t.common.guides}</Link></li>
               <li><Link href="/contact" className={linkClass}>{t.common.contact}</Link></li>
               <li><Link href="/cart" className={linkClass}>{t.common.myCart}</Link></li>
             </ul>

@@ -17,6 +17,7 @@ import {
   type VariantData,
 } from "@/components/storefront/ProductVariantExperience";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { GuideLinks } from "@/components/storefront/GuideLinks";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CONDITION_SCHEMA } from "@/lib/conditions";
 import { MAX_QTY } from "@/lib/db/cart-pricing";
@@ -388,6 +389,9 @@ export default async function ProductPage({ params }: Props) {
           <GiftPicker giftOptions={giftOptions} />
 
           {bundles.length > 0 && <BundleOffer bundles={bundles} />}
+
+          {/* Used phones: the buying guides (checks, replaced parts, battery). */}
+          {product.isPhone && product.condition !== "NEUF" && <GuideLinks locale={locale} />}
         </ProductVariantExperience>
       </div>
 

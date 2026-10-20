@@ -12,6 +12,7 @@ export const ar: Dictionary = {
   },
 
   common: {
+    guides: "أدلة الشراء",
     skipToContent: "الانتقال إلى المحتوى",
     homeAria: "إلكترو زكي | الصفحة الرئيسية",
     mainNav: "القائمة الرئيسية",

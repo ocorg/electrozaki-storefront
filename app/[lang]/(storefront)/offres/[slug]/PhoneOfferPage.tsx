@@ -23,6 +23,7 @@ import type { PhoneOffer } from "@/lib/offers/phone-offers";
 import { OFFER_COPY } from "@/lib/offers/copy";
 import { STORAGE_SLOT, specRows } from "@/lib/offers/spec-sheet";
 import { InspectionReport } from "@/components/storefront/InspectionReport";
+import { GuideLinks } from "@/components/storefront/GuideLinks";
 import { ViewBeacon } from "./OfferParts";
 import { PhoneOfferExperience } from "./PhoneOfferExperience";
 import { OfferFaq, OfferFinal, OfferSteps } from "./OfferSections";
@@ -264,6 +265,11 @@ export function PhoneOfferPage({ offer, locale, t, mode = "promo" }: { offer: Ph
 
       <OfferSteps c={c} />
       <OfferFaq c={c} items={faq} />
+      {!isNew && (
+        <div className="mx-auto max-w-3xl px-4 pb-16">
+          <GuideLinks locale={locale} />
+        </div>
+      )}
       <OfferFinal title={c.final.title(name)} text={c.final.text} cta={c.final.cta} />
     </div>
   );

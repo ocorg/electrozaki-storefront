@@ -11,6 +11,7 @@ export const en: Dictionary = {
   },
 
   common: {
+    guides: "Buying guides",
     skipToContent: "Skip to content",
     homeAria: "Electro Zaki | home",
     mainNav: "Main navigation",

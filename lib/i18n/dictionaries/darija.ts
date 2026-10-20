@@ -14,6 +14,7 @@ export const darija: Dictionary = {
   },
 
   common: {
+    guides: "Guides dyal chra",
     skipToContent: "Doz l contenu",
     homeAria: "Electro Zaki | l'accueil",
     mainNav: "Menu principal",

@@ -13,6 +13,7 @@ export const fr = {
   },
 
   common: {
+    guides: "Guides d'achat",
     skipToContent: "Aller au contenu",
     homeAria: "Electro Zaki | accueil",
     mainNav: "Navigation principale",

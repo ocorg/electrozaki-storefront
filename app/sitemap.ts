@@ -8,6 +8,7 @@ import { alternates } from "@/lib/i18n/seo";
 import { OPEN_PRODUCTS, absoluteUrl } from "@/lib/site";
 import { getLiveOffers } from "@/lib/offers/live";
 import { getModelPages } from "@/lib/offers/phone-offers";
+import { GUIDE_SLUGS } from "@/lib/guides";
 
 // Rebuilt at most once an hour: products come and go with the ERP sync.
 export const revalidate = 3600;
@@ -60,6 +61,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...parents.flatMap((slug) => localized(`/collections/${slug}`, { changeFrequency: "daily", priority: 0.9 })),
     ...aisles.flatMap((a) => localized(`/collections/${a.slug}`, { changeFrequency: "daily", priority: 0.8 })),
     ...REPAIR_SLUGS.flatMap((slug) => localized(`/reparation/${slug}`, { changeFrequency: "monthly", priority: 0.6 })),
+    ...localized("/guides", { changeFrequency: "monthly", priority: 0.6 }),
+    ...GUIDE_SLUGS.flatMap((slug) => localized(`/guides/${slug}`, { changeFrequency: "monthly", priority: 0.7 })),
     ...products.flatMap((p) =>
       localized(`/products/${p.slug}`, {
         lastModified: p.updatedAt,
