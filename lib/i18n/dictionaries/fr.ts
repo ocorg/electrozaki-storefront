@@ -476,15 +476,15 @@ export const fr = {
   },
 
   repairPage: {
-    metaTitle: "Réparation de téléphone à Meknès - écran, batterie, logiciel",
+    metaTitle: "Réparation de téléphone à Meknès, à partir de 150 DH",
     metaDescription:
-      "Réparation de téléphones à Meknès : écran, batterie, port de charge, problèmes logiciels, récupération de données et consultation en ligne. Devis gratuit, suivi en ligne.",
+      "Réparation de téléphones à Meknès à partir de 150 DH : écran, batterie, port de charge, logiciel, récupération de données. Devis gratuit, suivi en ligne.",
     ogTitle: "Réparation de téléphone à Meknès",
     ogDescription: "Écran, batterie, port de charge, logiciel : devis gratuit avant toute réparation, suivi en ligne.",
     eyebrow: "Atelier · Meknès",
     title: "Votre téléphone cassé ?",
     titleGold: "On s'en occupe.",
-    lead: "Matériel ou logiciel, en boutique ou en consultation en ligne : devis gratuit avant toute réparation, et suivi de votre appareil en ligne.",
+    lead: "Matériel ou logiciel, en boutique ou en consultation en ligne : réparations à partir de 150 DH, devis gratuit avant toute réparation, et suivi de votre appareil en ligne.",
     askQuote: "Demander un devis",
     track: "Suivre ma réparation",
     howItWorks: "Comment ça marche",

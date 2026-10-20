@@ -288,6 +288,27 @@ export const MODEL_FACTS: Record<string, ModelFacts> = {
     },
   },
 
+  // Published specs (Apple's spec page, GSMArena, Wikipedia, October 2026);
+  // the video hours and water rating aren't confirmed yet, so left out.
+  "iphone-18-pro-max": {
+    ...IPHONE,
+    name: "iPhone 18 Pro Max",
+    port: "usb-c",
+    ram: "12GB",
+    chip: "A20 Pro",
+    displayTitle: "6.9″ ProMotion 120 Hz",
+    cameraTitle: "48 MP × 3",
+    extra: "USB-C · 60W · MagSafe / Qi2 25W",
+    specs: {
+      display: "6.9″ OLED Super Retina XDR · ProMotion 120 Hz · Always-On · 2868 × 1320 · 3000 nits",
+      chip: "A20 Pro (2 nm) · CPU 6 cœurs",
+      rearCameras: "48 MP + 48 MP ultra grand-angle + 48 MP téléobjectif",
+      frontCamera: "18 MP",
+      battery: "5391 mAh (nano-SIM) / 5567 mAh (eSIM)",
+      charging: "USB-C · 60W · MagSafe / Qi2 25W",
+      network: "5G",
+    },
+  },
   // ── Samsung ────────────────────────────────────────────────────────────
   "galaxy-s22-ultra": {
     ...GALAXY_S,

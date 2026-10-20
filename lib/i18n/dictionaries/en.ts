@@ -493,15 +493,15 @@ export const en: Dictionary = {
   },
 
   repairPage: {
-    metaTitle: "Phone repair in Meknes - screen, battery, software",
+    metaTitle: "Phone repair in Meknes, from 150 DH",
     metaDescription:
-      "Phone repair in Meknes: screen, battery, charging port, software problems, data recovery and online consultation. Free quote, online tracking.",
+      "Phone repair in Meknes from 150 DH: screen, battery, charging port, software, data recovery. Free quote, online tracking.",
     ogTitle: "Phone repair in Meknes",
     ogDescription: "Screen, battery, charging port, software: free quote before any repair, online tracking.",
     eyebrow: "Workshop · Meknes",
     title: "Broken phone?",
     titleGold: "We've got it.",
-    lead: "Hardware or software, in the shop or in an online consultation: a free quote before any repair, and online tracking of your device.",
+    lead: "Hardware or software, in the shop or in an online consultation: repairs from 150 DH, a free quote before any repair, and online tracking of your device.",
     askQuote: "Get a quote",
     track: "Track my repair",
     howItWorks: "How it works",

@@ -66,10 +66,10 @@ const DARIJA: Record<RepairSlug, Seo> = {
 const BY_LOCALE: Record<Locale, Record<RepairSlug, Seo>> = { fr: FR, en: EN, ar: AR, darija: DARIJA };
 
 const TAIL: Record<Locale, (online: boolean) => string> = {
-  fr: (online) => (online ? " : réponse rapide, toutes marques. Electro Zaki, Meknès." : " ? Diagnostic et devis gratuits dans notre atelier à Meknès (Ouislane), toutes marques. Suivi en ligne."),
-  en: (online) => (online ? ": quick answer, all brands. Electro Zaki, Meknes." : "? Free diagnosis and quote at our workshop in Meknes (Ouislane), all brands. Track it online."),
-  ar: (online) => (online ? ": رد سريع لكل العلامات. إلكترو زكي، مكناس." : "؟ تشخيص وعرض سعر مجاني في ورشتنا بمكناس (ويسلان)، لكل العلامات. تتبع الإصلاح عبر الإنترنت."),
-  darija: (online) => (online ? ": jawab dghya, ga3 les marques. Electro Zaki, Mknas." : "? Diagnostic w devis fabor f l'atelier dyalna f Mknas (Ouislane), ga3 les marques. Suivi en ligne."),
+  fr: (online) => (online ? " : réponse rapide, toutes marques. Electro Zaki, Meknès." : " ? À partir de 150 DH, diagnostic et devis gratuits dans notre atelier à Meknès (Ouislane), toutes marques."),
+  en: (online) => (online ? ": quick answer, all brands. Electro Zaki, Meknes." : "? From 150 DH, free diagnosis and quote at our workshop in Meknes (Ouislane), all brands."),
+  ar: (online) => (online ? ": رد سريع لكل العلامات. إلكترو زكي، مكناس." : "؟ ابتداءً من 150 درهم، تشخيص وعرض سعر مجاني في ورشتنا بمكناس (ويسلان)، لكل العلامات."),
+  darija: (online) => (online ? ": jawab dghya, ga3 les marques. Electro Zaki, Mknas." : "? Men 150 DH, diagnostic w devis fabor f l'atelier dyalna f Mknas (Ouislane), ga3 les marques."),
 };
 
 export function repairSeo(locale: Locale, topic: RepairSlug): { title: string; description: string } {

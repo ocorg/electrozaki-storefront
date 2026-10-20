@@ -479,15 +479,15 @@ export const darija: Dictionary = {
   },
 
   repairPage: {
-    metaTitle: "Tasli7 dyal tilifounat f Mknas - l'écran, batterie, logiciel",
+    metaTitle: "Tasli7 dyal tilifounat f Mknas, men 150 DH",
     metaDescription:
-      "Tasli7 tilifounat f Mknas: l'écran, batterie, port de charge, machakil logiciel, rj3an dyal les données w consultation 3la b3d. Devis fabor, suivi f l'internet.",
+      "Tasli7 tilifounat f Mknas men 150 DH: l'écran, batterie, port de charge, logiciel, rj3an dyal les données. Devis fabor, suivi f l'internet.",
     ogTitle: "Tasli7 dyal tilifounat f Mknas",
     ogDescription: "L'écran, batterie, port de charge, logiciel: devis fabor 9bel ay tasli7, w suivi f l'internet.",
     eyebrow: "L'atelier · Mknas",
     title: "Téléphone dyalek khasser?",
     titleGold: "7na nthallaw fih.",
-    lead: "Matériel wla logiciel, f l7anout wla consultation 3la b3d: devis fabor 9bel ay tasli7, w tba3 l'appareil dyalek f l'internet.",
+    lead: "Matériel wla logiciel, f l7anout wla consultation 3la b3d: tasli7 men 150 DH, devis fabor 9bel ay tasli7, w tba3 l'appareil dyalek f l'internet.",
     askQuote: "Tleb devis",
     track: "Tba3 tasli7 dyali",
     howItWorks: "Kifach kankhdmo",
