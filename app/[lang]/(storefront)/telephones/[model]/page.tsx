@@ -4,6 +4,7 @@ import { getLocale, getT } from "@/lib/i18n/server";
 import { localePath } from "@/lib/i18n/config";
 import { getModelPage } from "@/lib/offers/phone-offers";
 import { MODEL_FACTS } from "@/lib/offers/models";
+import { getReviewSummary } from "@/lib/reviews";
 import { PhoneOfferPage, phoneOfferMetadata } from "../../offres/[slug]/PhoneOfferPage";
 
 // A phone model's permanent page (/telephones/iphone-13): every unit in
@@ -30,7 +31,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ModelPage({ params }: Props) {
   const { model } = await params;
   const [page, t, locale] = await Promise.all([getModelPage(model), getT(), getLocale()]);
-  if (page) return <PhoneOfferPage offer={page} locale={locale} t={t} mode="model" />;
+  if (page) {
+    const reviews = await getReviewSummary({ modelKey: page.modelKey });
+    return <PhoneOfferPage offer={page} locale={locale} t={t} mode="model" reviews={reviews} />;
+  }
   // A model we know but have none of right now: the phones aisle, searched
   // for it (temporary: stock comes back).
   const facts = MODEL_FACTS[model];

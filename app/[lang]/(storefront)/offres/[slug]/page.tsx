@@ -13,6 +13,7 @@ import { BRAND_PAGES, getBrandOffer, getPhoneOffer } from "@/lib/offers/phone-of
 import { MODEL_FACTS } from "@/lib/offers/models";
 import { BrandOfferPage, brandOfferMetadata } from "./BrandOfferPage";
 import { PhoneOfferPage, phoneOfferMetadata } from "./PhoneOfferPage";
+import { getReviewSummary } from "@/lib/reviews";
 
 // Three kinds of page share this address: a phone model on promo in the ERP
 // (/offres/iphone-14, lib/offers/phone-offers.ts), a brand's promos
@@ -69,7 +70,7 @@ function endedOfferTarget(slug: string): string | null {
 export default async function OfferPage({ params }: Props) {
   const { slug } = await params;
   const [offer, t, locale] = await Promise.all([getPhoneOffer(slug), getT(), getLocale()]);
-  if (offer) return <PhoneOfferPage offer={offer} locale={locale} t={t} />;
+  if (offer) return <PhoneOfferPage offer={offer} locale={locale} t={t} reviews={await getReviewSummary({ modelKey: offer.modelKey })} />;
   const brand = await getBrandOffer(slug);
   if (brand) return <BrandOfferPage brand={brand} locale={locale} t={t} />;
   const ended = endedOfferTarget(slug);

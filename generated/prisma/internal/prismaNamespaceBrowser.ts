@@ -63,6 +63,7 @@ export const ModelName = {
   ProductInternal: 'ProductInternal',
   OrderRequest: 'OrderRequest',
   OrderRequestItem: 'OrderRequestItem',
+  ProductReview: 'ProductReview',
   ContactMessage: 'ContactMessage',
   RepairRequest: 'RepairRequest',
   PromoCode: 'PromoCode',
@@ -301,6 +302,24 @@ export const OrderRequestItemScalarFieldEnum = {
 } as const
 
 export type OrderRequestItemScalarFieldEnum = (typeof OrderRequestItemScalarFieldEnum)[keyof typeof OrderRequestItemScalarFieldEnum]
+
+
+export const ProductReviewScalarFieldEnum = {
+  id: 'id',
+  orderItemId: 'orderItemId',
+  productId: 'productId',
+  modelKey: 'modelKey',
+  productName: 'productName',
+  rating: 'rating',
+  comment: 'comment',
+  authorName: 'authorName',
+  locale: 'locale',
+  hidden: 'hidden',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductReviewScalarFieldEnum = (typeof ProductReviewScalarFieldEnum)[keyof typeof ProductReviewScalarFieldEnum]
 
 
 export const ContactMessageScalarFieldEnum = {

@@ -9,6 +9,7 @@ import { useLocale, useT } from "@/components/i18n/I18nProvider";
 import { LOCALE_META } from "@/lib/i18n/config";
 import { translateError } from "@/lib/i18n/labels";
 import type { TrackedOrder } from "@/lib/order-tracking";
+import { ReviewForm } from "@/components/reviews/ReviewForm";
 import { lookupOrder } from "./actions";
 
 // Ameex's own tracking page, the one the shop already sends customers to
@@ -28,6 +29,8 @@ export function OrderTrackingForm({ initialRef }: { initialRef: string }) {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
+  // The phone the order was found with (the review form proves ownership with it).
+  const [foundWith, setFoundWith] = useState("");
 
   const day = (iso: string) =>
     new Date(iso).toLocaleDateString(`${LOCALE_META[locale].intl}-u-nu-latn`, { timeZone: "Etc/GMT", weekday: "long", day: "numeric", month: "long" });
@@ -39,7 +42,10 @@ export function OrderTrackingForm({ initialRef }: { initialRef: string }) {
     const r = await lookupOrder(ref, phone).catch(() => null);
     setBusy(false);
     if (!r) setError(t.errors.network);
-    else if (r.ok) setOrder(r.order);
+    else if (r.ok) {
+      setOrder(r.order);
+      setFoundWith(phone);
+    }
     else {
       setOrder(null);
       setError(translateError(t, r.error));
@@ -207,6 +213,20 @@ export function OrderTrackingForm({ initialRef }: { initialRef: string }) {
               <dd className="readout font-bold text-ink">{formatMAD(order.total)}</dd>
             </div>
           </dl>
+
+          {order.items.some((it) => it.reviewable) && (
+            <div className="space-y-3 border-t border-ink/8 pt-5">
+              <div>
+                <h2 className="font-display text-xl font-bold text-ink">{t.reviews.formTitle}</h2>
+                <p className="mt-1 text-sm text-neutral-600">{t.reviews.formIntro}</p>
+              </div>
+              {order.items
+                .filter((it) => it.reviewable)
+                .map((it) => (
+                  <ReviewForm key={`${order.ref}-${it.id}`} orderRef={order.ref} phone={foundWith} item={it} defaultName={order.reviewName} />
+                ))}
+            </div>
+          )}
 
           <a
             href={whatsappLink(`${o.title} #${order.ref}`)}

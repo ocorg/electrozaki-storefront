@@ -24,6 +24,8 @@ import { OFFER_COPY } from "@/lib/offers/copy";
 import { STORAGE_SLOT, specRows } from "@/lib/offers/spec-sheet";
 import { InspectionReport } from "@/components/storefront/InspectionReport";
 import { GuideLinks } from "@/components/storefront/GuideLinks";
+import { ReviewsSection } from "@/components/reviews/ReviewsSection";
+import { reviewJsonLd, type ReviewSummary } from "@/lib/reviews";
 import { ViewBeacon } from "./OfferParts";
 import { PhoneOfferExperience } from "./PhoneOfferExperience";
 import { OfferFaq, OfferFinal, OfferSteps } from "./OfferSections";
@@ -64,7 +66,20 @@ export function phoneOfferMetadata(offer: PhoneOffer, locale: Locale, mode: Phon
   };
 }
 
-export function PhoneOfferPage({ offer, locale, t, mode = "promo" }: { offer: PhoneOffer; locale: Locale; t: Dictionary; mode?: PhonePageMode }) {
+export function PhoneOfferPage({
+  offer,
+  locale,
+  t,
+  mode = "promo",
+  reviews = null,
+}: {
+  offer: PhoneOffer;
+  locale: Locale;
+  t: Dictionary;
+  mode?: PhonePageMode;
+  /** the model's customer reviews */
+  reviews?: ReviewSummary | null;
+}) {
   const c = OFFER_COPY[locale];
   const isNew = isNewOnly(offer);
   const f = offer.facts;
@@ -139,6 +154,7 @@ export function PhoneOfferPage({ offer, locale, t, mode = "promo" }: { offer: Ph
       availability: "https://schema.org/InStock",
       seller: { "@id": `${SITE_URL}/#store` },
     },
+    ...reviewJsonLd(reviews),
   };
 
   return (
@@ -262,6 +278,12 @@ export function PhoneOfferPage({ offer, locale, t, mode = "promo" }: { offer: Ph
           </Reveal>
         </div>
       </section>
+
+      {reviews && (
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:py-24">
+          <ReviewsSection summary={reviews} name={name} t={t} locale={locale} />
+        </div>
+      )}
 
       <OfferSteps c={c} />
       <OfferFaq c={c} items={faq} />

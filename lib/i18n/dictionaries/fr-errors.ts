@@ -46,4 +46,8 @@ export const errors = {
   offerEnded: "Cette offre n'est plus disponible.",
   offerUnitGone: "Ce téléphone vient d'être réservé. Merci d'en choisir un autre.",
   phoneOrderLimit: "Vous avez déjà passé plusieurs commandes avec ce numéro aujourd'hui. Nous vous appelons très vite, ou écrivez-nous sur WhatsApp.",
+  reviewPickStars: "Choisissez une note de 1 à 5 étoiles.",
+  reviewTooLong: "Votre avis est trop long (1000 caractères maximum).",
+  reviewNoLinks: "Les liens ne sont pas acceptés dans les avis.",
+  reviewNotDelivered: "Vous pourrez donner votre avis dès que votre commande sera livrée.",
 };

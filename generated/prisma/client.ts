@@ -102,6 +102,11 @@ export type OrderRequest = Prisma.OrderRequestModel
  */
 export type OrderRequestItem = Prisma.OrderRequestItemModel
 /**
+ * Model ProductReview
+ * 
+ */
+export type ProductReview = Prisma.ProductReviewModel
+/**
  * Model ContactMessage
  * 
  */

@@ -38,6 +38,8 @@ import { OFFER_COPY } from "@/lib/offers/copy";
 import { SINGLE_SIM_NOTE, factsFor, isSingleSim, specRows } from "@/lib/offers/spec-sheet";
 import { getModelOptions, type ModelListing } from "@/lib/db/model-options";
 import { InspectionReport } from "@/components/storefront/InspectionReport";
+import { ReviewsSection } from "@/components/reviews/ReviewsSection";
+import { getReviewSummary, reviewJsonLd } from "@/lib/reviews";
 
 export const revalidate = 3600;
 
@@ -125,11 +127,13 @@ export default async function ProductPage({ params }: Props) {
     }
   }
 
-  const [compatibilityPhones, rawBundles, related, facetGroups] = await Promise.all([
+  const [compatibilityPhones, rawBundles, related, facetGroups, reviews] = await Promise.all([
     product.compatibleWithPhones.length ? getCompatibilityTargetPhones() : Promise.resolve([]),
     product.isPhone ? getActiveBundlesForProduct(product.id) : Promise.resolve([]),
     getRelatedProducts(product, 4),
     product.facets.length ? getFacetGroups(product.category.slug) : Promise.resolve([]),
+    // A phone shows the reviews of its whole model (every storage and grade).
+    getReviewSummary({ modelKey: product.isPhone ? product.modelKey : null, productId: product.id }),
   ]);
   // The product's checklist, group by group, in the ERP's order. The phone
   // models it fits lead; each answer links back to the aisle, narrowed.
@@ -264,6 +268,7 @@ export default async function ProductPage({ params }: Props) {
       seller: { "@id": `${SITE_URL}/#store` },
       shippingDetails: SHIPPING_DETAILS,
     },
+    ...reviewJsonLd(reviews),
   };
 
   // A phone's model page sits between the aisle and the listing
@@ -394,6 +399,10 @@ export default async function ProductPage({ params }: Props) {
           {product.isPhone && product.condition !== "NEUF" && <GuideLinks locale={locale} />}
         </ProductVariantExperience>
       </div>
+
+      {reviews && (
+        <ReviewsSection summary={reviews} name={facts?.name ?? product.name} t={t} locale={locale} className="mt-20 sm:mt-28" />
+      )}
 
       {related.length > 0 && (
         <section aria-labelledby="rayon" className="mt-20 sm:mt-28">

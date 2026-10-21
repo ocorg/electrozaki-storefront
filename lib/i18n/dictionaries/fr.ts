@@ -463,6 +463,34 @@ export const fr = {
     success: "Suivre ma commande",
   },
 
+  reviews: {
+    // On the tracking page, once the order is delivered.
+    formTitle: "Donnez votre avis",
+    formIntro: "Votre commande est livrée. Notez ce que vous avez reçu : votre avis s'affiche sur le site et aide les autres clients à choisir.",
+    yourRating: "Votre note",
+    star: (n: number) => (n === 1 ? "1 étoile" : `${n} étoiles`),
+    starWords: ["Décevant", "Moyen", "Bien", "Très bien", "Excellent"],
+    commentLabel: "Votre commentaire (facultatif)",
+    commentPlaceholder: "L'état du téléphone, la batterie, la livraison, l'accueil…",
+    nameLabel: "Nom affiché",
+    nameHint: "Seuls votre prénom et l'initiale de votre nom apparaissent.",
+    submit: "Publier mon avis",
+    update: "Enregistrer",
+    saving: "Envoi…",
+    thanks: "Merci ! Votre avis est publié.",
+    edit: "Modifier mon avis",
+    cancel: "Annuler",
+    // On the product and model pages.
+    eyebrow: "Avis clients",
+    title: (name: string) => `Avis sur ${name}`,
+    count: (n: number) => (n === 1 ? "1 avis" : `${n} avis`),
+    outOf: "sur 5",
+    verified: "Achat vérifié",
+    bought: "A acheté :",
+    about: "Avis laissés par nos clients après la livraison de leur commande sur le site. Seul un client livré peut donner son avis.",
+    rating: (avg: string) => `Note moyenne : ${avg} sur 5`,
+  },
+
   conditionPanel: {
     specsToggle: (n: number) => `Fiche technique complète (${n})`,
     aria: "État de l'appareil",

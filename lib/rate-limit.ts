@@ -21,6 +21,7 @@ const LIMITS = {
   track: { max: 20, windowMinutes: 60 }, // repair / order tracking lookups, quote answers
   view: { max: 10, windowMinutes: 60 }, // promo page visit counts
   whatsapp: { max: 20, windowMinutes: 60 }, // "WhatsApp opened" marks on orders
+  review: { max: 10, windowMinutes: 60 }, // reviews written or edited on the tracking page
 } as const;
 
 export type RateLimitBucket = keyof typeof LIMITS;

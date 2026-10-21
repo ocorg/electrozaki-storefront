@@ -263,6 +263,7 @@ export type OrderRequestItemWhereInput = {
   orderRequest?: Prisma.XOR<Prisma.OrderRequestScalarRelationFilter, Prisma.OrderRequestWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   variant?: Prisma.XOR<Prisma.ProductVariantNullableScalarRelationFilter, Prisma.ProductVariantWhereInput> | null
+  review?: Prisma.XOR<Prisma.ProductReviewNullableScalarRelationFilter, Prisma.ProductReviewWhereInput> | null
 }
 
 export type OrderRequestItemOrderByWithRelationInput = {
@@ -279,6 +280,7 @@ export type OrderRequestItemOrderByWithRelationInput = {
   orderRequest?: Prisma.OrderRequestOrderByWithRelationInput
   product?: Prisma.ProductOrderByWithRelationInput
   variant?: Prisma.ProductVariantOrderByWithRelationInput
+  review?: Prisma.ProductReviewOrderByWithRelationInput
 }
 
 export type OrderRequestItemWhereUniqueInput = Prisma.AtLeast<{
@@ -298,6 +300,7 @@ export type OrderRequestItemWhereUniqueInput = Prisma.AtLeast<{
   orderRequest?: Prisma.XOR<Prisma.OrderRequestScalarRelationFilter, Prisma.OrderRequestWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   variant?: Prisma.XOR<Prisma.ProductVariantNullableScalarRelationFilter, Prisma.ProductVariantWhereInput> | null
+  review?: Prisma.XOR<Prisma.ProductReviewNullableScalarRelationFilter, Prisma.ProductReviewWhereInput> | null
 }, "id">
 
 export type OrderRequestItemOrderByWithAggregationInput = {
@@ -345,6 +348,7 @@ export type OrderRequestItemCreateInput = {
   orderRequest: Prisma.OrderRequestCreateNestedOneWithoutItemsInput
   product: Prisma.ProductCreateNestedOneWithoutOrderRequestItemsInput
   variant?: Prisma.ProductVariantCreateNestedOneWithoutOrderRequestItemsInput
+  review?: Prisma.ProductReviewCreateNestedOneWithoutOrderItemInput
 }
 
 export type OrderRequestItemUncheckedCreateInput = {
@@ -358,6 +362,7 @@ export type OrderRequestItemUncheckedCreateInput = {
   productNameSnapshot: string
   priceAtRequest: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: number
+  review?: Prisma.ProductReviewUncheckedCreateNestedOneWithoutOrderItemInput
 }
 
 export type OrderRequestItemUpdateInput = {
@@ -371,6 +376,7 @@ export type OrderRequestItemUpdateInput = {
   orderRequest?: Prisma.OrderRequestUpdateOneRequiredWithoutItemsNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutOrderRequestItemsNestedInput
   variant?: Prisma.ProductVariantUpdateOneWithoutOrderRequestItemsNestedInput
+  review?: Prisma.ProductReviewUpdateOneWithoutOrderItemNestedInput
 }
 
 export type OrderRequestItemUncheckedUpdateInput = {
@@ -384,6 +390,7 @@ export type OrderRequestItemUncheckedUpdateInput = {
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   priceAtRequest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  review?: Prisma.ProductReviewUncheckedUpdateOneWithoutOrderItemNestedInput
 }
 
 export type OrderRequestItemCreateManyInput = {
@@ -479,6 +486,11 @@ export type OrderRequestItemMinOrderByAggregateInput = {
 export type OrderRequestItemSumOrderByAggregateInput = {
   priceAtRequest?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+}
+
+export type OrderRequestItemScalarRelationFilter = {
+  is?: Prisma.OrderRequestItemWhereInput
+  isNot?: Prisma.OrderRequestItemWhereInput
 }
 
 export type OrderRequestItemCreateNestedManyWithoutProductInput = {
@@ -607,6 +619,20 @@ export type OrderRequestItemUncheckedUpdateManyWithoutOrderRequestNestedInput = 
   deleteMany?: Prisma.OrderRequestItemScalarWhereInput | Prisma.OrderRequestItemScalarWhereInput[]
 }
 
+export type OrderRequestItemCreateNestedOneWithoutReviewInput = {
+  create?: Prisma.XOR<Prisma.OrderRequestItemCreateWithoutReviewInput, Prisma.OrderRequestItemUncheckedCreateWithoutReviewInput>
+  connectOrCreate?: Prisma.OrderRequestItemCreateOrConnectWithoutReviewInput
+  connect?: Prisma.OrderRequestItemWhereUniqueInput
+}
+
+export type OrderRequestItemUpdateOneRequiredWithoutReviewNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderRequestItemCreateWithoutReviewInput, Prisma.OrderRequestItemUncheckedCreateWithoutReviewInput>
+  connectOrCreate?: Prisma.OrderRequestItemCreateOrConnectWithoutReviewInput
+  upsert?: Prisma.OrderRequestItemUpsertWithoutReviewInput
+  connect?: Prisma.OrderRequestItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderRequestItemUpdateToOneWithWhereWithoutReviewInput, Prisma.OrderRequestItemUpdateWithoutReviewInput>, Prisma.OrderRequestItemUncheckedUpdateWithoutReviewInput>
+}
+
 export type OrderRequestItemCreateWithoutProductInput = {
   id?: string
   unitRef?: string | null
@@ -617,6 +643,7 @@ export type OrderRequestItemCreateWithoutProductInput = {
   quantity?: number
   orderRequest: Prisma.OrderRequestCreateNestedOneWithoutItemsInput
   variant?: Prisma.ProductVariantCreateNestedOneWithoutOrderRequestItemsInput
+  review?: Prisma.ProductReviewCreateNestedOneWithoutOrderItemInput
 }
 
 export type OrderRequestItemUncheckedCreateWithoutProductInput = {
@@ -629,6 +656,7 @@ export type OrderRequestItemUncheckedCreateWithoutProductInput = {
   productNameSnapshot: string
   priceAtRequest: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: number
+  review?: Prisma.ProductReviewUncheckedCreateNestedOneWithoutOrderItemInput
 }
 
 export type OrderRequestItemCreateOrConnectWithoutProductInput = {
@@ -683,6 +711,7 @@ export type OrderRequestItemCreateWithoutVariantInput = {
   quantity?: number
   orderRequest: Prisma.OrderRequestCreateNestedOneWithoutItemsInput
   product: Prisma.ProductCreateNestedOneWithoutOrderRequestItemsInput
+  review?: Prisma.ProductReviewCreateNestedOneWithoutOrderItemInput
 }
 
 export type OrderRequestItemUncheckedCreateWithoutVariantInput = {
@@ -695,6 +724,7 @@ export type OrderRequestItemUncheckedCreateWithoutVariantInput = {
   productNameSnapshot: string
   priceAtRequest: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: number
+  review?: Prisma.ProductReviewUncheckedCreateNestedOneWithoutOrderItemInput
 }
 
 export type OrderRequestItemCreateOrConnectWithoutVariantInput = {
@@ -733,6 +763,7 @@ export type OrderRequestItemCreateWithoutOrderRequestInput = {
   quantity?: number
   product: Prisma.ProductCreateNestedOneWithoutOrderRequestItemsInput
   variant?: Prisma.ProductVariantCreateNestedOneWithoutOrderRequestItemsInput
+  review?: Prisma.ProductReviewCreateNestedOneWithoutOrderItemInput
 }
 
 export type OrderRequestItemUncheckedCreateWithoutOrderRequestInput = {
@@ -745,6 +776,7 @@ export type OrderRequestItemUncheckedCreateWithoutOrderRequestInput = {
   productNameSnapshot: string
   priceAtRequest: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: number
+  review?: Prisma.ProductReviewUncheckedCreateNestedOneWithoutOrderItemInput
 }
 
 export type OrderRequestItemCreateOrConnectWithoutOrderRequestInput = {
@@ -773,6 +805,74 @@ export type OrderRequestItemUpdateManyWithWhereWithoutOrderRequestInput = {
   data: Prisma.XOR<Prisma.OrderRequestItemUpdateManyMutationInput, Prisma.OrderRequestItemUncheckedUpdateManyWithoutOrderRequestInput>
 }
 
+export type OrderRequestItemCreateWithoutReviewInput = {
+  id?: string
+  unitRef?: string | null
+  isGift?: boolean
+  bundleId?: string | null
+  productNameSnapshot: string
+  priceAtRequest: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: number
+  orderRequest: Prisma.OrderRequestCreateNestedOneWithoutItemsInput
+  product: Prisma.ProductCreateNestedOneWithoutOrderRequestItemsInput
+  variant?: Prisma.ProductVariantCreateNestedOneWithoutOrderRequestItemsInput
+}
+
+export type OrderRequestItemUncheckedCreateWithoutReviewInput = {
+  id?: string
+  orderRequestId: string
+  productId: string
+  variantId?: string | null
+  unitRef?: string | null
+  isGift?: boolean
+  bundleId?: string | null
+  productNameSnapshot: string
+  priceAtRequest: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: number
+}
+
+export type OrderRequestItemCreateOrConnectWithoutReviewInput = {
+  where: Prisma.OrderRequestItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderRequestItemCreateWithoutReviewInput, Prisma.OrderRequestItemUncheckedCreateWithoutReviewInput>
+}
+
+export type OrderRequestItemUpsertWithoutReviewInput = {
+  update: Prisma.XOR<Prisma.OrderRequestItemUpdateWithoutReviewInput, Prisma.OrderRequestItemUncheckedUpdateWithoutReviewInput>
+  create: Prisma.XOR<Prisma.OrderRequestItemCreateWithoutReviewInput, Prisma.OrderRequestItemUncheckedCreateWithoutReviewInput>
+  where?: Prisma.OrderRequestItemWhereInput
+}
+
+export type OrderRequestItemUpdateToOneWithWhereWithoutReviewInput = {
+  where?: Prisma.OrderRequestItemWhereInput
+  data: Prisma.XOR<Prisma.OrderRequestItemUpdateWithoutReviewInput, Prisma.OrderRequestItemUncheckedUpdateWithoutReviewInput>
+}
+
+export type OrderRequestItemUpdateWithoutReviewInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  priceAtRequest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  orderRequest?: Prisma.OrderRequestUpdateOneRequiredWithoutItemsNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutOrderRequestItemsNestedInput
+  variant?: Prisma.ProductVariantUpdateOneWithoutOrderRequestItemsNestedInput
+}
+
+export type OrderRequestItemUncheckedUpdateWithoutReviewInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderRequestId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  variantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  priceAtRequest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
 export type OrderRequestItemCreateManyProductInput = {
   id?: string
   orderRequestId: string
@@ -795,6 +895,7 @@ export type OrderRequestItemUpdateWithoutProductInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   orderRequest?: Prisma.OrderRequestUpdateOneRequiredWithoutItemsNestedInput
   variant?: Prisma.ProductVariantUpdateOneWithoutOrderRequestItemsNestedInput
+  review?: Prisma.ProductReviewUpdateOneWithoutOrderItemNestedInput
 }
 
 export type OrderRequestItemUncheckedUpdateWithoutProductInput = {
@@ -807,6 +908,7 @@ export type OrderRequestItemUncheckedUpdateWithoutProductInput = {
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   priceAtRequest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  review?: Prisma.ProductReviewUncheckedUpdateOneWithoutOrderItemNestedInput
 }
 
 export type OrderRequestItemUncheckedUpdateManyWithoutProductInput = {
@@ -843,6 +945,7 @@ export type OrderRequestItemUpdateWithoutVariantInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   orderRequest?: Prisma.OrderRequestUpdateOneRequiredWithoutItemsNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutOrderRequestItemsNestedInput
+  review?: Prisma.ProductReviewUpdateOneWithoutOrderItemNestedInput
 }
 
 export type OrderRequestItemUncheckedUpdateWithoutVariantInput = {
@@ -855,6 +958,7 @@ export type OrderRequestItemUncheckedUpdateWithoutVariantInput = {
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   priceAtRequest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  review?: Prisma.ProductReviewUncheckedUpdateOneWithoutOrderItemNestedInput
 }
 
 export type OrderRequestItemUncheckedUpdateManyWithoutVariantInput = {
@@ -891,6 +995,7 @@ export type OrderRequestItemUpdateWithoutOrderRequestInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   product?: Prisma.ProductUpdateOneRequiredWithoutOrderRequestItemsNestedInput
   variant?: Prisma.ProductVariantUpdateOneWithoutOrderRequestItemsNestedInput
+  review?: Prisma.ProductReviewUpdateOneWithoutOrderItemNestedInput
 }
 
 export type OrderRequestItemUncheckedUpdateWithoutOrderRequestInput = {
@@ -903,6 +1008,7 @@ export type OrderRequestItemUncheckedUpdateWithoutOrderRequestInput = {
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   priceAtRequest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  review?: Prisma.ProductReviewUncheckedUpdateOneWithoutOrderItemNestedInput
 }
 
 export type OrderRequestItemUncheckedUpdateManyWithoutOrderRequestInput = {
@@ -933,6 +1039,7 @@ export type OrderRequestItemSelect<ExtArgs extends runtime.Types.Extensions.Inte
   orderRequest?: boolean | Prisma.OrderRequestDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   variant?: boolean | Prisma.OrderRequestItem$variantArgs<ExtArgs>
+  review?: boolean | Prisma.OrderRequestItem$reviewArgs<ExtArgs>
 }, ExtArgs["result"]["orderRequestItem"]>
 
 export type OrderRequestItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -985,6 +1092,7 @@ export type OrderRequestItemInclude<ExtArgs extends runtime.Types.Extensions.Int
   orderRequest?: boolean | Prisma.OrderRequestDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   variant?: boolean | Prisma.OrderRequestItem$variantArgs<ExtArgs>
+  review?: boolean | Prisma.OrderRequestItem$reviewArgs<ExtArgs>
 }
 export type OrderRequestItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderRequest?: boolean | Prisma.OrderRequestDefaultArgs<ExtArgs>
@@ -1003,6 +1111,7 @@ export type $OrderRequestItemPayload<ExtArgs extends runtime.Types.Extensions.In
     orderRequest: Prisma.$OrderRequestPayload<ExtArgs>
     product: Prisma.$ProductPayload<ExtArgs>
     variant: Prisma.$ProductVariantPayload<ExtArgs> | null
+    review: Prisma.$ProductReviewPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1412,6 +1521,7 @@ export interface Prisma__OrderRequestItemClient<T, Null = never, ExtArgs extends
   orderRequest<T extends Prisma.OrderRequestDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderRequestDefaultArgs<ExtArgs>>): Prisma.Prisma__OrderRequestClient<runtime.Types.Result.GetResult<Prisma.$OrderRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   variant<T extends Prisma.OrderRequestItem$variantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderRequestItem$variantArgs<ExtArgs>>): Prisma.Prisma__ProductVariantClient<runtime.Types.Result.GetResult<Prisma.$ProductVariantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  review<T extends Prisma.OrderRequestItem$reviewArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderRequestItem$reviewArgs<ExtArgs>>): Prisma.Prisma__ProductReviewClient<runtime.Types.Result.GetResult<Prisma.$ProductReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1868,6 +1978,25 @@ export type OrderRequestItem$variantArgs<ExtArgs extends runtime.Types.Extension
    */
   include?: Prisma.ProductVariantInclude<ExtArgs> | null
   where?: Prisma.ProductVariantWhereInput
+}
+
+/**
+ * OrderRequestItem.review
+ */
+export type OrderRequestItem$reviewArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductReview
+   */
+  select?: Prisma.ProductReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductReview
+   */
+  omit?: Prisma.ProductReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductReviewInclude<ExtArgs> | null
+  where?: Prisma.ProductReviewWhereInput
 }
 
 /**

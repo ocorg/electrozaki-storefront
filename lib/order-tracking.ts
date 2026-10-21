@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db/client";
+import { displayName } from "@/lib/reviews";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Customer tracking of a website order (/commande/suivi): the reference
@@ -23,8 +24,19 @@ export type TrackedOrder = {
   deliveryCity: string | null;
   /** promised delivery day (YYYY-MM-DD) */
   deliveryEstimate: string | null;
-  items: { name: string; quantity: number }[];
+  items: TrackedItem[];
   total: number;
+  /** "Prénom N.", suggested as the name on a review */
+  reviewName: string;
+};
+
+export type TrackedItem = {
+  id: string;
+  name: string;
+  quantity: number;
+  /** once delivered: every line but the free gifts */
+  reviewable: boolean;
+  review: { rating: number; comment: string | null; authorName: string } | null;
 };
 
 const REF_RE = /^[A-Z0-9]{8}$/;
@@ -48,6 +60,7 @@ export async function findTrackedOrder(ref: string, phone: string): Promise<Trac
       id: true,
       createdAt: true,
       customerPhone: true,
+      customerName: true,
       status: true,
       requiresAdvance: true,
       advancePaymentStatus: true,
@@ -56,7 +69,16 @@ export async function findTrackedOrder(ref: string, phone: string): Promise<Trac
       deliveryCity: true,
       deliveryEstimate: true,
       totalEstimate: true,
-      items: { select: { productNameSnapshot: true, quantity: true }, orderBy: { id: "asc" } },
+      items: {
+        select: {
+          id: true,
+          productNameSnapshot: true,
+          quantity: true,
+          isGift: true,
+          review: { select: { rating: true, comment: true, authorName: true } },
+        },
+        orderBy: { id: "asc" },
+      },
     },
     take: 5,
   });
@@ -102,7 +124,14 @@ export async function findTrackedOrder(ref: string, phone: string): Promise<Trac
     trackingNumber: order.trackingNumber,
     deliveryCity: order.deliveryCity,
     deliveryEstimate: order.deliveryEstimate ? order.deliveryEstimate.toISOString().slice(0, 10) : null,
-    items: order.items.map((i) => ({ name: i.productNameSnapshot, quantity: i.quantity })),
+    items: order.items.map((i) => ({
+      id: i.id,
+      name: i.productNameSnapshot,
+      quantity: i.quantity,
+      reviewable: state === "delivered" && !i.isGift,
+      review: i.review,
+    })),
     total: Number(order.totalEstimate),
+    reviewName: displayName(order.customerName),
   };
 }
