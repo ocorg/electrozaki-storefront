@@ -77,13 +77,15 @@ export default async function CollectionPage({ params, searchParams }: Props) {
     return <ComingSoon name={categoryName(t, slug, category.name)} art={artFor(slug, category.name)} />;
   }
 
-  const models = slug === "telephones" ? [...(await getModelPages())].sort((a, b) => b.units.length - a.units.length) : [];
-  const [options, aisles, t, groups] = await Promise.all([
+  // All at once: none of these needs another's answer.
+  const [modelPages, options, aisles, t, groups] = await Promise.all([
+    slug === "telephones" ? getModelPages() : Promise.resolve([]),
     getCategoryFilterOptions(slug),
     getAisles(),
     getT(),
     getFacetGroups(slug),
   ]);
+  const models = [...modelPages].sort((a, b) => b.units.length - a.units.length);
   const phones = options.kind === "phones";
   const str = (v?: string) => (typeof v === "string" && v ? v.slice(0, 80) : undefined);
   const int = (v?: string) => (v && Number.isFinite(Number(v)) && Number(v) > 0 ? Number(v) : undefined);

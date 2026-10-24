@@ -5,7 +5,7 @@ import { landingStatus } from "@/lib/db/landing";
 import { MAX_QTY } from "@/lib/db/cart-pricing";
 import { ACCESSORIES_OPEN } from "@/lib/site";
 import { MODEL_FACTS, type ModelFacts } from "./models";
-import { getModelOptions } from "@/lib/db/model-options";
+import { getManyModelOptions } from "@/lib/db/model-options";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Phone offer pages (/offres/<model>): one page per phone model that has
@@ -182,6 +182,9 @@ async function loadOffers(kind: "promo" | "model"): Promise<PhoneOffer[]> {
       : [];
   const pageBySlug = new Map(pages.map((p) => [p.slug, p]));
 
+  // Every model's options in one go (not one model after the other).
+  const optionsByModel = await getManyModelOptions([...byModel.keys()]);
+
   const offers: PhoneOffer[] = [];
   for (const [modelKey, group] of byModel) {
     const slug = offerSlug(modelKey);
@@ -233,7 +236,7 @@ async function loadOffers(kind: "promo" | "model"): Promise<PhoneOffer[]> {
     const storages = [...new Set(units.map((u) => u.storage).filter((s): s is string => !!s))].sort(
       (a, b) => parseInt(a) * (/TB|To/i.test(a) ? 1024 : 1) - parseInt(b) * (/TB|To/i.test(b) ? 1024 : 1)
     );
-    const all = await getModelOptions(modelKey);
+    const all = optionsByModel.get(modelKey) ?? { colors: [], listings: [] };
     offers.push({
       slug,
       modelKey,
