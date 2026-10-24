@@ -159,7 +159,7 @@ export const fr = {
     },
     warranty: {
       q: "Le téléphone est-il garanti ?",
-      a: "Oui, chaque téléphone est garanti 3 mois. Les conditions de la garantie vous sont précisées lors de l'appel de confirmation.",
+      a: "Oui : 3 mois pour un téléphone d'occasion, 12 mois pour un neuf. Elle couvre les pannes en utilisation normale (pas la casse ni l'eau). Si vous habitez hors de Meknès, l'envoi pour une panne couverte est à notre charge. Tout est détaillé dans nos conditions de vente.",
     },
     shop: {
       q: "Puis-je le voir en boutique ?",
@@ -201,7 +201,7 @@ export const fr = {
     metaTitle: (name: string, from: string, isNew: boolean) => `${name} ${isNew ? "neuf" : "d'occasion"} à Meknès, dès ${from}`,
     metaDescription: (name: string, from: string, isNew: boolean) =>
       isNew
-        ? `${name} neuf en stock à Meknès dès ${from} : scellé, garantie 3 mois, livraison partout au Maroc.`
+        ? `${name} neuf en stock à Meknès dès ${from} : scellé, garantie 12 mois, livraison partout au Maroc.`
         : `${name} d'occasion en stock à Meknès dès ${from} : état, batterie et pièces affichés pour chaque téléphone, garantie 3 mois, livraison partout au Maroc.`,
     eyebrow: "Electro Zaki · En stock à Meknès",
     title: (name: string, isNew: boolean) => `${name} ${isNew ? "neuf" : "d'occasion"}`,

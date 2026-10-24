@@ -3,27 +3,29 @@ import type { TermsCopy } from "./types";
 export const fr: TermsCopy = {
   metaTitle: "Conditions générales de vente et retours (7 jours)",
   metaDescription:
-    "Conditions de vente d'Electro Zaki : commande, avance de 300 DH, livraison Ameex partout au Maroc, droit de retour de 7 jours, garantie 3 mois.",
+    "Conditions de vente d'Electro Zaki : commande, avance de 300 DH, livraison Ameex partout au Maroc, droit de retour de 7 jours, garantie 3 mois (occasion) ou 12 mois (neuf).",
   title: "Conditions générales de vente",
   updated: (date) => `Mise à jour : ${date}`,
   intro:
-    "Ces conditions s'appliquent à toute commande passée sur electrozaki.ma. Vous les acceptez en cochant la case prévue avant de confirmer votre commande. Elles respectent la loi n° 31-08 édictant des mesures de protection du consommateur.",
+    "Ces conditions s'appliquent à toute commande passée sur electrozaki.ma. Vous les acceptez en cochant la case prévue avant de confirmer votre commande. Elles respectent la loi n° 31-08 édictant des mesures de protection du consommateur. Pour les achats faits en boutique, ce sont les conditions de garantie remises en magasin qui s'appliquent.",
   summaryTitle: "L'essentiel",
   summary: [
     "Retour possible pendant 7 jours après la réception, sans avoir à vous justifier.",
     "Remboursement sous 15 jours au plus. Les frais d'envoi du retour sont à votre charge, sauf si le téléphone est défectueux ou ne correspond pas à l'annonce.",
-    "Garantie boutique de 3 mois sur chaque téléphone, et garantie constructeur d'un an sur les téléphones neufs.",
+    "Garantie boutique : 3 mois sur les téléphones d'occasion achetés sur le site, 12 mois sur les téléphones neufs. Si une panne couverte touche un téléphone livré hors de Meknès, l'envoi aller et retour est à notre charge.",
     "Vous pouvez vérifier le téléphone à la livraison et refuser le colis s'il ne correspond pas à l'annonce.",
   ],
   seller: {
     title: "1. Le vendeur",
+    legalName: "Raison sociale",
     tradeName: "Nom commercial",
     address: "Adresse",
     phone: "Téléphone et WhatsApp",
     website: "Site",
     rc: "Registre de commerce",
     ice: "ICE",
-    fiscalId: "Identifiant fiscal",
+    fiscalId: "Identifiant fiscal (IF)",
+    tp: "Taxe professionnelle (TP)",
     email: "E-mail",
   },
   sections: [
@@ -97,29 +99,62 @@ export const fr: TermsCopy = {
       id: "garantie",
       title: "9. Les garanties",
       paragraphs: [
-        "Chaque téléphone bénéficie d'une garantie boutique de 3 mois à partir de la réception. Elle couvre les pannes de fonctionnement. Elle ne couvre pas les dégâts causés par une chute, un choc, l'eau ou l'humidité, ni un téléphone ouvert ou réparé ailleurs. Pendant la garantie, nous réparons le téléphone ou, si ce n'est pas possible, nous l'échangeons ou le remboursons.",
-        "Les téléphones neufs bénéficient en plus de la garantie constructeur d'un an.",
-        "Ces garanties s'ajoutent à la garantie légale des défauts cachés (articles 549 et suivants du Dahir des obligations et contrats), qui s'applique dans tous les cas.",
+        "La garantie légale des défauts cachés (loi n° 31-08 et articles 549 à 575 du Dahir des obligations et contrats) s'applique de plein droit. L'action peut être exercée dans un délai d'un an à compter de la livraison. Elle ne peut pas être réduite par contrat.",
+        "En plus, EZ ELECTRO ZAKI accorde une garantie commerciale, à partir de la réception :",
+      ],
+      list: [
+        "téléphones d'occasion achetés sur le site : 3 mois, pour les pannes de fonctionnement en utilisation normale (hors défauts esthétiques signalés à la vente) ;",
+        "téléphones neufs : 12 mois, pour les défauts matériels de fabrication en utilisation normale ;",
+        "accessoires : 7 jours, remplacement à l'identique sur présentation de la facture, sans réparation.",
+      ],
+    },
+    {
+      id: "garantie-conditions",
+      title: "10. Conditions de la garantie",
+      paragraphs: [
+        "La garantie est nominative, liée à l'IMEI ou au numéro de série figurant sur la facture, et ne peut pas être cédée à un tiers.",
+        "Batterie : son état est indiqué à titre d'information, par lecture logicielle le jour de la vente. La perte de capacité naturelle liée aux cycles de charge est une usure normale, exclue de la garantie. Seul un défaut anormal, comme un gonflement ou une coupure soudaine alors que la charge est au-dessus de 30 %, est pris en charge pendant la garantie.",
+        "Comptes et verrouillages : avant l'envoi d'un téléphone d'occasion, nous supprimons et vérifions les comptes liés (Apple ID, iCloud, Localiser, verrouillage d'activation ; compte Google et FRP ; compte Samsung ; compte Xiaomi). Vérifiez à la réception qu'aucun verrouillage n'est actif. Les difficultés dues à des comptes ou actions ajoutés après la vente ne sont pas couvertes par la garantie commerciale.",
+      ],
+    },
+    {
+      id: "exclusions",
+      title: "11. Ce que la garantie ne couvre pas",
+      paragraphs: ["La garantie commerciale ne couvre pas :"],
+      list: [
+        "les dommages accidentels : chute, choc, écran fissuré ou cassé, châssis déformé, liquides (eau, humidité, transpiration), oxydation ou corrosion ;",
+        "les interventions non autorisées : ouverture ou remplacement de pièces par un tiers non agréé, modification matérielle, déverrouillage du bootloader, root ou jailbreak ;",
+        "le mauvais usage : chargeurs, câbles ou adaptateurs incompatibles ou non certifiés, usage contraire aux recommandations du fabricant, logiciels malveillants installés par le client ;",
+        "l'usure normale : baisse naturelle de la batterie, usure des boutons, ports et matériaux, rayures d'usage, ainsi que la perte ou le vol.",
+      ],
+    },
+    {
+      id: "sav",
+      title: "12. Faire jouer la garantie (SAV)",
+      paragraphs: [
+        "Contactez-nous avec votre référence de commande, puis apportez le téléphone et sa facture à la boutique de Meknès. Si vous habitez ailleurs, nous organisons l'envoi avec Ameex : si la panne est couverte par la garantie, les frais d'envoi aller et retour sont à notre charge.",
+        "Un premier diagnostic est fait sous 48 heures ouvrables (plus si une difficulté technique l'exige ; nous vous prévenons). Notre décision vous est communiquée par écrit : réparation, échange standard, ou refus motivé par un constat technique, avec le délai de réparation prévu. Si la panne n'est pas couverte, nous vous proposons un devis, et le renvoi du téléphone est alors à votre charge.",
+        "Le téléphone vous est rendu avec un bon de restitution SAV. La garantie est prolongée de la durée passée à l'atelier.",
       ],
     },
     {
       id: "reclamations",
-      title: "10. Questions et réclamations",
+      title: "13. Questions et réclamations",
       paragraphs: [
-        "Pour toute question ou réclamation, écrivez-nous sur WhatsApp, appelez-nous ou passez à la boutique, avec votre référence de commande. Nous cherchons toujours d'abord une solution à l'amiable.",
+        "Pour toute question ou réclamation, écrivez-nous sur WhatsApp, appelez le +212 6 67 65 44 30 ou passez à la boutique, avec votre référence de commande. Nous traitons chaque réclamation de bonne foi, dans les meilleurs délais, en cherchant d'abord une solution à l'amiable.",
       ],
     },
     {
       id: "donnees",
-      title: "11. Vos données personnelles",
+      title: "14. Vos données personnelles",
       paragraphs: [
-        "Nous utilisons votre nom, votre téléphone, votre adresse et, le cas échéant, le reçu de votre avance, uniquement pour traiter et livrer votre commande et assurer la garantie. Ils sont transmis au transporteur (Ameex) pour la livraison, et ne sont ni vendus ni cédés.",
-        "Conformément à la loi n° 09-08, vous pouvez demander à consulter, corriger ou supprimer vos données en nous contactant.",
+        "Nous utilisons votre nom, votre téléphone, votre adresse et, le cas échéant, le reçu de votre avance, uniquement pour traiter et livrer votre commande et assurer la garantie. Ils sont transmis au transporteur (Ameex) pour la livraison, et ne sont ni vendus ni cédés. Conformément à la loi n° 09-08, vous pouvez demander à consulter, corriger ou supprimer vos données en nous contactant.",
+        "Avant de nous confier un téléphone pour le SAV, sauvegardez vos données et, si possible, retirez-les et déconnectez vos comptes. Le diagnostic ou la réparation peut nécessiter une remise aux paramètres d'usine : nous ne pouvons pas garantir la conservation des données ni être tenus responsables de leur perte.",
       ],
     },
     {
       id: "droit",
-      title: "12. Droit applicable",
+      title: "15. Droit applicable",
       paragraphs: [
         "Ces conditions sont soumises au droit marocain. En cas de litige, et à défaut d'accord amiable, les tribunaux marocains compétents peuvent être saisis.",
       ],

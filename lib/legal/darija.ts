@@ -3,27 +3,29 @@ import type { TermsCopy } from "./types";
 export const darija: TermsCopy = {
   metaTitle: "Chorout dyal lbi3 w r-retour (7 iyam)",
   metaDescription:
-    "Chorout dyal lbi3 f Electro Zaki: la commande, 3arboun 300 DH, livraison m3a Ameex f ga3 lmghrib, retour f 7 iyam, garantie 3 chhor.",
+    "Chorout dyal lbi3 f Electro Zaki: la commande, 3arboun 300 DH, livraison m3a Ameex f ga3 lmghrib, retour f 7 iyam, garantie 3 chhor (mosta3mel) wla 12 chhar (jdid).",
   title: "Chorout 3amma dyal lbi3",
   updated: (date) => `Tjeddedat: ${date}`,
   intro:
-    "Had chorout kaytbe9o 3la kol commande f electrozaki.ma. Katwafe9 3lihom mli katcochi la case 9bel ma tconfirmi la commande. Kayt7tarmo l9anoun 31-08 dyal 7imayat l-moustahlik. N-noskha l-fransawiya hiya l-marja3.",
+    "Had chorout kaytbe9o 3la kol commande f electrozaki.ma. Katwafe9 3lihom mli katcochi la case 9bel ma tconfirmi la commande. Kayt7tarmo l9anoun 31-08 dyal 7imayat l-moustahlik. L chi li kaytchra f l7anout, katbe9 chorout l-garantie li kayt3taw f l7anout. N-noskha l-fransawiya hiya l-marja3.",
   summaryTitle: "L-mohim",
   summary: [
     "Tqder trejje3 l-produit f 7 iyam mn nhar ma wslek, bla ma tbrrer.",
     "Kanrejj3o lflous f 15 yom max. Masarif dyal ssift dyal r-retour 3lik, ila kan t-téléphone fih 3ayb wla machi b7al l-i3lan 3lina 7na.",
-    "Garantie dyal l7anout 3 chhor 3la kol téléphone, w garantie dyal charika 3am 3la t-téléphonat jdad.",
+    "Garantie dyal l7anout: 3 chhor 3la t-téléphonat mosta3mlin li chriti mn site, w 12 chhar 3la t-téléphonat jdad. Ila kan 3ayb dakhel f l-garantie f téléphone wsel l barra Meknès, ssift mchi w ji 3lina.",
     "Tqder tchouf t-téléphone mli ywslek w traffad l-colis ila ma kanch b7al l-i3lan.",
   ],
   seller: {
     title: "1. L-bayi3",
+    legalName: "Smiya l-9anouniya",
     tradeName: "Smiya tijariya",
     address: "L-3onwan",
     phone: "Téléphone w WhatsApp",
     website: "Site",
     rc: "Registre de commerce",
     ice: "ICE",
-    fiscalId: "Identifiant fiscal",
+    fiscalId: "Identifiant fiscal (IF)",
+    tp: "Taxe professionnelle (TP)",
     email: "E-mail",
   },
   sections: [
@@ -97,29 +99,62 @@ export const darija: TermsCopy = {
       id: "garantie",
       title: "9. L-garantie",
       paragraphs: [
-        "Kol téléphone 3endo garantie dyal l7anout 3 chhor mn nhar ma tstalmo. Katghetti l-pannes dyal l-khedma. Ma katghettich l-adrar dyal tay7a, darba, l-ma wla r-rtouba, wla téléphone t7el wla tsla7 f blasa khra. F l-garantie, kanslhou t-téléphone, w ila ma mkench kanbeddloh wla kanrejj3o flouso.",
-        "T-téléphonat jdad 3endhom zyada garantie dyal charika 3am.",
-        "Had l-garantiyat kayzado 3la l-garantie l-9anouniya dyal l-3oyoub l-khafiya (l-foussoul 549 w ma ba3dha mn Dahir l-iltizamat w l-3oqoud), li katbe9 f ga3 l-7alat.",
+        "L-garantie l-9anouniya dyal l-3oyoub l-khafiya (l9anoun 31-08 w l-foussoul 549 l 575 mn Dahir l-iltizamat w l-3oqoud) katbe9 dima. Tqder tdir d-da3wa f 3am mn nhar l-livraison, w ma ymkench tn9es b l-3a9d.",
+        "Zyada 3liha, EZ ELECTRO ZAKI kat3ti garantie tijariya, mn nhar ma tstalem:",
+      ],
+      list: [
+        "t-téléphonat mosta3mlin li chriti mn site: 3 chhor, l l-pannes dyal l-khedma f l-isti3mal l-3adi (ghir l-3oyoub dyal chakl li tgalo f lbi3);",
+        "t-téléphonat jdad: 12 chhar, l l-3oyoub dyal tasni3 f l-isti3mal l-3adi;",
+        "les accessoires: 7 iyam, tbdil b nfs l-produit b la facture, bla tsli7.",
+      ],
+    },
+    {
+      id: "garantie-conditions",
+      title: "10. Chorout l-garantie",
+      paragraphs: [
+        "L-garantie chakhsiya, mrbouta b l-IMEI wla n-numéro de série li f la facture, w ma tqderch t3tiha l chi wa7ed akhor.",
+        "La batterie: l7ala dyalha kangoulouha ghir l l-ma3louma, b la lecture logicielle nhar lbi3. N-n9es t-tabi3i dyal la capacité b l-charges howa isti3mal 3adi, ma dakhelch f l-garantie. Ghir l-3ayb machi 3adi, b7al n-nfakh wla ttfi bla sbab w la charge fo9 30%, li dakhel f l-garantie.",
+        "Les comptes w l-verrouillage: 9bel ma nsiftou téléphone mosta3mel, kanms7o w nchoufou les comptes li fih (Apple ID, iCloud, Localiser, verrouillage d'activation; compte Google w FRP; compte Samsung; compte Xiaomi). Chouf mli ywslek belli ma kayn 7ta verrouillage. L-mochkil dyal comptes wla 7wayj zadhom l-client mn ba3d lbi3 ma dakhlinch f l-garantie t-tijariya.",
+      ],
+    },
+    {
+      id: "exclusions",
+      title: "11. Chno ma katghettich l-garantie",
+      paragraphs: ["L-garantie t-tijariya ma katghettich:"],
+      list: [
+        "l-adrar l-3aradiya: tay7a, darba, écran mcheqqe9 wla mherres, l-hayakal m3wwej, l-ma (ma, rtouba, 3r9), l-oxydation wla s-sdi;",
+        "t-tadakhoulat bla ttrkhis: t7el wla tbdel pièces 3nd chi wa7ed machi mo3tamad, tbdil f l-matériel, déverrouillage dyal bootloader, root wla jailbreak;",
+        "l-isti3mal l-ghalet: chargeurs, câbles wla adaptateurs machi compatibles wla machi certifiés, isti3mal mokhalif l t-tawsiyat dyal charika, logiciels khabita dkhlhom l-client;",
+        "l-isti3mal l-3adi: n-n9es t-tabi3i dyal la batterie, l-istihlak dyal les boutons, l-ports w l-mawad, t-tkhdach dyal l-isti3mal, w kadalik d-diya3 wla s-sri9a.",
+      ],
+    },
+    {
+      id: "sav",
+      title: "12. Kifach tst3mel l-garantie (SAV)",
+      paragraphs: [
+        "Tswel m3ana b la référence dyal la commande, w jib t-téléphone w la facture dyalo l l7anout f Meknès. Ila kont sakn f mdina khra, kannddmo ssift m3a Ameex: ila kan l-3ayb dakhel f l-garantie, ssift mchi w ji 3lina.",
+        "Diagnostic louwel f 48 sa3a dyal l-khedma (ktar ila kanet chi s3oubiya te9niya, w kan3lmok). Kan3tiwk l-9arar dyalna b l-kteba: tsli7, tbdil, wla rafd m3a sabab te9ni, m3a l-wa9t l-motawa99a3 dyal tsli7. Ila l-3ayb ma dakhelch, kan9t9r7o 3lik devis, w rja3 t-téléphone kaykoun 3lik.",
+        "T-téléphone kayrja3 lik m3a bon de restitution SAV. W l-garantie katzid b l-mouda li dar f l-atelier.",
       ],
     },
     {
       id: "reclamations",
-      title: "10. L-as2ila w ch-chakayat",
+      title: "13. L-as2ila w ch-chakayat",
       paragraphs: [
-        "L ay so2al wla chakaya, kteb lina f WhatsApp, 3ayet lina wla douz l l7anout, m3a la référence dyal la commande. Dima kanqellbo louwel 3la 7al b t-taradi.",
+        "L ay so2al wla chakaya, kteb lina f WhatsApp, 3ayet l +212 6 67 65 44 30 wla douz l l7anout, m3a la référence dyal la commande. Kantt3aamlo m3a kol chakaya b niya w f a9rab wa9t, w dima kanqellbo louwel 3la 7al b t-taradi.",
       ],
     },
     {
       id: "donnees",
-      title: "11. L-ma3loumat dyalek",
+      title: "14. L-ma3loumat dyalek",
       paragraphs: [
-        "Kanst3mlo smiytek, r-raqm dyalek, l-3onwan w, ila kan, l-wasl dyal l-3arboun, ghir bach nwjdo w nwslo la commande w ndiro l-garantie. Kanseftouhom l Ameex l-livraison, w ma kanbi3ouhomch w ma kan3tiwhomch l 7ta wa7ed.",
-        "3la 7sab l9anoun 09-08, tqder tlb tchouf, tsle7 wla tms7 l-ma3loumat dyalek ila tswelti m3ana.",
+        "Kanst3mlo smiytek, r-raqm dyalek, l-3onwan w, ila kan, l-wasl dyal l-3arboun, ghir bach nwjdo w nwslo la commande w ndiro l-garantie. Kanseftouhom l Ameex l-livraison, w ma kanbi3ouhomch. 3la 7sab l9anoun 09-08, tqder tlb tchouf, tsle7 wla tms7 l-ma3loumat dyalek ila tswelti m3ana.",
+        "9bel ma t3tina téléphone l SAV, dir sauvegarde l l-ma3loumat dyalek, w ila mken ms7hom w khrej mn les comptes. Diagnostic wla tsli7 y9der ytlb réinitialisation: ma n9drouch nddmnou l-ma3loumat w ma n7mlouch l-mas2ouliya ila dda3o.",
       ],
     },
     {
       id: "droit",
-      title: "12. L9anoun li kaytbe9",
+      title: "15. L9anoun li kaytbe9",
       paragraphs: [
         "Had chorout khad3a l l9anoun l-maghribi. F 7alat niza3, ila ma kanch ittifa9 b t-taradi, tqder tmchi l l-ma7akim l-maghribiya l-mokhtassa.",
       ],

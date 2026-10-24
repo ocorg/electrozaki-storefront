@@ -322,7 +322,7 @@ export const fr = {
       used ? `${name} d'occasion, ${condition?.toLowerCase()} - ${price}` : condition ? `${name} neuf - ${price}` : `${name} - ${price}`,
     metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
       `${name}${used ? " d'occasion" : condition ? " neuf" : ""}${used && condition ? ` (${condition.toLowerCase()})` : ""} à ${price} chez Electro Zaki, Meknès. ${
-        used ? "État, batterie et pièces affichés, garantie 3 mois. " : condition ? "Neuf, scellé, garantie 3 mois. " : ""
+        used ? "État, batterie et pièces affichés, garantie 3 mois. " : condition ? "Neuf, scellé, garantie 12 mois. " : ""
       }Livraison partout au Maroc.`,
   },
 
@@ -431,7 +431,7 @@ export const fr = {
     newEyebrow: "Téléphone neuf",
     newTitle: "Neuf, scellé.",
     newIntro: "Il vous arrive dans sa boîte d'origine, jamais ouverte ni activée.",
-    newItems: ["Boîte scellée, jamais activé", "IMEI vérifié, non bloqué", "Garantie constructeur 1 an", "Garantie boutique 3 mois"],
+    newItems: ["Boîte scellée, jamais activé", "IMEI vérifié, non bloqué", "Garantie boutique 12 mois", "Livraison partout au Maroc"],
   },
 
   orderTracking: {

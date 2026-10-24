@@ -36,6 +36,7 @@ export default async function TermsPage() {
 
   // Only the identifiers the shop has given: never an example number.
   const seller: [string, string][] = [
+    [c.seller.legalName, LEGAL.legalName],
     [c.seller.tradeName, LEGAL.tradeName],
     [c.seller.address, LEGAL.address],
     [c.seller.phone, SHOP.whatsappDisplay],
@@ -43,6 +44,7 @@ export default async function TermsPage() {
     ...(LEGAL.rc ? [[c.seller.rc, LEGAL.rc] as [string, string]] : []),
     ...(LEGAL.ice ? [[c.seller.ice, LEGAL.ice] as [string, string]] : []),
     ...(LEGAL.fiscalId ? [[c.seller.fiscalId, LEGAL.fiscalId] as [string, string]] : []),
+    ...(LEGAL.tp ? [[c.seller.tp, LEGAL.tp] as [string, string]] : []),
     ...(LEGAL.email ? [[c.seller.email, LEGAL.email] as [string, string]] : []),
   ];
 

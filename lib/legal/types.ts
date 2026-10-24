@@ -24,6 +24,7 @@ export type TermsCopy = {
   summary: string[];
   seller: {
     title: string;
+    legalName: string;
     tradeName: string;
     address: string;
     phone: string;
@@ -31,6 +32,7 @@ export type TermsCopy = {
     rc: string;
     ice: string;
     fiscalId: string;
+    tp: string;
     email: string;
   };
   sections: TermsSection[];

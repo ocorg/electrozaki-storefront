@@ -153,7 +153,7 @@ export const en: OfferCopy = {
     },
     warranty: {
       q: "Is the phone under warranty?",
-      a: "Yes, every phone comes with a 3-month warranty. Its terms are explained during the confirmation call.",
+      a: "Yes: 3 months for a used phone, 12 months for a new one. It covers faults in normal use (not breakage or water). If you live outside Meknès, shipping for a covered fault is on us. Everything is in our terms of sale.",
     },
     shop: {
       q: "Can I see it in the shop?",
@@ -192,7 +192,7 @@ export const en: OfferCopy = {
     metaTitle: (name: string, from: string, isNew: boolean) => `${isNew ? "New" : "Used"} ${name} in Meknes, from ${from}`,
     metaDescription: (name: string, from: string, isNew: boolean) =>
       isNew
-        ? `New ${name} in stock in Meknes from ${from}: sealed, 3-month warranty, delivery anywhere in Morocco.`
+        ? `New ${name} in stock in Meknes from ${from}: sealed, 12-month warranty, delivery anywhere in Morocco.`
         : `Used ${name} in stock in Meknes from ${from}: condition, battery and parts shown for every phone, 3-month warranty, delivery anywhere in Morocco.`,
     eyebrow: "Electro Zaki · In stock in Meknes",
     title: (name: string, isNew: boolean) => `${isNew ? "New" : "Used"} ${name}`,

@@ -3,27 +3,29 @@ import type { TermsCopy } from "./types";
 export const en: TermsCopy = {
   metaTitle: "Terms of sale and returns (7 days)",
   metaDescription:
-    "Electro Zaki's terms of sale: ordering, the 300 DH advance, Ameex delivery anywhere in Morocco, a 7-day return right, a 3-month warranty.",
+    "Electro Zaki's terms of sale: ordering, the 300 DH advance, Ameex delivery anywhere in Morocco, a 7-day return right, a 3-month (used) or 12-month (new) warranty.",
   title: "Terms of sale",
   updated: (date) => `Updated: ${date}`,
   intro:
-    "These terms apply to every order placed on electrozaki.ma. You accept them by ticking the box before confirming your order. They follow Moroccan law no. 31-08 on consumer protection. The French version is the reference.",
+    "These terms apply to every order placed on electrozaki.ma. You accept them by ticking the box before confirming your order. They follow Moroccan law no. 31-08 on consumer protection. For purchases made in the shop, the warranty terms handed over in the shop apply. The French version is the reference.",
   summaryTitle: "In short",
   summary: [
     "You can return an item within 7 days of receiving it, without giving a reason.",
     "Refund within 15 days at most. Return shipping is paid by you, unless the phone is faulty or not as described.",
-    "A 3-month shop warranty on every phone, plus the maker's 1-year warranty on new phones.",
+    "Shop warranty: 3 months on used phones bought on the site, 12 months on new phones. If a covered fault affects a phone delivered outside Meknès, we pay the shipping both ways.",
     "You can check the phone on delivery and refuse the parcel if it isn't as described.",
   ],
   seller: {
     title: "1. The seller",
+    legalName: "Company name",
     tradeName: "Trade name",
     address: "Address",
     phone: "Phone and WhatsApp",
     website: "Website",
     rc: "Trade register (RC)",
     ice: "ICE",
-    fiscalId: "Tax ID",
+    fiscalId: "Tax ID (IF)",
+    tp: "Business tax (TP)",
     email: "Email",
   },
   sections: [
@@ -97,29 +99,62 @@ export const en: TermsCopy = {
       id: "garantie",
       title: "9. Warranties",
       paragraphs: [
-        "Every phone has a 3-month shop warranty from delivery. It covers malfunctions. It doesn't cover damage from a fall, a knock, water or moisture, or a phone opened or repaired elsewhere. During the warranty we repair the phone or, if that isn't possible, exchange or refund it.",
-        "New phones also have the maker's 1-year warranty.",
-        "These warranties come on top of the legal warranty against hidden defects (articles 549 and following of the Dahir of obligations and contracts), which always applies.",
+        "The legal warranty against hidden defects (law no. 31-08 and articles 549 to 575 of the Dahir of obligations and contracts) always applies. A claim can be made within one year of delivery, and this can't be shortened by contract.",
+        "On top of it, EZ ELECTRO ZAKI gives a commercial warranty, from delivery:",
+      ],
+      list: [
+        "used phones bought on the site: 3 months, for malfunctions in normal use (except cosmetic defects stated at sale);",
+        "new phones: 12 months, for manufacturing defects in normal use;",
+        "accessories: 7 days, replaced with the same item on showing the invoice, no repair.",
+      ],
+    },
+    {
+      id: "garantie-conditions",
+      title: "10. Warranty conditions",
+      paragraphs: [
+        "The warranty is personal, linked to the IMEI or serial number on the invoice, and can't be transferred to someone else.",
+        "Battery: its health is given for information, read by software on the day of sale. The natural loss of capacity from charge cycles is normal wear, not covered. Only an abnormal fault, such as swelling or a sudden shutdown while the charge is above 30%, is covered during the warranty.",
+        "Accounts and locks: before shipping a used phone, we remove and check its linked accounts (Apple ID, iCloud, Find My, Activation Lock; Google account and FRP; Samsung account; Xiaomi account). Check on delivery that no lock is active. Problems from accounts or actions added after the sale aren't covered by the commercial warranty.",
+      ],
+    },
+    {
+      id: "exclusions",
+      title: "11. What the warranty doesn't cover",
+      paragraphs: ["The commercial warranty doesn't cover:"],
+      list: [
+        "accidental damage: a fall, a knock, a cracked or broken screen, a bent frame, liquids (water, moisture, sweat), oxidation or corrosion;",
+        "unauthorised work: opening or parts replaced by an unapproved third party, hardware changes, bootloader unlocking, root or jailbreak;",
+        "misuse: incompatible or uncertified chargers, cables or adapters, use against the maker's advice, malware installed by the customer;",
+        "normal wear: the battery's natural decline, worn buttons, ports and materials, scratches from use, and loss or theft.",
+      ],
+    },
+    {
+      id: "sav",
+      title: "12. Using the warranty (after-sales)",
+      paragraphs: [
+        "Contact us with your order reference, then bring the phone and its invoice to the shop in Meknès. If you live elsewhere, we arrange shipping with Ameex: if the fault is covered by the warranty, we pay the shipping both ways.",
+        "A first diagnosis is made within 48 working hours (longer if a technical difficulty requires it; we tell you). Our decision is given in writing: repair, standard exchange, or a refusal explained by a technical report, with the expected repair time. If the fault isn't covered, we offer a quote, and sending the phone back is then at your cost.",
+        "The phone is returned with an after-sales return slip. The warranty is extended by the time spent in the workshop.",
       ],
     },
     {
       id: "reclamations",
-      title: "10. Questions and complaints",
+      title: "13. Questions and complaints",
       paragraphs: [
-        "For any question or complaint, message us on WhatsApp, call us or come to the shop, with your order reference. We always look for an amicable solution first.",
+        "For any question or complaint, message us on WhatsApp, call +212 6 67 65 44 30 or come to the shop, with your order reference. We handle every complaint in good faith and as quickly as we can, looking for an amicable solution first.",
       ],
     },
     {
       id: "donnees",
-      title: "11. Your personal data",
+      title: "14. Your personal data",
       paragraphs: [
-        "We use your name, phone, address and, where relevant, your advance receipt only to handle and deliver your order and provide the warranty. They are passed to the courier (Ameex) for delivery, and are never sold or given away.",
-        "Under law no. 09-08, you can ask to see, correct or delete your data by contacting us.",
+        "We use your name, phone, address and, where relevant, your advance receipt only to handle and deliver your order and provide the warranty. They are passed to the courier (Ameex) for delivery, and are never sold or given away. Under law no. 09-08, you can ask to see, correct or delete your data by contacting us.",
+        "Before leaving a phone with us for after-sales, back up your data and, if you can, remove it and sign out of your accounts. Diagnosis or repair may need a factory reset: we can't guarantee your data is kept and can't be held responsible for its loss.",
       ],
     },
     {
       id: "droit",
-      title: "12. Applicable law",
+      title: "15. Applicable law",
       paragraphs: [
         "These terms are governed by Moroccan law. In a dispute, if no amicable agreement is found, the competent Moroccan courts may hear it.",
       ],

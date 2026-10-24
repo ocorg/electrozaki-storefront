@@ -343,7 +343,7 @@ export const ar: Dictionary = {
       used ? `${name} مستعمل، ${condition} - ${price}` : condition ? `${name} جديد - ${price}` : `${name} - ${price}`,
     metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
       `${name}${used ? " مستعمل" : condition ? " جديد" : ""}${used && condition ? ` (${condition})` : ""} بـ ${price} عند إلكترو زكي، مكناس. ${
-        used ? "الحالة والبطارية والقطع معروضة، ضمان 3 أشهر. " : condition ? "جديد ومغلق، ضمان 3 أشهر. " : ""
+        used ? "الحالة والبطارية والقطع معروضة، ضمان 3 أشهر. " : condition ? "جديد ومغلق، ضمان 12 شهرًا. " : ""
       }التوصيل إلى جميع أنحاء المغرب.`,
   },
 
@@ -452,7 +452,7 @@ export const ar: Dictionary = {
     newEyebrow: "هاتف جديد",
     newTitle: "جديد ومختوم.",
     newIntro: "يصلك في علبته الأصلية، لم تُفتح ولم يُفعَّل.",
-    newItems: ["علبة مختومة، لم يُفعَّل قط", "رقم IMEI مفحوص وغير محظور", "ضمان الشركة المصنعة سنة واحدة", "ضمان المتجر 3 أشهر"],
+    newItems: ["علبة مختومة، لم يُفعَّل قط", "رقم IMEI مفحوص وغير محظور", "ضمان المتجر 12 شهرًا", "التوصيل إلى جميع أنحاء المغرب"],
   },
 
   orderTracking: {

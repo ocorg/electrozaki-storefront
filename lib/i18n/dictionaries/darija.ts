@@ -325,7 +325,7 @@ export const darija: Dictionary = {
       used ? `${name} mosta3mal, ${condition} - ${price}` : condition ? `${name} jdid - ${price}` : `${name} - ${price}`,
     metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
       `${name}${used ? " mosta3mal" : condition ? " jdid" : ""}${used && condition ? ` (${condition})` : ""} b ${price} 3nd Electro Zaki, Mknas. ${
-        used ? "L7ala, l batterie w l pièces bayna, garantie 3 chhour. " : condition ? "Jdid, msdoud, garantie 3 chhour. " : ""
+        used ? "L7ala, l batterie w l pièces bayna, garantie 3 chhour. " : condition ? "Jdid, msdoud, garantie 12 chhar. " : ""
       }Livraison l ga3 lmghrib.`,
   },
 
@@ -434,7 +434,7 @@ export const darija: Dictionary = {
     newEyebrow: "Téléphone jdid",
     newTitle: "Jdid, msdoud.",
     newIntro: "Kaywslek f la boîte dyalo l asliya, 3emmerha ma tt7ellat wla tactiva.",
-    newItems: ["Boîte msdouda, 3emmro ma tactiva", "IMEI mchouf, machi bloqué", "Garantie dyal la marque 1 3am", "Garantie dyal l7anout 3 chhour"],
+    newItems: ["Boîte msdouda, 3emmro ma tactiva", "IMEI mchouf, machi bloqué", "Garantie dyal l7anout 12 chhar", "Livraison l ga3 lmghrib"],
   },
 
   orderTracking: {

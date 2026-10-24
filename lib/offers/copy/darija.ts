@@ -153,7 +153,7 @@ export const darija: OfferCopy = {
     },
     warranty: {
       q: "Wach téléphone fih garantie?",
-      a: "Ah, kol téléphone fih garantie dyal 3 chhour. Les conditions dyalha kan9oulouhom lik f l'appel dyal confirmation.",
+      a: "Ah: 3 chhor l téléphone mosta3mel, w 12 chhar l téléphone jdid. Katghetti l-pannes f l-isti3mal l-3adi (machi t-tkesser wla l-ma). Ila kont sakn barra Meknès, ssift dyal panne dakhla f l-garantie 3lina. Kolchi mktoub f chorout dyal lbi3.",
     },
     shop: {
       q: "Wach n9der nchoufo f l7anout?",
@@ -192,7 +192,7 @@ export const darija: OfferCopy = {
     metaTitle: (name: string, from: string, isNew: boolean) => `${name} ${isNew ? "jdid" : "mosta3mal"} f Mknas, men ${from}`,
     metaDescription: (name: string, from: string, isNew: boolean) =>
       isNew
-        ? `${name} jdid kayn f Mknas men ${from}: msdoud, garantie 3 chhour, livraison l ga3 lmghrib.`
+        ? `${name} jdid kayn f Mknas men ${from}: msdoud, garantie 12 chhar, livraison l ga3 lmghrib.`
         : `${name} mosta3mal kayn f Mknas men ${from}: l7ala, l batterie w l pièces bayna l kol téléphone, garantie 3 chhour, livraison l ga3 lmghrib.`,
     eyebrow: "Electro Zaki · Kayn f Mknas",
     title: (name: string, isNew: boolean) => `${name} ${isNew ? "jdid" : "mosta3mal"}`,

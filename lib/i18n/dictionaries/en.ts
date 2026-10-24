@@ -339,7 +339,7 @@ export const en: Dictionary = {
       used ? `Used ${name}, ${condition?.toLowerCase()} - ${price}` : condition ? `New ${name} - ${price}` : `${name} - ${price}`,
     metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
       `${used ? "Used " : condition ? "New " : ""}${name}${used && condition ? ` (${condition.toLowerCase()})` : ""} for ${price} at Electro Zaki, Meknes. ${
-        used ? "Condition, battery and parts shown, 3-month warranty. " : condition ? "New, sealed, 3-month warranty. " : ""
+        used ? "Condition, battery and parts shown, 3-month warranty. " : condition ? "New, sealed, 12-month warranty. " : ""
       }Delivery anywhere in Morocco.`,
   },
 
@@ -448,7 +448,7 @@ export const en: Dictionary = {
     newEyebrow: "New phone",
     newTitle: "New and sealed.",
     newIntro: "It reaches you in its original box, never opened or activated.",
-    newItems: ["Sealed box, never activated", "IMEI checked, not blocked", "1-year manufacturer warranty", "3-month shop warranty"],
+    newItems: ["Sealed box, never activated", "IMEI checked, not blocked", "12-month shop warranty", "Delivery anywhere in Morocco"],
   },
 
   orderTracking: {

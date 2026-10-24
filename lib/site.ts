@@ -21,11 +21,13 @@ export const SHOP = {
  * (registre de commerce, ICE, identifiant fiscal), never with examples.
  */
 export const LEGAL = {
+  legalName: "EZ ELECTRO ZAKI",
   tradeName: "Electro Zaki",
   address: "Boulevard Al Massira Al Khadra, Ouislane, Meknès (en face de la station de taxis Hamirya)",
-  rc: null as string | null,
-  ice: null as string | null,
-  fiscalId: null as string | null,
+  rc: "102816 (Meknès)" as string | null,
+  ice: "002533374000004" as string | null,
+  fiscalId: "45725467" as string | null,
+  tp: "17202369" as string | null,
   email: null as string | null,
 };
 
