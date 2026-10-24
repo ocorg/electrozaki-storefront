@@ -233,6 +233,9 @@ export default async function ProductPage({ params }: Props) {
   };
 
   const inStock = product.availability === "IN_STOCK";
+  // Google refuses a product without a picture: its photos, else its
+  // colours' photos, else the generated one (name on the shop's colours).
+  const ldImages = [...new Set([...product.images.map((i) => i.url), ...product.variants.flatMap((v) => (v.imageUrl ? [v.imageUrl] : []))])];
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -250,7 +253,7 @@ export default async function ProductPage({ params }: Props) {
     sku: product.id,
     brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
     category: aisleName,
-    image: product.images.map((i) => absoluteUrl(i.url)),
+    image: ldImages.length ? ldImages.map(absoluteUrl) : [absoluteUrl(`/feeds/product-image/${product.slug}`)],
     url: absoluteUrl(localePath(locale, `/products/${product.slug}`)),
     inLanguage: LOCALE_META[locale].htmlLang,
     offers: {

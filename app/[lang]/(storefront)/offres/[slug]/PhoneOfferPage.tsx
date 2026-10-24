@@ -131,6 +131,8 @@ export function PhoneOfferPage({
       { "@type": "ListItem", position: 3, name, item: absoluteUrl(localePath(locale, `/telephones/${offer.slug}`)) },
     ],
   };
+  // Google refuses a product without a picture (see the product page).
+  const ldImages = [...new Set([...offer.images.map((i) => i.url), ...offer.units.flatMap((u) => (u.imageUrl ? [u.imageUrl] : []))])];
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -140,7 +142,9 @@ export function PhoneOfferPage({
       mode === "model"
         ? c.model.metaDescription(name, formatMADText(offer.fromPrice), isNew)
         : c.meta.description(name, formatMADText(offer.fromPrice)),
-    image: offer.images.map((i) => absoluteUrl(i.url)),
+    image: ldImages.length
+      ? ldImages.slice(0, 10).map(absoluteUrl)
+      : offer.listingSlugs.slice(0, 1).map((slug) => absoluteUrl(`/feeds/product-image/${slug}`)),
     url,
     inLanguage: LOCALE_META[locale].htmlLang,
     offers: {
