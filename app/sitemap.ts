@@ -5,7 +5,7 @@ import { getAisles } from "@/lib/db/storefront";
 import { REPAIR_SLUGS } from "@/lib/repair-faq";
 import { LOCALES } from "@/lib/i18n/config";
 import { alternates } from "@/lib/i18n/seo";
-import { OPEN_PRODUCTS, absoluteUrl } from "@/lib/site";
+import { OPEN_PRODUCTS, TERMS_PATH, absoluteUrl } from "@/lib/site";
 import { getLiveOffers } from "@/lib/offers/live";
 import { getModelPages } from "@/lib/offers/phone-offers";
 import { GUIDE_SLUGS } from "@/lib/guides";
@@ -48,6 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...localized("/", { changeFrequency: "daily", priority: 1 }),
     ...localized("/reparation", { changeFrequency: "monthly", priority: 0.8 }),
     ...localized("/contact", { changeFrequency: "yearly", priority: 0.4 }),
+    ...localized(TERMS_PATH, { changeFrequency: "yearly", priority: 0.3 }),
     ...localized("/prix", { changeFrequency: "daily", priority: 0.7 }),
     ...localized("/offres", { changeFrequency: "daily", priority: 0.8 }),
     ...offers.filter((o) => !modelPromos.has(o.href)).flatMap((o) => localized(o.href, { changeFrequency: "daily", priority: 0.9 })),

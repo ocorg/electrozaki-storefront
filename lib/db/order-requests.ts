@@ -11,6 +11,8 @@ type OrderRequestInput = {
   requiresAdvance: boolean;
   receiptKey?: string;
   dataConsentAccepted: boolean;
+  /** the terms of sale were accepted (checked by the caller) */
+  termsAccepted: true;
   // Server-priced lines from priceCart() — never the browser's own prices.
   lines: PricedLine[];
   // Locked in at submission time — see the schema comment on OrderRequest.
@@ -74,6 +76,7 @@ export async function createOrderRequest(input: OrderRequestInput) {
         receiptKey: input.receiptKey,
         receiptUploadedAt: input.receiptKey ? new Date() : undefined,
         dataConsentAccepted: input.dataConsentAccepted,
+        termsAcceptedAt: new Date(),
         promoCodeId: input.promoCodeId,
         discountAmount,
         items: {

@@ -23,7 +23,7 @@ import { CONDITION_SCHEMA } from "@/lib/conditions";
 import { MAX_QTY } from "@/lib/db/cart-pricing";
 import { formatMAD, formatMADText } from "@/lib/format";
 import { CITIES } from "@/lib/delivery/cities.generated";
-import { JsonLd } from "@/lib/json-ld";
+import { JsonLd, returnPolicyJsonLd } from "@/lib/json-ld";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 import { LOCALE_META, localePath } from "@/lib/i18n/config";
 import { getLocale, getT } from "@/lib/i18n/server";
@@ -270,6 +270,7 @@ export default async function ProductPage({ params }: Props) {
             : "https://schema.org/OutOfStock",
       seller: { "@id": `${SITE_URL}/#store` },
       shippingDetails: SHIPPING_DETAILS,
+      hasMerchantReturnPolicy: returnPolicyJsonLd(locale),
     },
     ...reviewJsonLd(reviews),
   };

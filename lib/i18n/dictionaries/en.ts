@@ -48,6 +48,8 @@ export const en: Dictionary = {
   footer: {
     address: "Boulevard Al Massira Al Khadra, Ouislane, Meknes",
     findUs: "See the map",
+    terms: "Terms of sale",
+    returns: "7-day returns",
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
     blurbPhonesOnly: (city: string) =>
       `New and used phones and repairs in ${city}. Every used phone is sold with its condition and battery shown.`,
@@ -748,6 +750,7 @@ export const en: Dictionary = {
       address: "Add a few more details: at least 10 characters.",
       receipt: "Upload the receipt for your advance.",
       consent: "Tick the box to accept how your data is handled.",
+      terms: "Tick the box to accept the terms of sale.",
     },
     missingNames: {
       name: "your name",
@@ -756,6 +759,7 @@ export const en: Dictionary = {
       address: "your address",
       receipt: "the advance receipt",
       consent: "your consent",
+      terms: "your agreement to the terms of sale",
     },
     missing: (names: string[]) =>
       `Still missing: ${names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0]}.`,
@@ -835,6 +839,9 @@ export const en: Dictionary = {
     whyAdvanceText: "The deposit covers shipping costs and holds your phone for you until delivery.",
     consent:
       "I agree that my data and bank receipt are handled confidentially, in line with CNDP regulations.",
+    termsBefore: "I have read and accept the ",
+    termsLink: "terms of sale",
+    termsAfter: " (including the 7-day return right).",
     codTitle: "Cash on delivery",
     codText: "No deposit needed for an accessories order - you pay when it arrives.",
     sending: "Sending…",
@@ -1013,6 +1020,7 @@ export const en: Dictionary = {
     reviewTooLong: "Your review is too long (1000 characters max).",
     reviewNoLinks: "Links aren't accepted in reviews.",
     reviewNotDelivered: "You can review your order as soon as it has been delivered.",
+    terms: "Please accept the terms of sale to continue.",
   },
 
   specKeys: { "État": "Condition", Stockage: "Storage", RAM: "RAM" },

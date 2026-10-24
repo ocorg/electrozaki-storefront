@@ -28,6 +28,7 @@ type SubmitInput = {
   notes?: string;
   receipt?: { key: string; token: string };
   dataConsentAccepted: boolean;
+  termsAccepted: boolean;
   promoCode?: string;
 };
 
@@ -87,6 +88,7 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
     requiresAdvance: cart.requiresAdvance,
     receiptKey,
     dataConsentAccepted: input.dataConsentAccepted === true,
+    termsAccepted: input.termsAccepted === true,
   });
   if (!parsed.success) {
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Certains champs sont invalides." };
@@ -115,6 +117,7 @@ export async function submitOrderRequest(input: SubmitInput): Promise<SubmitResu
       requiresAdvance: parsed.data.requiresAdvance,
       receiptKey: parsed.data.receiptKey,
       dataConsentAccepted: parsed.data.dataConsentAccepted,
+      termsAccepted: parsed.data.termsAccepted,
       promoCodeId,
       discountAmount,
       lines: cart.lines,

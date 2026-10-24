@@ -49,6 +49,8 @@ export const ar: Dictionary = {
   footer: {
     address: "شارع المسيرة الخضراء، ويسلان، مكناس",
     findUs: "شاهد الخريطة",
+    terms: "شروط البيع",
+    returns: "الإرجاع خلال 7 أيام",
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
     blurbPhonesOnly: (city: string) =>
       `هواتف جديدة ومستعملة وإصلاح في ${city}. كل هاتف مستعمل يُباع مع عرض حالته وبطاريته.`,
@@ -751,6 +753,7 @@ export const ar: Dictionary = {
       address: "أضف تفاصيل أكثر: 10 أحرف على الأقل.",
       receipt: "ارفع وصل التسبيق.",
       consent: "ضع علامة في الخانة لقبول معالجة بياناتك.",
+      terms: "ضع علامة في الخانة لقبول شروط البيع.",
     },
     missingNames: {
       name: "اسمك",
@@ -759,6 +762,7 @@ export const ar: Dictionary = {
       address: "عنوانك",
       receipt: "وصل التسبيق",
       consent: "موافقتك",
+      terms: "موافقتك على شروط البيع",
     },
     missing: (names: string[]) => `ما زال ينقص: ${names.join("، ")}.`,
     progress: (done: number, total: number) => (done === total ? "كل شيء جاهز!" : `${done} من ${total} معلومات`),
@@ -836,6 +840,9 @@ export const ar: Dictionary = {
     whyAdvance: "لماذا هذا التسبيق؟",
     whyAdvanceText: "يغطي هذا التسبيق مصاريف الشحن ويضمن حجز هاتفك طوال مدة التوصيل.",
     consent: "أوافق على معالجة بياناتي ووصل التحويل البنكي بسرية، وفقًا لقوانين CNDP.",
+    termsBefore: "قرأت وأوافق على ",
+    termsLink: "الشروط العامة للبيع",
+    termsAfter: " (بما فيها حق الإرجاع خلال 7 أيام).",
     codTitle: "الدفع عند الاستلام",
     codText: "لا حاجة لتسبيق في طلبات الإكسسوارات - تدفع عند الاستلام.",
     sending: "جارٍ الإرسال…",
@@ -1014,6 +1021,7 @@ export const ar: Dictionary = {
     reviewTooLong: "رأيك طويل جدًا (1000 حرف كحد أقصى).",
     reviewNoLinks: "لا نقبل الروابط في الآراء.",
     reviewNotDelivered: "يمكنك إبداء رأيك بمجرد توصيل طلبك.",
+    terms: "المرجو الموافقة على الشروط العامة للبيع للمتابعة.",
   },
 
   specKeys: { "État": "الحالة", Stockage: "السعة", RAM: "الذاكرة RAM" },

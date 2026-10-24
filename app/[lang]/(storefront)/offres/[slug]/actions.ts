@@ -38,6 +38,8 @@ const OFFER_ENDED = "Cette offre n'est plus disponible.";
 const UNIT_GONE = "Ce téléphone vient d'être réservé. Merci d'en choisir un autre.";
 const ADVANCE = 300;
 
+const TERMS_REQUIRED = "Merci d'accepter les conditions générales de vente pour continuer.";
+
 const contactSchema = z.object({
   customerName: z.string().trim().min(2, "Merci d'indiquer votre nom complet.").max(120),
   customerPhone: z.string().trim().regex(MOROCCAN_PHONE_RE, "Numéro de téléphone invalide (ex: 06XXXXXXXX)."),
@@ -55,6 +57,8 @@ type OrderInput = {
   customerName: string;
   customerPhone: string;
   deliveryCity: string;
+  /** "j'accepte les conditions générales de vente" ticked */
+  termsAccepted: boolean;
 };
 
 type Result = { ok: true; reference: string; whatsappUrl: string } | { ok: false; error: string };
@@ -64,6 +68,8 @@ export async function submitOfferOrder(input: OrderInput): Promise<Result> {
   // per-connection allowance, which many mobile customers share.
   const contact = contactSchema.safeParse({ customerName: input.customerName, customerPhone: input.customerPhone });
   if (!contact.success) return { ok: false, error: contact.error.issues[0]?.message ?? "Champs invalides." };
+
+  if (input.termsAccepted !== true) return { ok: false, error: TERMS_REQUIRED };
 
   const city = findCity(String(input.deliveryCity ?? ""));
   if (!city) return { ok: false, error: "Merci de choisir votre ville de livraison dans la liste." };
@@ -127,8 +133,9 @@ export async function submitOfferOrder(input: OrderInput): Promise<Result> {
     notes: `${kind === "model" ? "Page modèle" : "Promo"} ${offer.name} (${pagePath}). Adresse exacte à prendre lors de l'appel de confirmation. Avance de ${ADVANCE} DH à régler avant expédition.`,
     // A phone: the advance applies. No receipt yet: it's arranged on the call.
     requiresAdvance: true,
-    // The form says the customer will be called to confirm; nothing else is stored.
+    // The box covers the terms of sale and their personal-data section.
     dataConsentAccepted: true,
+    termsAccepted: true,
     lines: priced,
     delivery,
     landingPageId: kind === "model" ? undefined : ((brandPage ? brandPage.pageId : offer.pageId) ?? undefined),

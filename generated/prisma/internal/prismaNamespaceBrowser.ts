@@ -278,6 +278,7 @@ export const OrderRequestScalarFieldEnum = {
   receiptUrl: 'receiptUrl',
   receiptUploadedAt: 'receiptUploadedAt',
   dataConsentAccepted: 'dataConsentAccepted',
+  termsAcceptedAt: 'termsAcceptedAt',
   promoCodeId: 'promoCodeId',
   discountAmount: 'discountAmount',
   landingPageId: 'landingPageId',

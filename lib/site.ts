@@ -15,6 +15,24 @@ export const SHOP = {
   geo: { latitude: 33.9135509, longitude: -5.4851789 },
 } as const;
 
+/**
+ * The seller's legal identity, shown on the terms of sale (law 31-08, art.
+ * 29). Numbers left null aren't shown: fill them in from the shop's papers
+ * (registre de commerce, ICE, identifiant fiscal), never with examples.
+ */
+export const LEGAL = {
+  tradeName: "Electro Zaki",
+  address: "Boulevard Al Massira Al Khadra, Ouislane, Meknès (en face de la station de taxis Hamirya)",
+  rc: null as string | null,
+  ice: null as string | null,
+  fiscalId: null as string | null,
+  email: null as string | null,
+};
+
+/** The terms of sale page; its returns section is at #retours. */
+export const TERMS_PATH = "/conditions-de-vente";
+export const RETURN_DAYS = 7;
+
 /** The shop's social pages (footer, contact page, structured data). */
 export const SOCIAL = {
   facebook: "https://www.facebook.com/profile.php?id=61553990252782",

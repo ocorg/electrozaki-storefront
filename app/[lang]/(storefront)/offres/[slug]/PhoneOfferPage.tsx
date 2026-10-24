@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { JsonLd } from "@/lib/json-ld";
+import { JsonLd, returnPolicyJsonLd } from "@/lib/json-ld";
 import { LOCALE_META, localePath, type Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { alternates } from "@/lib/i18n/seo";
@@ -157,6 +157,7 @@ export function PhoneOfferPage({
       itemCondition: isNew ? "https://schema.org/NewCondition" : "https://schema.org/UsedCondition",
       availability: "https://schema.org/InStock",
       seller: { "@id": `${SITE_URL}/#store` },
+      hasMerchantReturnPolicy: returnPolicyJsonLd(locale),
     },
     ...reviewJsonLd(reviews),
   };

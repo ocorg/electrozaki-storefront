@@ -1,5 +1,5 @@
 import { createElement } from "react";
-import { SHOP, SITE_URL, SOCIAL, WHATSAPP_URL, absoluteUrl } from "@/lib/site";
+import { RETURN_DAYS, SHOP, SITE_URL, SOCIAL, TERMS_PATH, WHATSAPP_URL, absoluteUrl } from "@/lib/site";
 import { LOCALE_META, localePath, type Locale } from "@/lib/i18n/config";
 
 // schema.org structured data (Google rich results): the store itself on
@@ -14,6 +14,25 @@ export function JsonLd({ data }: { data: Json | Json[] }) {
     type: "application/ld+json",
     dangerouslySetInnerHTML: { __html: JSON.stringify(data).replace(/</g, "\\u003c") },
   });
+}
+
+/**
+ * The 7-day return right (law 31-08), for Google's merchant listings: by
+ * post (Ameex) or at the shop, return shipping paid by the customer, full
+ * refund. The terms of sale explain it (#retours).
+ */
+export function returnPolicyJsonLd(locale: Locale): Json {
+  return {
+    "@type": "MerchantReturnPolicy",
+    applicableCountry: "MA",
+    returnPolicyCountry: "MA",
+    returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+    merchantReturnDays: RETURN_DAYS,
+    returnMethod: ["https://schema.org/ReturnByMail", "https://schema.org/ReturnInStore"],
+    returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
+    refundType: "https://schema.org/FullRefund",
+    merchantReturnLink: absoluteUrl(`${localePath(locale, TERMS_PATH)}#retours`),
+  };
 }
 
 export function storeJsonLd(locale: Locale): Json {
@@ -45,6 +64,7 @@ export function storeJsonLd(locale: Locale): Json {
     areaServed: { "@type": "Country", name: "Maroc" },
     currenciesAccepted: "MAD",
     paymentAccepted: "Cash, Bank transfer",
+    hasMerchantReturnPolicy: returnPolicyJsonLd(locale),
   };
 }
 

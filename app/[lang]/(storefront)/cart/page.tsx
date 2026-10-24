@@ -8,6 +8,7 @@ import { AlertCircle, Check, MessageCircle, Phone, ShoppingBag, Tag, Truck, Wall
 import { useCart } from "@/components/cart/CartContext";
 import { formatMAD } from "@/lib/format";
 import { submitOrderRequest, confirmWhatsAppOpened, applyPromoCode } from "./actions";
+import { TermsCheckbox } from "@/components/cart/TermsCheckbox";
 import { ReceiptUpload, type UploadedReceipt } from "@/components/cart/ReceiptUpload";
 import { PaymentAccounts } from "@/components/cart/PaymentAccounts";
 import { CheckoutJourney } from "@/components/cart/CheckoutJourney";
@@ -27,7 +28,7 @@ type Confirmation = { orderRequestId: string; whatsappUrl: string };
 // What each step needs before the customer may move on. The server checks
 // the same rules again (lib/validation.ts); these only say so earlier.
 type DeliveryField = "name" | "phone" | "city" | "address";
-type PaymentField = "receipt" | "consent";
+type PaymentField = "receipt" | "consent" | "terms";
 
 const inputClass = (invalid: boolean) =>
   `min-h-12 w-full rounded-xl border bg-white px-3.5 text-[15px] transition-colors focus:outline-none focus:ring-2 ${
@@ -50,6 +51,7 @@ export default function CartPage() {
 
   const [receipt, setReceipt] = useState<UploadedReceipt | null>(null);
   const [dataConsentAccepted, setDataConsentAccepted] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   // Missing information is pointed out only once the customer tries to go on.
   const [triedDelivery, setTriedDelivery] = useState(false);
@@ -90,6 +92,7 @@ export default function CartPage() {
   const paymentChecks: Record<PaymentField, boolean> = {
     receipt: !requiresAdvance || Boolean(receipt),
     consent: !requiresAdvance || dataConsentAccepted,
+    terms: termsAccepted,
   };
   const missingDelivery = (Object.keys(deliveryChecks) as DeliveryField[]).filter((f) => !deliveryChecks[f]);
   const missingPayment = (Object.keys(paymentChecks) as PaymentField[]).filter((f) => !paymentChecks[f]);
@@ -154,6 +157,7 @@ export default function CartPage() {
       notes: notes || undefined,
       receipt: receipt ?? undefined,
       dataConsentAccepted,
+      termsAccepted,
       promoCode: appliedPromo?.code,
     }).catch(() => null);
 
@@ -585,6 +589,22 @@ export default function CartPage() {
               <p className="mt-1 text-sm text-neutral-700">{c.codText}</p>
             </div>
           )}
+
+          {/* The terms of sale, accepted before every order (law 31-08). */}
+          <div
+            ref={(el) => {
+              fieldRefs.current.terms = el;
+            }}
+            className="scroll-mt-28"
+          >
+            <TermsCheckbox
+              id="checkout-terms"
+              checked={termsAccepted}
+              onChange={setTermsAccepted}
+              invalid={showPaymentError("terms")}
+            />
+            {showPaymentError("terms") && <FieldError id="checkout-terms-error">{k.errors.terms}</FieldError>}
+          </div>
 
           <div aria-live="polite">
             {triedPayment && missingPayment.length > 0 && (

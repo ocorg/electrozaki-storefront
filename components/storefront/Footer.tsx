@@ -2,7 +2,7 @@ import { MapPin, MessageCircle } from "lucide-react";
 import Link from "@/components/i18n/Link";
 import { AnchorButton } from "@/components/ui/Button";
 import { SocialLinks } from "@/components/storefront/SocialLinks";
-import { ACCESSORIES_OPEN, SHOP, WHATSAPP_URL } from "@/lib/site";
+import { ACCESSORIES_OPEN, SHOP, TERMS_PATH, WHATSAPP_URL } from "@/lib/site";
 import { getT } from "@/lib/i18n/server";
 import { categoryName } from "@/lib/i18n/labels";
 import type { AisleStat } from "@/lib/db/storefront";
@@ -48,6 +48,8 @@ export async function Footer({ aisles }: { aisles: AisleStat[] }) {
               <li><Link href="/guides" className={linkClass}>{t.common.guides}</Link></li>
               <li><Link href="/contact" className={linkClass}>{t.common.contact}</Link></li>
               <li><Link href="/cart" className={linkClass}>{t.common.myCart}</Link></li>
+              <li><Link href={`${TERMS_PATH}#retours`} className={linkClass}>{t.footer.returns}</Link></li>
+              <li><Link href={TERMS_PATH} className={linkClass}>{t.footer.terms}</Link></li>
             </ul>
           </div>
 

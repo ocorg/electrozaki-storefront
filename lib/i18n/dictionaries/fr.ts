@@ -50,6 +50,8 @@ export const fr = {
   footer: {
     address: "Boulevard Al Massira Al Khadra, Ouislane, Meknès",
     findUs: "Voir le plan",
+    terms: "Conditions de vente",
+    returns: "Retours sous 7 jours",
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
     blurbPhonesOnly: (city: string) =>
       `Téléphones neufs et d'occasion et réparation à ${city}. Chaque téléphone d'occasion est vendu avec son état et sa batterie affichés.`,
@@ -736,6 +738,7 @@ export const fr = {
       address: "Ajoutez un peu plus de détails : au moins 10 caractères.",
       receipt: "Déposez le reçu de votre avance.",
       consent: "Cochez la case pour accepter le traitement de vos données.",
+      terms: "Cochez la case pour accepter les conditions de vente.",
     },
     missingNames: {
       name: "votre nom",
@@ -744,6 +747,7 @@ export const fr = {
       address: "votre adresse",
       receipt: "le reçu de l'avance",
       consent: "votre accord",
+      terms: "votre accord aux conditions de vente",
     } as Record<string, string>,
     missing: (names: string[]) =>
       `Il manque encore ${names.length > 1 ? `${names.slice(0, -1).join(", ")} et ${names[names.length - 1]}` : names[0]}.`,
@@ -824,6 +828,9 @@ export const fr = {
       "Cette avance couvre les frais logistiques et garantit la réservation de votre téléphone le temps de la livraison.",
     consent:
       "J'accepte que mes données et mon reçu bancaire soient traités de manière confidentielle, conformément à la réglementation CNDP.",
+    termsBefore: "J'ai lu et j'accepte les ",
+    termsLink: "conditions générales de vente",
+    termsAfter: " (dont le droit de retour de 7 jours).",
     codTitle: "Paiement à la livraison",
     codText: "Aucune avance requise pour une commande d'accessoires - vous payez à la réception.",
     sending: "Envoi…",

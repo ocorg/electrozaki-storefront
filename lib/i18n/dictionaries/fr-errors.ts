@@ -50,4 +50,5 @@ export const errors = {
   reviewTooLong: "Votre avis est trop long (1000 caractères maximum).",
   reviewNoLinks: "Les liens ne sont pas acceptés dans les avis.",
   reviewNotDelivered: "Vous pourrez donner votre avis dès que votre commande sera livrée.",
+  terms: "Merci d'accepter les conditions générales de vente pour continuer.",
 };

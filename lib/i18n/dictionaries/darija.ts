@@ -51,6 +51,8 @@ export const darija: Dictionary = {
   footer: {
     address: "Boulevard Al Massira Al Khadra, Ouislane, Mknas",
     findUs: "Chouf lkharita",
+    terms: "Chorout dyal lbi3",
+    returns: "Retour f 7 iyam",
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
     blurbPhonesOnly: (city: string) =>
       `Tilifounat jdad w mosta3mlin w tasli7 f ${city}. Kol téléphone mosta3mel kaytba3 w l7ala w l batterie dyalo bayna.`,
@@ -733,6 +735,7 @@ export const darija: Dictionary = {
       address: "Zid chwiya d tafassil: 10 7orouf 3la l a9al.",
       receipt: "7ett l reçu dyal l avance.",
       consent: "Coché l case bach twafe9 3la l mo3alaja dyal l ma3loumat dyalek.",
+      terms: "Coché l case bach twafe9 3la chorout dyal lbi3.",
     },
     missingNames: {
       name: "smitek",
@@ -741,6 +744,7 @@ export const darija: Dictionary = {
       address: "l adresse dyalek",
       receipt: "l reçu dyal l avance",
       consent: "l mowafa9a dyalek",
+      terms: "l mowafa9a dyalek 3la chorout dyal lbi3",
     },
     missing: (names: string[]) => `Mazal khass: ${names.join(", ")}.`,
     progress: (done: number, total: number) => (done === total ? "Kolchi wajed!" : `${done} men ${total} ma3loumat`),
@@ -818,6 +822,9 @@ export const darija: Dictionary = {
     whyAdvance: "3lach had l3arboun?",
     whyAdvanceText: "Had l3arboun kaygetti masarif l livraison w kay7jez lik téléphone 7tal iwslek.",
     consent: "Mwafe9 belli les données dyali w l reçu dyal banque ytkhdmo b sirriya, 7sab l9anoun dyal CNDP.",
+    termsBefore: "9rit w kanwafe9 3la ",
+    termsLink: "chorout 3amma dyal lbi3",
+    termsAfter: " (fihom 7a99 r-retour f 7 iyam).",
     codTitle: "Khlles mnin twslek",
     codText: "Ta 3arboun ma khass f commande dyal accessoires - katkhlles mnin twslek.",
     sending: "Kansifto…",
@@ -996,6 +1003,7 @@ export const darija: Dictionary = {
     reviewTooLong: "L'avis dyalek twil bzzaf (1000 7arf max).",
     reviewNoLinks: "Ma kanqblouch les liens f les avis.",
     reviewNotDelivered: "Tqder t3ti ra2yek ghir ila wslatek la commande.",
+    terms: "3afak wafe9 3la chorout dyal lbi3 bach tkemmel.",
   },
 
   specKeys: { "État": "L7ala", Stockage: "Stockage", RAM: "RAM" },

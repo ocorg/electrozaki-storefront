@@ -26,6 +26,8 @@ export const orderRequestSchema = z.object({
   // Already verified against its server signature by the action.
   receiptKey: z.string().max(200).optional(),
   dataConsentAccepted: z.boolean(),
+  // The terms of sale, ticked before every order (law 31-08, art. 30).
+  termsAccepted: z.literal(true, { error: "Merci d'accepter les conditions générales de vente pour continuer." }),
 }).refine((data) => !data.requiresAdvance || data.dataConsentAccepted, {
   message: "Merci d'accepter le traitement de vos données pour continuer.",
   path: ["dataConsentAccepted"],

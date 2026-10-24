@@ -40,6 +40,7 @@ import { STORAGE_SLOT, type SpecRow } from "@/lib/offers/spec-row";
 import { track } from "@/components/analytics/track";
 import { metaTrack } from "@/components/analytics/meta";
 import { submitOfferOrder } from "./actions";
+import { TermsCheckbox } from "@/components/cart/TermsCheckbox";
 
 const ADVANCE = 300;
 
@@ -196,6 +197,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
   const [city, setCity] = useState<string | null>(null);
   const [customer, setCustomer] = useState("");
   const [phone, setPhone] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // What's missing, shown right at the field the page scrolls to.
@@ -280,7 +282,9 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
           ? [copy.needName, "offer-name"]
           : !phone.trim()
             ? [copy.needPhone, "offer-phone"]
-            : null;
+            : !termsAccepted
+              ? [t.checkout.errors.terms, "offer-terms"]
+              : null;
     if (missing) {
       setMissingAt({ id: missing[1], text: missing[0] });
       const el = document.getElementById(missing[1]);
@@ -302,6 +306,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
         customerName: customer,
         customerPhone: phone,
         deliveryCity: city,
+        termsAccepted,
       });
       if (r.ok) {
         // Counted in the ERP's sales funnel like an add to cart (this page has no cart).
@@ -678,6 +683,20 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                   <Phone size={16} aria-hidden className="mt-0.5 flex-none text-gold-deep" />
                   {copy.callNote}
                 </p>
+              </div>
+
+              {/* The terms of sale, accepted before ordering (law 31-08). */}
+              <div className="mt-4 scroll-mt-28">
+                {missingAt?.id === "offer-terms" && <MissingHint text={missingAt.text} />}
+                <TermsCheckbox
+                  id="offer-terms"
+                  checked={termsAccepted}
+                  onChange={(v) => {
+                    setTermsAccepted(v);
+                    setMissingAt(null);
+                  }}
+                  invalid={missingAt?.id === "offer-terms"}
+                />
               </div>
 
               {error && (
