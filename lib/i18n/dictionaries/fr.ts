@@ -557,6 +557,15 @@ export const fr = {
     noneBefore: "Aucun résultat. Essayez un autre terme, ou",
     contactWhatsapp: "contactez-nous sur WhatsApp",
     refine: "Affinez avec les filtres :",
+    notInStock: (q: string) => `« ${q} » n'est pas en stock en ce moment.`,
+    notInStockText: "Le stock change chaque semaine. Écrivez-nous : on vous prévient dès qu'il arrive.",
+    notifyMe: "Prévenez-moi sur WhatsApp",
+    waNotify: (q: string) => `Bonjour, je cherche : ${q}. Pouvez-vous me prévenir quand il arrive ?`,
+    closest: (q: string) => `Les plus proches en stock (« ${q} ») :`,
+    shopOnlyTitle: "Les accessoires se vendent en boutique pour l'instant.",
+    shopOnlyText: "Coques, pochettes, verres trempés, chargeurs : demandez-nous sur WhatsApp, on vous envoie les photos et les prix.",
+    askShop: "Demander sur WhatsApp",
+    waShopOnly: (q: string) => `Bonjour, je cherche : ${q}. Qu'avez-vous en boutique ?`,
   },
 
   notFound: {

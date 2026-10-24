@@ -556,6 +556,15 @@ export const darija: Dictionary = {
     noneBefore: "Walou. Jreb kelma khra, wla",
     contactWhatsapp: "kteb lina f WhatsApp",
     refine: "Ster b les filtres:",
+    notInStock: (q: string) => `« ${q} » ma kaynch daba f stock.`,
+    notInStockText: "Stock kaytbddel kol simana. Kteb lina w n3lmok ghir ywsel.",
+    notifyMe: "3lmni f WhatsApp",
+    waNotify: (q: string) => `Salam, kanqelleb 3la: ${q}. Tqdro t3lmoni mli ywsel?`,
+    closest: (q: string) => `Lqrab li kayn f stock (« ${q} »):`,
+    shopOnlyTitle: "Les accessoires kaytbaw3o f l7anout daba.",
+    shopOnlyText: "Coques, pochettes, verre trempé, chargeurs: swlna f WhatsApp w nsiftolek les photos w les prix.",
+    askShop: "Swl f WhatsApp",
+    waShopOnly: (q: string) => `Salam, kanqelleb 3la: ${q}. Chno 3ndkom f l7anout?`,
   },
 
   notFound: {

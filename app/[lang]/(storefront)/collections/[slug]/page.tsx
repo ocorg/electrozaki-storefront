@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { MessageCircle } from "lucide-react";
 import Link from "@/components/i18n/Link";
-import { getProductsByCategorySlug, getCategoryFilterOptions } from "@/lib/db/public-products";
+import { getProductsByCategorySlug, getCategoryFilterOptions, countShopOnlyAccessories, shorterQueries } from "@/lib/db/public-products";
+import { NoExactMatch } from "@/components/storefront/NoExactMatch";
 import { getCategoryBySlug } from "@/lib/db/categories";
 import { getAisles } from "@/lib/db/storefront";
 import { getFacetGroups } from "@/lib/db/facets";
@@ -205,6 +206,29 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   const page = Math.min(pageCount, int(filterParams.page) ?? 1);
   const products = sorted.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
+  // A search (and nothing else) that found nothing here: say it isn't in
+  // stock, offer to be told when it arrives, and show the aisle's closest
+  // products (the same search with its last words dropped). In the phones
+  // aisle, a search for accessories says they're sold in the shop.
+  const searchOnly =
+    Boolean(filters.q) &&
+    Object.entries(filters).every(([k, v]) => k === "q" || !v) &&
+    !Object.keys(selection).length &&
+    !budget;
+  let closest: { query: string; products: typeof fetched } | null = null;
+  let shopOnly = false;
+  if (searchOnly && all.length === 0) {
+    for (const shorter of shorterQueries(filters.q!)) {
+      const found = await getProductsByCategorySlug(slug, { ...filters, q: shorter });
+      if (found.length) {
+        const inStockFirst = [...found].sort((a, b) => Number(b.availability === "IN_STOCK") - Number(a.availability === "IN_STOCK"));
+        closest = { query: shorter, products: inStockFirst.slice(0, 8) };
+        break;
+      }
+    }
+    if (!closest) shopOnly = phones && (await countShopOnlyAccessories(filters.q!)) > 0;
+  }
+
   // Aisle chips: the children of a parent aisle, or a leaf's siblings.
   const groupSlug = category.parent?.slug ?? slug;
   const siblings = aisles.filter((a) => a.parentSlug === groupSlug);
@@ -355,7 +379,18 @@ export default async function CollectionPage({ params, searchParams }: Props) {
                 {t.pagination.pageOf(page, pageCount)}
               </p>
             )}
-            {products.length === 0 ? (
+            {products.length === 0 && searchOnly ? (
+              <>
+                <NoExactMatch query={filters.q!} closest={closest?.query ?? null} shopOnly={shopOnly} t={t} />
+                {closest && (
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+                    {closest.products.map((product, i) => (
+                      <ProductCard key={product.id} product={product} priority={i < 4} />
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : products.length === 0 ? (
               <div className="flex flex-col items-center rounded-[1.75rem] border border-dashed border-ink/20 bg-white px-6 py-14 text-center">
                 <DeviceArt kind={artFor(slug, category.name)} className="h-24 w-24 text-neutral-400" />
                 <p className="font-display mt-4 text-2xl font-bold text-ink">

@@ -571,6 +571,15 @@ export const en: Dictionary = {
     noneBefore: "No results. Try another word, or",
     contactWhatsapp: "message us on WhatsApp",
     refine: "Narrow it down with filters:",
+    notInStock: (q: string) => `“${q}” isn't in stock right now.`,
+    notInStockText: "Our stock changes every week. Message us and we'll tell you as soon as it arrives.",
+    notifyMe: "Tell me on WhatsApp",
+    waNotify: (q: string) => `Hello, I'm looking for: ${q}. Can you let me know when it arrives?`,
+    closest: (q: string) => `Closest in stock (“${q}”):`,
+    shopOnlyTitle: "Accessories are sold in the shop for now.",
+    shopOnlyText: "Cases, pouches, screen protectors, chargers: ask us on WhatsApp and we'll send photos and prices.",
+    askShop: "Ask on WhatsApp",
+    waShopOnly: (q: string) => `Hello, I'm looking for: ${q}. What do you have in the shop?`,
   },
 
   notFound: {

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
-import { searchProducts } from "@/lib/db/public-products";
+import { countShopOnlyAccessories, searchProducts, shorterQueries } from "@/lib/db/public-products";
+import { NoExactMatch } from "@/components/storefront/NoExactMatch";
 import type { Metadata } from "next";
 import Link from "@/components/i18n/Link";
 import { ProductCard } from "@/components/storefront/ProductCard";
@@ -42,6 +43,21 @@ export default async function SearchPage({ searchParams }: Props) {
   ]);
   const s = t.searchPage;
 
+  // Nothing found: the closest phones in stock (the same search with its
+  // last words dropped), or else accessories sold in the shop only.
+  let closest: { query: string; products: typeof results } | null = null;
+  let shopOnly = false;
+  if (query && results.length === 0) {
+    for (const shorter of shorterQueries(query)) {
+      const found = await searchProducts(shorter, filters);
+      if (found.length) {
+        closest = { query: shorter, products: found.slice(0, 8) };
+        break;
+      }
+    }
+    if (!closest) shopOnly = (await countShopOnlyAccessories(query)) > 0;
+  }
+
   // The aisles have the filters (grade, battery, storage, price, promo,
   // sort) and search as you type: a search whose results all sit in one
   // aisle opens that aisle, searched; a mixed one offers each aisle.
@@ -75,6 +91,17 @@ export default async function SearchPage({ searchParams }: Props) {
 
       {!query && !hasFilters ? (
         <p className="text-neutral-600">{s.useBar}</p>
+      ) : results.length === 0 && query ? (
+        <>
+          <NoExactMatch query={query} closest={closest?.query ?? null} shopOnly={shopOnly} t={t} />
+          {closest && (
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {closest.products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
+        </>
       ) : results.length === 0 ? (
         <p className="text-neutral-600">
           {s.noneBefore}{" "}

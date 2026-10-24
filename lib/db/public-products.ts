@@ -1,6 +1,6 @@
 import { AvailabilityStatus } from "@/generated/prisma/enums";
 import { prisma } from "./client";
-import { OPEN_PRODUCTS } from "@/lib/site";
+import { ACCESSORIES_OPEN, OPEN_PRODUCTS } from "@/lib/site";
 
 // ─────────────────────────────────────────────────────────────────────────
 // THIS IS THE FILE deliverable 1's schema comment pointed to.
@@ -205,6 +205,13 @@ const ALIASES: [RegExp, string][] = [
   [/ماكس/g, " max "],
   [/بلس/g, " plus "],
   [/نوت/g, " note "],
+  // "S23+" is how Samsung (and the ERP) write "S23 Plus".
+  [/\+/g, " plus "],
+  [/\b0ro\b/g, " pro "],
+  // The shop's own words for accessories: cases are "pochettes", tempered
+  // glass is "incassable".
+  [/\b(?:coques?|covers?|cases?)\b|غلاف|كوك/g, " pochette "],
+  [/\bverres?(?: tremp[eé]s?)?(?![a-z])|\bglass\b/g, " incassable "],
   [/عادي|العادي|نورمال/g, " "],
 ];
 // Words that say "the base model" ("iPhone 13 normal", as on the ads):
@@ -238,6 +245,8 @@ function wordConditions(q: string | null | undefined): Array<Record<string, unkn
   return searchWords(q).map((word) => ({
     OR: [
       { name: { contains: word, mode: "insensitive" } },
+      // "plus" also finds "Galaxy S23+" (the iPhones are written "14 Plus").
+      ...(word === "plus" ? [{ name: { contains: "+" } }] : []),
       { brand: { contains: word, mode: "insensitive" } },
       { slug: { contains: word } },
       { tags: { has: word } },
@@ -326,6 +335,44 @@ export async function getDistinctBrandsForCategory(categorySlug: string): Promis
     .map((r: { brand: string | null }) => r.brand)
     .filter((b: string | null): b is string => Boolean(b))
     .sort();
+}
+
+/**
+ * Shorter versions of a search that found nothing, closest first: the last
+ * word dropped each time ("iphone 15 pro max" → "iphone 15 pro" →
+ * "iphone 15" → "iphone"), so a model we don't have shows its neighbours.
+ */
+export function shorterQueries(q: string): string[] {
+  const words = searchWords(q);
+  const out: string[] = [];
+  for (let n = words.length; n >= 1; n--) {
+    const kept = words.slice(0, n);
+    if (n < words.length) out.push(kept.join(" "));
+    // A model code ("s26", "a16"): then its series ("s2" finds S22 to S25).
+    const last = kept[n - 1];
+    if (/^[a-z]+\d{2,}$/.test(last)) out.push([...kept.slice(0, -1), last.slice(0, -1)].join(" "));
+  }
+  return out;
+}
+
+/**
+ * Accessories matching a search while they're sold in the shop only (not
+ * open on the site): the search then says where to find them.
+ */
+export async function countShopOnlyAccessories(q: string): Promise<number> {
+  if (ACCESSORIES_OPEN) return 0;
+  const words = searchWords(q);
+  if (!words.length) return 0;
+  const inStock = { published: true, isPhone: false, availability: AvailabilityStatus.IN_STOCK };
+  const n = await prisma.product.count({ where: { AND: [inStock, ...wordConditions(q)] } });
+  if (n) return n;
+  // "pochette iphone 13": it starts with an accessory aisle's name, even if
+  // no product name says "13". (Not "iphone …": chargers are named that way.)
+  const first = words[0];
+  if (first.length < 4) return 0;
+  return prisma.product.count({
+    where: { ...inStock, category: { OR: [{ slug: { contains: first } }, { name: { contains: first, mode: "insensitive" } }] } },
+  });
 }
 
 // `query` and `filters` are independent — the header search bar uses query
