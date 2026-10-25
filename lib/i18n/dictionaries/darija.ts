@@ -720,7 +720,7 @@ export const darija: Dictionary = {
     mapTitle: "Lkharita: l7anout dyal Electro Zaki f Mknas",
     directions: "Tri9",
     metaTitle: "Contact w l3onwan dyal l7anout f Mknas",
-    metaDescription: "Electro Zaki, boulevard Al Massira Al Khadra, Ouislane, Mknas (9bel station dyal taxi Hamirya). M7loul kol nhar. WhatsApp: +212 6 67 65 44 30.",
+    metaDescription: "Electro Zaki, boulevard Al Massira Al Khadra, Ouislane, Mknas (9bel station dyal taxi Hamirya). M7loul kol nhar. WhatsApp: +212 6 20 21 01 24.",
     sentTitle: "Message tsifet",
     sentBefore: "Ghadi njawbok dghya. Ila bghiti jawab f l7in, kteb lina f",
     title: "Tassel bina",

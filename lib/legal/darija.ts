@@ -141,7 +141,7 @@ export const darija: TermsCopy = {
       id: "reclamations",
       title: "13. L-as2ila w ch-chakayat",
       paragraphs: [
-        "L ay so2al wla chakaya, kteb lina f WhatsApp, 3ayet l +212 6 67 65 44 30 wla douz l l7anout, m3a la référence dyal la commande. Kantt3aamlo m3a kol chakaya b niya w f a9rab wa9t, w dima kanqellbo louwel 3la 7al b t-taradi.",
+        "L ay so2al wla chakaya, kteb lina f WhatsApp, 3ayet l +212 6 20 21 01 24 wla douz l l7anout, m3a la référence dyal la commande. Kantt3aamlo m3a kol chakaya b niya w f a9rab wa9t, w dima kanqellbo louwel 3la 7al b t-taradi.",
       ],
     },
     {

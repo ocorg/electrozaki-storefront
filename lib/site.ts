@@ -6,8 +6,8 @@ export const SHOP = {
   city: "Meknès",
   country: "MA",
   tagline: "Téléphones & accessoires à Meknès",
-  whatsappNumber: "212667654430",
-  whatsappDisplay: "+212 6 67 65 44 30",
+  whatsappNumber: "212620210124",
+  whatsappDisplay: "+212 6 20 21 01 24",
   // The shop on Google Maps (contact page map, "Itinéraire", structured data).
   mapsUrl: "https://maps.app.goo.gl/BW9tPvGbrGzyyU1U6",
   mapEmbed:

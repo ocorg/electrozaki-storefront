@@ -723,7 +723,7 @@ export const fr = {
     mapTitle: "Carte : la boutique Electro Zaki à Meknès",
     directions: "Itinéraire",
     metaTitle: "Contact et adresse de la boutique à Meknès",
-    metaDescription: "Electro Zaki, boulevard Al Massira Al Khadra, Ouislane, Meknès (en face de la station de taxis Hamirya). Ouvert tous les jours. WhatsApp : +212 6 67 65 44 30.",
+    metaDescription: "Electro Zaki, boulevard Al Massira Al Khadra, Ouislane, Meknès (en face de la station de taxis Hamirya). Ouvert tous les jours. WhatsApp : +212 6 20 21 01 24.",
     sentTitle: "Message envoyé",
     sentBefore: "Nous vous répondrons rapidement. Pour une réponse immédiate, contactez-nous sur",
     title: "Contactez-nous",

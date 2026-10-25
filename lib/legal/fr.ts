@@ -141,7 +141,7 @@ export const fr: TermsCopy = {
       id: "reclamations",
       title: "13. Questions et réclamations",
       paragraphs: [
-        "Pour toute question ou réclamation, écrivez-nous sur WhatsApp, appelez le +212 6 67 65 44 30 ou passez à la boutique, avec votre référence de commande. Nous traitons chaque réclamation de bonne foi, dans les meilleurs délais, en cherchant d'abord une solution à l'amiable.",
+        "Pour toute question ou réclamation, écrivez-nous sur WhatsApp, appelez le +212 6 20 21 01 24 ou passez à la boutique, avec votre référence de commande. Nous traitons chaque réclamation de bonne foi, dans les meilleurs délais, en cherchant d'abord une solution à l'amiable.",
       ],
     },
     {

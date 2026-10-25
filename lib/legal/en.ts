@@ -141,7 +141,7 @@ export const en: TermsCopy = {
       id: "reclamations",
       title: "13. Questions and complaints",
       paragraphs: [
-        "For any question or complaint, message us on WhatsApp, call +212 6 67 65 44 30 or come to the shop, with your order reference. We handle every complaint in good faith and as quickly as we can, looking for an amicable solution first.",
+        "For any question or complaint, message us on WhatsApp, call +212 6 20 21 01 24 or come to the shop, with your order reference. We handle every complaint in good faith and as quickly as we can, looking for an amicable solution first.",
       ],
     },
     {

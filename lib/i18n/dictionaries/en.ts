@@ -735,7 +735,7 @@ export const en: Dictionary = {
     mapTitle: "Map: the Electro Zaki shop in Meknes",
     directions: "Directions",
     metaTitle: "Contact and shop address in Meknes",
-    metaDescription: "Electro Zaki, Boulevard Al Massira Al Khadra, Ouislane, Meknes (opposite the Hamirya taxi station). Open every day. WhatsApp: +212 6 67 65 44 30.",
+    metaDescription: "Electro Zaki, Boulevard Al Massira Al Khadra, Ouislane, Meknes (opposite the Hamirya taxi station). Open every day. WhatsApp: +212 6 20 21 01 24.",
     sentTitle: "Message sent",
     sentBefore: "We'll reply soon. For an immediate answer, contact us on",
     title: "Contact us",
