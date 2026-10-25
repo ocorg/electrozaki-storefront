@@ -211,7 +211,7 @@ export function SearchBox({ className = "", placeholder }: {
                     >
                       <span className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-neutral-50">
                         {p.image ? (
-                          <Image src={p.image} alt="" fill sizes="56px" className="object-contain p-1" />
+                          <Image src={p.image} alt={p.name} fill sizes="56px" className="object-contain p-1" />
                         ) : (
                           <ImageOff size={18} className="text-neutral-300" />
                         )}

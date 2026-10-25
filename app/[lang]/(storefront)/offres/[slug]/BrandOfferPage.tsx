@@ -134,7 +134,7 @@ export function BrandOfferPage({ brand, locale, t }: { brand: BrandOffer; locale
                   >
                     <span className="relative flex h-24 w-24 flex-none items-center justify-center overflow-hidden rounded-2xl bg-paper">
                       {cover ? (
-                        <Image src={cover.url} alt="" fill sizes="96px" className="object-contain p-1.5" />
+                        <Image src={cover.url} alt={m.name} fill sizes="96px" className="object-contain p-1.5" />
                       ) : (
                         <ImageOff size={20} className="text-neutral-300" aria-hidden />
                       )}

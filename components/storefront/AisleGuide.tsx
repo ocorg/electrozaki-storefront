@@ -202,7 +202,7 @@ function Tile({ option, art }: { option: GuideOption; art: ArtKind }) {
       {option.image ? (
         <Image
           src={option.image}
-          alt=""
+          alt={option.label}
           fill
           sizes="(min-width: 1024px) 180px, (min-width: 640px) 25vw, 33vw"
           className="bg-white object-contain p-2 pb-9 transition-transform duration-500 ease-out-quint group-hover/tile:scale-105"

@@ -176,7 +176,7 @@ export default async function HomePage() {
                 {phonePhoto?.image && (
                   <div className="absolute bottom-6 end-5 aspect-square w-[44%] max-w-[250px] rotate-6 overflow-hidden rounded-[1.4rem] bg-white p-2 shadow-[0_30px_60px_-20px_rgb(0_0_0/0.8)] ring-1 ring-white/20 transition-transform duration-700 ease-spring group-hover:-translate-y-2 group-hover:rotate-2 sm:end-8">
                     <div className="relative h-full w-full">
-                      <Image src={phonePhoto.image} alt="" fill sizes="250px" className="object-contain" />
+                      <Image src={phonePhoto.image} alt={phonePhoto.name} fill sizes="250px" className="object-contain" />
                     </div>
                   </div>
                 )}

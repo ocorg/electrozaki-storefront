@@ -30,7 +30,7 @@ function Notification({ phone, dimmed = false }: { phone: ShowcasePhone; dimmed?
     >
       <span className="relative flex h-11 w-11 flex-none items-center justify-center overflow-hidden rounded-[30%] bg-white">
         {phone.image ? (
-          <Image src={phone.image} alt="" fill sizes="44px" className="object-contain p-0.5" />
+          <Image src={phone.image} alt={phone.name} fill sizes="44px" className="object-contain p-0.5" />
         ) : (
           <span className="font-display text-sm font-extrabold text-ink">EZ</span>
         )}
@@ -96,7 +96,7 @@ export function HeroPhone({ phones }: { phones: ShowcasePhone[] }) {
 
             {/* Wallpaper: the brand mark, faint. */}
             <div className="relative flex flex-1 items-center justify-center" aria-hidden>
-              <Image src="/logo-mark.png" alt="" width={120} height={120} className="h-24 w-24 opacity-[0.12]" />
+              <Image src="/logo-mark.png" alt="Electro Zaki" width={120} height={120} className="h-24 w-24 opacity-[0.12]" />
             </div>
 
             {/* Notification stack, iOS style: newest on top, two peeking below. */}

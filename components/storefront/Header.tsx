@@ -104,7 +104,7 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
           <Link href="/" className="flex flex-none items-center gap-2.5" aria-label={t.common.homeAria}>
             {/* The mark's Z is white: it sits on an ink squircle. */}
             <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[30%] bg-ink p-1.5 shadow-[0_6px_14px_-6px_rgb(17_16_19/0.7)]">
-              <Image src="/logo-mark.png" alt="" width={28} height={28} priority className="h-full w-full object-contain" />
+              <Image src="/logo-mark.png" alt="Electro Zaki" width={28} height={28} priority className="h-full w-full object-contain" />
             </span>
             {/* The wordmark is a logo: always Latin, always left-to-right. */}
             <span dir="ltr" className="hidden font-display text-[1.15rem] font-extrabold leading-none tracking-tight text-ink sm:inline md:hidden xl:inline">

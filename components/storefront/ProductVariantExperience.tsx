@@ -252,7 +252,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
                   i === imageIndex ? "border-ink" : "border-transparent hover:border-ink/20"
                 }`}
               >
-                <Image src={img.url} alt="" fill sizes="80px" className="object-contain p-1.5" />
+                <Image src={img.url} alt={`${product.name} - ${p.photo(i + 1)}`} fill sizes="80px" className="object-contain p-1.5" />
               </button>
             ))}
           </div>

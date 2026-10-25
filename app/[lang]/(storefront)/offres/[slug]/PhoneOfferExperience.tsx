@@ -387,7 +387,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                   shown?.url === img.url ? "border-ink" : "border-transparent hover:border-ink/20"
                 }`}
               >
-                <Image src={img.url} alt="" fill sizes="72px" className="object-contain p-1.5" />
+                <Image src={img.url} alt={`${name} - ${t.pdp.photo(i + 1)}`} fill sizes="72px" className="object-contain p-1.5" />
               </button>
             ))}
           </div>
