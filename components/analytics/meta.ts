@@ -1,3 +1,5 @@
+import { gaSaleEvent } from "./google";
+
 // Meta (Facebook/Instagram) Pixel: tells Meta Ads what visitors from an ad
 // do on the site, so campaigns can optimise for people who order. Pixel IDs
 // are public (they sit in every page's HTML). Every event goes to each pixel:
@@ -47,6 +49,8 @@ export function catalogId(item: { productId: string; variantId?: string; isPhone
 }
 
 export function metaTrack(event: MetaEvent, params?: Params, eventId?: string): void {
+  // The same sales steps for Google Analytics (add to cart, checkout, order).
+  gaSaleEvent(event, params, eventId);
   try {
     if (!META_PIXEL_IDS.length || typeof window === "undefined") return;
     const data = params ? { currency: "MAD", ...params } : undefined;
