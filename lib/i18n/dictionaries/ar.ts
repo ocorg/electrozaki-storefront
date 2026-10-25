@@ -36,7 +36,7 @@ export const ar: Dictionary = {
     city: "مكناس",
     country: "المغرب",
     deliveryEverywhere: "التوصيل إلى جميع أنحاء المغرب",
-    cashOnDelivery: "الدفع عند الاستلام",
+    cashOnDelivery: "الباقي عند الاستلام",
     searchPlaceholder: "iPhone 13، غلاف، شاحن…",
     question: "لديك سؤال؟",
     writeUsWhatsapp: "راسلنا على واتساب",
@@ -156,7 +156,7 @@ export const ar: Dictionary = {
     aria: "التزاماتنا",
     tiles: [
       { title: "التوصيل", value: "كل المغرب" },
-      { title: "الدفع", value: "عند الاستلام" },
+      { title: "الدفع", value: "300 درهم، والباقي عند الاستلام" },
       { title: "الضمان", value: "3 أشهر" },
       { title: "البطارية", value: "معروضة" },
     ],
@@ -207,7 +207,7 @@ export const ar: Dictionary = {
     },
     reassurance: [
       { title: "ضمان 3 أشهر", desc: "على كل هواتفنا" },
-      { title: "التوصيل لكل المغرب", desc: "الدفع عند الاستلام" },
+      { title: "التوصيل لكل المغرب", desc: "تسبيق 300 درهم، والباقي عند الاستلام" },
       { title: "فحص من طرف تقنيين", desc: "تشخيص قبل كل بيع" },
       { title: "دعم عبر واتساب", desc: "رد سريع، بدون روبوت" },
     ],
@@ -334,7 +334,13 @@ export const ar: Dictionary = {
     show: "عرض النتائج",
   },
 
+  cartToast: { added: "أُضيف إلى السلة", view: "عرض السلة", close: "إغلاق" },
+
   productPage: {
+    soldOutTitle: "تم بيع هذا الهاتف للتو.",
+    soldOutText: (n: number, model: string, from: string) =>
+      n === 1 ? `لدينا ${model} آخر متوفر، بـ ${from}.` : `لدينا ${n} هواتف ${model} أخرى متوفرة، ابتداءً من ${from}.`,
+    soldOutCta: (model: string) => `شاهد هواتف ${model} المتوفرة`,
     specs: "المواصفات",
     compatible: "متوافق مع",
     sameAisle: "في نفس القسم.",
@@ -395,6 +401,8 @@ export const ar: Dictionary = {
     waNotify: (name: string) => `السلام عليكم، أريد أن تُعلموني عند توفر: ${name}`,
     notifyWhatsapp: "أعلموني على واتساب",
     trustGuarantee: "ضمان 3 أشهر",
+    trustGuaranteeNew: "ضمان 12 شهرًا",
+    trustPhotos: "صور وفيديو حقيقية على واتساب قبل الشحن",
     trustChecked: "مفحوص قبل البيع",
     trustShop: "متجر في مكناس",
     description: "الوصف",
@@ -857,6 +865,12 @@ export const ar: Dictionary = {
     holder: "صاحب الحساب",
     copy: "نسخ",
     copied: "تم النسخ",
+    advanceNote: (amount: string) =>
+      `بالنسبة للهاتف: نتصل بك للتأكيد، ثم يحجزه تسبيق ${amount} قبل الشحن. والباقي يُدفع عند التسليم.`,
+    advanceLater: (amount: string, rest: string) =>
+      `بعد طلبك، نتصل بك لتأكيده. يُدفع تسبيق ${amount} بعد ذلك (تحويل بنكي أو CashPlus أو بريد بنك)؛ والباقي (${rest}) يُدفع عند التسليم.`,
+    callFirst: "لا شيء للدفع الآن: أكّد طلبك وسنتصل بك قريبًا جدًا.",
+    payNow: "تفضّل دفع التسبيق الآن؟ (اختياري)",
     whyAdvance: "لماذا هذا التسبيق؟",
     whyAdvanceText: "يغطي هذا التسبيق مصاريف الشحن ويضمن حجز هاتفك طوال مدة التوصيل.",
     consent: "أوافق على معالجة بياناتي ووصل التحويل البنكي بسرية، وفقًا لقوانين CNDP.",

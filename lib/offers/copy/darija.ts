@@ -18,6 +18,8 @@ export const darija: OfferCopy = {
       `${name} b prix promo. Kol téléphone mchouf${battery ? ", w sa7t l batterie dyalo m9iyssa w bayna" : ""}, w nta li katkhtar nit téléphone li ghadi iwslek.`,
     trustBattery: "Batterie {min}% w ktar",
     trust: ["Mchouf 9bel l bi3", "Garantie 3 chhour", "Livraison l ga3 lmghrib"],
+    trustNewWarranty: "Garantie 12 chhar",
+    trustPhotos: "Tswer w vidéo 7a9i9iyin f WhatsApp",
   },
 
   form: (name: string) => ({
@@ -173,11 +175,11 @@ export const darija: OfferCopy = {
   brand: {
     metaTitle: (name: string, from: string) => `Promos ${name} men ${from}`,
     metaDescription: (name: string, from: string, n: number) =>
-      `Ga3 les ${name} f promo 3nd Electro Zaki f Mknas, men ${from}: ${n} modèles, kol téléphone mchouf, garantie 3 chhour, livraison l ga3 lmghrib.`,
+      `Ga3 les ${name} f promo 3nd Electro Zaki f Mknas, men ${from}: ${n} ${n === 1 ? "modèle" : "modèles"}, kol téléphone mchouf, garantie 3 chhour, livraison l ga3 lmghrib.`,
     eyebrow: "Promo Electro Zaki · Kayn f Mknas",
     title: (name: string) => `Promos ${name}`,
     lead: (name: string, n: number) =>
-      `${n} modèles dyal ${name} f promo, f page wa7da. Khtar l modèle, l7ala w nit téléphone li ghadi iwslek: kol wa7ed mchouf mn 3nd les techniciens dyalna.`,
+      `${n} ${n === 1 ? "modèle" : "modèles"} dyal ${name} f promo, f page wa7da. Khtar l modèle, l7ala w nit téléphone li ghadi iwslek: kol wa7ed mchouf mn 3nd les techniciens dyalna.`,
     modelsTitle: "Les modèles li f promo",
     modelsIntro: "Kol modèle 3ndo 7ta l page dyalo, b la fiche technique kamla.",
     phones: (n: number) => `${n} téléphone f promo`,
@@ -185,7 +187,7 @@ export const darija: OfferCopy = {
     upTo: (saving: string) => `7tal ${saving} na9sin`,
     seeModel: "Chouf l modèle",
     cardTitle: (name: string) => `Ga3 les promos ${name}`,
-    cardTeaser: (n: number) => `${n} modèles f promo f page wa7da`,
+    cardTeaser: (n: number) => `${n} ${n === 1 ? "modèle" : "modèles"} f promo f page wa7da`,
     finalTitle: (name: string) => `${name} dyalek f promo kaytsennak.`,
   },
 

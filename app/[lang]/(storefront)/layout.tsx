@@ -4,6 +4,7 @@ import { Header } from "@/components/storefront/Header";
 import { Footer } from "@/components/storefront/Footer";
 import { FloatingWhatsApp } from "@/components/storefront/FloatingWhatsApp";
 import { MobileTabBar } from "@/components/storefront/MobileTabBar";
+import { CartToast } from "@/components/cart/CartToast";
 import { getAllCategories } from "@/lib/db/categories";
 import { getAisles } from "@/lib/db/storefront";
 import { PageTracker } from "@/components/analytics/PageTracker";
@@ -36,6 +37,7 @@ export default async function StorefrontLayout({ children }: { children: ReactNo
       <Footer aisles={aisles} />
       <FloatingWhatsApp />
       <MobileTabBar />
+      <CartToast />
       <PageTracker />
       <MetaPixel />
     </CartProvider>

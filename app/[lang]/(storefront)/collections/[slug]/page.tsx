@@ -204,7 +204,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
       ? [...all].sort((a, b) => price(a) - price(b))
       : filterParams.sort === "prix-desc"
         ? [...all].sort((a, b) => price(b) - price(a))
-        : all;
+        : [...all].sort(byShelfOrder);
   const pageCount = Math.max(1, Math.ceil(sorted.length / PER_PAGE));
   const page = Math.min(pageCount, int(filterParams.page) ?? 1);
   const products = sorted.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -253,8 +253,9 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   return (
     <div>
       <section className="border-b border-ink/10 bg-paper-2/60">
-        <div className="mx-auto grid max-w-7xl items-end gap-6 px-4 pb-8 pt-8 sm:pt-10 md:grid-cols-[1fr_auto]">
-          <div>
+        <div className="mx-auto grid max-w-7xl items-end gap-6 px-4 pb-8 pt-8 sm:pt-10 md:grid-cols-[minmax(0,1fr)_auto]">
+          {/* min-w-0: the sideways-scrolling model row mustn't widen the page. */}
+          <div className="min-w-0">
             <Breadcrumbs items={crumbs} />
             {/* The phones aisle says what it sells, in the words people search
                 ("téléphones d'occasion Meknès"), not just "Téléphones". */}
@@ -270,9 +271,11 @@ export default async function CollectionPage({ params, searchParams }: Props) {
             {phones && models.length > 1 && (
               <nav aria-label={t.collection.byModel} className="mt-5">
                 <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-neutral-600">{t.collection.byModel}</p>
-                <ul className="flex flex-wrap gap-2">
+                {/* One row that scrolls sideways on a phone (37 models used to
+                    fill two screens before the first phone); wrapped on wider screens. */}
+                <ul className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 scrollbar-none md:mx-0 md:flex-wrap md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
                   {models.map((m) => (
-                    <li key={m.slug}>
+                    <li key={m.slug} className="flex-none">
                       <Link
                         href={`/telephones/${m.slug}`}
                         className="inline-flex min-h-10 items-center rounded-full bg-white px-3.5 text-[13px] font-semibold text-ink ring-1 ring-ink/10 transition-shadow hover:ring-ink/30"
@@ -436,5 +439,27 @@ export default async function CollectionPage({ params, searchParams }: Props) {
         </div>
       </div>
     </div>
+  );
+}
+
+type ShelfProduct = {
+  availability: string;
+  compareAtPrice: unknown;
+  variants: { stockQuantity: number; compareAtPrice: unknown }[];
+};
+
+const unitsInStock = (p: ShelfProduct) => p.variants.reduce((n, v) => n + Math.max(0, v.stockQuantity), 0);
+const onPromo = (p: ShelfProduct) => p.compareAtPrice != null || p.variants.some((v) => v.stockQuantity > 0 && v.compareAtPrice != null);
+
+/**
+ * The aisle's default order: what can be bought first, then promos, then
+ * the listings with the most phones in stock (the shop's best sellers, e.g.
+ * iPhone 13), newest first among equals (the order they were fetched in).
+ */
+function byShelfOrder(a: ShelfProduct, b: ShelfProduct): number {
+  return (
+    Number(b.availability === "IN_STOCK") - Number(a.availability === "IN_STOCK") ||
+    Number(onPromo(b)) - Number(onPromo(a)) ||
+    unitsInStock(b) - unitsInStock(a)
   );
 }

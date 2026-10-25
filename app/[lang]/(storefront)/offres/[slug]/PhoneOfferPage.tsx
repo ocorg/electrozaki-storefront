@@ -93,7 +93,14 @@ export function PhoneOfferPage({
   const allGood = minBattery !== null && minBattery >= BATTERY_GOOD_FROM;
 
   const subtitle = [offer.storages.join(" / "), offer.grades.map((g) => t.grades.label[g] ?? g).join(" · ")].filter(Boolean).join(" · ");
-  const trust = [...(batteryShown && allGood ? [c.hero.trustBattery.replace("{min}", String(minBattery))] : []), ...c.hero.trust];
+  // New phones carry the 12-month warranty; every phone gets real photos
+  // and a video on WhatsApp before shipping.
+  const baseTrust = isNew ? c.hero.trust.map((item, i) => (i === 1 ? c.hero.trustNewWarranty : item)) : c.hero.trust;
+  const trust = [
+    ...(batteryShown && allGood ? [c.hero.trustBattery.replace("{min}", String(minBattery))] : []),
+    ...baseTrust,
+    c.hero.trustPhotos,
+  ];
 
   // "Why" cards, from the model's fact sheet.
   const why: { icon: LucideIcon; title: string; text: string }[] = f

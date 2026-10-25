@@ -9,7 +9,6 @@ import { useT } from "@/components/i18n/I18nProvider";
 import { LanguageChips, LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { useCart } from "@/components/cart/CartContext";
 import { SearchBox } from "@/components/storefront/SearchBox";
-import { LiveClock } from "@/components/storefront/LiveClock";
 import { DeviceArt } from "@/components/storefront/DeviceArt";
 import { artFor } from "@/lib/category-art";
 import { formatMAD } from "@/lib/format";
@@ -27,27 +26,6 @@ function LiveDot({ className = "" }: { className?: string }) {
     <span className={`relative flex h-2 w-2 flex-none ${className}`} aria-hidden>
       <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75 motion-safe:animate-ping" />
       <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
-    </span>
-  );
-}
-
-/** Decorative signal / wifi / battery glyphs of the status bar. */
-function StatusIcons() {
-  return (
-    <span aria-hidden className="flex items-center gap-1.5">
-      <span className="flex items-end gap-[1.5px]">
-        {[4, 6, 8, 10].map((h) => (
-          <span key={h} className="w-[2.5px] rounded-[1px] bg-white" style={{ height: h }} />
-        ))}
-      </span>
-      <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="white" strokeWidth="1.6" strokeLinecap="round">
-        <path d="M1 3.5a9 9 0 0 1 12 0M3.2 5.8a5.8 5.8 0 0 1 7.6 0" />
-        <circle cx="7" cy="8.3" r="0.9" fill="white" stroke="none" />
-      </svg>
-      <span className="relative flex h-[10px] w-[20px] rounded-[3px] border border-white/70 p-[1.5px]">
-        <span className="h-full w-[80%] rounded-[1px] bg-gold" />
-        <span className="absolute -right-[3px] top-1/2 h-[4px] w-[1.5px] -translate-y-1/2 bg-white/70" />
-      </span>
     </span>
   );
 }
@@ -89,13 +67,11 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
 
   return (
     <>
-      {/* Status bar — the site opens like a phone screen. */}
+      {/* The current offer (or delivery) in one line. It used to imitate a
+          phone's status bar (clock, signal, battery), which doubled the real
+          one on a phone and looked out of place on a computer. */}
       <div className="on-dark bg-ink text-[12px] text-white">
-        <div className="mx-auto flex h-8 max-w-7xl items-center justify-between gap-4 px-4">
-          <span className="flex items-center gap-2">
-            <LiveClock className="font-semibold" />
-            <span className="hidden text-neutral-300 sm:inline">{t.common.city}</span>
-          </span>
+        <div className="mx-auto flex h-8 max-w-7xl items-center justify-center gap-4 px-4">
           {topOffer ? (
             <Link
               href={topOffer.href}
@@ -114,7 +90,6 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
               </span>
             </span>
           )}
-          <StatusIcons />
         </div>
       </div>
 

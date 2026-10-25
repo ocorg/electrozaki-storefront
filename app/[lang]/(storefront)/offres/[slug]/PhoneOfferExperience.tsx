@@ -5,6 +5,7 @@ import Image from "next/image";
 import {
   ArrowDown,
   BatteryCharging,
+  Camera,
   AlertCircle,
   Cable,
   Check,
@@ -58,7 +59,7 @@ const AISLE_ICONS: Record<string, LucideIcon> = {
   casque: Headphones,
   powerbank: BatteryCharging,
 };
-const TRUST_ICONS: LucideIcon[] = [BatteryCharging, ShieldCheck, Check, Truck];
+const TRUST_ICONS: LucideIcon[] = [BatteryCharging, ShieldCheck, Check, Truck, Camera];
 const GRADE_ORDER = ["NEUF", "TRES_BON", "BON", "PIECES_REMPLACEES"];
 
 /** "{rest}" → value. */
@@ -337,34 +338,9 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
     : null;
 
   return (
-    <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14">
-      {/* ── Gallery ── */}
-      <div className="md:sticky md:top-28 md:self-start">
-        <div className="relative aspect-square overflow-hidden rounded-4xl border border-ink/7 bg-white shadow-[0_30px_60px_-40px_rgb(17_16_19/0.5)]">
-          <ProductVisual image={shown} name={name} brand={brand} isPhone priority size="large" sizes="(min-width: 768px) 50vw, 100vw" />
-        </div>
-        {gallery.length > 1 && (
-          <div className="mt-3 flex gap-2 overflow-x-auto pb-1 scrollbar-none" role="group" aria-label={t.pdp.photos}>
-            {gallery.map((img, i) => (
-              <button
-                key={img.url}
-                type="button"
-                onClick={() => setImageIndex(i)}
-                aria-label={t.pdp.photo(i + 1)}
-                aria-pressed={shown?.url === img.url}
-                className={`relative h-18 w-18 flex-none overflow-hidden rounded-2xl border-2 bg-white transition-colors ${
-                  shown?.url === img.url ? "border-ink" : "border-transparent hover:border-ink/20"
-                }`}
-              >
-                <Image src={img.url} alt="" fill sizes="72px" className="object-contain p-1.5" />
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* ── Offer + order ── */}
-      <div>
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-x-8 md:gap-y-0 md:grid-rows-[auto_1fr] lg:gap-x-14">
+      {/* ── Name and price: first on a phone screen, beside the photos on wider ones ── */}
+      <div className="md:col-start-2 md:row-start-1">
         <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-gold-deep">{hero.eyebrow}</p>
         <h1 className="font-display mt-2 text-5xl font-extrabold leading-none text-ink sm:text-6xl">{hero.title}</h1>
         <p className="mt-2 text-lg font-semibold text-neutral-700">{hero.subtitle}</p>
@@ -391,6 +367,35 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
           </div>
         )}
 
+      </div>
+
+      {/* ── Gallery ── */}
+      <div className="md:sticky md:top-28 md:col-start-1 md:row-span-2 md:row-start-1 md:self-start">
+        <div className="relative aspect-square overflow-hidden rounded-4xl border border-ink/7 bg-white shadow-[0_30px_60px_-40px_rgb(17_16_19/0.5)]">
+          <ProductVisual image={shown} name={name} brand={brand} isPhone priority size="large" sizes="(min-width: 768px) 50vw, 100vw" />
+        </div>
+        {gallery.length > 1 && (
+          <div className="mt-3 flex gap-2 overflow-x-auto pb-1 scrollbar-none" role="group" aria-label={t.pdp.photos}>
+            {gallery.map((img, i) => (
+              <button
+                key={img.url}
+                type="button"
+                onClick={() => setImageIndex(i)}
+                aria-label={t.pdp.photo(i + 1)}
+                aria-pressed={shown?.url === img.url}
+                className={`relative h-18 w-18 flex-none overflow-hidden rounded-2xl border-2 bg-white transition-colors ${
+                  shown?.url === img.url ? "border-ink" : "border-transparent hover:border-ink/20"
+                }`}
+              >
+                <Image src={img.url} alt="" fill sizes="72px" className="object-contain p-1.5" />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* ── Offer + order ── */}
+      <div className="md:col-start-2">
         <p className="mt-5 leading-relaxed text-neutral-700">{hero.lead}</p>
 
         <ul className="mt-5 grid grid-cols-2 gap-2 text-sm text-neutral-800">

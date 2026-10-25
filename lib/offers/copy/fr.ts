@@ -24,6 +24,8 @@ export const fr = {
       `Le ${name} à prix promo. Chaque téléphone est vérifié${battery ? ", sa santé de batterie est mesurée et affichée" : ""}, et vous choisissez l'exemplaire exact que vous recevez.`,
     trustBattery: "Batterie {min} % et plus",
     trust: ["Vérifié avant la vente", "Garantie 3 mois", "Livraison partout au Maroc"],
+    trustNewWarranty: "Garantie 12 mois",
+    trustPhotos: "Photos et vidéo réelles sur WhatsApp",
   },
 
   // Order panel (client). Plain strings; "{x}" = a value filled in there.
@@ -39,7 +41,7 @@ export const fr = {
     added: "Ajouté",
     contact: "Vos coordonnées",
     fullName: "Nom complet",
-    phone: "Téléphone (ex : 06XXXXXXXX)",
+    phone: "Téléphone (ex : 06XXXXXXXX)",
     summary: "Récapitulatif",
     delivery: "Livraison",
     deliveryPending: "choisissez votre ville",
@@ -56,8 +58,8 @@ export const fr = {
     needCity: "Choisissez votre ville de livraison",
     needName: "Indiquez votre nom complet",
     needPhone: "Indiquez votre numéro de téléphone",
-    successTitle: "Commande reçue, merci !",
-    successRef: "Référence : {ref}",
+    successTitle: "Commande reçue, merci !",
+    successRef: "Référence : {ref}",
     successText: "Nous vous appelons très vite au {phone} pour confirmer la commande, l'adresse et l'avance de 300 DH.",
     successSteps: ["Appel de confirmation", "Avance de 300 DH", "Expédition et paiement du reste à la livraison"],
     whatsapp: "Continuer sur WhatsApp",
@@ -88,8 +90,8 @@ export const fr = {
   battery: {
     eyebrow: "La batterie, sans surprise",
     title: "Vous voyez la santé de la batterie avant de choisir.",
-    text: "Chaque iPhone de la promo affiche sa santé de batterie mesurée (Réglages > Batterie > État de la batterie). À 80 % et plus, une batterie est en bon état : ici, chaque téléphone est à {min} % ou plus.",
-    textAny: "Chaque iPhone de la promo affiche sa santé de batterie mesurée (Réglages > Batterie > État de la batterie). À 80 % et plus, une batterie est en bon état ; en dessous, son remplacement est conseillé.",
+    text: "Chaque iPhone de la promo affiche sa santé de batterie mesurée (Réglages > Batterie > État de la batterie). À 80 % et plus, une batterie est en bon état : ici, chaque téléphone est à {min} % ou plus.",
+    textAny: "Chaque iPhone de la promo affiche sa santé de batterie mesurée (Réglages > Batterie > État de la batterie). À 80 % et plus, une batterie est en bon état ; en dessous, son remplacement est conseillé.",
     points: ["Pourcentage exact affiché pour chaque téléphone", "Chaque pièce remplacée est indiquée", "Vous choisissez le téléphone exact que vous recevez"],
   },
 
@@ -145,29 +147,29 @@ export const fr = {
     eyebrow: "Questions fréquentes",
     title: "Vous vous demandez…",
     advance: {
-      q: "Pourquoi une avance de 300 DH ?",
+      q: "Pourquoi une avance de 300 DH ?",
       a: "Elle réserve votre téléphone et couvre les frais d'expédition. Le reste du montant se paie à la livraison. Les détails pour la régler vous sont donnés lors de l'appel de confirmation.",
     },
     when: {
-      q: "Quand vais-je recevoir mon téléphone ?",
-      a: "Après l'appel de confirmation et la réception de l'avance, il part avec Ameex : en général 24 à 30 h après l'enlèvement. La date estimée s'affiche dès que vous choisissez votre ville.",
+      q: "Quand vais-je recevoir mon téléphone ?",
+      a: "Après l'appel de confirmation et la réception de l'avance, il part avec Ameex : en général 24 à 30 h après l'enlèvement. La date estimée s'affiche dès que vous choisissez votre ville.",
     },
     battery: {
-      q: "La batterie affichée est-elle la vraie ?",
+      q: "La batterie affichée est-elle la vraie ?",
       a: "Oui. C'est la santé mesurée par l'iPhone lui-même (Réglages > Batterie > État de la batterie), relevée sur chaque téléphone. Vous choisissez le téléphone exact que vous recevez.",
     },
     // Answered with the site's own grade descriptions (t.grades.hint).
-    grades: { q: "Que veulent dire les différents états ?" },
+    grades: { q: "Que veulent dire les différents états ?" },
     charger: {
-      q: "Le chargeur est-il fourni ?",
+      q: "Le chargeur est-il fourni ?",
       a: "Non, le téléphone est livré sans chargeur. Si vous en avez besoin, dites-le-nous lors de l'appel de confirmation.",
     },
     warranty: {
-      q: "Le téléphone est-il garanti ?",
-      a: "Oui : 3 mois pour un téléphone d'occasion, 12 mois pour un neuf. Elle couvre les pannes en utilisation normale (pas la casse ni l'eau). Si vous habitez hors de Meknès, l'envoi pour une panne couverte est à notre charge. Tout est détaillé dans nos conditions de vente.",
+      q: "Le téléphone est-il garanti ?",
+      a: "Oui : 3 mois pour un téléphone d'occasion, 12 mois pour un neuf. Elle couvre les pannes en utilisation normale (pas la casse ni l'eau). Si vous habitez hors de Meknès, l'envoi pour une panne couverte est à notre charge. Tout est détaillé dans nos conditions de vente.",
     },
     shop: {
-      q: "Puis-je le voir en boutique ?",
+      q: "Puis-je le voir en boutique ?",
       a: "Bien sûr. Passez à notre boutique de Meknès, ou écrivez-nous sur WhatsApp pour réserver un téléphone avant de venir.",
     },
   },
@@ -176,7 +178,7 @@ export const fr = {
   card: {
     title: (name: string) => `${name} en promo`,
     teaser: (saving: string) => `Jusqu'à ${saving} de remise, garantie 3 mois`,
-    bar: (name: string, price: string) => `Promo ${name} : dès ${price}`,
+    bar: (name: string, price: string) => `Promo ${name} : dès ${price}`,
     banner: (name: string, price: string) => `${name} en promo dès ${price}`,
     cta: "Voir la promo",
   },
@@ -187,13 +189,13 @@ export const fr = {
     metaDescription: (name: string, from: string, n: number) =>
       fit(
         DESC_MAX,
-        `Tous les ${name} en promo chez Electro Zaki à Meknès, dès ${from} : ${n} modèles, chaque téléphone vérifié, garantie 3 mois, livraison partout au Maroc.`,
-        `Tous les ${name} en promo à Meknès dès ${from} : ${n} modèles vérifiés, garantie 3 mois, livraison partout au Maroc.`
+        `Tous les ${name} en promo chez Electro Zaki à Meknès, dès ${from} : ${n} ${n === 1 ? "modèle" : "modèles"}, chaque téléphone vérifié, garantie 3 mois, livraison partout au Maroc.`,
+        `Tous les ${name} en promo à Meknès dès ${from} : ${n} ${n === 1 ? "modèle vérifié" : "modèles vérifiés"}, garantie 3 mois, livraison partout au Maroc.`
       ),
     eyebrow: "Promos Electro Zaki · Stock à Meknès",
     title: (name: string) => `Promos ${name}`,
     lead: (name: string, n: number) =>
-      `${n} modèles de ${name} en promo, sur une seule page. Choisissez le modèle, l'état et le téléphone exact que vous recevez : chacun est vérifié par nos techniciens.`,
+      `${n} ${n === 1 ? "modèle" : "modèles"} de ${name} en promo, sur une seule page. Choisissez le modèle, l'état et le téléphone exact que vous recevez : chacun est vérifié par nos techniciens.`,
     modelsTitle: "Les modèles en promo",
     modelsIntro: "Chaque modèle a aussi sa page, avec sa fiche technique complète.",
     phones: (n: number) => `${n} téléphone${n > 1 ? "s" : ""} en promo`,
@@ -201,7 +203,7 @@ export const fr = {
     upTo: (saving: string) => `jusqu'à -${saving}`,
     seeModel: "Voir le modèle",
     cardTitle: (name: string) => `Toutes les promos ${name}`,
-    cardTeaser: (n: number) => `${n} modèles en promo sur une seule page`,
+    cardTeaser: (n: number) => `${n} ${n === 1 ? "modèle" : "modèles"} en promo sur une seule page`,
     finalTitle: (name: string) => `Votre ${name} en promo vous attend.`,
   },
 
@@ -213,12 +215,12 @@ export const fr = {
     },
     metaDescription: (name: string, from: string, isNew: boolean) =>
       isNew
-        ? `${name} neuf en stock à Meknès dès ${from} : scellé, garantie 12 mois, livraison partout au Maroc.`
+        ? `${name} neuf en stock à Meknès dès ${from} : scellé, garantie 12 mois, livraison partout au Maroc.`
         : fit(
             DESC_MAX,
-            `${name} d'occasion en stock à Meknès dès ${from} : état, batterie et pièces affichés pour chaque téléphone, garantie 3 mois, livraison partout au Maroc.`,
-            `${name} d'occasion en stock à Meknès dès ${from} : état, batterie et pièces affichés, garantie 3 mois, livraison partout au Maroc.`,
-            `${name} d'occasion dès ${from} : batterie et pièces affichées, garantie 3 mois, livraison partout au Maroc.`
+            `${name} d'occasion en stock à Meknès dès ${from} : état, batterie et pièces affichés pour chaque téléphone, garantie 3 mois, livraison partout au Maroc.`,
+            `${name} d'occasion en stock à Meknès dès ${from} : état, batterie et pièces affichés, garantie 3 mois, livraison partout au Maroc.`,
+            `${name} d'occasion dès ${from} : batterie et pièces affichées, garantie 3 mois, livraison partout au Maroc.`
           ),
     eyebrow: "Electro Zaki · En stock à Meknès",
     title: (name: string, isNew: boolean) => `${name} ${isNew ? "neuf" : "d'occasion"}`,

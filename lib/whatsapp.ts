@@ -67,7 +67,7 @@ export function buildWhatsAppOrderLink(
     messageParts.push(
       context.receiptUploaded
         ? "Avance de 300 DH : reçu envoyé, en attente de vérification."
-        : "Avance de 300 DH : reçu non encore envoyé."
+        : "Avance de 300 DH : à régler après l'appel de confirmation."
     );
   }
 

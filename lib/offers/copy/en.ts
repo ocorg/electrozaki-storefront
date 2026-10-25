@@ -22,6 +22,8 @@ export const en: OfferCopy = {
       `The ${name} at a promo price. Every phone is checked${battery ? ", its battery health measured and shown" : ""}, and you choose the exact one you receive.`,
     trustBattery: "Battery {min}% and up",
     trust: ["Checked before sale", "3-month warranty", "Delivery anywhere in Morocco"],
+    trustNewWarranty: "12-month warranty",
+    trustPhotos: "Real photos and video on WhatsApp",
   },
 
   form: (name: string) => ({
@@ -179,13 +181,13 @@ export const en: OfferCopy = {
     metaDescription: (name: string, from: string, n: number) =>
       fit(
         DESC_MAX,
-        `Every ${name} on promo at Electro Zaki in Meknes, from ${from}: ${n} models, every phone checked, 3-month warranty, delivery anywhere in Morocco.`,
-        `Every ${name} on promo in Meknes from ${from}: ${n} checked models, 3-month warranty, delivery across Morocco.`
+        `Every ${name} on promo at Electro Zaki in Meknes, from ${from}: ${n} ${n === 1 ? "model" : "models"}, every phone checked, 3-month warranty, delivery anywhere in Morocco.`,
+        `Every ${name} on promo in Meknes from ${from}: ${n} checked ${n === 1 ? "model" : "models"}, 3-month warranty, delivery across Morocco.`
       ),
     eyebrow: "Electro Zaki promo · In stock in Meknes",
     title: (name: string) => `${name} deals`,
     lead: (name: string, n: number) =>
-      `${n} ${name} models on promo, on one page. Choose the model, the condition and the exact phone you receive: each one is checked by our technicians.`,
+      `${n} ${name} ${n === 1 ? "model" : "models"} on promo, on one page. Choose the model, the condition and the exact phone you receive: each one is checked by our technicians.`,
     modelsTitle: "The models on promo",
     modelsIntro: "Each model also has its own page, with its full specifications.",
     phones: (n: number) => `${n} phone${n > 1 ? "s" : ""} on promo`,
@@ -193,7 +195,7 @@ export const en: OfferCopy = {
     upTo: (saving: string) => `up to ${saving} off`,
     seeModel: "See the model",
     cardTitle: (name: string) => `All ${name} deals`,
-    cardTeaser: (n: number) => `${n} models on promo on one page`,
+    cardTeaser: (n: number) => `${n} ${n === 1 ? "model" : "models"} on promo on one page`,
     finalTitle: (name: string) => `Your ${name} on promo is waiting.`,
   },
 

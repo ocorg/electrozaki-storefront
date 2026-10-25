@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "@/components/i18n/Link";
-import { Check, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
+import { Camera, Check, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
 import { formatMAD, savingOf } from "@/lib/format";
 import { swatch } from "@/lib/colors";
@@ -491,9 +491,15 @@ export function ProductVariantExperience({ product, variants, images, categorySl
           </div>
         )}
 
-        <ul className="mt-6 grid gap-2 text-sm text-neutral-700 sm:grid-cols-3">
+        <ul className="mt-6 grid gap-2 text-sm text-neutral-700 sm:grid-cols-2">
           {[
-            { icon: ShieldCheck, text: product.isPhone ? p.trustGuarantee : p.trustChecked },
+            {
+              icon: ShieldCheck,
+              text: product.isPhone ? (product.grade === "NEUF" ? p.trustGuaranteeNew : p.trustGuarantee) : p.trustChecked,
+            },
+            // The shop sends real photos and a video of the exact phone on
+            // WhatsApp once the order is confirmed, before shipping.
+            ...(product.isPhone ? [{ icon: Camera, text: p.trustPhotos }] : []),
             { icon: Truck, text: t.common.deliveryEverywhere },
             { icon: Store, text: p.trustShop },
           ].map((item) => (

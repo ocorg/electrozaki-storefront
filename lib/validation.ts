@@ -28,12 +28,12 @@ export const orderRequestSchema = z.object({
   dataConsentAccepted: z.boolean(),
   // The terms of sale, ticked before every order (law 31-08, art. 30).
   termsAccepted: z.literal(true, { error: "Merci d'accepter les conditions générales de vente pour continuer." }),
-}).refine((data) => !data.requiresAdvance || data.dataConsentAccepted, {
+// The 300 DH advance is arranged on the confirmation call (as on the phone
+// pages): a receipt sent with the order is optional, and only then needs
+// the customer's consent to its processing.
+}).refine((data) => !data.receiptKey || data.dataConsentAccepted, {
   message: "Merci d'accepter le traitement de vos données pour continuer.",
   path: ["dataConsentAccepted"],
-}).refine((data) => !data.requiresAdvance || Boolean(data.receiptKey), {
-  message: "Merci de déposer votre reçu de virement avant de confirmer.",
-  path: ["receiptKey"],
 });
 
 export type OrderRequestInput = z.infer<typeof orderRequestSchema>;

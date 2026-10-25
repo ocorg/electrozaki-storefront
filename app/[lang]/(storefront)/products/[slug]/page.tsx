@@ -29,11 +29,11 @@ import { LOCALE_META, localePath } from "@/lib/i18n/config";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { categoryName, facetOptionName, specRow } from "@/lib/i18n/labels";
 import { alternates } from "@/lib/i18n/seo";
-import { Tag } from "lucide-react";
+import { ArrowRight, Tag } from "lucide-react";
 import { ACCESSORIES_OPEN } from "@/lib/site";
 import { ComingSoon } from "@/components/storefront/ComingSoon";
 import { artFor } from "@/lib/category-art";
-import { offerForListing, offerSlug } from "@/lib/offers/phone-offers";
+import { getModelPages, offerForListing, offerSlug } from "@/lib/offers/phone-offers";
 import { OFFER_COPY } from "@/lib/offers/copy";
 import { SINGLE_SIM_NOTE, factsFor, isSingleSim, specRows } from "@/lib/offers/spec-sheet";
 import { getModelOptions, type ModelListing } from "@/lib/db/model-options";
@@ -276,6 +276,13 @@ export default async function ProductPage({ params }: Props) {
     ...reviewJsonLd(reviews),
   };
 
+  // Sold out: the same model's phones still in stock (its page), so the
+  // visit doesn't end on "Indisponible".
+  const modelInStock =
+    !inStock && product.isPhone && product.modelKey
+      ? ((await getModelPages()).find((m) => m.modelKey === product.modelKey) ?? null)
+      : null;
+
   // A phone's model page sits between the aisle and the listing
   // (Téléphones › iPhone 13 › iPhone 13 128GB): every unit of the model.
   const crumbs = [
@@ -302,6 +309,23 @@ export default async function ProductPage({ params }: Props) {
             {offerBanner.cta}
           </span>
         </Link>
+      )}
+
+      {modelInStock && (
+        <div className="mb-6 rounded-3xl bg-ink p-5 text-white sm:flex sm:items-center sm:justify-between sm:gap-6 sm:p-6">
+          <div>
+            <p className="font-display text-xl font-bold">{t.productPage.soldOutTitle}</p>
+            <p className="mt-1 text-neutral-300">
+              {t.productPage.soldOutText(modelInStock.units.length, modelInStock.name, formatMAD(modelInStock.fromPrice))}
+            </p>
+          </div>
+          <Link
+            href={`/telephones/${modelInStock.slug}`}
+            className="mt-4 inline-flex min-h-12 flex-none items-center gap-2 rounded-full bg-gold px-6 font-bold text-ink transition-[filter] hover:brightness-105 sm:mt-0"
+          >
+            {t.productPage.soldOutCta(modelInStock.name)} <ArrowRight size={18} aria-hidden className="rtl:rotate-180" />
+          </Link>
+        </div>
       )}
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">

@@ -59,7 +59,9 @@ async function loadLiveOffers(locale: Locale): Promise<LiveOffer[]> {
   // phone models on promo in the ERP (/offres/iphone-14…): one each.
   const c = OFFER_COPY[locale];
   const [brandOffers, phoneOffers] = await Promise.all([getBrandOffers(), getPhoneOffers()]);
-  const offers: LiveOffer[] = brandOffers.map((b) => ({
+  // A brand page with a single model on promo would repeat that model's own
+  // card (same phone, same price): only the model's card is listed then.
+  const offers: LiveOffer[] = brandOffers.filter((b) => b.models.length > 1).map((b) => ({
     slug: b.slug,
     href: `/offres/${b.slug}`,
     title: c.brand.cardTitle(b.name),

@@ -35,7 +35,7 @@ export const en: Dictionary = {
     city: "Meknes",
     country: "Morocco",
     deliveryEverywhere: "Delivery anywhere in Morocco",
-    cashOnDelivery: "Cash on delivery",
+    cashOnDelivery: "The rest on delivery",
     searchPlaceholder: "iPhone 13, case, charger…",
     question: "A question?",
     writeUsWhatsapp: "Message us on WhatsApp",
@@ -155,7 +155,7 @@ export const en: Dictionary = {
     aria: "Our promises",
     tiles: [
       { title: "Delivery", value: "All of Morocco" },
-      { title: "Payment", value: "On delivery" },
+      { title: "Payment", value: "300 DH, the rest on delivery" },
       { title: "Warranty", value: "3 months" },
       { title: "Battery", value: "Shown" },
     ],
@@ -206,7 +206,7 @@ export const en: Dictionary = {
     },
     reassurance: [
       { title: "3-month warranty", desc: "On all our phones" },
-      { title: "Delivery anywhere in Morocco", desc: "Cash on delivery" },
+      { title: "Delivery anywhere in Morocco", desc: "300 DH advance, the rest on delivery" },
       { title: "Checked by technicians", desc: "Diagnosed before every sale" },
       { title: "WhatsApp support", desc: "Quick answers, no bots" },
     ],
@@ -330,7 +330,13 @@ export const en: Dictionary = {
     show: "Show results",
   },
 
+  cartToast: { added: "Added to your cart", view: "View cart", close: "Close" },
+
   productPage: {
+    soldOutTitle: "This phone has just been sold.",
+    soldOutText: (n: number, model: string, from: string) =>
+      n === 1 ? `We have 1 other ${model} in stock, at ${from}.` : `We have ${n} other ${model} in stock, from ${from}.`,
+    soldOutCta: (model: string) => `See the ${model} in stock`,
     specs: "Specifications",
     compatible: "Works with",
     sameAisle: "In the same aisle.",
@@ -391,6 +397,8 @@ export const en: Dictionary = {
     waNotify: (name: string) => `Hello, I'd like to be told when this is back: ${name}`,
     notifyWhatsapp: "Get notified on WhatsApp",
     trustGuarantee: "3-month warranty",
+    trustGuaranteeNew: "12-month warranty",
+    trustPhotos: "Real photos and video on WhatsApp before shipping",
     trustChecked: "Checked before sale",
     trustShop: "Shop in Meknes",
     description: "Description",
@@ -855,6 +863,12 @@ export const en: Dictionary = {
     holder: "Account holder",
     copy: "Copy",
     copied: "Copied",
+    advanceNote: (amount: string) =>
+      `For a phone: we call you to confirm, then a ${amount} advance reserves it before shipping. The rest is paid on delivery.`,
+    advanceLater: (amount: string, rest: string) =>
+      `After your order, we call you to confirm it. The ${amount} advance is paid then (bank transfer, CashPlus or Al Barid Bank); the rest (${rest}) is paid on delivery.`,
+    callFirst: "Nothing to pay for now: confirm your order and we'll call you very soon.",
+    payNow: "Prefer to pay the advance now? (optional)",
     whyAdvance: "Why a deposit?",
     whyAdvanceText: "The deposit covers shipping costs and holds your phone for you until delivery.",
     consent:

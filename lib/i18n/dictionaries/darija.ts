@@ -38,7 +38,7 @@ export const darija: Dictionary = {
     city: "Mknas",
     country: "Lmghrib",
     deliveryEverywhere: "Livraison l ga3 lmghrib",
-    cashOnDelivery: "Khlles mnin twslek",
+    cashOnDelivery: "L-ba9i mnin twslek",
     searchPlaceholder: "iPhone 13, coque, chargeur…",
     question: "3ndek chi so2al?",
     writeUsWhatsapp: "Kteb lina f WhatsApp",
@@ -158,7 +158,7 @@ export const darija: Dictionary = {
     aria: "L'engagements dyalna",
     tiles: [
       { title: "Livraison", value: "Ga3 lmghrib" },
-      { title: "Lkhlas", value: "Mnin twslek" },
+      { title: "Lkhlas", value: "300 DH, l-ba9i mnin twslek" },
       { title: "Garantie", value: "3 chhour" },
       { title: "Batterie", value: "Bayna" },
     ],
@@ -209,7 +209,7 @@ export const darija: Dictionary = {
     },
     reassurance: [
       { title: "Garantie 3 chhour", desc: "3la ga3 tilifounat dyalna" },
-      { title: "Livraison l ga3 lmghrib", desc: "Khlles mnin twslek" },
+      { title: "Livraison l ga3 lmghrib", desc: "3arboun 300 DH, l-ba9i mnin twslek" },
       { title: "Techniciens kaychoufo", desc: "Diagnostic 9bel kol bi3" },
       { title: "Support f WhatsApp", desc: "Jawab dghya, bla robot" },
     ],
@@ -316,7 +316,13 @@ export const darija: Dictionary = {
     show: "Werri n-natayej",
   },
 
+  cartToast: { added: "Tzad l panier", view: "Chouf l panier", close: "Sedd" },
+
   productPage: {
+    soldOutTitle: "Had t-téléphone yalah tba3.",
+    soldOutText: (n: number, model: string, from: string) =>
+      n === 1 ? `B9a 3ndna ${model} akhor f stock, b ${from}.` : `B9aw 3ndna ${n} dyal ${model} khrin f stock, men ${from}.`,
+    soldOutCta: (model: string) => `Chouf les ${model} li kaynin`,
     specs: "Caractéristiques",
     compatible: "Kaymchi m3a",
     sameAisle: "F nfs rayon.",
@@ -377,6 +383,8 @@ export const darija: Dictionary = {
     waNotify: (name: string) => `Salam, bghit t3lmouni mnin iwlli kayn: ${name}`,
     notifyWhatsapp: "3lmouni f WhatsApp",
     trustGuarantee: "Garantie 3 chhour",
+    trustGuaranteeNew: "Garantie 12 chhar",
+    trustPhotos: "Tswer w vidéo 7a9i9iyin f WhatsApp 9bel ssift",
     trustChecked: "Mchouf 9bel l bi3",
     trustShop: "L7anout f Mknas",
     description: "Description",
@@ -839,6 +847,12 @@ export const darija: Dictionary = {
     holder: "Mol l compte",
     copy: "Copier",
     copied: "Tcopia",
+    advanceNote: (amount: string) =>
+      `L téléphone: kan3ayto lik nconfirmiw, mn ba3d 3arboun ${amount} kay7jzo 9bel ssift. L-ba9i katkhelso f l-livraison.`,
+    advanceLater: (amount: string, rest: string) =>
+      `Mn ba3d la commande, kan3ayto lik bach nconfirmiwha. 3arboun ${amount} katkhelso mn ba3d (virement, CashPlus wla Al Barid Bank); l-ba9i (${rest}) f l-livraison.`,
+    callFirst: "Walo ma tkhelles daba: confirmi la commande w ghadi n3ayto lik dghya.",
+    payNow: "Bghiti tkhelles 3arboun daba? (ila bghiti)",
     whyAdvance: "3lach had l3arboun?",
     whyAdvanceText: "Had l3arboun kaygetti masarif l livraison w kay7jez lik téléphone 7tal iwslek.",
     consent: "Mwafe9 belli les données dyali w l reçu dyal banque ytkhdmo b sirriya, 7sab l9anoun dyal CNDP.",

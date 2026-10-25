@@ -90,8 +90,10 @@ export default function CartPage() {
     address: deliveryAddress.trim().length >= 10,
   };
   const paymentChecks: Record<PaymentField, boolean> = {
-    receipt: !requiresAdvance || Boolean(receipt),
-    consent: !requiresAdvance || dataConsentAccepted,
+    // The advance is arranged on the confirmation call (as on the phone
+    // pages); a receipt sent now is optional, and only then needs consent.
+    receipt: true,
+    consent: !receipt || dataConsentAccepted,
     terms: termsAccepted,
   };
   const missingDelivery = (Object.keys(deliveryChecks) as DeliveryField[]).filter((f) => !deliveryChecks[f]);
@@ -374,6 +376,13 @@ export default function CartPage() {
             </div>
           </div>
 
+          {requiresAdvance && (
+            <p className="mt-4 flex items-start gap-2 rounded-2xl bg-gold/8 px-4 py-3 text-sm text-neutral-700 ring-1 ring-gold/30">
+              <Wallet size={16} className="mt-0.5 flex-none text-gold-deep" aria-hidden />
+              {c.advanceNote(formatMAD(ADVANCE))}
+            </p>
+          )}
+
           <Button
             type="button"
             onClick={() => {
@@ -540,8 +549,11 @@ export default function CartPage() {
                   <Wallet size={16} className="text-gold-deep" aria-hidden />
                   {c.advanceTitle(formatMAD(ADVANCE))}
                 </p>
-                <p className="mt-1 text-sm text-neutral-700">{c.advanceText(formatMAD(ADVANCE), formatMAD(discountedTotal - ADVANCE))}</p>
-                <PaymentAccounts />
+                <p className="mt-1 text-sm text-neutral-700">{c.advanceLater(formatMAD(ADVANCE), formatMAD(discountedTotal - ADVANCE))}</p>
+                <p className="mt-2 flex items-start gap-2 text-sm text-neutral-700">
+                  <Phone size={15} aria-hidden className="mt-0.5 flex-none text-gold-deep" />
+                  {c.callFirst}
+                </p>
 
                 <details className="mt-3 rounded-lg bg-white p-3 text-sm shadow-sm">
                   <summary className="cursor-pointer font-medium">{c.whyAdvance}</summary>
@@ -549,21 +561,20 @@ export default function CartPage() {
                 </details>
               </div>
 
-              <div
-                ref={(el) => {
-                  fieldRefs.current.receipt = el;
-                }}
-                className={`scroll-mt-28 rounded-2xl ${showPaymentError("receipt") ? "p-2 ring-2 ring-red-500" : ""}`}
-              >
-                <ReceiptUpload onUploadedAction={setReceipt} />
-                {showPaymentError("receipt") && <FieldError id="checkout-receipt-error">{k.errors.receipt}</FieldError>}
-              </div>
+              {/* Paying the advance right away is possible, never required. */}
+              <details className="rounded-2xl bg-white p-4 text-sm ring-1 ring-ink/7" open={Boolean(receipt)}>
+                <summary className="cursor-pointer font-semibold text-ink">{c.payNow}</summary>
+                <div className="mt-3 space-y-3">
+                  <PaymentAccounts />
+                  <ReceiptUpload onUploadedAction={setReceipt} />
+                </div>
+              </details>
 
               <div
                 ref={(el) => {
                   fieldRefs.current.consent = el;
                 }}
-                className="scroll-mt-28"
+                className={`scroll-mt-28 ${receipt ? "" : "hidden"}`}
               >
                 <label
                   className={`flex items-start gap-2.5 rounded-xl p-2 text-xs text-neutral-600 ${showPaymentError("consent") ? "ring-2 ring-red-500" : ""}`}

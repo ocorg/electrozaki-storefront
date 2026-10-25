@@ -103,7 +103,9 @@ export default async function HomePage() {
             <ControlCenter />
           </div>
 
-          <div className="relative mx-auto w-full max-w-[640px] lg:h-[660px]">
+          {/* The showcase phone: on a phone screen it pushed the first phone
+              for sale two screens down, so it starts at tablet size. */}
+          <div className="relative mx-auto hidden w-full max-w-[640px] md:block lg:h-[660px]">
             {/* Brass halo behind the phone */}
             <div
               aria-hidden
@@ -311,9 +313,9 @@ export default async function HomePage() {
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-neutral-300">{h.transparency.gradesTitle}</p>
               <ul className="mt-5 divide-y divide-white/10">
                 {GRADES.map((g) => (
-                  <li key={g} className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 py-3.5">
+                  <li key={g} className="flex flex-col gap-1 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
                     <GradeMeter grade={g} tone="dark" size="md" />
-                    <span className="text-sm text-neutral-300">{t.grades.hint[g]}</span>
+                    <span className="min-w-0 text-sm text-neutral-300 sm:text-end">{t.grades.hint[g]}</span>
                   </li>
                 ))}
               </ul>

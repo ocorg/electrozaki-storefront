@@ -37,6 +37,8 @@ type CartContextValue = {
   clear: () => void;
   totalItems: number;
   totalPrice: number;
+  /** the last line the customer added (not a free gift), for the "added" message */
+  lastAdded: { name: string; at: number } | null;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -57,6 +59,7 @@ function sameLine(a: LineKey, b: LineKey) {
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
+  const [lastAdded, setLastAdded] = useState<CartContextValue["lastAdded"]>(null);
 
   // Load any cart left over from a previous visit, once, on the client.
   useEffect(() => {
@@ -85,6 +88,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!item.isGift) {
       track({ t: "add_to_cart", pid: item.productId, v: item.price * quantity });
       metaTrack("AddToCart", { value: item.price * quantity, content_ids: [catalogId(item)], content_type: "product", content_name: item.productName });
+      setLastAdded({ name: item.productName, at: Date.now() });
     }
     setItems((prev) => {
       const existing = prev.find((line) => sameLine(line, item));
@@ -121,7 +125,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clear, totalItems, totalPrice }}
+      value={{ items, addItem, removeItem, updateQuantity, clear, totalItems, totalPrice, lastAdded }}
     >
       {children}
     </CartContext.Provider>
