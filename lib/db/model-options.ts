@@ -82,3 +82,24 @@ export async function getManyModelOptions(modelKeys: string[]): Promise<Map<stri
   ]);
   return new Map(keys.map((k) => [k, buildOptions(photos.filter((p) => p.modelKey === k), rows.filter((r) => r.modelKey === k))]));
 }
+
+/**
+ * Which colour each model photo shows (the ERP's photo per model + colour),
+ * by photo address: lets every photo be described as "iPhone 13 - Rouge".
+ */
+export async function getPhotoColors(modelKeys: string[]): Promise<Map<string, string>> {
+  const keys = [...new Set(modelKeys.filter(Boolean))];
+  if (!keys.length) return new Map();
+  const rows = await prisma.modelPhoto.findMany({ where: { modelKey: { in: keys } }, select: { url: true, color: true } });
+  return new Map(rows.map((r) => [r.url, r.color]));
+}
+
+/**
+ * Every model photo's colour (ERP "Catalogue du site → Photo téléphone"),
+ * read once per page render: lists of product cards describe each cover
+ * without a query per card.
+ */
+export const getAllPhotoColors = cache(async (): Promise<Map<string, string>> => {
+  const rows = await prisma.modelPhoto.findMany({ select: { url: true, color: true } });
+  return new Map(rows.map((r) => [r.url, r.color]));
+});

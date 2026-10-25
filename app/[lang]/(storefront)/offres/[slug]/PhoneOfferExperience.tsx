@@ -42,6 +42,7 @@ import { track } from "@/components/analytics/track";
 import { metaTrack } from "@/components/analytics/meta";
 import { submitOfferOrder } from "./actions";
 import { TermsCheckbox } from "@/components/cart/TermsCheckbox";
+import { photoAlt } from "@/components/storefront/photo-alt";
 
 const ADVANCE = 300;
 
@@ -91,7 +92,7 @@ type Props = {
   hero: OfferHero;
   copy: OfferFormCopy;
   units: PhoneOfferUnit[];
-  images: { url: string; altText: string | null }[];
+  images: { url: string; altText: string | null; color?: string | null }[];
   addons: OfferAddon[];
   /** each model's spec sheet, by its offer slug; the storage row holds STORAGE_SLOT */
   sheets: Record<string, SpecRow[]>;
@@ -220,13 +221,20 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
   const total = (unit?.price ?? 0) + addonsTotal + fee;
   const saving = unit && unit.normalPrice > unit.price ? unit.normalPrice - unit.price : 0;
 
+  // Each photo described by its colour ("iPhone 13 - Rouge"): the ERP's
+  // model photos, else the colour of the units shown in it.
+  const colorOf = (url: string, own?: string | null) => own ?? units.find((u) => u.imageUrl === url)?.color ?? null;
+  const described = (img: { url: string; color?: string | null }, i: number) => ({
+    url: img.url,
+    altText: photoAlt(t, name, colorOf(img.url, img.color), i),
+  });
   // The chosen unit's photo, unless the customer is browsing the gallery.
-  const gallery = images.length ? images : unit?.imageUrl ? [{ url: unit.imageUrl, altText: null }] : [];
+  const gallery = (images.length ? images : unit?.imageUrl ? [{ url: unit.imageUrl, color: unit.color }] : []).map(described);
   const shown =
     imageIndex !== null && gallery[imageIndex]
       ? gallery[imageIndex]
       : unit?.imageUrl
-        ? { url: unit.imageUrl, altText: null }
+        ? described({ url: unit.imageUrl, color: unit.color }, 0)
         : (gallery[0] ?? null);
 
   // After any change of filter, keep the chosen phone if it still matches,
@@ -387,7 +395,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                   shown?.url === img.url ? "border-ink" : "border-transparent hover:border-ink/20"
                 }`}
               >
-                <Image src={img.url} alt={`${name} - ${t.pdp.photo(i + 1)}`} fill sizes="72px" className="object-contain p-1.5" />
+                <Image src={img.url} alt={img.altText} fill sizes="72px" className="object-contain p-1.5" />
               </button>
             ))}
           </div>

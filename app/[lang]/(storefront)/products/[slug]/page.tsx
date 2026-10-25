@@ -36,7 +36,7 @@ import { artFor } from "@/lib/category-art";
 import { getModelPages, offerForListing, offerSlug } from "@/lib/offers/phone-offers";
 import { OFFER_COPY } from "@/lib/offers/copy";
 import { SINGLE_SIM_NOTE, factsFor, isSingleSim, specRows } from "@/lib/offers/spec-sheet";
-import { getModelOptions, type ModelListing } from "@/lib/db/model-options";
+import { getModelOptions, getPhotoColors, type ModelListing } from "@/lib/db/model-options";
 import { InspectionReport } from "@/components/storefront/InspectionReport";
 import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { getReviewSummary, reviewJsonLd } from "@/lib/reviews";
@@ -178,6 +178,8 @@ export default async function ProductPage({ params }: Props) {
   // listings (grade, storage), the sold-out ones shown crossed out.
   const modelOptions = product.isPhone && product.modelKey ? await getModelOptions(product.modelKey) : null;
   const siblings = modelOptions ? modelSiblings(modelOptions.listings, product.slug) : undefined;
+  // Which colour each photo shows (its description: "iPhone 13 128GB - Rouge").
+  const photoColor = product.modelKey ? await getPhotoColors([product.modelKey]) : new Map<string, string>();
   const giftOptions = product.compatibleAccessories.filter((c) => c.isGiftOption);
 
   // Prisma Decimal fields (and the whole product/variant shape generally)
@@ -332,7 +334,7 @@ export default async function ProductPage({ params }: Props) {
         <ProductVariantExperience
           product={productData}
           variants={variantsData}
-          images={product.images.map((i) => ({ url: i.url, altText: i.altText }))}
+          images={product.images.map((i) => ({ url: i.url, altText: i.altText, color: photoColor.get(i.url) ?? null }))}
           categorySlug={product.category.slug}
         >
           {product.isPhone && (

@@ -19,6 +19,7 @@ import { Select } from "@/components/ui/Select";
 import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
 import { useT } from "@/components/i18n/I18nProvider";
 import { colorName } from "@/lib/i18n/labels";
+import { photoAlt } from "@/components/storefront/photo-alt";
 import { metaTrack } from "@/components/analytics/meta";
 
 export type VariantData = ConditionData & {
@@ -66,7 +67,8 @@ export type ProductVariantExperienceData = {
 type Props = {
   product: ProductVariantExperienceData;
   variants: VariantData[];
-  images: { url: string; altText: string | null }[];
+  /** `color`: the photo's colour when known, for its description */
+  images: { url: string; altText: string | null; color?: string | null }[];
   categorySlug: string;
   children?: ReactNode; // static content (specs/compatibility/gift/bundle) rendered after the transparency block
 };
@@ -77,8 +79,14 @@ function pick<T>(variantValue: T | null | undefined, productValue: T): T {
   return variantValue === null || variantValue === undefined ? productValue : variantValue;
 }
 
-export function ProductVariantExperience({ product, variants, images, categorySlug, children }: Props) {
+export function ProductVariantExperience({ product, variants, images: photos, categorySlug, children }: Props) {
   const t = useT();
+  // Each photo described by its colour ("iPhone 13 128GB - Rouge"), from the
+  // ERP's model photos or the units shown in it.
+  const images = photos.map((img, i) => ({
+    url: img.url,
+    altText: photoAlt(t, product.name, img.color ?? variants.find((v) => v.imageUrl === img.url)?.color, i),
+  }));
   // Product page seen: Meta's "ViewContent". A used phone's units are separate
   // catalogue items, so the listing is reported as their group.
   const catalogGroup = product.isPhone && variants.length > 0;
@@ -158,7 +166,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
   const wasPrice = selectedVariant?.priceOverride ? selectedVariant.compareAtPrice : product.compareAtPrice;
   const saving = savingOf(price, wasPrice);
   const displayImage = selectedVariant?.imageUrl
-    ? { url: selectedVariant.imageUrl, altText: product.name }
+    ? { url: selectedVariant.imageUrl, altText: photoAlt(t, product.name, selectedVariant.color, 0) }
     : coverImage;
 
   const condition: ConditionData = {
@@ -252,7 +260,7 @@ export function ProductVariantExperience({ product, variants, images, categorySl
                   i === imageIndex ? "border-ink" : "border-transparent hover:border-ink/20"
                 }`}
               >
-                <Image src={img.url} alt={`${product.name} - ${p.photo(i + 1)}`} fill sizes="80px" className="object-contain p-1.5" />
+                <Image src={img.url} alt={img.altText} fill sizes="80px" className="object-contain p-1.5" />
               </button>
             ))}
           </div>

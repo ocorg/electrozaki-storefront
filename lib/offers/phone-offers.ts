@@ -5,7 +5,7 @@ import { landingStatus } from "@/lib/db/landing";
 import { MAX_QTY } from "@/lib/db/cart-pricing";
 import { ACCESSORIES_OPEN } from "@/lib/site";
 import { MODEL_FACTS, type ModelFacts } from "./models";
-import { getManyModelOptions } from "@/lib/db/model-options";
+import { getManyModelOptions, getPhotoColors } from "@/lib/db/model-options";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Phone offer pages (/offres/<model>): one page per phone model that has
@@ -80,7 +80,8 @@ export type PhoneOffer = {
   units: PhoneOfferUnit[];
   /** listings the units belong to (product page banners) */
   listingSlugs: string[];
-  images: { url: string; altText: string | null }[];
+  /** the photo's colour when known (alt text "iPhone 13 - Rouge") */
+  images: { url: string; altText: string | null; color?: string | null }[];
   addons: OfferAddon[];
   fromPrice: number;
   /** normal price of the cheapest unit */
@@ -183,7 +184,7 @@ async function loadOffers(kind: "promo" | "model"): Promise<PhoneOffer[]> {
   const pageBySlug = new Map(pages.map((p) => [p.slug, p]));
 
   // Every model's options in one go (not one model after the other).
-  const optionsByModel = await getManyModelOptions([...byModel.keys()]);
+  const [optionsByModel, photoColor] = await Promise.all([getManyModelOptions([...byModel.keys()]), getPhotoColors([...byModel.keys()])]);
 
   const offers: PhoneOffer[] = [];
   for (const [modelKey, group] of byModel) {
@@ -230,7 +231,8 @@ async function loadOffers(kind: "promo" | "model"): Promise<PhoneOffer[]> {
       .sort((a, b) => b.variants.length - a.variants.length)
       .flatMap((p) => p.images)
       .filter((i) => !seen.has(i.url) && seen.add(i.url))
-      .slice(0, 8);
+      .slice(0, 8)
+      .map((i) => ({ ...i, color: photoColor.get(i.url) ?? null }));
 
     const cheapest = units.reduce((min, u) => (u.price < min.price ? u : min));
     const storages = [...new Set(units.map((u) => u.storage).filter((s): s is string => !!s))].sort(

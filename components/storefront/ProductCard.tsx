@@ -3,6 +3,8 @@ import Link from "@/components/i18n/Link";
 import { formatMAD, savingOf } from "@/lib/format";
 import type { PublicProduct } from "@/lib/db/public-products";
 import { getT } from "@/lib/i18n/server";
+import { photoAlt } from "@/components/storefront/photo-alt";
+import { getAllPhotoColors } from "@/lib/db/model-options";
 import { categoryName } from "@/lib/i18n/labels";
 import { ProductVisual } from "@/components/storefront/ProductVisual";
 import { BatteryLevel, GradeMeter } from "@/components/storefront/GradeMeter";
@@ -18,7 +20,13 @@ export async function ProductCard({
   fiche?: { fits?: string; traits: string[] };
 }) {
   const t = await getT();
-  const cover = product.images[0];
+  // The cover described by its colour ("iPhone 13 128GB - Rouge"): the ERP's
+  // photo per model + colour, else a unit shown in it; just the name otherwise.
+  const coverPhoto = product.images[0];
+  const coverColor = coverPhoto
+    ? ((await getAllPhotoColors()).get(coverPhoto.url) ?? product.variants.find((v) => v.imageUrl === coverPhoto.url)?.color ?? null)
+    : null;
+  const cover = coverPhoto ? { ...coverPhoto, altText: coverColor ? photoAlt(t, product.name, coverColor, 0) : product.name } : coverPhoto;
   const isSoldOut = product.availability === "OUT_OF_STOCK" || product.availability === "DISCONTINUED";
   const isComingSoon = product.availability === "COMING_SOON";
   const inStockUnits = product.variants.filter((v) => v.stockQuantity > 0);
