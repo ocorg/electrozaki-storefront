@@ -1,4 +1,5 @@
 import type { Dictionary } from "./fr";
+import { DESC_MAX, TITLE_MAX, fit } from "../../seo-fit";
 
 // Arabic (Modern Standard, as read in Morocco). Numbers stay in Western
 // digits, the way prices and phone numbers are written in Morocco.
@@ -339,12 +340,31 @@ export const ar: Dictionary = {
     sameAisle: "في نفس القسم.",
     alsoSee: "قد يعجبك أيضًا.",
     wholeAisle: (name: string) => `كل قسم ${name}`,
-    metaTitle: (name: string, condition: string | null, used: boolean, price: string) =>
-      used ? `${name} مستعمل، ${condition} - ${price}` : condition ? `${name} جديد - ${price}` : `${name} - ${price}`,
-    metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
-      `${name}${used ? " مستعمل" : condition ? " جديد" : ""}${used && condition ? ` (${condition})` : ""} بـ ${price} عند إلكترو زكي، مكناس. ${
-        used ? "الحالة والبطارية والقطع معروضة، ضمان 3 أشهر. " : condition ? "جديد ومغلق، ضمان 12 شهرًا. " : ""
-      }التوصيل إلى جميع أنحاء المغرب.`,
+    metaTitle: (name: string, condition: string | null, used: boolean, price: string) => {
+      const c = condition ?? "";
+      return used
+        ? fit(TITLE_MAX, `${name} مستعمل، ${c} - ${price}`, `${name} مستعمل ${c} - ${price}`, `${name}، ${c} - ${price}`, `${name} ${c}`)
+        : condition
+          ? `${name} جديد - ${price}`
+          : `${name} - ${price}`;
+    },
+    metaDescription: (name: string, condition: string | null, price: string, used: boolean) => {
+      const c = condition ?? "";
+      if (used)
+        return fit(
+          DESC_MAX,
+          `${name} مستعمل (${c}) بـ ${price} عند إلكترو زكي، مكناس. الحالة والبطارية والقطع معروضة، ضمان 3 أشهر. التوصيل إلى جميع أنحاء المغرب.`,
+          `${name} مستعمل (${c}) بـ ${price}، مكناس. الحالة والبطارية والقطع معروضة، ضمان 3 أشهر، التوصيل لكل المغرب.`,
+          `${name} (${c}) بـ ${price}. البطارية والقطع معروضة، ضمان 3 أشهر، التوصيل لكل المغرب.`
+        );
+      if (condition)
+        return fit(
+          DESC_MAX,
+          `${name} جديد بـ ${price} عند إلكترو زكي، مكناس. جديد ومغلق، ضمان 12 شهرًا. التوصيل إلى جميع أنحاء المغرب.`,
+          `${name} جديد ومغلق بـ ${price}، مكناس. ضمان 12 شهرًا، التوصيل لكل المغرب.`
+        );
+      return fit(DESC_MAX, `${name} بـ ${price} عند إلكترو زكي، مكناس. التوصيل إلى جميع أنحاء المغرب.`, `${name} بـ ${price}، مكناس. التوصيل لكل المغرب.`);
+    },
   },
 
   pdp: {

@@ -22,6 +22,7 @@ import { ScreenTest } from "@/components/guides/ScreenTest";
 import { PartsHistory } from "@/components/guides/PartsHistory";
 import { PartsDiagram } from "@/components/guides/PartsDiagram";
 import { PriceChart } from "@/components/guides/PriceChart";
+import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 // A buying guide (/guides/<slug>). Text in lib/guides; guide 2's price
 // example comes from live stock. Cached an hour, refreshed by the ERP.
@@ -42,8 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const guide = guidesText(locale).guides[slug];
   const alt = alternates(locale, `/guides/${slug}`);
   return {
-    title: guide.metaTitle,
-    description: guide.metaDescription,
+    title: pageTitle(guide.metaTitle),
+    description: clipDescription(guide.metaDescription),
     alternates: alt,
     openGraph: { type: "article", title: `${guide.metaTitle} | Electro Zaki`, description: guide.metaDescription, url: alt.canonical },
   };

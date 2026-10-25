@@ -1,4 +1,5 @@
 import type { Dictionary } from "./fr";
+import { DESC_MAX, TITLE_MAX, fit } from "../../seo-fit";
 
 // English. Prices stay in DH, the way they're written in Morocco.
 export const en: Dictionary = {
@@ -335,12 +336,31 @@ export const en: Dictionary = {
     sameAisle: "In the same aisle.",
     alsoSee: "You may also like.",
     wholeAisle: (name: string) => `All ${name}`,
-    metaTitle: (name: string, condition: string | null, used: boolean, price: string) =>
-      used ? `Used ${name}, ${condition?.toLowerCase()} - ${price}` : condition ? `New ${name} - ${price}` : `${name} - ${price}`,
-    metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
-      `${used ? "Used " : condition ? "New " : ""}${name}${used && condition ? ` (${condition.toLowerCase()})` : ""} for ${price} at Electro Zaki, Meknes. ${
-        used ? "Condition, battery and parts shown, 3-month warranty. " : condition ? "New, sealed, 12-month warranty. " : ""
-      }Delivery anywhere in Morocco.`,
+    metaTitle: (name: string, condition: string | null, used: boolean, price: string) => {
+      const c = condition?.toLowerCase() ?? "";
+      return used
+        ? fit(TITLE_MAX, `Used ${name}, ${c} - ${price}`, `Used ${name} ${c} - ${price}`, `${name}, ${c} - ${price}`, `${name} ${c}`)
+        : condition
+          ? `New ${name} - ${price}`
+          : `${name} - ${price}`;
+    },
+    metaDescription: (name: string, condition: string | null, price: string, used: boolean) => {
+      const c = condition?.toLowerCase() ?? "";
+      if (used)
+        return fit(
+          DESC_MAX,
+          `Used ${name} (${c}) for ${price} at Electro Zaki, Meknes. Condition, battery and parts shown, 3-month warranty. Delivery anywhere in Morocco.`,
+          `Used ${name} (${c}) for ${price}, Meknes. Condition, battery and parts shown, 3-month warranty, delivery across Morocco.`,
+          `${name} (${c}) for ${price}. Battery and parts shown, 3-month warranty, delivery across Morocco.`
+        );
+      if (condition)
+        return fit(
+          DESC_MAX,
+          `New ${name} for ${price} at Electro Zaki, Meknes. New, sealed, 12-month warranty. Delivery anywhere in Morocco.`,
+          `New, sealed ${name} for ${price}, Meknes. 12-month warranty, delivery across Morocco.`
+        );
+      return fit(DESC_MAX, `${name} for ${price} at Electro Zaki, Meknes. Delivery anywhere in Morocco.`, `${name} for ${price}, Meknes. Delivery across Morocco.`);
+    },
   },
 
   pdp: {

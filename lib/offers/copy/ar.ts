@@ -1,4 +1,5 @@
 import type { OfferCopy } from "./fr";
+import { DESC_MAX, TITLE_MAX, fit } from "@/lib/seo-fit";
 
 // Text of the phone offer pages — Arabic.
 export const ar: OfferCopy = {
@@ -189,11 +190,18 @@ export const ar: OfferCopy = {
   },
 
   model: {
-    metaTitle: (name: string, from: string, isNew: boolean) => `${name} ${isNew ? "جديد" : "مستعمل"} في مكناس، ابتداءً من ${from}`,
+    metaTitle: (name: string, from: string, isNew: boolean) => {
+      const kind = isNew ? "جديد" : "مستعمل";
+      return fit(TITLE_MAX, `${name} ${kind} في مكناس، ابتداءً من ${from}`, `${name} ${kind} في مكناس من ${from}`, `${name} ${kind}، من ${from}`);
+    },
     metaDescription: (name: string, from: string, isNew: boolean) =>
       isNew
         ? `${name} جديد متوفر في مكناس ابتداءً من ${from}: مغلق، ضمان 12 شهرًا، والتوصيل إلى جميع أنحاء المغرب.`
-        : `${name} مستعمل متوفر في مكناس ابتداءً من ${from}: الحالة والبطارية والقطع معروضة لكل هاتف، ضمان 3 أشهر، والتوصيل إلى جميع أنحاء المغرب.`,
+        : fit(
+            DESC_MAX,
+            `${name} مستعمل متوفر في مكناس ابتداءً من ${from}: الحالة والبطارية والقطع معروضة لكل هاتف، ضمان 3 أشهر، والتوصيل إلى جميع أنحاء المغرب.`,
+            `${name} مستعمل متوفر في مكناس ابتداءً من ${from}: الحالة والبطارية والقطع معروضة، ضمان 3 أشهر، التوصيل لكل المغرب.`
+          ),
     eyebrow: "إلكترو زكي · متوفر في مكناس",
     title: (name: string, isNew: boolean) => `${name} ${isNew ? "جديد" : "مستعمل"}`,
     priceLabel: "الثمن",

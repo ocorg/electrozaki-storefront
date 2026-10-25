@@ -6,6 +6,7 @@ import { formatMAD } from "@/lib/format";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { categoryName } from "@/lib/i18n/labels";
 import { alternates } from "@/lib/i18n/seo";
+import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 // Every product and its price on one plain page: for a visitor comparing
 // prices, and for assistants and crawlers (Meta's WhatsApp agent among them)
@@ -14,7 +15,7 @@ export const revalidate = 300;
 
 export async function generateMetadata(): Promise<Metadata> {
   const [t, locale] = await Promise.all([getT(), getLocale()]);
-  return { title: t.pricesPage.metaTitle, description: t.pricesPage.metaDescription, alternates: alternates(locale, "/prix") };
+  return { title: pageTitle(t.pricesPage.metaTitle), description: clipDescription(t.pricesPage.metaDescription), alternates: alternates(locale, "/prix") };
 }
 
 /** The price a customer pays: the cheapest unit in stock for a used phone. */

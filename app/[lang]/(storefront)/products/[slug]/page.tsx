@@ -40,6 +40,7 @@ import { getModelOptions, type ModelListing } from "@/lib/db/model-options";
 import { InspectionReport } from "@/components/storefront/InspectionReport";
 import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { getReviewSummary, reviewJsonLd } from "@/lib/reviews";
+import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 export const revalidate = 3600;
 
@@ -93,8 +94,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const cover = product.images[0];
   const alt = alternates(locale, `/products/${slug}`);
   return {
-    title,
-    description,
+    title: pageTitle(title),
+    description: clipDescription(description),
     alternates: alt,
     openGraph: {
       type: "website",

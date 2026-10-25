@@ -1,4 +1,5 @@
 import type { Dictionary } from "./fr";
+import { DESC_MAX, TITLE_MAX, fit } from "../../seo-fit";
 
 // Moroccan Darija, written the way people text it: Latin letters, numbers
 // for the sounds French letters don't have (3 = ع, 7 = ح, 9 = ق, 2 = ء,
@@ -321,12 +322,31 @@ export const darija: Dictionary = {
     sameAisle: "F nfs rayon.",
     alsoSee: "Chouf 7ta hado.",
     wholeAisle: (name: string) => `Ga3 rayon ${name}`,
-    metaTitle: (name: string, condition: string | null, used: boolean, price: string) =>
-      used ? `${name} mosta3mal, ${condition} - ${price}` : condition ? `${name} jdid - ${price}` : `${name} - ${price}`,
-    metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
-      `${name}${used ? " mosta3mal" : condition ? " jdid" : ""}${used && condition ? ` (${condition})` : ""} b ${price} 3nd Electro Zaki, Mknas. ${
-        used ? "L7ala, l batterie w l pièces bayna, garantie 3 chhour. " : condition ? "Jdid, msdoud, garantie 12 chhar. " : ""
-      }Livraison l ga3 lmghrib.`,
+    metaTitle: (name: string, condition: string | null, used: boolean, price: string) => {
+      const c = condition ?? "";
+      return used
+        ? fit(TITLE_MAX, `${name} mosta3mal, ${c} - ${price}`, `${name} mosta3mal ${c} - ${price}`, `${name}, ${c} - ${price}`, `${name} ${c}`)
+        : condition
+          ? `${name} jdid - ${price}`
+          : `${name} - ${price}`;
+    },
+    metaDescription: (name: string, condition: string | null, price: string, used: boolean) => {
+      const c = condition ?? "";
+      if (used)
+        return fit(
+          DESC_MAX,
+          `${name} mosta3mal (${c}) b ${price} 3nd Electro Zaki, Mknas. L7ala, l batterie w l pièces bayna, garantie 3 chhour. Livraison l ga3 lmghrib.`,
+          `${name} mosta3mal (${c}) b ${price}, Mknas. L7ala, l batterie w l pièces bayna, garantie 3 chhour, livraison l ga3 lmghrib.`,
+          `${name} (${c}) b ${price}. L batterie w l pièces bayna, garantie 3 chhour, livraison l ga3 lmghrib.`
+        );
+      if (condition)
+        return fit(
+          DESC_MAX,
+          `${name} jdid b ${price} 3nd Electro Zaki, Mknas. Jdid, msdoud, garantie 12 chhar. Livraison l ga3 lmghrib.`,
+          `${name} jdid msdoud b ${price}, Mknas. Garantie 12 chhar, livraison l ga3 lmghrib.`
+        );
+      return fit(DESC_MAX, `${name} b ${price} 3nd Electro Zaki, Mknas. Livraison l ga3 lmghrib.`, `${name} b ${price}, Mknas. Livraison l ga3 lmghrib.`);
+    },
   },
 
   pdp: {

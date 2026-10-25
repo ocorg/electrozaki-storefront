@@ -3,7 +3,7 @@ import type { TermsCopy } from "./types";
 export const fr: TermsCopy = {
   metaTitle: "Conditions générales de vente et retours (7 jours)",
   metaDescription:
-    "Conditions de vente d'Electro Zaki : commande, avance de 300 DH, livraison Ameex partout au Maroc, droit de retour de 7 jours, garantie 3 mois (occasion) ou 12 mois (neuf).",
+    "Conditions de vente Electro Zaki : avance de 300 DH, livraison Ameex partout au Maroc, retour sous 7 jours, garantie 3 mois (occasion) ou 12 mois (neuf).",
   title: "Conditions générales de vente",
   updated: (date) => `Mise à jour : ${date}`,
   intro:

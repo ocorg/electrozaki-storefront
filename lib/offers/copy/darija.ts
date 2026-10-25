@@ -1,4 +1,5 @@
 import type { OfferCopy } from "./fr";
+import { DESC_MAX, TITLE_MAX, fit } from "@/lib/seo-fit";
 
 // Text of the phone offer pages — Darija (Latin letters + numbers).
 export const darija: OfferCopy = {
@@ -189,11 +190,18 @@ export const darija: OfferCopy = {
   },
 
   model: {
-    metaTitle: (name: string, from: string, isNew: boolean) => `${name} ${isNew ? "jdid" : "mosta3mal"} f Mknas, men ${from}`,
+    metaTitle: (name: string, from: string, isNew: boolean) => {
+      const kind = isNew ? "jdid" : "mosta3mal";
+      return fit(TITLE_MAX, `${name} ${kind} f Mknas, men ${from}`, `${name} ${kind} f Mknas men ${from}`, `${name} ${kind}, men ${from}`);
+    },
     metaDescription: (name: string, from: string, isNew: boolean) =>
       isNew
         ? `${name} jdid kayn f Mknas men ${from}: msdoud, garantie 12 chhar, livraison l ga3 lmghrib.`
-        : `${name} mosta3mal kayn f Mknas men ${from}: l7ala, l batterie w l pièces bayna l kol téléphone, garantie 3 chhour, livraison l ga3 lmghrib.`,
+        : fit(
+            DESC_MAX,
+            `${name} mosta3mal kayn f Mknas men ${from}: l7ala, l batterie w l pièces bayna l kol téléphone, garantie 3 chhour, livraison l ga3 lmghrib.`,
+            `${name} mosta3mal f Mknas men ${from}: l batterie w l pièces bayna, garantie 3 chhour, livraison l ga3 lmghrib.`
+          ),
     eyebrow: "Electro Zaki · Kayn f Mknas",
     title: (name: string, isNew: boolean) => `${name} ${isNew ? "jdid" : "mosta3mal"}`,
     priceLabel: "Taman",

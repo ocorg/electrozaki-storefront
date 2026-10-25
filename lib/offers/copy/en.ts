@@ -1,11 +1,16 @@
 import type { OfferCopy } from "./fr";
+import { DESC_MAX, TITLE_MAX, fit } from "@/lib/seo-fit";
 
 // Text of the phone offer pages — English.
 export const en: OfferCopy = {
   meta: {
     title: (name: string, from: string) => `${name} on promo from ${from}`,
     description: (name: string, from: string) =>
-      `${name} checked by our technicians in Meknes, on promo from ${from}. You choose the exact phone you receive, 3-month warranty, delivery anywhere in Morocco.`,
+      fit(
+        DESC_MAX,
+        `${name} checked by our technicians in Meknes, on promo from ${from}. You choose the exact phone you receive, 3-month warranty, delivery anywhere in Morocco.`,
+        `${name} checked in Meknes, on promo from ${from}. You choose the exact phone, 3-month warranty, delivery across Morocco.`
+      ),
   },
 
   hero: {
@@ -172,7 +177,11 @@ export const en: OfferCopy = {
   brand: {
     metaTitle: (name: string, from: string) => `${name} deals from ${from}`,
     metaDescription: (name: string, from: string, n: number) =>
-      `Every ${name} on promo at Electro Zaki in Meknes, from ${from}: ${n} models, every phone checked, 3-month warranty, delivery anywhere in Morocco.`,
+      fit(
+        DESC_MAX,
+        `Every ${name} on promo at Electro Zaki in Meknes, from ${from}: ${n} models, every phone checked, 3-month warranty, delivery anywhere in Morocco.`,
+        `Every ${name} on promo in Meknes from ${from}: ${n} checked models, 3-month warranty, delivery across Morocco.`
+      ),
     eyebrow: "Electro Zaki promo · In stock in Meknes",
     title: (name: string) => `${name} deals`,
     lead: (name: string, n: number) =>
@@ -189,11 +198,19 @@ export const en: OfferCopy = {
   },
 
   model: {
-    metaTitle: (name: string, from: string, isNew: boolean) => `${isNew ? "New" : "Used"} ${name} in Meknes, from ${from}`,
+    metaTitle: (name: string, from: string, isNew: boolean) => {
+      const kind = isNew ? "New" : "Used";
+      return fit(TITLE_MAX, `${kind} ${name} in Meknes, from ${from}`, `${kind} ${name} in Meknes from ${from}`, `${kind} ${name}, from ${from}`);
+    },
     metaDescription: (name: string, from: string, isNew: boolean) =>
       isNew
         ? `New ${name} in stock in Meknes from ${from}: sealed, 12-month warranty, delivery anywhere in Morocco.`
-        : `Used ${name} in stock in Meknes from ${from}: condition, battery and parts shown for every phone, 3-month warranty, delivery anywhere in Morocco.`,
+        : fit(
+            DESC_MAX,
+            `Used ${name} in stock in Meknes from ${from}: condition, battery and parts shown for every phone, 3-month warranty, delivery anywhere in Morocco.`,
+            `Used ${name} in stock in Meknes from ${from}: condition, battery and parts shown, 3-month warranty, delivery across Morocco.`,
+            `Used ${name} from ${from}: battery and parts shown, 3-month warranty, delivery across Morocco.`
+          ),
     eyebrow: "Electro Zaki · In stock in Meknes",
     title: (name: string, isNew: boolean) => `${isNew ? "New" : "Used"} ${name}`,
     priceLabel: "Price",

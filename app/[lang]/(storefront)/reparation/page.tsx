@@ -12,14 +12,15 @@ import { getRepairTopics } from "@/lib/i18n/repair";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { alternates } from "@/lib/i18n/seo";
 import { whatsappLink } from "@/lib/site";
+import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [t, locale] = await Promise.all([getT(), getLocale()]);
   const r = t.repairPage;
   const alt = alternates(locale, "/reparation");
   return {
-    title: r.metaTitle,
-    description: r.metaDescription,
+    title: pageTitle(r.metaTitle),
+    description: clipDescription(r.metaDescription),
     alternates: alt,
     openGraph: { title: `${r.ogTitle} | Electro Zaki`, description: r.ogDescription, url: alt.canonical },
   };

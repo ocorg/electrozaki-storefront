@@ -3,7 +3,7 @@ import type { TermsCopy } from "./types";
 export const en: TermsCopy = {
   metaTitle: "Terms of sale and returns (7 days)",
   metaDescription:
-    "Electro Zaki's terms of sale: ordering, the 300 DH advance, Ameex delivery anywhere in Morocco, a 7-day return right, a 3-month (used) or 12-month (new) warranty.",
+    "Electro Zaki's terms of sale: the 300 DH advance, Ameex delivery across Morocco, 7-day returns, a 3-month (used) or 12-month (new) warranty.",
   title: "Terms of sale",
   updated: (date) => `Updated: ${date}`,
   intro:

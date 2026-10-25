@@ -7,6 +7,7 @@ import { LOCALE_META } from "@/lib/i18n/config";
 import { alternates } from "@/lib/i18n/seo";
 import { TERMS, TERMS_UPDATED } from "@/lib/legal";
 import { LEGAL, SHOP, SITE_URL, TERMS_PATH, WHATSAPP_URL } from "@/lib/site";
+import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 // The terms of sale (law 31-08): who sells, how ordering, payment and
 // delivery work, the 7-day return right (#retours), warranties and data.
@@ -18,8 +19,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const c = TERMS[locale];
   const alt = alternates(locale, TERMS_PATH);
   return {
-    title: c.metaTitle,
-    description: c.metaDescription,
+    title: pageTitle(c.metaTitle),
+    description: clipDescription(c.metaDescription),
     alternates: alt,
     openGraph: { title: `${c.metaTitle} | Electro Zaki`, description: c.metaDescription, url: alt.canonical },
   };

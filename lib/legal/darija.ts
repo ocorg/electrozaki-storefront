@@ -3,7 +3,7 @@ import type { TermsCopy } from "./types";
 export const darija: TermsCopy = {
   metaTitle: "Chorout dyal lbi3 w r-retour (7 iyam)",
   metaDescription:
-    "Chorout dyal lbi3 f Electro Zaki: la commande, 3arboun 300 DH, livraison m3a Ameex f ga3 lmghrib, retour f 7 iyam, garantie 3 chhor (mosta3mel) wla 12 chhar (jdid).",
+    "Chorout dyal lbi3 f Electro Zaki: 3arboun 300 DH, livraison m3a Ameex f ga3 lmghrib, retour f 7 iyam, garantie 3 chhor (mosta3mel) wla 12 chhar (jdid).",
   title: "Chorout 3amma dyal lbi3",
   updated: (date) => `Tjeddedat: ${date}`,
   intro:

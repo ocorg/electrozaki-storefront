@@ -2,6 +2,7 @@
 // this one (see ./index.ts). Functions are for text that embeds a value.
 
 import { errors } from "./fr-errors";
+import { DESC_MAX, TITLE_MAX, fit } from "../../seo-fit";
 
 export const fr = {
   meta: {
@@ -317,13 +318,34 @@ export const fr = {
     sameAisle: "Dans le même rayon.",
     alsoSee: "À voir aussi.",
     wholeAisle: (name: string) => `Tout le rayon ${name}`,
-    // Search wording: "iPhone 13 128GB d'occasion", with the price (shown in Google's results).
-    metaTitle: (name: string, condition: string | null, used: boolean, price: string) =>
-      used ? `${name} d'occasion, ${condition?.toLowerCase()} - ${price}` : condition ? `${name} neuf - ${price}` : `${name} - ${price}`,
-    metaDescription: (name: string, condition: string | null, price: string, used: boolean) =>
-      `${name}${used ? " d'occasion" : condition ? " neuf" : ""}${used && condition ? ` (${condition.toLowerCase()})` : ""} à ${price} chez Electro Zaki, Meknès. ${
-        used ? "État, batterie et pièces affichés, garantie 3 mois. " : condition ? "Neuf, scellé, garantie 12 mois. " : ""
-      }Livraison partout au Maroc.`,
+    // Search wording: "iPhone 13 128GB d'occasion", with the price (shown in
+    // Google's results). The richest wording that fits Google's 60 / 160
+    // characters (lib/seo-fit.ts).
+    metaTitle: (name: string, condition: string | null, used: boolean, price: string) => {
+      const c = condition?.toLowerCase() ?? "";
+      return used
+        ? fit(TITLE_MAX, `${name} d'occasion, ${c} - ${price}`, `${name} d'occasion ${c} - ${price}`, `${name}, ${c} - ${price}`, `${name} ${c}`)
+        : condition
+          ? `${name} neuf - ${price}`
+          : `${name} - ${price}`;
+    },
+    metaDescription: (name: string, condition: string | null, price: string, used: boolean) => {
+      const c = condition?.toLowerCase() ?? "";
+      if (used)
+        return fit(
+          DESC_MAX,
+          `${name} d'occasion (${c}) à ${price} chez Electro Zaki, Meknès. État, batterie et pièces affichés, garantie 3 mois. Livraison partout au Maroc.`,
+          `${name} d'occasion (${c}) à ${price}, Meknès. État, batterie et pièces affichés, garantie 3 mois, livraison partout au Maroc.`,
+          `${name} (${c}) à ${price}, Meknès. Batterie et pièces affichées, garantie 3 mois, livraison partout au Maroc.`
+        );
+      if (condition)
+        return fit(
+          DESC_MAX,
+          `${name} neuf à ${price} chez Electro Zaki, Meknès. Neuf, scellé, garantie 12 mois. Livraison partout au Maroc.`,
+          `${name} neuf et scellé à ${price}, Meknès. Garantie 12 mois, livraison partout au Maroc.`
+        );
+      return fit(DESC_MAX, `${name} à ${price} chez Electro Zaki, Meknès. Livraison partout au Maroc.`, `${name} à ${price}, Meknès. Livraison partout au Maroc.`);
+    },
   },
 
   pdp: {

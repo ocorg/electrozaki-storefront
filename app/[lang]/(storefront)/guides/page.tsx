@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { alternates } from "@/lib/i18n/seo";
 import { GUIDE_SLUGS, guidesText } from "@/lib/guides";
+import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 // The buying guides, listed (/guides).
 export async function generateMetadata(): Promise<Metadata> {
@@ -11,8 +12,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const g = guidesText(locale);
   const alt = alternates(locale, "/guides");
   return {
-    title: g.indexMetaTitle,
-    description: g.indexMetaDescription,
+    title: pageTitle(g.indexMetaTitle),
+    description: clipDescription(g.indexMetaDescription),
     alternates: alt,
     openGraph: { title: `${g.indexMetaTitle} | Electro Zaki`, description: g.indexMetaDescription, url: alt.canonical },
   };

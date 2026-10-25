@@ -1,5 +1,6 @@
 import type { Locale } from "@/lib/i18n/config";
 import type { RepairSlug } from "@/lib/repair-faq";
+import { DESC_MAX, fit } from "@/lib/seo-fit";
 
 // Repair pages in Google's results: a short title in the words people search
 // ("réparation écran téléphone Meknès"), under ~50 characters so the shop's
@@ -72,7 +73,18 @@ const TAIL: Record<Locale, (online: boolean) => string> = {
   darija: (online) => (online ? ": jawab dghya, ga3 les marques. Electro Zaki, Mknas." : "? Men 150 DH, diagnostic w devis fabor f l'atelier dyalna f Mknas (Ouislane), ga3 les marques."),
 };
 
+// The same ending without "(Ouislane)", for a description that would pass
+// Google's 160 characters.
+const SHORT_TAIL: Record<Locale, string> = {
+  fr: " ? Dès 150 DH, diagnostic et devis gratuits à notre atelier de Meknès, toutes marques.",
+  en: "? From 150 DH, free diagnosis and quote at our Meknes workshop, all brands.",
+  ar: "؟ ابتداءً من 150 درهم، تشخيص وعرض سعر مجاني في ورشتنا بمكناس، لكل العلامات.",
+  darija: "? Men 150 DH, diagnostic w devis fabor f l'atelier dyalna f Mknas, ga3 les marques.",
+};
+
 export function repairSeo(locale: Locale, topic: RepairSlug): { title: string; description: string } {
   const seo = BY_LOCALE[locale][topic];
-  return { title: seo.title, description: seo.what + TAIL[locale](topic === "consultation-en-ligne") };
+  const online = topic === "consultation-en-ligne";
+  const description = online ? seo.what + TAIL[locale](true) : fit(DESC_MAX, seo.what + TAIL[locale](false), seo.what + SHORT_TAIL[locale]);
+  return { title: seo.title, description };
 }

@@ -29,6 +29,7 @@ import { reviewJsonLd, type ReviewSummary } from "@/lib/reviews";
 import { ViewBeacon } from "./OfferParts";
 import { PhoneOfferExperience } from "./PhoneOfferExperience";
 import { OfferFaq, OfferFinal, OfferSteps } from "./OfferSections";
+import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 // A phone model's page, in two modes:
 // - "promo" (/offres/<model>): the promo units, for ads and campaigns;
@@ -52,8 +53,8 @@ export function phoneOfferMetadata(offer: PhoneOffer, locale: Locale, mode: Phon
   const description = mode === "model" ? c.model.metaDescription(offer.name, from, isNew) : c.meta.description(offer.name, from);
   const cover = offer.images[0];
   return {
-    title,
-    description,
+    title: pageTitle(title),
+    description: clipDescription(description),
     alternates: alt,
     openGraph: {
       type: "website",

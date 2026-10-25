@@ -14,6 +14,7 @@ import { MODEL_FACTS } from "@/lib/offers/models";
 import { BrandOfferPage, brandOfferMetadata } from "./BrandOfferPage";
 import { PhoneOfferPage, phoneOfferMetadata } from "./PhoneOfferPage";
 import { getReviewSummary } from "@/lib/reviews";
+import { pageTitle } from "@/lib/seo-fit";
 
 // Three kinds of page share this address: a phone model on promo in the ERP
 // (/offres/iphone-14, lib/offers/phone-offers.ts), a brand's promos
@@ -50,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // A page switched off or outside its dates shows nothing of its offer.
   if (data.status !== "live") return { robots: { index: false } };
   return {
-    title: data.page.title,
+    title: pageTitle(data.page.title),
     description: data.page.subtitle ?? undefined,
     alternates: alternates(locale, `/offres/${slug}`),
     openGraph: data.page.bannerUrl ? { images: [data.page.bannerUrl] } : undefined,

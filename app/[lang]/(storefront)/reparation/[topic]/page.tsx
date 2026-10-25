@@ -12,6 +12,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { WHATSAPP_URL } from "@/lib/site";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd, faqJsonLd } from "@/lib/json-ld";
+import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 type Props = { params: Promise<{ topic: string }> };
 
@@ -23,8 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { title, description } = repairSeo(locale, topic);
   const alt = alternates(locale, `/reparation/${topic}`);
   return {
-    title,
-    description,
+    title: pageTitle(title),
+    description: clipDescription(description),
     alternates: alt,
     openGraph: { title: `${data.title} | Electro Zaki`, description, url: alt.canonical },
   };

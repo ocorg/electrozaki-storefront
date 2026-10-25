@@ -18,6 +18,7 @@ import { STORAGE_SLOT, specRows } from "@/lib/offers/spec-sheet";
 import { ViewBeacon } from "./OfferParts";
 import { PhoneOfferExperience } from "./PhoneOfferExperience";
 import { OfferFaq, OfferFinal, OfferSteps } from "./OfferSections";
+import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 // A brand's promo page (/offres/iphone, /offres/samsung): every unit on
 // promo of every model of the brand, ordered without leaving the page, for
@@ -31,8 +32,8 @@ export function brandOfferMetadata(brand: BrandOffer, locale: Locale): Metadata 
   const description = c.brand.metaDescription(brand.name, formatMADText(brand.fromPrice), brand.models.length);
   const cover = brand.images[0];
   return {
-    title,
-    description,
+    title: pageTitle(title),
+    description: clipDescription(description),
     alternates: alt,
     openGraph: {
       type: "website",

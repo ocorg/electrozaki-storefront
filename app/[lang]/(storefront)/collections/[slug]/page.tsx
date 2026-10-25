@@ -25,6 +25,7 @@ import { getLocale, getT } from "@/lib/i18n/server";
 import { categoryName, facetOptionName, facetQuestion } from "@/lib/i18n/labels";
 import { BUDGET_BANDS, MODEL_GROUP, budgetOf, hasOption, matchesSelection, optionsIn, readBudget, readSelection } from "@/lib/facets";
 import { alternates } from "@/lib/i18n/seo";
+import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 // An hour's cache keeps pages fast and cheap; the ERP asks for an immediate refresh
 // (/api/revalidate) whenever stock or presentation changes.
@@ -59,8 +60,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const description = isPhones ? t.collection.metaPhonesDescription : t.collection.metaAisleDescription(name, blurb);
   const alt = alternates(locale, path);
   return {
-    title,
-    description,
+    title: pageTitle(title),
+    description: clipDescription(description),
     alternates: alt,
     openGraph: { title: `${title} | Electro Zaki`, description, url: alt.canonical },
   };

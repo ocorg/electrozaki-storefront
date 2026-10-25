@@ -7,6 +7,7 @@ import { LOCALE_META } from "@/lib/i18n/config";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { alternates } from "@/lib/i18n/seo";
 import { getLiveOffers } from "@/lib/offers/live";
+import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 // Every offer on right now, for visitors who didn't come from a campaign.
 // Same 15 min cache as the offer pages; the ERP refreshes it on every change.
@@ -16,8 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const [t, locale] = await Promise.all([getT(), getLocale()]);
   const alt = alternates(locale, "/offres");
   return {
-    title: t.offers.metaTitle,
-    description: t.offers.metaDescription,
+    title: pageTitle(t.offers.metaTitle),
+    description: clipDescription(t.offers.metaDescription),
     alternates: alt,
     openGraph: { title: `${t.offers.metaTitle} | Electro Zaki`, description: t.offers.metaDescription, url: alt.canonical },
   };
