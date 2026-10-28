@@ -125,6 +125,8 @@ export const ProductScalarFieldEnum = {
   erpKey: 'erpKey',
   published: 'published',
   modelKey: 'modelKey',
+  colorName: 'colorName',
+  colorGroup: 'colorGroup',
   batteryHealthPercent: 'batteryHealthPercent',
   faceIdWorking: 'faceIdWorking',
   screenGenuine: 'screenGenuine',
@@ -234,7 +236,8 @@ export type FacetGroupCategoryScalarFieldEnum = (typeof FacetGroupCategoryScalar
 
 export const ProductFacetScalarFieldEnum = {
   productId: 'productId',
-  optionId: 'optionId'
+  optionId: 'optionId',
+  imageUrl: 'imageUrl'
 } as const
 
 export type ProductFacetScalarFieldEnum = (typeof ProductFacetScalarFieldEnum)[keyof typeof ProductFacetScalarFieldEnum]

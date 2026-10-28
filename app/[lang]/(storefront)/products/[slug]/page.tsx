@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "@/components/i18n/Link";
-import { getProductBySlug, getRelatedProducts } from "@/lib/db/public-products";
+import { getColorSiblings, getProductBySlug, getRelatedProducts } from "@/lib/db/public-products";
+import Image from "next/image";
+import { swatch } from "@/lib/colors";
 import { getCompatibilityTargetPhones } from "@/lib/db/compatibility";
 import { getActiveBundlesForProduct } from "@/lib/db/bundles";
 import { getFacetGroups } from "@/lib/db/facets";
@@ -27,7 +29,7 @@ import { JsonLd, returnPolicyJsonLd } from "@/lib/json-ld";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 import { LOCALE_META, localePath } from "@/lib/i18n/config";
 import { getLocale, getT } from "@/lib/i18n/server";
-import { categoryName, facetOptionName, specRow } from "@/lib/i18n/labels";
+import { categoryName, colorName, facetOptionName, specRow } from "@/lib/i18n/labels";
 import { alternates } from "@/lib/i18n/seo";
 import { ArrowRight, Tag } from "lucide-react";
 import { ACCESSORIES_OPEN } from "@/lib/site";
@@ -181,6 +183,23 @@ export default async function ProductPage({ params }: Props) {
   // Which colour each photo shows (its description: "iPhone 13 128GB - Rouge").
   const photoColor = product.modelKey ? await getPhotoColors([product.modelKey]) : new Map<string, string>();
   const giftOptions = product.compatibleAccessories.filter((c) => c.isGiftOption);
+  // An accessory sold in several colours: one page per colour (own stock),
+  // linked by buttons. Shown only when this one and at least one other are named.
+  const colorPages = !product.isPhone && product.colorGroup && product.colorName ? await getColorSiblings(product.colorGroup) : [];
+  const colors = colorPages
+    .filter((c) => c.colorName)
+    .map((c) => ({
+      label: colorName(t, c.colorName!),
+      slug: c.slug,
+      available: c.id === product.id || c.availability === "IN_STOCK",
+      current: c.id === product.id,
+      swatch: swatch(c.colorName!),
+    }));
+  // This product's own photos of its features (Extras: its card holder, its stand…)
+  const featurePhotos = product.facets
+    .filter((f) => f.imageUrl && f.option.group.key !== MODEL_GROUP)
+    .sort((a, b) => a.option.sortOrder - b.option.sortOrder)
+    .map((f) => ({ url: f.imageUrl!, label: facetOptionName(t, f.option.group.key, f.option) }));
 
   // Prisma Decimal fields (and the whole product/variant shape generally)
   // can't cross the Server -> Client boundary as-is — serialize before
@@ -221,6 +240,7 @@ export default async function ProductPage({ params }: Props) {
     description: product.description || (isSingleSim(facts) ? SINGLE_SIM_NOTE : null),
     specSheet,
     modelColors: modelOptions?.colors,
+    colors: colors.length > 1 && colors.some((c) => c.current) ? colors : undefined,
     siblings,
     hasDefects: product.hasDefects,
     transparencyNotes: product.transparencyNotes,
@@ -376,6 +396,20 @@ export default async function ProductPage({ params }: Props) {
                   </div>
                 ))}
               </dl>
+              {featurePhotos.length > 0 && (
+                <ul className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
+                  {featurePhotos.map((ph) => (
+                    <li key={ph.url}>
+                      <a href={ph.url} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-2xl bg-white ring-1 ring-ink/7 transition-shadow hover:ring-ink/30">
+                        <span className="relative block aspect-square">
+                          <Image src={ph.url} alt={`${product.name} - ${ph.label}`} fill sizes="(min-width: 640px) 150px, 30vw" className="object-contain p-2" />
+                        </span>
+                        <span className="block truncate px-2 pb-2 text-center text-[13px] font-semibold text-ink">{ph.label}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           )}
 

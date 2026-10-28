@@ -27,16 +27,19 @@ export type AggregateProductFacet = {
 export type ProductFacetMinAggregateOutputType = {
   productId: string | null
   optionId: string | null
+  imageUrl: string | null
 }
 
 export type ProductFacetMaxAggregateOutputType = {
   productId: string | null
   optionId: string | null
+  imageUrl: string | null
 }
 
 export type ProductFacetCountAggregateOutputType = {
   productId: number
   optionId: number
+  imageUrl: number
   _all: number
 }
 
@@ -44,16 +47,19 @@ export type ProductFacetCountAggregateOutputType = {
 export type ProductFacetMinAggregateInputType = {
   productId?: true
   optionId?: true
+  imageUrl?: true
 }
 
 export type ProductFacetMaxAggregateInputType = {
   productId?: true
   optionId?: true
+  imageUrl?: true
 }
 
 export type ProductFacetCountAggregateInputType = {
   productId?: true
   optionId?: true
+  imageUrl?: true
   _all?: true
 }
 
@@ -132,6 +138,7 @@ export type ProductFacetGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type ProductFacetGroupByOutputType = {
   productId: string
   optionId: string
+  imageUrl: string | null
   _count: ProductFacetCountAggregateOutputType | null
   _min: ProductFacetMinAggregateOutputType | null
   _max: ProductFacetMaxAggregateOutputType | null
@@ -158,6 +165,7 @@ export type ProductFacetWhereInput = {
   NOT?: Prisma.ProductFacetWhereInput | Prisma.ProductFacetWhereInput[]
   productId?: Prisma.StringFilter<"ProductFacet"> | string
   optionId?: Prisma.StringFilter<"ProductFacet"> | string
+  imageUrl?: Prisma.StringNullableFilter<"ProductFacet"> | string | null
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   option?: Prisma.XOR<Prisma.FacetOptionScalarRelationFilter, Prisma.FacetOptionWhereInput>
 }
@@ -165,6 +173,7 @@ export type ProductFacetWhereInput = {
 export type ProductFacetOrderByWithRelationInput = {
   productId?: Prisma.SortOrder
   optionId?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   product?: Prisma.ProductOrderByWithRelationInput
   option?: Prisma.FacetOptionOrderByWithRelationInput
 }
@@ -176,6 +185,7 @@ export type ProductFacetWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ProductFacetWhereInput | Prisma.ProductFacetWhereInput[]
   productId?: Prisma.StringFilter<"ProductFacet"> | string
   optionId?: Prisma.StringFilter<"ProductFacet"> | string
+  imageUrl?: Prisma.StringNullableFilter<"ProductFacet"> | string | null
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   option?: Prisma.XOR<Prisma.FacetOptionScalarRelationFilter, Prisma.FacetOptionWhereInput>
 }, "productId_optionId">
@@ -183,6 +193,7 @@ export type ProductFacetWhereUniqueInput = Prisma.AtLeast<{
 export type ProductFacetOrderByWithAggregationInput = {
   productId?: Prisma.SortOrder
   optionId?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProductFacetCountOrderByAggregateInput
   _max?: Prisma.ProductFacetMaxOrderByAggregateInput
   _min?: Prisma.ProductFacetMinOrderByAggregateInput
@@ -194,9 +205,11 @@ export type ProductFacetScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ProductFacetScalarWhereWithAggregatesInput | Prisma.ProductFacetScalarWhereWithAggregatesInput[]
   productId?: Prisma.StringWithAggregatesFilter<"ProductFacet"> | string
   optionId?: Prisma.StringWithAggregatesFilter<"ProductFacet"> | string
+  imageUrl?: Prisma.StringNullableWithAggregatesFilter<"ProductFacet"> | string | null
 }
 
 export type ProductFacetCreateInput = {
+  imageUrl?: string | null
   product: Prisma.ProductCreateNestedOneWithoutFacetsInput
   option: Prisma.FacetOptionCreateNestedOneWithoutProductsInput
 }
@@ -204,9 +217,11 @@ export type ProductFacetCreateInput = {
 export type ProductFacetUncheckedCreateInput = {
   productId: string
   optionId: string
+  imageUrl?: string | null
 }
 
 export type ProductFacetUpdateInput = {
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   product?: Prisma.ProductUpdateOneRequiredWithoutFacetsNestedInput
   option?: Prisma.FacetOptionUpdateOneRequiredWithoutProductsNestedInput
 }
@@ -214,20 +229,23 @@ export type ProductFacetUpdateInput = {
 export type ProductFacetUncheckedUpdateInput = {
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   optionId?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductFacetCreateManyInput = {
   productId: string
   optionId: string
+  imageUrl?: string | null
 }
 
 export type ProductFacetUpdateManyMutationInput = {
-
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductFacetUncheckedUpdateManyInput = {
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   optionId?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductFacetListRelationFilter = {
@@ -248,16 +266,19 @@ export type ProductFacetProductIdOptionIdCompoundUniqueInput = {
 export type ProductFacetCountOrderByAggregateInput = {
   productId?: Prisma.SortOrder
   optionId?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
 }
 
 export type ProductFacetMaxOrderByAggregateInput = {
   productId?: Prisma.SortOrder
   optionId?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
 }
 
 export type ProductFacetMinOrderByAggregateInput = {
   productId?: Prisma.SortOrder
   optionId?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
 }
 
 export type ProductFacetCreateNestedManyWithoutProductInput = {
@@ -345,11 +366,13 @@ export type ProductFacetUncheckedUpdateManyWithoutOptionNestedInput = {
 }
 
 export type ProductFacetCreateWithoutProductInput = {
+  imageUrl?: string | null
   option: Prisma.FacetOptionCreateNestedOneWithoutProductsInput
 }
 
 export type ProductFacetUncheckedCreateWithoutProductInput = {
   optionId: string
+  imageUrl?: string | null
 }
 
 export type ProductFacetCreateOrConnectWithoutProductInput = {
@@ -384,14 +407,17 @@ export type ProductFacetScalarWhereInput = {
   NOT?: Prisma.ProductFacetScalarWhereInput | Prisma.ProductFacetScalarWhereInput[]
   productId?: Prisma.StringFilter<"ProductFacet"> | string
   optionId?: Prisma.StringFilter<"ProductFacet"> | string
+  imageUrl?: Prisma.StringNullableFilter<"ProductFacet"> | string | null
 }
 
 export type ProductFacetCreateWithoutOptionInput = {
+  imageUrl?: string | null
   product: Prisma.ProductCreateNestedOneWithoutFacetsInput
 }
 
 export type ProductFacetUncheckedCreateWithoutOptionInput = {
   productId: string
+  imageUrl?: string | null
 }
 
 export type ProductFacetCreateOrConnectWithoutOptionInput = {
@@ -422,34 +448,42 @@ export type ProductFacetUpdateManyWithWhereWithoutOptionInput = {
 
 export type ProductFacetCreateManyProductInput = {
   optionId: string
+  imageUrl?: string | null
 }
 
 export type ProductFacetUpdateWithoutProductInput = {
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   option?: Prisma.FacetOptionUpdateOneRequiredWithoutProductsNestedInput
 }
 
 export type ProductFacetUncheckedUpdateWithoutProductInput = {
   optionId?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductFacetUncheckedUpdateManyWithoutProductInput = {
   optionId?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductFacetCreateManyOptionInput = {
   productId: string
+  imageUrl?: string | null
 }
 
 export type ProductFacetUpdateWithoutOptionInput = {
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   product?: Prisma.ProductUpdateOneRequiredWithoutFacetsNestedInput
 }
 
 export type ProductFacetUncheckedUpdateWithoutOptionInput = {
   productId?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductFacetUncheckedUpdateManyWithoutOptionInput = {
   productId?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -457,6 +491,7 @@ export type ProductFacetUncheckedUpdateManyWithoutOptionInput = {
 export type ProductFacetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   productId?: boolean
   optionId?: boolean
+  imageUrl?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   option?: boolean | Prisma.FacetOptionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productFacet"]>
@@ -464,6 +499,7 @@ export type ProductFacetSelect<ExtArgs extends runtime.Types.Extensions.Internal
 export type ProductFacetSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   productId?: boolean
   optionId?: boolean
+  imageUrl?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   option?: boolean | Prisma.FacetOptionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productFacet"]>
@@ -471,6 +507,7 @@ export type ProductFacetSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
 export type ProductFacetSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   productId?: boolean
   optionId?: boolean
+  imageUrl?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   option?: boolean | Prisma.FacetOptionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productFacet"]>
@@ -478,9 +515,10 @@ export type ProductFacetSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type ProductFacetSelectScalar = {
   productId?: boolean
   optionId?: boolean
+  imageUrl?: boolean
 }
 
-export type ProductFacetOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"productId" | "optionId", ExtArgs["result"]["productFacet"]>
+export type ProductFacetOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"productId" | "optionId" | "imageUrl", ExtArgs["result"]["productFacet"]>
 export type ProductFacetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   option?: boolean | Prisma.FacetOptionDefaultArgs<ExtArgs>
@@ -503,6 +541,7 @@ export type $ProductFacetPayload<ExtArgs extends runtime.Types.Extensions.Intern
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     productId: string
     optionId: string
+    imageUrl: string | null
   }, ExtArgs["result"]["productFacet"]>
   composites: {}
 }
@@ -930,6 +969,7 @@ export interface Prisma__ProductFacetClient<T, Null = never, ExtArgs extends run
 export interface ProductFacetFieldRefs {
   readonly productId: Prisma.FieldRef<"ProductFacet", 'String'>
   readonly optionId: Prisma.FieldRef<"ProductFacet", 'String'>
+  readonly imageUrl: Prisma.FieldRef<"ProductFacet", 'String'>
 }
     
 

@@ -36,6 +36,8 @@ const PUBLIC_PRODUCT_SELECT = {
   transparencyNotes: true,
   metaTitle: true,
   metaDescription: true,
+  colorName: true,
+  colorGroup: true,
   category: { select: { id: true, name: true, slug: true } },
   images: {
     select: { url: true, altText: true, sortOrder: true },
@@ -91,6 +93,7 @@ const PUBLIC_PRODUCT_SELECT = {
   facets: {
     where: { option: { active: true, group: { active: true } } },
     select: {
+      imageUrl: true,
       option: { select: { key: true, name: true, level: true, sortOrder: true, group: { select: { key: true } } } },
     },
   },
@@ -128,6 +131,8 @@ export interface PublicProduct {
   transparencyNotes: string | null;
   metaTitle: string | null;
   metaDescription: string | null;
+  colorName: string | null;
+  colorGroup: string | null;
   category: { id: string; name: string; slug: string };
   images: { url: string; altText: string | null; sortOrder: number }[];
   variants: {
@@ -164,6 +169,7 @@ export interface PublicProduct {
     compatibleWith: { id: string; slug: string; name: string };
   }[];
   facets: {
+    imageUrl: string | null;
     option: { key: string; name: string; level: number | null; sortOrder: number; group: { key: string } };
   }[];
 }
@@ -280,6 +286,16 @@ function buildFilterConditions(filters?: ProductFilters): Array<Record<string, u
     and.push({ compatibleWithPhones: { some: { compatibleWith: { modelKey: filters.compatibleWith, published: true } } } });
   }
   return and;
+}
+
+/** The other colours of an accessory model (owner, 2026-10-29): each colour is
+ *  its own product (own stock), linked in the ERP by a shared colorGroup. */
+export async function getColorSiblings(colorGroup: string) {
+  return prisma.product.findMany({
+    where: { colorGroup, published: true, availability: { not: AvailabilityStatus.DISCONTINUED } },
+    select: { id: true, slug: true, colorName: true, availability: true },
+    orderBy: { createdAt: "asc" },
+  });
 }
 
 export async function getProductBySlug(slug: string): Promise<PublicProduct | null> {

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "@/components/i18n/Link";
-import { Camera, Check, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
+import { Camera, Check, ChevronLeft, ChevronRight, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
 import { formatMAD, savingOf } from "@/lib/format";
 import { swatch } from "@/lib/colors";
@@ -51,6 +51,8 @@ export type ProductVariantExperienceData = {
   /** phones: every colour the model has had (out-of-stock ones are crossed out) */
   modelColors?: string[];
   /** phones: the model's other listings, one per grade / storage (sold-out ones crossed out) */
+  /** accessories: the colours of this model, each its own page (own stock) */
+  colors?: { label: string; slug: string; available: boolean; current: boolean; swatch: string }[];
   siblings?: {
     grades: { grade: string; slug: string; available: boolean; current: boolean }[];
     storages: { label: string; slug: string; available: boolean; current: boolean }[];
@@ -202,6 +204,25 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
     setTimeout(() => setJustAdded(false), 1500);
   }
 
+  // Several photos of the product (not a unit's own photo): shown as a carousel.
+  const slideshow = images.length > 1 && !selectedVariant?.imageUrl;
+  const slidesRef = useRef<HTMLDivElement>(null);
+  // In Arabic the row runs right to left: scrollLeft goes from 0 to negative.
+  function goToImage(i: number) {
+    const el = slidesRef.current;
+    const next = Math.max(0, Math.min(images.length - 1, i));
+    setImageIndex(next);
+    if (!el) return;
+    const rtl = getComputedStyle(el).direction === "rtl";
+    el.scrollTo({ left: (rtl ? -1 : 1) * next * el.clientWidth, behavior: "smooth" });
+  }
+  function onSlidesScroll() {
+    const el = slidesRef.current;
+    if (!el || !el.clientWidth) return;
+    const i = Math.round(Math.abs(el.scrollLeft) / el.clientWidth);
+    if (i !== imageIndex) setImageIndex(i);
+  }
+
   const inStock = product.availability === "IN_STOCK";
   const unitsInStock = variants.filter((v) => v.stockQuantity > 0).length;
 
@@ -231,29 +252,86 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
       {/* ── Gallery ── */}
       <div className="md:sticky md:top-28 md:self-start">
         <div className="group relative aspect-square overflow-hidden rounded-[2rem] border border-ink/7 bg-white shadow-[0_30px_60px_-40px_rgb(17_16_19/0.5)]">
-          <ProductVisual
-            image={displayImage}
-            name={product.name}
-            brand={product.brand}
-            categorySlug={categorySlug}
-            isPhone={product.isPhone}
-            priority
-            size="large"
-            sizes="(min-width: 1280px) 620px, (min-width: 768px) 50vw, 100vw"
-          />
+          {slideshow ? (
+            // Several photos: a carousel — swipe on phones, arrows with a mouse,
+            // dots and the thumbnails below follow the photo shown.
+            <div
+              ref={slidesRef}
+              onScroll={onSlidesScroll}
+              className="flex h-full w-full snap-x snap-mandatory overflow-x-auto scrollbar-none"
+              role="group"
+              aria-roledescription="carousel"
+              aria-label={p.photos}
+            >
+              {images.map((img, i) => (
+                <div key={img.url} className="relative h-full w-full flex-none snap-center" aria-label={p.photo(i + 1)} role="group" aria-roledescription="slide">
+                  <ProductVisual
+                    image={img}
+                    name={product.name}
+                    brand={product.brand}
+                    categorySlug={categorySlug}
+                    isPhone={product.isPhone}
+                    priority={i === 0}
+                    size="large"
+                    sizes="(min-width: 1280px) 620px, (min-width: 768px) 50vw, 100vw"
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <ProductVisual
+              image={displayImage}
+              name={product.name}
+              brand={product.brand}
+              categorySlug={categorySlug}
+              isPhone={product.isPhone}
+              priority
+              size="large"
+              sizes="(min-width: 1280px) 620px, (min-width: 768px) 50vw, 100vw"
+            />
+          )}
           {saving !== null && (
             <span dir="ltr" className="readout absolute inset-s-4 top-4 z-3 rounded-full bg-red-600 px-3 py-1.5 text-sm font-bold text-white">
               -{formatMAD(saving)}
             </span>
           )}
+          {slideshow && (
+            <>
+              {imageIndex > 0 && (
+                <button
+                  type="button"
+                  aria-label={t.common.previous}
+                  onClick={() => goToImage(imageIndex - 1)}
+                  className="absolute inset-s-3 top-1/2 z-3 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-ink/85 text-white shadow-lg transition-transform hover:scale-105 md:flex"
+                >
+                  <ChevronLeft size={20} className="rtl:rotate-180" />
+                </button>
+              )}
+              {imageIndex < images.length - 1 && (
+                <button
+                  type="button"
+                  aria-label={t.common.next}
+                  onClick={() => goToImage(imageIndex + 1)}
+                  className="absolute inset-e-3 top-1/2 z-3 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-ink/85 text-white shadow-lg transition-transform hover:scale-105 md:flex"
+                >
+                  <ChevronRight size={20} className="rtl:rotate-180" />
+                </button>
+              )}
+              <div className="absolute inset-x-0 bottom-4 z-3 flex justify-center gap-1.5" aria-hidden="true">
+                {images.map((img, i) => (
+                  <span key={img.url} className={`h-1.5 rounded-full transition-all ${i === imageIndex ? "w-5 bg-ink" : "w-1.5 bg-ink/25"}`} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
-        {images.length > 1 && !selectedVariant?.imageUrl && (
+        {slideshow && (
           <div className="mt-3 flex gap-2 overflow-x-auto pb-1 scrollbar-none" role="group" aria-label={p.photos}>
             {images.map((img, i) => (
               <button
                 key={img.url}
                 type="button"
-                onClick={() => setImageIndex(i)}
+                onClick={() => goToImage(i)}
                 aria-label={p.photo(i + 1)}
                 aria-pressed={i === imageIndex}
                 className={`relative h-20 w-20 flex-none overflow-hidden rounded-2xl border-2 bg-white transition-colors ${
@@ -315,6 +393,14 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
 
         {inStock ? (
           <div className="mt-7 space-y-5">
+            {product.colors && product.colors.length > 1 && (
+              <SiblingRow
+                label={`${p.color} · ${product.colors.find((c) => c.current)?.label ?? ""}`}
+                unavailable={t.unitPicker.unavailable}
+                options={product.colors}
+              />
+            )}
+
             {hasColorVariants && (
               <fieldset>
                 <legend className="mb-2 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">
@@ -540,23 +626,28 @@ function SiblingRow({
 }: {
   label: string;
   unavailable: string;
-  options: { label: string; slug: string; available: boolean; current: boolean }[];
+  options: { label: string; slug: string; available: boolean; current: boolean; swatch?: string }[];
 }) {
+  // accessory colours: a dot of the colour before its name
+  const dot = (o: { swatch?: string }) =>
+    o.swatch ? <span aria-hidden className="h-4 w-4 flex-none rounded-full border border-ink/15" style={{ background: o.swatch }} /> : null;
   return (
     <div>
       <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">{label}</p>
       <div className="flex flex-wrap gap-2">
         {options.map((o) =>
           o.current ? (
-            <span key={o.slug} aria-current="true" className="inline-flex min-h-11 items-center rounded-full border border-gold-deep bg-gold/15 px-4 text-sm font-semibold text-ink">
+            <span key={o.slug} aria-current="true" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold-deep bg-gold/15 px-4 text-sm font-semibold text-ink">
+              {dot(o)}
               {o.label}
             </span>
           ) : o.available ? (
             <Link
               key={o.slug}
               href={`/products/${o.slug}`}
-              className="inline-flex min-h-11 items-center rounded-full border border-ink/15 bg-white px-4 text-sm text-neutral-800 transition-colors hover:border-ink/40"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/15 bg-white px-4 text-sm text-neutral-800 transition-colors hover:border-ink/40"
             >
+              {dot(o)}
               {o.label}
             </Link>
           ) : (
@@ -564,8 +655,9 @@ function SiblingRow({
               key={o.slug}
               aria-disabled="true"
               title={unavailable}
-              className="inline-flex min-h-11 cursor-not-allowed items-center rounded-full border border-dashed border-ink/15 bg-paper px-4 text-sm text-neutral-400 line-through decoration-neutral-400"
+              className="inline-flex min-h-11 cursor-not-allowed items-center gap-2 rounded-full border border-dashed border-ink/15 bg-paper px-4 text-sm text-neutral-400 line-through decoration-neutral-400"
             >
+              {dot(o)}
               {o.label}
               <span className="sr-only"> ({unavailable})</span>
             </span>
