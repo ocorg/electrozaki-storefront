@@ -1,4 +1,5 @@
 import type { Dictionary } from "./fr";
+import { colorWordsEn } from "./color-words";
 import { DESC_MAX, TITLE_MAX, fit } from "../../seo-fit";
 
 // English. Prices stay in DH, the way they're written in Morocco.
@@ -1100,4 +1101,6 @@ export const en: Dictionary = {
     "Bleu Pacifique": "Pacific Blue",
     Autre: "Other",
   },
+  colorWords: colorWordsEn,
+  colorOrder: "reverse",
 };

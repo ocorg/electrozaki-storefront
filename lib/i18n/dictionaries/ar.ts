@@ -1,4 +1,5 @@
 import type { Dictionary } from "./fr";
+import { colorWordsAr } from "./color-words";
 import { DESC_MAX, TITLE_MAX, fit } from "../../seo-fit";
 
 // Arabic (Modern Standard, as read in Morocco). Numbers stay in Western
@@ -1101,4 +1102,6 @@ export const ar: Dictionary = {
     "Bleu Pacifique": "أزرق باسيفيكي",
     Autre: "أخرى",
   },
+  colorWords: colorWordsAr,
+  colorOrder: "same",
 };

@@ -1,4 +1,5 @@
 import type { Dictionary } from "./fr";
+import { colorWordsDarija } from "./color-words";
 import { DESC_MAX, TITLE_MAX, fit } from "../../seo-fit";
 
 // Moroccan Darija, written the way people text it: Latin letters, numbers
@@ -1070,7 +1071,7 @@ export const darija: Dictionary = {
     "Bleu foncé": "Zre9 ghame9",
     "Velvet Noir": "K7el velours",
     "Marron rougeâtre": "Marron m7mmer",
-    Argent: "Silver",
+    Argent: "Fedda",
     Violet: "Mauve",
     "Vert Alpin": "Khdar Alpin",
     "Bleu Sierra": "Zre9 Sierra",
@@ -1083,4 +1084,6 @@ export const darija: Dictionary = {
     "Bleu Pacifique": "Zre9 Pacifique",
     Autre: "Akhor",
   },
+  colorWords: colorWordsDarija,
+  colorOrder: "same",
 };

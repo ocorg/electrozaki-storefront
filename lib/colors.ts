@@ -10,6 +10,12 @@ const SWATCHES: [RegExp, string][] = [
   [/graphite/, "#4a4a4c"],
   [/noir|black/, "#1d1d1f"],
   [/blanc|white/, "#f5f5f2"],
+  // French names used since the colour clean-up (owner, 2026-10-29)
+  [/bordeaux|bourgogne|cerise|cramoisi|prune/, "#6e1f2e"],
+  [/glacier|glace|brume|ciel/, "#b9d3e6"],
+  [/sauge|pistache/, "#a7b89a"],
+  [/cuivre|bronze/, "#a8683c"],
+  [/sable|champagne/, "#d9c7a3"],
   [/bleu\s*sierra|sierra/, "#9bb5ce"],
   [/bleu\s*(fonc[eé]|nuit|marine)|navy/, "#1f3a5f"],
   [/bleu|blue/, "#3d6fb0"],

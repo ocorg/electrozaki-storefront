@@ -1012,6 +1012,10 @@ export const fr = {
 
   // Colour names as typed in the ERP → shown name (unknown ones show as typed).
   colors: {} as Record<string, string>,
+  // Unknown colour names are translated word by word (color-words.ts):
+  // French → the words as typed; "reverse" = English order ("Noir Fantôme" → "Phantom Black").
+  colorWords: {} as Record<string, string>,
+  colorOrder: "same" as "same" | "reverse",
 };
 
 export type Dictionary = typeof fr;
