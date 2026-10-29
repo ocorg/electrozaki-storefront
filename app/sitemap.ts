@@ -49,7 +49,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...localized("/reparation", { changeFrequency: "monthly", priority: 0.8 }),
     ...localized("/contact", { changeFrequency: "yearly", priority: 0.4 }),
     ...localized(TERMS_PATH, { changeFrequency: "yearly", priority: 0.3 }),
-    ...localized("/prix", { changeFrequency: "daily", priority: 0.7 }),
     ...localized("/offres", { changeFrequency: "daily", priority: 0.8 }),
     ...offers.filter((o) => !modelPromos.has(o.href)).flatMap((o) => localized(o.href, { changeFrequency: "daily", priority: 0.9 })),
     ...models.flatMap((m) =>

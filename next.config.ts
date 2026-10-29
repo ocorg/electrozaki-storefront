@@ -38,6 +38,12 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: SECURITY_HEADERS }];
   },
+  // The former "Tous nos prix" page (removed 2026-10-29: a full price list
+  // only helped competitors). Its addresses were indexed: they now lead to
+  // the phones aisle.
+  async redirects() {
+    return [{ source: "/:lang(fr|ar|en|darija)/prix", destination: "/:lang/collections/telephones", permanent: true }];
+  },
   // Receipt photos are shrunk in the browser first (lib/compress-image.ts);
   // this is the safety net when that isn't possible. Matches the 5 MB cap
   // in lib/storage.ts, plus room for the form encoding.

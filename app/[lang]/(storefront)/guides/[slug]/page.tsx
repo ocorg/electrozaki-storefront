@@ -10,10 +10,8 @@ import { getLocale, getT } from "@/lib/i18n/server";
 import { LOCALE_META, localePath } from "@/lib/i18n/config";
 import { alternates } from "@/lib/i18n/seo";
 import { JsonLd } from "@/lib/json-ld";
-import { formatMAD } from "@/lib/format";
 import { absoluteUrl, SITE_URL, WHATSAPP_URL } from "@/lib/site";
 import { GUIDE_SLUGS, guidesText, isGuideSlug } from "@/lib/guides";
-import { getModelPage } from "@/lib/offers/phone-offers";
 import { widgetsText } from "@/lib/guides/widgets";
 import { IosScreen } from "@/components/guides/IosScreen";
 import { BatterySlider } from "@/components/guides/BatterySlider";
@@ -21,7 +19,6 @@ import { Checklist } from "@/components/guides/Checklist";
 import { ScreenTest } from "@/components/guides/ScreenTest";
 import { PartsHistory } from "@/components/guides/PartsHistory";
 import { PartsDiagram } from "@/components/guides/PartsDiagram";
-import { PriceChart } from "@/components/guides/PriceChart";
 import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 // A buying guide (/guides/<slug>). Text in lib/guides; guide 2's price
@@ -50,18 +47,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-/** "un iPhone 13 est à partir de 2 700 DH en Pièces remplacées, contre 3 100 DH…", from stock; "" when not both in stock. */
-async function priceExample(example: (model: string, replaced: string, original: string) => string): Promise<string> {
-  const page = await getModelPage("iphone-13");
-  if (!page) return "";
-  const lowest = (grade: string) => {
-    const prices = page.units.filter((u) => u.grade === grade).map((u) => u.price);
-    return prices.length ? Math.min(...prices) : null;
-  };
-  const replaced = lowest("PIECES_REMPLACEES");
-  const original = lowest("TRES_BON");
-  return replaced !== null && original !== null && replaced < original ? example(page.name, formatMAD(replaced), formatMAD(original)) : "";
-}
 
 export default async function GuidePage({ params }: Props) {
   const { slug } = await params;
@@ -69,8 +54,9 @@ export default async function GuidePage({ params }: Props) {
   const [t, locale] = await Promise.all([getT(), getLocale()]);
   const g = guidesText(locale);
   const guide = g.guides[slug];
-  const prices = slug === "pieces-origine-ou-remplacees" ? await priceExample(g.priceExample) : "";
-  const fill = (s: string) => s.replace(/\s*\{prices\}\s*/, prices ? ` ${prices} ` : " ");
+  // No prices in the guides (a price comparison only helped competitors):
+  // the "{prices}" slot of the texts stays empty.
+  const fill = (s: string) => s.replace(/\s*\{prices\}\s*/, " ");
 
   // The interactive parts, after the section they illustrate (the sections
   // are in the same order in every language).
@@ -102,7 +88,6 @@ export default async function GuidePage({ params }: Props) {
         ? {
             0: <PartsHistory t={w.parts} ios={w.ios} drawn={w.drawn} />,
             2: <PartsDiagram t={w.parts} texts={guide.sections[2]?.list ?? []} />,
-            3: <PriceChart t={w.prices} />,
           }
         : { 1: <BatterySlider t={w.battery} ios={w.ios} drawn={w.drawn} /> };
 
