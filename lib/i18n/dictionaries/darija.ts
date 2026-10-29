@@ -11,10 +11,11 @@ export const darija: Dictionary = {
     phonesOnly: { title: "iPhone w Samsung mosta3mlin f Mknas | Electro Zaki", description: "iPhone, Samsung w Xiaomi mosta3mlin w jdad f Mknas: l7ala w l batterie bayna, garantie 3 chhour, tasli7 f l7anout. Livraison l ga3 lmghrib." },
     title: "Electro Zaki | Tilifounat w accessoires f Mknas",
     description:
-      "Tilifounat jdad w mosta3mlin (iPhone, Samsung, Xiaomi), coques, chargeurs, cables, écouteurs w tasli7 f Mknas. L7ala w l batterie dyal kol téléphone bayna, w livraison l ga3 lmghrib.",
+      "Tilifounat jdad w mosta3mlin (iPhone, Samsung, Xiaomi), coques, chargeurs, cables, écouteurs w tasli7 f Mknas. L7ala w l batterie wla RAM dyal kol téléphone bayna, w livraison l ga3 lmghrib.",
   },
 
   common: {
+    ram: (v: string) => `RAM ${v}`,
     guides: "Guides dyal chra",
     skipToContent: "Doz l contenu",
     homeAria: "Electro Zaki | l'accueil",
@@ -66,6 +67,7 @@ export const darija: Dictionary = {
   },
 
   categories: {
+    tablettes: "Tablettes",
     telephones: "Tilifounat",
     accessoires: "Accessoires",
     pochettes: "Pochettes",
@@ -86,6 +88,7 @@ export const darija: Dictionary = {
   },
 
   aisleBlurb: {
+    tablettes: "Samsung Galaxy Tab, iPad - jdad w mosta3mlin",
     telephones: "iPhone, Samsung, Xiaomi - jdad w mosta3mlin",
     pochettes: "Coques l kol modèle",
     incassables: "Verre trempé, 7imaya l l'écran",
@@ -142,10 +145,10 @@ export const darija: Dictionary = {
 
   hero: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
-    phonesOnly: { eyebrow: "Tilifounat · Tasli7", title: ["Tilifounat", "w tasli7", "f Mknas."], lead: "iPhone, Samsung, Xiaomi, jdad w mosta3mlin - l7ala w l batterie dyal kol appareil bayna 9bel ma tchri. Garantie 3 chhour, w tasli7 f l7in." },
+    phonesOnly: { eyebrow: "Tilifounat · Tasli7", title: ["Tilifounat", "w tasli7", "f Mknas."], lead: "iPhone, Samsung, Xiaomi, jdad w mosta3mlin - l7ala w l batterie wla RAM dyal kol appareil bayna 9bel ma tchri. Garantie 3 chhour, w tasli7 f l7in." },
     eyebrow: "Tilifounat · Accessoires · Tasli7",
     title: ["Tilifounat", "w accessoires", "f Mknas."],
-    lead: "iPhone, Samsung, Xiaomi, jdad w mosta3mlin - l7ala w l batterie dyal kol appareil bayna 9bel ma tchri. Coques, chargeurs, cables, écouteurs, w tasli7 f l7in.",
+    lead: "iPhone, Samsung, Xiaomi, jdad w mosta3mlin - l7ala w l batterie wla RAM dyal kol appareil bayna 9bel ma tchri. Coques, chargeurs, cables, écouteurs, w tasli7 f l7in.",
     seePhones: "Chouf tilifounat",
     lockCaption: "Mknas · Electro Zaki",
     inStock: "kayn",
@@ -160,7 +163,7 @@ export const darija: Dictionary = {
       { title: "Livraison", value: "Ga3 lmghrib" },
       { title: "Lkhlas", value: "300 DH, l-ba9i mnin twslek" },
       { title: "Garantie", value: "3 chhour" },
-      { title: "Batterie", value: "Bayna" },
+      { title: "Batterie / RAM", value: "Bayna" },
     ],
   },
 

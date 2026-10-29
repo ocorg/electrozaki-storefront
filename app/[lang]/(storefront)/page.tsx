@@ -64,6 +64,19 @@ export default async function HomePage() {
   // While accessories aren't online, the hero speaks of phones and repair only.
   const hero = ACCESSORIES_OPEN ? t.hero : { ...t.hero, ...t.hero.phonesOnly };
 
+  // Section numbers ("01 - Rayons"…) counted from the sections actually
+  // shown: a hidden one (accessories while closed, an empty shelf) used to
+  // leave a gap (01, 02, 03, 05, 06).
+  const shown = [
+    "rayons",
+    ...(shelves.phones.length > 0 ? ["arrivages"] : []),
+    "transparence",
+    ...(shelves.accessories.length > 0 ? ["accessoires"] : []),
+    "finder",
+    "atelier",
+  ];
+  const sectionNo = (key: string) => String(shown.indexOf(key) + 1).padStart(2, "0");
+
   return (
     <div>
       {/* ── Hero: the shop window ─────────────────────────────────────── */}
@@ -163,7 +176,7 @@ export default async function HomePage() {
       {/* ── Aisles ────────────────────────────────────────────────────── */}
       <section aria-labelledby="rayons" className="mx-auto max-w-7xl px-4 pt-20 sm:pt-28">
         <Reveal>
-          <SectionHeading id="rayons" index="01" eyebrow={h.aisles.eyebrow} title={h.aisles.title} />
+          <SectionHeading id="rayons" index={sectionNo("rayons")} eyebrow={h.aisles.eyebrow} title={h.aisles.title} />
         </Reveal>
         <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
           {phonesAisle && (
@@ -263,7 +276,7 @@ export default async function HomePage() {
           <Reveal>
             <SectionHeading
               id="arrivages"
-              index="02"
+              index={sectionNo("arrivages")}
               eyebrow={h.showcase.eyebrow}
               title={h.showcase.title}
               action={
@@ -289,7 +302,7 @@ export default async function HomePage() {
           <Reveal>
             <SectionHeading
               id="transparence"
-              index="03"
+              index={sectionNo("transparence")}
               eyebrow={h.transparency.eyebrow}
               tone="dark"
               title={
@@ -349,7 +362,7 @@ export default async function HomePage() {
           <Reveal>
             <SectionHeading
               id="accessoires"
-              index="04"
+              index={sectionNo("accessoires")}
               eyebrow={h.accessories.eyebrow}
               title={h.accessories.title}
               intro={h.accessories.intro}
@@ -376,7 +389,7 @@ export default async function HomePage() {
       <section id="trouver" aria-labelledby="finder" className="mx-auto max-w-7xl px-4 pt-20 sm:pt-28">
         <div className="grid gap-10 rounded-[2rem] bg-paper-2 p-6 sm:p-10 lg:grid-cols-[1fr_1.2fr] lg:items-center lg:p-14">
           <Reveal>
-            <SectionHeading id="finder" index="05" eyebrow={h.finder.eyebrow} title={h.finder.title} intro={h.finder.intro} />
+            <SectionHeading id="finder" index={sectionNo("finder")} eyebrow={h.finder.eyebrow} title={h.finder.title} intro={h.finder.intro} />
           </Reveal>
           <Reveal delayMs={100}>
             <PhoneFinder />
@@ -395,7 +408,7 @@ export default async function HomePage() {
             <div className="relative max-w-2xl">
               <SectionHeading
                 id="atelier"
-                index="06"
+                index={sectionNo("atelier")}
                 eyebrow={h.workshop.eyebrow}
                 tone="dark"
                 title={

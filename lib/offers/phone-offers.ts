@@ -135,9 +135,15 @@ function storageOf(p: { name: string; specs: unknown }, v: { storageLabel: strin
 }
 
 /** "Samsung Galaxy S24 Ultra 256GB" → "Galaxy S24 Ultra" (when there is no fact sheet). */
+// Families that say the brand on their own: "Galaxy S24" needs no
+// "Samsung", but "Smart 20e" or "14 Pro 5G" do need "Infinix" / "Realme".
+const SELF_NAMED_FAMILY = /^(iphone|ipad|galaxy|redmi|poco|pixel)\b/i;
+
 function modelName(listingName: string, brand: string | null): string {
   const noStorage = listingName.replace(/\s*\b\d+\s?(?:GB|TB|Go|To)\b.*$/i, "").trim();
-  return brand && noStorage.toLowerCase().startsWith(`${brand.toLowerCase()} `) ? noStorage.slice(brand.length + 1) : noStorage;
+  if (!brand || !noStorage.toLowerCase().startsWith(`${brand.toLowerCase()} `)) return noStorage;
+  const rest = noStorage.slice(brand.length + 1);
+  return SELF_NAMED_FAMILY.test(rest) ? rest : noStorage;
 }
 
 // "promo": the units on promo, for /offres/<model> (an ERP promo page with

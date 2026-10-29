@@ -1,5 +1,5 @@
 import { prisma } from "./client";
-import { ACCESSORIES_OPEN, PHONES_AISLE } from "@/lib/site";
+import { ACCESSORIES_OPEN, PHONES_AISLE, TABLETS_AISLE } from "@/lib/site";
 
 export async function getCategoryBySlug(slug: string) {
   return prisma.category.findUnique({
@@ -16,7 +16,7 @@ export async function getCategoryBySlug(slug: string) {
 // Top-level categories with their children, for nav menus and the home page.
 export async function getAllCategories() {
   return prisma.category.findMany({
-    where: { parentId: null, ...(ACCESSORIES_OPEN ? {} : { slug: PHONES_AISLE }) },
+    where: { parentId: null, ...(ACCESSORIES_OPEN ? {} : { slug: { in: [PHONES_AISLE, TABLETS_AISLE] } }) },
     select: {
       id: true,
       name: true,

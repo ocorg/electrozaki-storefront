@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import Link from "@/components/i18n/Link";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { SearchTracker } from "@/components/analytics/SearchTracker";
-import { PHONES_AISLE, WHATSAPP_URL } from "@/lib/site";
+import { PHONES_AISLE, TABLETS_AISLE, WHATSAPP_URL } from "@/lib/site";
 import { getLocalePath, getT } from "@/lib/i18n/server";
 import { categoryName } from "@/lib/i18n/labels";
 
@@ -61,7 +61,8 @@ export default async function SearchPage({ searchParams }: Props) {
   // The aisles have the filters (grade, battery, storage, price, promo,
   // sort) and search as you type: a search whose results all sit in one
   // aisle opens that aisle, searched; a mixed one offers each aisle.
-  const aisleOf = (p: (typeof results)[number]) => (p.isPhone ? PHONES_AISLE : ACCESSORIES_AISLE);
+  const aisleOf = (p: (typeof results)[number]) =>
+    p.category.slug === TABLETS_AISLE ? TABLETS_AISLE : p.isPhone ? PHONES_AISLE : ACCESSORIES_AISLE;
   const counts = new Map<string, number>();
   for (const p of results) counts.set(aisleOf(p), (counts.get(aisleOf(p)) ?? 0) + 1);
   const aisleHref = (aisle: string) => `/collections/${aisle}?q=${encodeURIComponent(query)}`;

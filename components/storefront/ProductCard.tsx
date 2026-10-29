@@ -1,4 +1,4 @@
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight, Check, MemoryStick } from "lucide-react";
 import Link from "@/components/i18n/Link";
 import { formatMAD, savingOf } from "@/lib/format";
 import type { PublicProduct } from "@/lib/db/public-products";
@@ -45,6 +45,11 @@ export async function ProductCard({
   ].filter((b): b is number => b !== null);
   const bMin = batteries.length ? Math.min(...batteries) : null;
   const bMax = batteries.length ? Math.max(...batteries) : null;
+  // Android phones: the ERP has no battery health for them, and RAM is what
+  // their buyers compare (owner's choice, 2026-10-29). iPhones show the battery.
+  const ramSpec = (product.specs as Record<string, unknown> | null)?.["RAM"];
+  const ram =
+    product.brand?.toLowerCase() !== "apple" && typeof ramSpec === "string" && ramSpec.trim() ? ramSpec.replace(/\s+/g, "") : null;
 
   return (
     <Link
@@ -92,6 +97,11 @@ export async function ProductCard({
             <GradeMeter grade={product.condition} />
             {bMin !== null && bMax !== null && product.condition !== "NEUF" && (
               <BatteryLevel percent={bMax} label={bMin === bMax ? undefined : `${bMin}-${bMax} %`} />
+            )}
+            {ram && (
+              <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-neutral-700">
+                <MemoryStick size={14} aria-hidden className="text-gold-deep" /> {t.common.ram(ram)}
+              </span>
             )}
           </div>
         )}

@@ -92,7 +92,9 @@ export function PhoneOfferPage({
   const batteryShown = iphone && minBattery !== null;
   const allGood = minBattery !== null && minBattery >= BATTERY_GOOD_FROM;
 
-  const subtitle = [offer.storages.join(" / "), offer.grades.map((g) => t.grades.label[g] ?? g).join(" · ")].filter(Boolean).join(" · ");
+  // Android models: their RAM next to the storage (no battery health for them).
+  const ramLine = offer.brandKey !== "apple" && offer.rams.length ? t.common.ram(offer.rams.join(" / ")) : "";
+  const subtitle = [offer.storages.join(" / "), ramLine, offer.grades.map((g) => t.grades.label[g] ?? g).join(" · ")].filter(Boolean).join(" · ");
   // New phones carry the 12-month warranty; every phone gets real photos
   // and a video on WhatsApp before shipping.
   const baseTrust = isNew ? c.hero.trust.map((item, i) => (i === 1 ? c.hero.trustNewWarranty : item)) : c.hero.trust;

@@ -5,13 +5,14 @@ import { DESC_MAX, TITLE_MAX, fit } from "../../seo-fit";
 export const en: Dictionary = {
   meta: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
-    phonesOnly: { title: "Used iPhone and Samsung in Meknes | Electro Zaki", description: "Used and new iPhone, Samsung and Xiaomi in Meknes: condition and battery shown, 3-month warranty, repairs on site. Delivery anywhere in Morocco." },
+    phonesOnly: { title: "Used iPhone and Samsung in Meknes | Electro Zaki", description: "Used and new iPhone, Samsung and Xiaomi in Meknes: condition and battery or RAM shown, 3-month warranty, repairs on site. Delivery anywhere in Morocco." },
     title: "Electro Zaki | Phones & accessories in Meknes",
     description:
-      "New and used phones (iPhone, Samsung, Xiaomi), cases, chargers, cables, earphones and repairs in Meknes. Condition and battery shown for every phone, delivery anywhere in Morocco.",
+      "New and used phones (iPhone, Samsung, Xiaomi), cases, chargers, cables, earphones and repairs in Meknes. Condition and battery or RAM shown for every phone, delivery anywhere in Morocco.",
   },
 
   common: {
+    ram: (v: string) => `${v} RAM`,
     guides: "Buying guides",
     skipToContent: "Skip to content",
     homeAria: "Electro Zaki | home",
@@ -53,9 +54,9 @@ export const en: Dictionary = {
     returns: "7-day returns",
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
     blurbPhonesOnly: (city: string) =>
-      `New and used phones and repairs in ${city}. Every used phone is sold with its condition and battery shown.`,
+      `New and used phones and repairs in ${city}. Every used phone is sold with its condition and battery or RAM shown.`,
     blurb: (city: string) =>
-      `New and used phones, accessories and repairs in ${city}. Every used phone is sold with its condition and battery shown.`,
+      `New and used phones, accessories and repairs in ${city}. Every used phone is sold with its condition and battery or RAM shown.`,
     services: "Services",
     writeUs: "Write to us",
     writeUsText: "Photos, availability, prices: we answer on WhatsApp.",
@@ -63,6 +64,7 @@ export const en: Dictionary = {
   },
 
   categories: {
+    tablettes: "Tablets",
     telephones: "Phones",
     accessoires: "Accessories",
     pochettes: "Cases",
@@ -83,6 +85,7 @@ export const en: Dictionary = {
   },
 
   aisleBlurb: {
+    tablettes: "Samsung Galaxy Tab, iPad - new and used",
     telephones: "iPhone, Samsung, Xiaomi - new and used",
     pochettes: "Cases for every model",
     incassables: "Tempered glass, screen protection",
@@ -139,10 +142,10 @@ export const en: Dictionary = {
 
   hero: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
-    phonesOnly: { eyebrow: "Phones · Repairs", title: ["Phones", "& repairs", "in Meknes."], lead: "iPhone, Samsung, Xiaomi, new and used - the condition and battery of every device shown before you buy. 3-month warranty, and repairs on site." },
+    phonesOnly: { eyebrow: "Phones · Repairs", title: ["Phones", "& repairs", "in Meknes."], lead: "iPhone, Samsung, Xiaomi, new and used - the condition and battery or RAM of every device shown before you buy. 3-month warranty, and repairs on site." },
     eyebrow: "Phones · Accessories · Repairs",
     title: ["Phones", "& accessories", "in Meknes."],
-    lead: "iPhone, Samsung, Xiaomi, new and used - the condition and battery of every device shown before you buy. Cases, chargers, cables, earphones, and repairs on site.",
+    lead: "iPhone, Samsung, Xiaomi, new and used - the condition and battery or RAM of every device shown before you buy. Cases, chargers, cables, earphones, and repairs on site.",
     seePhones: "See the phones",
     lockCaption: "Meknes · Electro Zaki",
     inStock: "in stock",
@@ -157,7 +160,7 @@ export const en: Dictionary = {
       { title: "Delivery", value: "All of Morocco" },
       { title: "Payment", value: "300 DH, the rest on delivery" },
       { title: "Warranty", value: "3 months" },
-      { title: "Battery", value: "Shown" },
+      { title: "Battery / RAM", value: "Shown" },
     ],
   },
 

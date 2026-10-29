@@ -6,13 +6,14 @@ import { DESC_MAX, TITLE_MAX, fit } from "../../seo-fit";
 export const ar: Dictionary = {
   meta: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
-    phonesOnly: { title: "ايفون وسامسونج مستعمل في مكناس | إلكترو زكي", description: "هواتف iPhone و Samsung و Xiaomi مستعملة وجديدة في مكناس: الحالة والبطارية معروضة، ضمان 3 أشهر، وإصلاح في المحل. التوصيل إلى جميع أنحاء المغرب." },
+    phonesOnly: { title: "ايفون وسامسونج مستعمل في مكناس | إلكترو زكي", description: "هواتف iPhone و Samsung و Xiaomi مستعملة وجديدة في مكناس: الحالة والبطارية أو الرام معروضة، ضمان 3 أشهر، وإصلاح في المحل. التوصيل إلى جميع أنحاء المغرب." },
     title: "إلكترو زكي | هواتف وإكسسوارات في مكناس",
     description:
-      "هواتف جديدة ومستعملة (iPhone و Samsung و Xiaomi)، أغلفة وشواحن وكابلات وسماعات، وإصلاح الهواتف في مكناس. حالة كل هاتف وبطاريته معروضة، والتوصيل إلى جميع أنحاء المغرب.",
+      "هواتف جديدة ومستعملة (iPhone و Samsung و Xiaomi)، أغلفة وشواحن وكابلات وسماعات، وإصلاح الهواتف في مكناس. حالة كل هاتف وبطاريته أو الرام معروضة، والتوصيل إلى جميع أنحاء المغرب.",
   },
 
   common: {
+    ram: (v: string) => `رام ${v}`,
     guides: "أدلة الشراء",
     skipToContent: "الانتقال إلى المحتوى",
     homeAria: "إلكترو زكي | الصفحة الرئيسية",
@@ -54,9 +55,9 @@ export const ar: Dictionary = {
     returns: "الإرجاع خلال 7 أيام",
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
     blurbPhonesOnly: (city: string) =>
-      `هواتف جديدة ومستعملة وإصلاح في ${city}. كل هاتف مستعمل يُباع مع عرض حالته وبطاريته.`,
+      `هواتف جديدة ومستعملة وإصلاح في ${city}. كل هاتف مستعمل يُباع مع عرض حالته وبطاريته أو الرام.`,
     blurb: (city: string) =>
-      `هواتف جديدة ومستعملة، إكسسوارات وإصلاح في ${city}. كل هاتف مستعمل يُباع مع عرض حالته وبطاريته.`,
+      `هواتف جديدة ومستعملة، إكسسوارات وإصلاح في ${city}. كل هاتف مستعمل يُباع مع عرض حالته وبطاريته أو الرام.`,
     services: "الخدمات",
     writeUs: "راسلنا",
     writeUsText: "صور، توفر، أسعار: نجيبك على واتساب.",
@@ -64,6 +65,7 @@ export const ar: Dictionary = {
   },
 
   categories: {
+    tablettes: "الأجهزة اللوحية",
     telephones: "الهواتف",
     accessoires: "الإكسسوارات",
     pochettes: "الأغلفة",
@@ -84,6 +86,7 @@ export const ar: Dictionary = {
   },
 
   aisleBlurb: {
+    tablettes: "سامسونج جالاكسي تاب وآيباد - جديدة ومستعملة",
     telephones: "iPhone و Samsung و Xiaomi - جديدة ومستعملة",
     pochettes: "أغلفة لكل طراز",
     incassables: "زجاج مقوّى وحماية للشاشة",
@@ -140,10 +143,10 @@ export const ar: Dictionary = {
 
   hero: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
-    phonesOnly: { eyebrow: "هواتف · إصلاح", title: ["هواتف", "وإصلاح", "في مكناس."], lead: "iPhone و Samsung و Xiaomi، جديدة ومستعملة - حالة كل جهاز وبطاريته معروضة قبل الشراء. ضمان 3 أشهر، وإصلاح في عين المكان." },
+    phonesOnly: { eyebrow: "هواتف · إصلاح", title: ["هواتف", "وإصلاح", "في مكناس."], lead: "iPhone و Samsung و Xiaomi، جديدة ومستعملة - حالة كل جهاز وبطاريته أو الرام معروضة قبل الشراء. ضمان 3 أشهر، وإصلاح في عين المكان." },
     eyebrow: "هواتف · إكسسوارات · إصلاح",
     title: ["هواتف", "وإكسسوارات", "في مكناس."],
-    lead: "iPhone و Samsung و Xiaomi، جديدة ومستعملة - حالة كل جهاز وبطاريته معروضة قبل الشراء. أغلفة وشواحن وكابلات وسماعات، وإصلاح في عين المكان.",
+    lead: "iPhone و Samsung و Xiaomi، جديدة ومستعملة - حالة كل جهاز وبطاريته أو الرام معروضة قبل الشراء. أغلفة وشواحن وكابلات وسماعات، وإصلاح في عين المكان.",
     seePhones: "عرض الهواتف",
     lockCaption: "مكناس · إلكترو زكي",
     inStock: "متوفر",
@@ -158,7 +161,7 @@ export const ar: Dictionary = {
       { title: "التوصيل", value: "كل المغرب" },
       { title: "الدفع", value: "300 درهم، والباقي عند الاستلام" },
       { title: "الضمان", value: "3 أشهر" },
-      { title: "البطارية", value: "معروضة" },
+      { title: "البطارية / الرام", value: "معروضة" },
     ],
   },
 

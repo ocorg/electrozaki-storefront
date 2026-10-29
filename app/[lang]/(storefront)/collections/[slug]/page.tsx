@@ -19,7 +19,8 @@ import { AnchorButton, LinkButton } from "@/components/ui/Button";
 import { getModelPages } from "@/lib/offers/phone-offers";
 import { artFor } from "@/lib/category-art";
 import { formatMAD } from "@/lib/format";
-import { aisleOpen, whatsappLink } from "@/lib/site";
+import { PHONES_AISLE, TABLET_RE, aisleOpen, whatsappLink } from "@/lib/site";
+import { byBrandThenNewest } from "@/lib/model-order";
 import { ComingSoon } from "@/components/storefront/ComingSoon";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { categoryName, facetOptionName, facetQuestion } from "@/lib/i18n/labels";
@@ -86,8 +87,12 @@ export default async function CollectionPage({ params, searchParams }: Props) {
     getT(),
     getFacetGroups(slug),
   ]);
-  const models = [...modelPages].sort((a, b) => b.units.length - a.units.length);
+  // By brand, newest model first (lib/model-order.ts); tablets have their own aisle.
+  const models = [...modelPages].filter((m) => !TABLET_RE.test(m.name)).sort(byBrandThenNewest);
   const phones = options.kind === "phones";
+  // The phones aisle itself (its search-shaped title, intro and model
+  // buttons); tablets are sold like phones but have their own aisle.
+  const phonesAisle = slug === PHONES_AISLE;
   const str = (v?: string) => (typeof v === "string" && v ? v.slice(0, 80) : undefined);
   const int = (v?: string) => (v && Number.isFinite(Number(v)) && Number(v) > 0 ? Number(v) : undefined);
 
@@ -259,16 +264,16 @@ export default async function CollectionPage({ params, searchParams }: Props) {
             <Breadcrumbs items={crumbs} />
             {/* The phones aisle says what it sells, in the words people search
                 ("téléphones d'occasion Meknès"), not just "Téléphones". */}
-            {phones ? (
+            {phonesAisle ? (
               <h1 className="font-display mt-4 text-[2rem] font-extrabold leading-[1.05] text-ink sm:text-5xl">{t.collection.metaPhonesTitle}</h1>
             ) : (
               <h1 className="font-display mt-4 text-[2.4rem] font-extrabold leading-none text-ink sm:text-6xl">{title}</h1>
             )}
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg">
-              {phones ? t.collection.introPhones : t.collection.introAisle(t.aisleBlurb[slug] ?? null, title)}
+              {phonesAisle ? t.collection.introPhones : t.collection.introAisle(t.aisleBlurb[slug] ?? null, title)}
             </p>
             {/* Each model's own page (every unit of it in stock), most stocked first. */}
-            {phones && models.length > 1 && (
+            {phonesAisle && models.length > 1 && (
               <nav aria-label={t.collection.byModel} className="mt-5">
                 <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-neutral-600">{t.collection.byModel}</p>
                 {/* One row that scrolls sideways on a phone (37 models used to

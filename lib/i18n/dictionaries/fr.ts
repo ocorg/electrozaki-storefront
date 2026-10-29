@@ -7,13 +7,14 @@ import { DESC_MAX, TITLE_MAX, fit } from "../../seo-fit";
 export const fr = {
   meta: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
-    phonesOnly: { title: "iPhone et Samsung d'occasion à Meknès | Electro Zaki", description: "iPhone, Samsung et Xiaomi d'occasion et neufs à Meknès : état et batterie affichés, garantie 3 mois, réparation sur place. Livraison partout au Maroc." },
+    phonesOnly: { title: "iPhone et Samsung d'occasion à Meknès | Electro Zaki", description: "iPhone, Samsung et Xiaomi d'occasion et neufs à Meknès : état et batterie ou RAM affichés, garantie 3 mois, réparation sur place. Livraison partout au Maroc." },
     title: "Electro Zaki | Téléphones & accessoires à Meknès",
     description:
-      "Téléphones neufs et d'occasion (iPhone, Samsung, Xiaomi), coques, chargeurs, câbles, écouteurs et réparation à Meknès. État et batterie affichés pour chaque téléphone, livraison partout au Maroc.",
+      "Téléphones neufs et d'occasion (iPhone, Samsung, Xiaomi), coques, chargeurs, câbles, écouteurs et réparation à Meknès. État et batterie ou RAM affichés pour chaque téléphone, livraison partout au Maroc.",
   },
 
   common: {
+    ram: (v: string) => `RAM ${v}`,
     guides: "Guides d'achat",
     skipToContent: "Aller au contenu",
     homeAria: "Electro Zaki | accueil",
@@ -55,9 +56,9 @@ export const fr = {
     returns: "Retours sous 7 jours",
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
     blurbPhonesOnly: (city: string) =>
-      `Téléphones neufs et d'occasion et réparation à ${city}. Chaque téléphone d'occasion est vendu avec son état et sa batterie affichés.`,
+      `Téléphones neufs et d'occasion et réparation à ${city}. Chaque téléphone d'occasion est vendu avec son état et sa batterie ou sa RAM affichés.`,
     blurb: (city: string) =>
-      `Téléphones neufs et d'occasion, accessoires et réparation à ${city}. Chaque téléphone d'occasion est vendu avec son état et sa batterie affichés.`,
+      `Téléphones neufs et d'occasion, accessoires et réparation à ${city}. Chaque téléphone d'occasion est vendu avec son état et sa batterie ou sa RAM affichés.`,
     services: "Services",
     writeUs: "Nous écrire",
     writeUsText: "Photos, disponibilités, prix : on répond sur WhatsApp.",
@@ -67,6 +68,7 @@ export const fr = {
   // Category names by slug. The ERP names categories in French; unknown
   // (new) slugs fall back to the ERP's own name.
   categories: {
+    tablettes: "Tablettes",
     telephones: "Téléphones",
     accessoires: "Accessoires",
     pochettes: "Pochettes",
@@ -88,6 +90,7 @@ export const fr = {
 
   // Short line under each aisle (home tiles, category page intro).
   aisleBlurb: {
+    tablettes: "Samsung Galaxy Tab, iPad - neuves et d'occasion",
     telephones: "iPhone, Samsung, Xiaomi - neufs et d'occasion",
     pochettes: "Coques pour chaque modèle",
     incassables: "Verres trempés, protection d'écran",
@@ -145,10 +148,10 @@ export const fr = {
 
   hero: {
     // While accessories aren't online (ACCESSORIES_OPEN in lib/site.ts).
-    phonesOnly: { eyebrow: "Téléphones · Réparation", title: ["Téléphones", "& réparation", "à Meknès."], lead: "iPhone, Samsung, Xiaomi, neufs et d'occasion - l'état et la batterie de chaque appareil affichés avant l'achat. Garantie 3 mois, et réparation sur place." },
+    phonesOnly: { eyebrow: "Téléphones · Réparation", title: ["Téléphones", "& réparation", "à Meknès."], lead: "iPhone, Samsung, Xiaomi, neufs et d'occasion - l'état et la batterie ou la RAM de chaque appareil affichés avant l'achat. Garantie 3 mois, et réparation sur place." },
     eyebrow: "Téléphones · Accessoires · Réparation",
     title: ["Téléphones", "& accessoires", "à Meknès."],
-    lead: "iPhone, Samsung, Xiaomi, neufs et d'occasion - l'état et la batterie de chaque appareil affichés avant l'achat. Coques, chargeurs, câbles, écouteurs, et réparation sur place.",
+    lead: "iPhone, Samsung, Xiaomi, neufs et d'occasion - l'état et la batterie ou la RAM de chaque appareil affichés avant l'achat. Coques, chargeurs, câbles, écouteurs, et réparation sur place.",
     seePhones: "Voir les téléphones",
     lockCaption: "Meknès · Electro Zaki",
     inStock: "en stock",
@@ -163,7 +166,7 @@ export const fr = {
       { title: "Livraison", value: "Tout le Maroc" },
       { title: "Paiement", value: "300 DH, le reste à la livraison" },
       { title: "Garantie", value: "3 mois" },
-      { title: "Batterie", value: "Affichée" },
+      { title: "Batterie / RAM", value: "Affichées" },
     ],
   },
 

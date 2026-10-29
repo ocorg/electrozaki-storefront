@@ -48,12 +48,19 @@ export const SOCIAL = {
 // Set to true to open them everywhere at once.
 export const ACCESSORIES_OPEN = false;
 
-/** The phones aisle; while accessories are closed, the only aisle shown. */
+/** The phones aisle; while accessories are closed, the only aisle shown with tablets. */
 export const PHONES_AISLE = "telephones";
+/**
+ * Tablets (Galaxy Tab, iPad…) come from the ERP's phones stock and are sold
+ * the same way (isPhone: advance, warranty), in their own aisle: the ERP
+ * sync files names matching TABLET_RE there.
+ */
+export const TABLETS_AISLE = "tablettes";
+export const TABLET_RE = /\b(tab|ipad|pad)\b/i;
 
 /** Is this aisle open online? (`parentSlug` for a sub-aisle.) */
 export function aisleOpen(slug: string, parentSlug?: string | null): boolean {
-  return ACCESSORIES_OPEN || slug === PHONES_AISLE || parentSlug === PHONES_AISLE;
+  return ACCESSORIES_OPEN || slug === PHONES_AISLE || slug === TABLETS_AISLE || parentSlug === PHONES_AISLE;
 }
 
 /** Product filter for public lists: phones only while accessories are closed. */
