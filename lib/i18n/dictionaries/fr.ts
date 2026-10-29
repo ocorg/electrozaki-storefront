@@ -14,6 +14,7 @@ export const fr = {
   },
 
   common: {
+    batteryPct: (n: number) => `Batterie ${n} %`,
     ram: (v: string) => `RAM ${v}`,
     guides: "Guides d'achat",
     skipToContent: "Aller au contenu",

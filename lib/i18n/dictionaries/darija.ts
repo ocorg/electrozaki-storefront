@@ -16,6 +16,7 @@ export const darija: Dictionary = {
   },
 
   common: {
+    batteryPct: (n: number) => `Batterie ${n}%`,
     ram: (v: string) => `RAM ${v}`,
     guides: "Guides dyal chra",
     skipToContent: "Doz l contenu",
@@ -1052,9 +1053,7 @@ export const darija: Dictionary = {
     Bleu: "Zre9",
     Minuit: "Minuit",
     Blanc: "Byed",
-    "Cosmic Orange": "Cosmic Orange",
     "Noir Sidéral": "K7el Sidéral",
-    Silver: "Silver",
     "Noir Minuit": "K7el Minuit",
     Rose: "Rose",
     Graphite: "Graphite",
@@ -1069,7 +1068,6 @@ export const darija: Dictionary = {
     Noir: "K7el",
     "Gris Clair": "Gris fateh",
     "Bleu foncé": "Zre9 ghame9",
-    "Velvet Noir": "K7el velours",
     "Marron rougeâtre": "Marron m7mmer",
     Argent: "Fedda",
     Violet: "Mauve",
@@ -1077,7 +1075,6 @@ export const darija: Dictionary = {
     "Bleu Sierra": "Zre9 Sierra",
     Lavande: "Lavande",
     "Bleu Marine": "Zre9 marine",
-    "Cobalt Violet": "Mauve cobalt",
     Olive: "Zitouni",
     "Vert Forêt": "Khdar ghaba",
     Or: "Dehbi",

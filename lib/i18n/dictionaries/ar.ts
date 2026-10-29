@@ -14,6 +14,7 @@ export const ar: Dictionary = {
   },
 
   common: {
+    batteryPct: (n: number) => `البطارية ${n}%`,
     ram: (v: string) => `رام ${v}`,
     guides: "أدلة الشراء",
     skipToContent: "الانتقال إلى المحتوى",
@@ -1070,7 +1071,6 @@ export const ar: Dictionary = {
     Bleu: "أزرق",
     Minuit: "منتصف الليل",
     Blanc: "أبيض",
-    "Cosmic Orange": "برتقالي كوني",
     "Noir Sidéral": "أسود فلكي",
     Silver: "فضي",
     "Noir Minuit": "أسود منتصف الليل",
@@ -1087,7 +1087,6 @@ export const ar: Dictionary = {
     Noir: "أسود",
     "Gris Clair": "رمادي فاتح",
     "Bleu foncé": "أزرق داكن",
-    "Velvet Noir": "أسود مخملي",
     "Marron rougeâtre": "بني محمر",
     Argent: "فضي",
     Violet: "بنفسجي",
@@ -1095,7 +1094,6 @@ export const ar: Dictionary = {
     "Bleu Sierra": "أزرق سييرا",
     Lavande: "لافندر",
     "Bleu Marine": "أزرق كحلي",
-    "Cobalt Violet": "بنفسجي كوبالت",
     Olive: "زيتوني",
     "Vert Forêt": "أخضر غابي",
     Or: "ذهبي",

@@ -7,7 +7,7 @@ import { formatMAD } from "@/lib/format";
 import { whatsappLink } from "@/lib/site";
 import { useLocale, useT } from "@/components/i18n/I18nProvider";
 import { LOCALE_META } from "@/lib/i18n/config";
-import { translateError } from "@/lib/i18n/labels";
+import { localizeUnitText, translateError } from "@/lib/i18n/labels";
 import type { TrackedOrder } from "@/lib/order-tracking";
 import { ReviewForm } from "@/components/reviews/ReviewForm";
 import { lookupOrder } from "./actions";
@@ -34,6 +34,14 @@ export function OrderTrackingForm({ initialRef }: { initialRef: string }) {
 
   const day = (iso: string) =>
     new Date(iso).toLocaleDateString(`${LOCALE_META[locale].intl}-u-nu-latn`, { timeZone: "Etc/GMT", weekday: "long", day: "numeric", month: "long" });
+
+  // An order line is saved as "iPhone 13 128GB (Vert · Batterie 89% · …)":
+  // the unit part, written in French by the ERP, is shown in the visitor's language.
+  const lineName = (name: string) => {
+    // The last brackets only: a promo line is "… (promo iPhone 13) (Rouge · …)".
+    const m = name.match(/^(.*)\(([^()]+)\)\s*$/);
+    return m ? `${m[1].trim()} (${localizeUnitText(t, m[2])})` : name;
+  };
 
   async function search(e: FormEvent) {
     e.preventDefault();
@@ -202,7 +210,7 @@ export function OrderTrackingForm({ initialRef }: { initialRef: string }) {
                   {order.items.map((it, i) => (
                     <li key={i} className="font-medium text-ink">
                       {it.quantity > 1 ? `${it.quantity} × ` : ""}
-                      {it.name}
+                      {lineName(it.name)}
                     </li>
                   ))}
                 </ul>

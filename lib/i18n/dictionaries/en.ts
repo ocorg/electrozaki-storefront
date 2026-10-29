@@ -13,6 +13,7 @@ export const en: Dictionary = {
   },
 
   common: {
+    batteryPct: (n: number) => `Battery ${n}%`,
     ram: (v: string) => `${v} RAM`,
     guides: "Buying guides",
     skipToContent: "Skip to content",
@@ -1069,9 +1070,7 @@ export const en: Dictionary = {
     Bleu: "Blue",
     Minuit: "Midnight",
     Blanc: "White",
-    "Cosmic Orange": "Cosmic Orange",
     "Noir Sidéral": "Space Black",
-    Silver: "Silver",
     "Noir Minuit": "Midnight Black",
     Rose: "Pink",
     Graphite: "Graphite",
@@ -1086,7 +1085,6 @@ export const en: Dictionary = {
     Noir: "Black",
     "Gris Clair": "Light Grey",
     "Bleu foncé": "Dark Blue",
-    "Velvet Noir": "Velvet Black",
     "Marron rougeâtre": "Reddish Brown",
     Argent: "Silver",
     Violet: "Purple",
@@ -1094,7 +1092,6 @@ export const en: Dictionary = {
     "Bleu Sierra": "Sierra Blue",
     Lavande: "Lavender",
     "Bleu Marine": "Navy Blue",
-    "Cobalt Violet": "Cobalt Violet",
     Olive: "Olive",
     "Vert Forêt": "Forest Green",
     Or: "Gold",

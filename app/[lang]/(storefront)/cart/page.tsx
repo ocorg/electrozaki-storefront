@@ -18,7 +18,7 @@ import { dayParts, estimateDelivery, findCity } from "@/lib/delivery";
 import { MOROCCAN_PHONE_RE } from "@/lib/validation";
 import { catalogId, metaTrack } from "@/components/analytics/meta";
 import { useT } from "@/components/i18n/I18nProvider";
-import { translateError } from "@/lib/i18n/labels";
+import { localizeUnitText, translateError } from "@/lib/i18n/labels";
 
 // The phone reservation advance, in DH (the server applies the same rule).
 const ADVANCE = 300;
@@ -288,7 +288,7 @@ export default function CartPage() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="font-medium">{item.productName}</p>
-                  {item.variantName && <p className="text-sm text-neutral-500">{item.variantName}</p>}
+                  {item.variantName && <p className="text-sm text-neutral-500">{localizeUnitText(t, item.variantName)}</p>}
                   <p className="mt-1 inline-block rounded-lg bg-ink px-2 py-0.5 text-sm font-bold text-gold">{formatMAD(item.price)}</p>
                 </div>
                 {item.isGift || item.bundleId ? (

@@ -18,7 +18,7 @@ import type { SpecRow } from "@/lib/offers/spec-row";
 import { Select } from "@/components/ui/Select";
 import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
 import { useT } from "@/components/i18n/I18nProvider";
-import { colorName } from "@/lib/i18n/labels";
+import { colorName, unitLabel } from "@/lib/i18n/labels";
 import { photoAlt } from "@/components/storefront/photo-alt";
 import { metaTrack } from "@/components/analytics/meta";
 
@@ -485,7 +485,8 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
               >
                 {variants.map((v) => (
                   <option key={v.id} value={v.id} disabled={v.stockQuantity <= 0}>
-                    {v.name}
+                    {/* In the visitor's language (the ERP name is French). */}
+                    {[v.storageLabel, unitLabel(t, { color: v.color, battery: v.batteryHealthPercent })].filter(Boolean).join(" · ") || v.name}
                     {v.stockQuantity <= 0 ? p.soldOutSuffix : ""}
                   </option>
                 ))}

@@ -30,6 +30,38 @@ export function colorName(t: Dictionary, name: string): string {
   return (t.colorOrder === "reverse" ? [...said.slice(1).reverse(), said[0]] : said).join(" ");
 }
 
+/**
+ * A unit's description in the visitor's language: "Vert · Batterie 89 %"
+ * (French), "Green · Battery 89%" (English). The ERP writes it in French with
+ * the price ("Vert · Batterie 89% · 3400 DH"); the price is shown apart.
+ */
+export function unitLabel(t: Dictionary, unit: { color?: string | null; battery?: number | null }): string {
+  return [unit.color ? colorName(t, unit.color) : null, unit.battery != null ? t.common.batteryPct(unit.battery) : null]
+    .filter(Boolean)
+    .join(" · ");
+}
+
+/**
+ * The ERP's French unit text ("Violet Clair · Batterie 87% · 1 200 DH", "—"
+ * also accepted) rebuilt in the visitor's language: kept in carts and order
+ * lines, where only the text was saved. Unknown shapes pass through.
+ */
+export function localizeUnitText(t: Dictionary, text: string): string {
+  const parts = text.split(/\s+[·—–-]\s+/).map((p) => p.trim()).filter(Boolean);
+  if (!parts.length) return text;
+  let color: string | null = null;
+  let battery: number | null = null;
+  const rest: string[] = [];
+  for (const part of parts) {
+    const b = part.match(/^batterie\s*(\d{1,3})\s*%$/i);
+    if (b) battery = Number(b[1]);
+    else if (/^[\d\s.,  ]+(DH|MAD)$/i.test(part)) continue; // the price: shown apart
+    else if (!color) color = part;
+    else rest.push(part);
+  }
+  return [unitLabel(t, { color, battery }), ...rest].filter(Boolean).join(" · ");
+}
+
 const colorKey = (w: string) => w.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
 /** "Blanc Clair de Lune" → ["Blanc", "Clair de Lune"]: known expressions stay one piece. */
