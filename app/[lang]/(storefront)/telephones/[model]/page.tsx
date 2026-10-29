@@ -5,6 +5,7 @@ import { localePath } from "@/lib/i18n/config";
 import { getModelPage } from "@/lib/offers/phone-offers";
 import { MODEL_FACTS } from "@/lib/offers/models";
 import { getReviewSummary } from "@/lib/reviews";
+import { listedModelName } from "@/lib/db/model-options";
 import { PhoneOfferPage, phoneOfferMetadata } from "../../offres/[slug]/PhoneOfferPage";
 
 // A phone model's permanent page (/telephones/iphone-13): every unit in
@@ -37,7 +38,11 @@ export default async function ModelPage({ params }: Props) {
   }
   // A model we know but have none of right now: the phones aisle, searched
   // for it (temporary: stock comes back).
+  // Any model ever listed counts (not only those with a fact sheet): a
+  // sold-out Redmi 12 5G used to answer 404 in Google's eyes.
   const facts = MODEL_FACTS[model];
-  if (facts) redirect(localePath(locale, `/collections/telephones?q=${encodeURIComponent(facts.name)}`));
+  const listed = facts ? null : await listedModelName(model);
+  const name = facts?.name ?? listed;
+  if (name) redirect(localePath(locale, `/collections/telephones?q=${encodeURIComponent(name)}`));
   notFound();
 }

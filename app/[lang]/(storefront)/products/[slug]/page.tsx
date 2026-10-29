@@ -97,6 +97,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const alt = alternates(locale, `/products/${slug}`);
   return {
     title: pageTitle(title),
+    // Sold for good (the ERP has none left): kept for visitors (it points to
+    // the same model in stock) but out of Google's index, so its visits go
+    // to phones that can be bought. Links are still followed.
+    ...(product.availability === "DISCONTINUED" ? { robots: { index: false, follow: true } } : {}),
     description: clipDescription(description),
     alternates: alt,
     openGraph: {

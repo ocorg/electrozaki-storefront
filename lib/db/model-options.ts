@@ -103,3 +103,22 @@ export const getAllPhotoColors = cache(async (): Promise<Map<string, string>> =>
   const rows = await prisma.modelPhoto.findMany({ select: { url: true, color: true } });
   return new Map(rows.map((r) => [r.url, r.color]));
 });
+
+/**
+ * A model the shop has listed at least once (sold out or not), by its page
+ * address (/telephones/redmi-12-5g): its name for a search ("Redmi 12 5G"),
+ * or null for an address that never existed.
+ */
+export async function listedModelName(slug: string): Promise<string | null> {
+  const { offerSlug } = await import("@/lib/offers/phone-offers");
+  const rows = await prisma.product.findMany({
+    where: { isPhone: true, modelKey: { not: null } },
+    select: { modelKey: true, name: true, brand: true },
+    distinct: ["modelKey"],
+  });
+  const hit = rows.find((r) => offerSlug(r.modelKey!) === slug);
+  if (!hit) return null;
+  // "Xiaomi Redmi 12 5G 256GB" → "Redmi 12 5G" (storage and brand dropped).
+  const noStorage = hit.name.replace(/\s*\b\d+\s?(?:GB|TB|Go|To)\b.*$/i, "").trim();
+  return hit.brand && noStorage.toLowerCase().startsWith(`${hit.brand.toLowerCase()} `) ? noStorage.slice(hit.brand.length + 1) : noStorage;
+}
