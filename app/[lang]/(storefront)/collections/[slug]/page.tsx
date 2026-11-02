@@ -11,6 +11,7 @@ import { ProductCard } from "@/components/storefront/ProductCard";
 import { CatalogBar, type FilterValues } from "@/components/storefront/CatalogBar";
 import { AisleGuide, type GuideStep } from "@/components/storefront/AisleGuide";
 import { RememberedPhone } from "@/components/storefront/RememberedPhone";
+import { ModelChips } from "@/components/storefront/ModelChips";
 import { DeviceArt } from "@/components/storefront/DeviceArt";
 import { Pagination } from "@/components/storefront/Pagination";
 import { SearchTracker } from "@/components/analytics/SearchTracker";
@@ -265,49 +266,31 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   return (
     <div>
       <section className="border-b border-ink/10 bg-paper-2/60">
-        <div className="mx-auto grid max-w-7xl items-end gap-6 px-4 pb-8 pt-8 sm:pt-10 md:grid-cols-[minmax(0,1fr)_auto]">
+        <div className="mx-auto grid max-w-7xl items-end gap-6 px-4 pb-5 pt-5 sm:pb-6 sm:pt-7 md:grid-cols-[minmax(0,1fr)_auto]">
           {/* min-w-0: the sideways-scrolling model row mustn't widen the page. */}
           <div className="min-w-0">
             <Breadcrumbs items={crumbs} />
             {/* The phones aisle says what it sells, in the words people search
                 ("téléphones d'occasion Meknès"), not just "Téléphones". */}
             {phonesAisle ? (
-              <h1 className="font-display mt-4 text-[2rem] font-extrabold leading-[1.05] text-ink sm:text-5xl">{t.collection.metaPhonesTitle}</h1>
+              <h1 className="font-display mt-3 text-[1.6rem] font-extrabold leading-[1.1] text-ink sm:text-4xl">{t.collection.metaPhonesTitle}</h1>
             ) : (
               <h1 className="font-display mt-4 text-[2.4rem] font-extrabold leading-none text-ink sm:text-6xl">{title}</h1>
             )}
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg">
+            <p className={`mt-3 leading-relaxed text-neutral-600 ${phonesAisle ? "line-clamp-2 max-w-3xl text-sm sm:line-clamp-none sm:text-base" : "max-w-2xl text-base sm:text-lg"}`}>
               {phonesAisle ? t.collection.introPhones : t.collection.introAisle(t.aisleBlurb[slug] ?? null, title)}
             </p>
-            {/* Each model's own page (every unit of it in stock), most stocked first. */}
-            {phonesAisle && models.length > 1 && (
-              <nav aria-label={t.collection.byModel} className="mt-5">
-                <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-neutral-600">{t.collection.byModel}</p>
-                {/* One row that scrolls sideways on a phone (37 models used to
-                    fill two screens before the first phone); wrapped on wider screens. */}
-                <ul className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 scrollbar-none md:mx-0 md:flex-wrap md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
-                  {models.map((m) => (
-                    <li key={m.slug} className="flex-none">
-                      <Link
-                        href={`/telephones/${m.slug}`}
-                        className="inline-flex min-h-10 items-center rounded-full bg-white px-3.5 text-[13px] font-semibold text-ink ring-1 ring-ink/10 transition-shadow hover:ring-ink/30"
-                      >
-                        {m.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            )}
+            {/* Each model's own page (every unit of it in stock), by brand then newest. */}
+            {phonesAisle && models.length > 1 && <ModelChips models={models.map((m) => ({ slug: m.slug, name: m.name }))} />}
           </div>
           <div className="hidden items-center gap-4 md:flex">
-            <DeviceArt kind={artFor(slug, category.name)} className="h-28 w-28 text-ink" />
+            <DeviceArt kind={artFor(slug, category.name)} className={`${phonesAisle ? "h-20 w-20" : "h-28 w-28"} text-ink`} />
             {fromPrice !== null && (
               <p className="text-end">
                 <span className="block font-mono text-xs font-semibold uppercase tracking-[0.16em] text-neutral-600">
                   {t.common.fromLong}
                 </span>
-                <span className="readout mt-1 block text-5xl font-bold text-ink">{formatMAD(fromPrice, locale)}</span>
+                <span className={`readout mt-1 block font-bold text-ink ${phonesAisle ? "text-4xl" : "text-5xl"}`}>{formatMAD(fromPrice, locale)}</span>
               </p>
             )}
           </div>

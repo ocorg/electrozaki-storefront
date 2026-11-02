@@ -229,6 +229,8 @@ export const ar: Dictionary = {
 
   collection: {
     byModel: "حسب الطراز",
+    moreModels: (n: number) => `+ ${n} طرازات أخرى`,
+    fewerModels: "طرازات أقل",
     introPhones:
       "iPhone و Samsung و Xiaomi و Honor… جديدة ومستعملة. كل هاتف مستعمل يُباع بالوحدة، مع عرض حالته وبطاريته وقطعه.",
     introAisle: (blurb: string | null, name: string) =>
