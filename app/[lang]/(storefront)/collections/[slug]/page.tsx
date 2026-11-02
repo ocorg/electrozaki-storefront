@@ -281,7 +281,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
               {phonesAisle ? t.collection.introPhones : t.collection.introAisle(t.aisleBlurb[slug] ?? null, title)}
             </p>
             {/* Each model's own page (every unit of it in stock), by brand then newest. */}
-            {phonesAisle && models.length > 1 && <ModelChips models={models.map((m) => ({ slug: m.slug, name: m.name }))} />}
+            {phonesAisle && models.length > 1 && <ModelChips models={models.map((m) => ({ slug: m.slug, name: m.name, brandKey: m.brandKey }))} />}
           </div>
           <div className="hidden items-center gap-4 md:flex">
             <DeviceArt kind={artFor(slug, category.name)} className={`${phonesAisle ? "h-20 w-20" : "h-28 w-28"} text-ink`} />

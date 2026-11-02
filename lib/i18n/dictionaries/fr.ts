@@ -233,8 +233,10 @@ export const fr = {
 
   collection: {
     byModel: "Par modèle",
-    moreModels: (n: number) => `+ ${n} modèles`,
-    fewerModels: "Moins de modèles",
+    otherBrands: "Autres",
+    brandJump: "Aller à une marque",
+    modelsPrev: "Modèles précédents",
+    modelsNext: "Modèles suivants",
     introPhones:
       "iPhone, Samsung, Xiaomi, Honor… neufs et d'occasion. Chaque téléphone d'occasion est vendu à l'unité, avec son état, sa batterie et ses pièces affichés.",
     introAisle: (blurb: string | null, name: string) =>

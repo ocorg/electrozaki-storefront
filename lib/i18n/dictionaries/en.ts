@@ -228,8 +228,10 @@ export const en: Dictionary = {
 
   collection: {
     byModel: "By model",
-    moreModels: (n: number) => `+ ${n} models`,
-    fewerModels: "Fewer models",
+    otherBrands: "Others",
+    brandJump: "Jump to a brand",
+    modelsPrev: "Previous models",
+    modelsNext: "Next models",
     introPhones:
       "iPhone, Samsung, Xiaomi, Honor… new and used. Every used phone is sold one by one, with its condition, battery and parts shown.",
     introAisle: (blurb: string | null, name: string) =>

@@ -231,8 +231,10 @@ export const darija: Dictionary = {
 
   collection: {
     byModel: "B l-modèle",
-    moreModels: (n: number) => `+ ${n} modèles khrin`,
-    fewerModels: "9ell men l-modèles",
+    otherBrands: "Khrin",
+    brandJump: "Sir l chi marque",
+    modelsPrev: "L-modèles li 9bel",
+    modelsNext: "L-modèles li mn ba3d",
     introPhones:
       "iPhone, Samsung, Xiaomi, Honor… jdad w mosta3mlin. Kol téléphone mosta3mel kaytba3 wa7ed b wa7ed, w l7ala, l batterie w l pièces dyalo bayna.",
     introAisle: (blurb: string | null, name: string) =>
