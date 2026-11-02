@@ -106,6 +106,7 @@ export const darija: OfferCopy = {
       sound: "Sout",
     },
     unlocks: {
+      touchid: "Touch ID (l-bassma f l-bouton louwel)",
       faceid: "Face ID (kay3ref wjhek b 3D)",
       ultrasonic: "Empreinte ta7t l'écran (ultrasons)",
       optical: "Empreinte ta7t l'écran",

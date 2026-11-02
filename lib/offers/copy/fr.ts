@@ -115,6 +115,7 @@ export const fr = {
       sound: "Son",
     },
     unlocks: {
+      touchid: "Touch ID (empreinte sur le bouton principal)",
       faceid: "Face ID (reconnaissance faciale 3D)",
       ultrasonic: "Empreinte sous l'écran (ultrasons)",
       optical: "Empreinte sous l'écran",

@@ -110,6 +110,7 @@ export const en: OfferCopy = {
       sound: "Sound",
     },
     unlocks: {
+      touchid: "Touch ID (fingerprint in the Home button)",
       faceid: "Face ID (3D face recognition)",
       ultrasonic: "In-display fingerprint (ultrasonic)",
       optical: "In-display fingerprint",

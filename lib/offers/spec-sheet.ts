@@ -13,6 +13,10 @@ export { STORAGE_SLOT, type SpecRow } from "./spec-row";
 // gets them in English (Arabic and Darija readers know the French terms).
 const EN_TERMS: [RegExp, string][] = [
   [/ultra grand-angle/g, "ultra-wide"],
+  [/profondeur/g, "depth"],
+  [/téléobjectif/g, "telephoto"],
+  [/mode Portrait/g, "Portrait mode"],
+  [/mode Nuit/g, "Night mode"],
   [/selon la version/g, "depending on version"],
   [/acier inoxydable/g, "stainless steel"],
   [/cadre titane/g, "titanium frame"],

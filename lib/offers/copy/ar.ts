@@ -106,6 +106,7 @@ export const ar: OfferCopy = {
       sound: "الصوت",
     },
     unlocks: {
+      touchid: "Touch ID (البصمة في الزر الرئيسي)",
       faceid: "Face ID (التعرف ثلاثي الأبعاد على الوجه)",
       ultrasonic: "بصمة تحت الشاشة (بالموجات فوق الصوتية)",
       optical: "بصمة تحت الشاشة",
