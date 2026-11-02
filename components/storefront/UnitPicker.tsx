@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useT } from "@/components/i18n/I18nProvider";
+import { useLocale, useT } from "@/components/i18n/I18nProvider";
 import { colorName } from "@/lib/i18n/labels";
 import { batteryGood } from "@/lib/battery";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
@@ -37,6 +37,16 @@ export function matchUnits(units: VariantData[], color: string, battery: Battery
         Number(a.priceOverride ?? 0) - Number(b.priceOverride ?? 0) ||
         (b.batteryHealthPercent ?? 0) - (a.batteryHealthPercent ?? 0)
     );
+}
+
+/** "Unité n/of" for units that would otherwise look identical. */
+export function twinNumbers(units: VariantData[], t: Dictionary): Map<string, { n: number; of: number }> {
+  const sig = (v: VariantData) => [v.color, v.batteryHealthPercent, partsOf(v, t).join(","), v.priceOverride, v.compareAtPrice].join("|");
+  const groups = new Map<string, string[]>();
+  for (const v of units) groups.set(sig(v), [...(groups.get(sig(v)) ?? []), v.id]);
+  const out = new Map<string, { n: number; of: number }>();
+  for (const ids of groups.values()) if (ids.length > 1) ids.forEach((id, i) => out.set(id, { n: i + 1, of: ids.length }));
+  return out;
 }
 
 // Short, factual labels for the parts a unit had replaced.
@@ -103,6 +113,7 @@ const Chip = OptionChip;
 
 export function UnitPicker({ units, color, battery, selectedId, onColor, onBattery, onSelect, allColors = [] }: Props) {
   const t = useT();
+  const locale = useLocale();
   const label = (c: string) => (c === NO_COLOR ? t.unitPicker.other : colorName(t, c));
   const inStock = useMemo(() => units.filter((u) => u.stockQuantity > 0), [units]);
 
@@ -125,6 +136,8 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
   const ranges = RANGES.filter((r) => r.key !== "na" || hasRange(r));
   const anyBattery = byColor.some((u) => u.batteryHealthPercent !== null);
   const matching = matchUnits(units, color, battery);
+  // Numbered over every phone in stock, so a filter doesn't renumber them.
+  const unitNumbers = twinNumbers(units.filter((u) => u.stockQuantity > 0), t);
 
   return (
     <div className="space-y-4">
@@ -167,6 +180,8 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
         <p className="mb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-600">
           {t.unitPicker.choose}
         </p>
+        {/* Two phones that read the same (colour, battery, parts, price) get
+            "Unité 1/2", "Unité 2/2" so the customer can tell them apart. */}
         {matching.length === 0 ? (
           <p className="rounded-lg bg-neutral-50 px-3 py-3 text-sm text-neutral-600">
             {t.unitPicker.noMatch}
@@ -176,6 +191,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
             {matching.map((u) => {
               const on = u.id === selectedId;
               const parts = partsOf(u, t);
+              const twin = unitNumbers.get(u.id);
               const b = u.batteryHealthPercent;
               const saving = savingOf(u.priceOverride, u.compareAtPrice);
               return (
@@ -199,6 +215,7 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                     {u.color ? colorName(t, u.color) : "-"}
                   </span>
                   {u.badge && <span className="mt-1 block text-xs font-semibold text-neutral-700">{u.badge}</span>}
+                  {twin && <span className="mt-1 block text-xs font-semibold text-neutral-600">{t.unitPicker.unitNo(twin.n, twin.of)}</span>}
                   {b !== null && (
                     <span className="mt-2 flex items-center gap-2 text-sm">
                       <BatteryFull size={16} className={batteryGood(b) ? "text-green-600" : "text-amber-600"} />
@@ -215,12 +232,12 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                     {parts.length ? parts.join(" · ") : t.unitPicker.originalParts}
                   </span>
                   <span className="mt-2 flex flex-wrap items-baseline gap-x-2">
-                    <span className="readout text-lg font-bold">{formatMAD(Number(u.priceOverride ?? 0))}</span>
+                    <span className="readout text-lg font-bold">{formatMAD(Number(u.priceOverride ?? 0), locale)}</span>
                     {saving !== null && u.compareAtPrice && (
                       <>
-                        <span className="text-sm text-neutral-500 line-through">{formatMAD(u.compareAtPrice)}</span>
+                        <span className="text-sm text-neutral-500 line-through">{formatMAD(u.compareAtPrice, locale)}</span>
                         <span dir="ltr" className="rounded-full bg-red-600 px-2 py-0.5 text-xs font-bold text-white">
-                          -{formatMAD(saving)}
+                          -{formatMAD(saving, locale)}
                         </span>
                       </>
                     )}

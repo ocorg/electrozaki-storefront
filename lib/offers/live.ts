@@ -30,10 +30,10 @@ export type LiveOffer = {
   bar: string;
 };
 
-function discountLabel(type: string | null, value: { toString(): string } | null): string | null {
+function discountLabel(type: string | null, value: { toString(): string } | null, locale: Locale): string | null {
   const v = value === null ? 0 : Number(value.toString());
   if (!type || !(v > 0)) return null;
-  return type === "PERCENTAGE" ? `-${v} %` : `-${formatMAD(v)}`;
+  return type === "PERCENTAGE" ? `-${v} %` : `-${formatMAD(v, locale)}`;
 }
 
 async function loadLiveOffers(locale: Locale): Promise<LiveOffer[]> {
@@ -71,19 +71,19 @@ async function loadLiveOffers(locale: Locale): Promise<LiveOffer[]> {
     normalPrice: b.normalFrom,
     discount: null,
     endsAt: b.endsAt?.toISOString() ?? null,
-    bar: c.card.bar(b.name, formatMAD(b.fromPrice)),
+    bar: c.card.bar(b.name, formatMAD(b.fromPrice, locale)),
   }));
   offers.push(...phoneOffers.map((o) => ({
     slug: o.slug,
     href: `/offres/${o.slug}`,
     title: c.card.title(o.name),
-    teaser: c.card.teaser(formatMAD(o.bestSaving)),
+    teaser: c.card.teaser(formatMAD(o.bestSaving, locale)),
     image: o.images[0]?.url ?? null,
     price: o.fromPrice,
     normalPrice: o.normalFrom,
     discount: null,
     endsAt: o.endsAt?.toISOString() ?? null,
-    bar: c.card.bar(o.name, formatMAD(o.fromPrice)),
+    bar: c.card.bar(o.name, formatMAD(o.fromPrice, locale)),
   })));
   const phoneSlugs = new Set([...brandOffers.map((b) => b.slug), ...phoneOffers.map((o) => o.slug)]);
 
@@ -93,7 +93,7 @@ async function loadLiveOffers(locale: Locale): Promise<LiveOffer[]> {
     // ERP promo pages (/offres/[slug]): listed while they have products in stock.
     const ids = await landingProductIds(page.id);
     if (!ids.length) continue;
-    const discount = discountLabel(page.discountType, page.discountValue);
+    const discount = discountLabel(page.discountType, page.discountValue, locale);
     const cover = page.bannerUrl
       ? null
       : await prisma.productImage.findFirst({ where: { productId: { in: ids } }, orderBy: { sortOrder: "asc" }, select: { url: true } });

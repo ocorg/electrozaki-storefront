@@ -114,6 +114,7 @@ export async function getShowcasePhones(limit = 6): Promise<ShowcasePhone[]> {
     select: {
       slug: true,
       name: true,
+      modelKey: true,
       condition: true,
       recommendedSalePrice: true,
       batteryHealthPercent: true,
@@ -130,8 +131,10 @@ export async function getShowcasePhones(limit = 6): Promise<ShowcasePhone[]> {
   const seen = new Set<string>();
   const out: ShowcasePhone[] = [];
   for (const r of bestFirst(rows)) {
-    if (seen.has(r.name)) continue;
-    seen.add(r.name);
+    // One per model: two grades of a Galaxy A07 64GB were shown side by side.
+    const key = r.modelKey ?? r.name.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
     const units = r.variants
       .map((v) => ({ price: v.priceOverride ? Number(v.priceOverride.toString()) : null, battery: v.batteryHealthPercent }))
       .filter((u): u is { price: number; battery: number | null } => u.price !== null)

@@ -10,6 +10,7 @@ export const darija: OfferCopy = {
   },
 
   hero: {
+    used: "Mosta3mal",
     eyebrow: "Promo Electro Zaki · Kayn f Mknas",
     priceLabel: "Prix dyal promo",
     instead: "f blast",
@@ -140,7 +141,7 @@ export const darija: OfferCopy = {
     title: "Yemken katsawel…",
     advance: {
       q: "3lach 3arboun dyal 300 DH?",
-      a: "Kay7jez lik téléphone w kaygetti masarif l expédition. Lba9i katkhllso mnin twslek. Kifach tkhllso kan9oulouh lik f l'appel dyal confirmation.",
+      a: "Kay7jez lik téléphone. Lba9i katkhllso mnin twslek. L livraison 3lik: taman dyalha 3la 7sab lmdina dyalek w kayban mnin tkhtarha. Kifach tkhllso kan9oulouh lik f l'appel dyal confirmation.",
     },
     when: {
       q: "Imta ghadi iwslni téléphone?",

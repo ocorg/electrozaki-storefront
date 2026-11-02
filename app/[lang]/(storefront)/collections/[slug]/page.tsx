@@ -19,7 +19,7 @@ import { AnchorButton, LinkButton } from "@/components/ui/Button";
 import { getModelPages } from "@/lib/offers/phone-offers";
 import { artFor } from "@/lib/category-art";
 import { formatMAD } from "@/lib/format";
-import { PHONES_AISLE, TABLET_RE, aisleOpen, whatsappLink } from "@/lib/site";
+import { PHONES_AISLE, TABLETS_AISLE, TABLET_RE, aisleOpen, whatsappLink } from "@/lib/site";
 import { byBrandThenNewest } from "@/lib/model-order";
 import { ComingSoon } from "@/components/storefront/ComingSoon";
 import { getLocale, getT } from "@/lib/i18n/server";
@@ -55,10 +55,16 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!aisleOpen(slug, category.parent?.slug)) return { title: t.comingSoon.title(name), robots: { index: false } };
   const blurb = t.aisleBlurb[slug] ?? null;
   const isPhones = slug === "telephones";
-  const base = isPhones ? t.collection.metaPhonesTitle : t.collection.metaAisleTitle(name);
+  // Tablets have their own words: the generic aisle title speaks of phone accessories.
+  const isTablets = slug === TABLETS_AISLE;
+  const base = isPhones ? t.collection.metaPhonesTitle : isTablets ? t.collection.metaTabletsTitle : t.collection.metaAisleTitle(name);
   // Page 2, 3…: their own title (otherwise every page of the aisle has the same one).
   const title = Number.isInteger(pageNo) && pageNo > 1 ? `${base} - ${t.pagination.titleSuffix(pageNo)}` : base;
-  const description = isPhones ? t.collection.metaPhonesDescription : t.collection.metaAisleDescription(name, blurb);
+  const description = isPhones
+    ? t.collection.metaPhonesDescription
+    : isTablets
+      ? t.collection.metaTabletsDescription
+      : t.collection.metaAisleDescription(name, blurb);
   const alt = alternates(locale, path);
   return {
     title: pageTitle(title),
@@ -80,12 +86,13 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   }
 
   // All at once: none of these needs another's answer.
-  const [modelPages, options, aisles, t, groups] = await Promise.all([
+  const [modelPages, options, aisles, t, groups, locale] = await Promise.all([
     slug === "telephones" ? getModelPages() : Promise.resolve([]),
     getCategoryFilterOptions(slug),
     getAisles(),
     getT(),
     getFacetGroups(slug),
+    getLocale(),
   ]);
   // By brand, newest model first (lib/model-order.ts); tablets have their own aisle.
   const models = [...modelPages].filter((m) => !TABLET_RE.test(m.name)).sort(byBrandThenNewest);
@@ -168,10 +175,10 @@ export default async function CollectionPage({ params, searchParams }: Props) {
         label: t.guide.bandName[band.key] ?? band.key,
         detail:
           band.max === null
-            ? t.guide.over(formatMAD(band.min))
+            ? t.guide.over(formatMAD(band.min, locale))
             : band.min === 0
-              ? t.guide.upTo(formatMAD(band.max))
-              : t.guide.between(band.min, formatMAD(band.max)),
+              ? t.guide.upTo(formatMAD(band.max, locale))
+              : t.guide.between(band.min, formatMAD(band.max, locale)),
         count: inSelection.filter((p) => budgetOf(price(p)) === band.key).length,
         on: budget === band.key,
         href: guideHref({ budget: budget === band.key ? undefined : band.key }),
@@ -300,7 +307,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
                 <span className="block font-mono text-xs font-semibold uppercase tracking-[0.16em] text-neutral-600">
                   {t.common.fromLong}
                 </span>
-                <span className="readout mt-1 block text-5xl font-bold text-ink">{formatMAD(fromPrice)}</span>
+                <span className="readout mt-1 block text-5xl font-bold text-ink">{formatMAD(fromPrice, locale)}</span>
               </p>
             )}
           </div>

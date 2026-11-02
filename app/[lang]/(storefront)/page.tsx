@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, MessageCircle, ShieldCheck, Truck, Wrench } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MessageCircle, ShieldCheck, Star, Truck, Wrench } from "lucide-react";
 import Link from "@/components/i18n/Link";
 import { getAisles, getBrands, getHomeShelves, getShowcasePhones } from "@/lib/db/storefront";
 import { ProductCard } from "@/components/storefront/ProductCard";
@@ -19,7 +19,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { artFor } from "@/lib/category-art";
 import { formatMAD } from "@/lib/format";
 import { REPAIR_TOPIC_ORDER } from "@/lib/repair-faq";
-import { WHATSAPP_URL, ACCESSORIES_OPEN, whatsappLink } from "@/lib/site";
+import { WHATSAPP_URL, ACCESSORIES_OPEN, SHOP, whatsappLink } from "@/lib/site";
+import { getReviewSummary } from "@/lib/reviews";
+import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { getRepairTopics } from "@/lib/i18n/repair";
 import { categoryName } from "@/lib/i18n/labels";
@@ -44,13 +46,15 @@ const CHIP_POSITIONS = [
 ];
 
 export default async function HomePage() {
-  const [aisles, brands, showcase, shelves, t, repair] = await Promise.all([
+  const [aisles, brands, showcase, shelves, t, repair, reviews, locale] = await Promise.all([
     getAisles(),
     getBrands(),
     getShowcasePhones(6),
     getHomeShelves(),
     getT(),
     getRepairTopics(),
+    getReviewSummary({ modelKey: null, all: true }, 3),
+    getLocale(),
   ]);
 
   const phonesAisle = aisles.find((a) => a.slug === "telephones");
@@ -140,7 +144,7 @@ export default async function HomePage() {
                   <span className="block text-sm font-bold text-white">{name(a)}</span>
                   {a.fromPrice !== null && (
                     <span className="readout block text-xs text-gold-bright">
-                      {t.common.from} {formatMAD(a.fromPrice)}
+                      {t.common.from} {formatMAD(a.fromPrice, locale)}
                     </span>
                   )}
                 </span>
@@ -206,7 +210,7 @@ export default async function HomePage() {
                   ))}
                   {phonesAisle.fromPrice !== null && (
                     <p className="readout pt-3 text-lg font-bold text-gold-bright">
-                      {t.common.from} {formatMAD(phonesAisle.fromPrice)}
+                      {t.common.from} {formatMAD(phonesAisle.fromPrice, locale)}
                     </p>
                   )}
                 </div>
@@ -235,7 +239,7 @@ export default async function HomePage() {
                 <p className="mt-auto pt-4 text-base font-bold leading-tight text-ink">{name(a)}</p>
                 {a.fromPrice !== null && (
                   <p className="mt-1 text-xs text-neutral-500">
-                    {t.common.from} <span className="readout font-semibold text-neutral-800">{formatMAD(a.fromPrice)}</span>
+                    {t.common.from} <span className="readout font-semibold text-neutral-800">{formatMAD(a.fromPrice, locale)}</span>
                   </p>
                 )}
               </Link>
@@ -445,6 +449,21 @@ export default async function HomePage() {
         </Reveal>
       </section>
 
+      {/* ── Reviews: the verified ones from the site, and the shop's Google
+          reviews (read on Google itself: never copied here). ───────────── */}
+      <section aria-labelledby={reviews ? "avis" : "avis-google"} className="mx-auto max-w-7xl px-4 pt-20 sm:pt-28">
+        {reviews ? (
+          <ReviewsSection summary={reviews} name={SHOP.name} title={h.reviews.title} t={t} locale={locale} footer={<GoogleReviews t={t} className="mt-6" />} />
+        ) : (
+          <Reveal>
+            <div className="rounded-[2rem] bg-paper-2 p-6 sm:p-10">
+              <SectionHeading id="avis-google" eyebrow={h.reviews.eyebrow} title={h.reviews.title} />
+              <GoogleReviews t={t} className="mt-6" />
+            </div>
+          </Reveal>
+        )}
+      </section>
+
       {/* ── Reassurance ──────────────────────────────────────────────── */}
       <section aria-label={t.controlCenter.aria} className="mx-auto max-w-7xl px-4 pt-20 sm:pt-28">
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -469,6 +488,27 @@ export default async function HomePage() {
           </div>
         </Reveal>
       </section>
+    </div>
+  );
+}
+
+/** The shop's Google reviews: read them on Google Maps, or leave one. */
+function GoogleReviews({ t, className = "" }: { t: Awaited<ReturnType<typeof getT>>; className?: string }) {
+  const g = t.home.reviews;
+  return (
+    <div className={`flex flex-col gap-4 rounded-[1.5rem] bg-white p-5 ring-1 ring-ink/7 sm:flex-row sm:items-center sm:justify-between ${className}`}>
+      <p className="flex items-start gap-2 text-neutral-700">
+        <Star size={18} aria-hidden className="mt-0.5 flex-none fill-gold text-gold" />
+        {g.intro}
+      </p>
+      <div className="flex flex-wrap gap-2">
+        <AnchorButton href={SHOP.mapsUrl} target="_blank" rel="noopener noreferrer" variant="accent" size="sm">
+          {g.seeGoogle} <ArrowUpRight size={16} aria-hidden />
+        </AnchorButton>
+        <AnchorButton href={SHOP.googleReviewUrl} target="_blank" rel="noopener noreferrer" variant="outline" size="sm">
+          {g.leaveGoogle}
+        </AnchorButton>
+      </div>
     </div>
   );
 }

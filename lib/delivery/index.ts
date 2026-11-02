@@ -34,6 +34,9 @@ export const DELIVERY_CITIES: DeliveryCity[] = CITIES.map((c) => ({
   lng: c.lng,
 }));
 
+/** The cheapest fee in the list ("Livraison dès 20 DH"). */
+export const MIN_DELIVERY_FEE = Math.min(...DELIVERY_CITIES.map((c) => c.fee));
+
 const byName = new Map(DELIVERY_CITIES.map((c) => [c.name, c]));
 
 /** Exact lookup (the name picked from the list) — the server never trusts a fee from the browser. */

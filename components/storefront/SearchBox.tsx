@@ -5,8 +5,8 @@ import Link from "@/components/i18n/Link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ImageOff, Loader2, Search, X } from "lucide-react";
-import { formatMAD } from "@/lib/format";
-import { useLocalePath, useT } from "@/components/i18n/I18nProvider";
+import { brandLabel, formatMAD } from "@/lib/format";
+import { useLocale, useLocalePath, useT } from "@/components/i18n/I18nProvider";
 import type { SearchSuggestion } from "@/lib/db/public-products";
 import { WHATSAPP_URL } from "@/lib/site";
 import { useNavPending } from "@/components/ui/NavProgress";
@@ -18,6 +18,7 @@ export function SearchBox({ className = "", placeholder }: {
   placeholder?: string;
 }) {
   const t = useT();
+  const locale = useLocale();
   const s = t.searchBox;
   const withLocale = useLocalePath();
   const router = useRouter();
@@ -217,14 +218,14 @@ export function SearchBox({ className = "", placeholder }: {
                         )}
                       </span>
                       <span className="min-w-0 flex-1">
-                        {p.brand && <span className="block text-xs uppercase tracking-wide text-neutral-500">{p.brand}</span>}
+                        {brandLabel(p.brand, p.name) && <span className="block text-xs uppercase tracking-wide text-neutral-500">{p.brand}</span>}
                         <span className="block text-sm font-medium leading-snug text-neutral-900 line-clamp-2">{p.name}</span>
                         {p.isPhone && <span className="text-xs text-neutral-500">{t.grades.label[p.condition] ?? p.condition}</span>}
                       </span>
                       <span className="shrink-0 text-end">
                         {p.fromPrice && <span className="block text-xs text-neutral-500">{t.common.from}</span>}
-                        <span className="block text-sm font-bold text-ink">{formatMAD(p.price)}</span>
-                        {p.compareAtPrice && <span className="block text-xs text-neutral-500 line-through">{formatMAD(p.compareAtPrice)}</span>}
+                        <span className="block text-sm font-bold text-ink">{formatMAD(p.price, locale)}</span>
+                        {p.compareAtPrice && <span className="block text-xs text-neutral-500 line-through">{formatMAD(p.compareAtPrice, locale)}</span>}
                       </span>
                     </Link>
                   </li>

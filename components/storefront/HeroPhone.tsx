@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Camera, Flashlight } from "lucide-react";
 import Link from "@/components/i18n/Link";
-import { useT } from "@/components/i18n/I18nProvider";
+import { useLocale, useT } from "@/components/i18n/I18nProvider";
 import { formatMAD } from "@/lib/format";
 import type { ShowcasePhone } from "@/lib/db/storefront";
 import { useMeknesClock } from "@/components/storefront/LiveClock";
@@ -18,6 +18,7 @@ const EVERY_MS = 3400;
 
 function Notification({ phone, dimmed = false }: { phone: ShowcasePhone; dimmed?: boolean }) {
   const t = useT();
+  const locale = useLocale();
   const detail = [
     t.grades.label[phone.condition] ?? phone.condition,
     phone.battery !== null && phone.condition !== "NEUF" ? t.hero.battShort(phone.battery) : null,
@@ -45,7 +46,7 @@ function Notification({ phone, dimmed = false }: { phone: ShowcasePhone; dimmed?
           <span className="truncate">{detail}</span>
           <span className="readout flex-none font-bold text-gold-bright">
             {phone.fromPrice ? `${t.common.from} ` : ""}
-            {formatMAD(phone.price)}
+            {formatMAD(phone.price, locale)}
           </span>
         </span>
       </span>

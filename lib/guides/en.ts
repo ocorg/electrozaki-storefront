@@ -75,7 +75,7 @@ export const en: GuidesText = {
       ],
       shopTitle: "At Electro Zaki",
       shop:
-        "Every used phone goes through our 25-point Electro Zaki check before sale, and the result is shown on its page: battery health, replaced parts, condition. iCloud and Google accounts are removed, the IMEI is checked, the phone is updated and comes with a 3-month warranty. On delivery, you can check it with us on a video call, or in the shop in Meknes, and refuse the parcel if anything doesn't match its page.",
+        "Every used phone goes through our Electro Zaki check (up to 25 points, depending on the model) before sale, and the result is shown on its page: battery health, replaced parts, condition. iCloud and Google accounts are removed, the IMEI is checked, the phone is updated and comes with a 3-month warranty. On delivery, you can check it with us on a video call, or in the shop in Meknes, and refuse the parcel if anything doesn't match its page.",
     },
     "pieces-origine-ou-remplacees": {
       title: "Original or replaced parts: what changes",

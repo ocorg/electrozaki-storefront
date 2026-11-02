@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Check, Copy, ImageOff, ShoppingBag } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
-import { formatMAD } from "@/lib/format";
+import { brandLabel, formatMAD } from "@/lib/format";
 import { recordLandingView } from "./actions";
-import { useT } from "@/components/i18n/I18nProvider";
+import { useLocale, useT } from "@/components/i18n/I18nProvider";
 
 /** Counts one visit per page load (the page HTML itself is cached). */
 export function ViewBeacon({ pageId }: { pageId: string }) {
@@ -87,6 +87,7 @@ type OfferProduct = { id: string; slug: string; name: string; brand: string | nu
 
 export function OfferProductCard({ product, landingId, accent }: { product: OfferProduct; landingId: string; accent: string }) {
   const { offer: o } = useT();
+  const locale = useLocale();
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
   const off = product.price < product.normal ? Math.round((1 - product.price / product.normal) * 100) : 0;
@@ -120,11 +121,11 @@ export function OfferProductCard({ product, landingId, accent }: { product: Offe
         )}
       </div>
       <div className="flex flex-1 flex-col gap-2 p-3">
-        {product.brand && <p className="text-xs uppercase tracking-wide text-neutral-500">{product.brand}</p>}
+        {brandLabel(product.brand, product.name) && <p className="text-xs uppercase tracking-wide text-neutral-500">{product.brand}</p>}
         <h3 className="line-clamp-2 min-h-[2.75em] text-sm font-medium leading-snug text-neutral-900">{product.name}</h3>
         <div className="flex items-baseline gap-2">
-          <span className="text-lg font-bold text-neutral-900">{formatMAD(product.price)}</span>
-          {off > 0 && <span className="text-sm text-neutral-500 line-through">{formatMAD(product.normal)}</span>}
+          <span className="text-lg font-bold text-neutral-900">{formatMAD(product.price, locale)}</span>
+          {off > 0 && <span className="text-sm text-neutral-500 line-through">{formatMAD(product.normal, locale)}</span>}
         </div>
         <button
           type="button"

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { ChevronDown, Loader2, Search, SlidersHorizontal, X } from "lucide-react";
 import type { CategoryFilterOptions } from "@/lib/db/public-products";
 import Link from "@/components/i18n/Link";
-import { useLocalePath, useT } from "@/components/i18n/I18nProvider";
+import { useLocale, useLocalePath, useT } from "@/components/i18n/I18nProvider";
 import { categoryName } from "@/lib/i18n/labels";
 import { formatMAD } from "@/lib/format";
 import { useNavPending } from "@/components/ui/NavProgress";
@@ -80,6 +80,7 @@ function uniqueBrands(brands: string[]): string[] {
  */
 export function CatalogBar({ options, basePath, defaults, guide }: Props) {
   const t = useT();
+  const locale = useLocale();
   const withLocale = useLocalePath();
   const action = withLocale(basePath);
   const phones = options.kind === "phones";
@@ -172,7 +173,7 @@ export function CatalogBar({ options, basePath, defaults, guide }: Props) {
       case "minBattery":
         return t.filters.batteryMin(v);
       case "maxPrice":
-        return t.filters.upTo(formatMAD(Number(v)));
+        return t.filters.upTo(formatMAD(Number(v), locale));
       case "type":
         return categoryName(t, v, options.subcategories.find((s) => s.slug === v)?.name ?? v);
       case "fits":
@@ -303,7 +304,7 @@ export function CatalogBar({ options, basePath, defaults, guide }: Props) {
               budgets.map((b) => (
                 <li key={b} className="flex-none">
                   <QuickChip href={toggle("maxPrice", String(b))} on={current.maxPrice === String(b)}>
-                    <span className="readout">≤ {formatMAD(b)}</span>
+                    <span className="readout">≤ {formatMAD(b, locale)}</span>
                   </QuickChip>
                 </li>
               ))}
@@ -519,10 +520,10 @@ export function CatalogBar({ options, basePath, defaults, guide }: Props) {
                 all={t.filters.anyPrice}
                 current={current.maxPrice}
                 items={[
-                  ...budgets.map((b) => ({ value: String(b), label: <span className="readout">≤ {formatMAD(b)}</span> })),
+                  ...budgets.map((b) => ({ value: String(b), label: <span className="readout">≤ {formatMAD(b, locale)}</span> })),
                   // A budget typed in the URL that isn't one of the presets still shows, selected.
                   ...(current.maxPrice && !budgets.includes(Number(current.maxPrice))
-                    ? [{ value: current.maxPrice, label: <span className="readout">≤ {formatMAD(Number(current.maxPrice))}</span> }]
+                    ? [{ value: current.maxPrice, label: <span className="readout">≤ {formatMAD(Number(current.maxPrice), locale)}</span> }]
                     : []),
                 ]}
               />

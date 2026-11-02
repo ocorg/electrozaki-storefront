@@ -67,7 +67,7 @@ export const fr: TermsCopy = {
       id: "livraison",
       title: "6. La livraison",
       paragraphs: [
-        "Nous livrons partout au Maroc avec Ameex. Le colis part de Meknès le jour même ou le jour ouvré suivant la confirmation (et l'avance, pour un téléphone), puis met en général 1 à 3 jours ouvrés. Une date de livraison prévue vous est indiquée lors de la commande.",
+        "Nous livrons partout au Maroc avec Ameex. Le colis part de Meknès le jour même ou le jour ouvré suivant la confirmation (et l'avance, pour un téléphone), puis arrive en général environ 2400a0h après l'expédition (un peu plus pour une localité qu'Ameex ne dessert que certains jours). Une date de livraison prévue vous est indiquée lors de la commande.",
         "À la réception, vous pouvez vérifier le téléphone, devant le livreur ou en appel vidéo avec nous. S'il ne correspond pas à l'annonce, refusez le colis : l'avance vous est remboursée en entier.",
         "Si la livraison a plus de 7 jours de retard sur la date prévue, sauf cas de force majeure, vous pouvez annuler la commande et être remboursé de toutes les sommes versées.",
       ],

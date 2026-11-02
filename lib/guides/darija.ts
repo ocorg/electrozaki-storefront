@@ -72,7 +72,7 @@ export const darija: GuidesText = {
       ],
       shopTitle: "3nd Electro Zaki",
       shop:
-        "Kol téléphone mosta3mal kaydouz men Contrôle Electro Zaki dyal 25 point 9bel l bi3, w n-natija bayna f l page dyalo: s-sa7a dyal l batterie, les pièces mbdlin, l7ala. Les comptes iCloud w Google m7ydin, l'IMEI mchouf, t-téléphone mise à jour w fih garantie 3 chhour. Mli twslek, t9der tchoufo m3ana f appel vidéo wla f l7anout f Mknas, w trfed l colis ila chi 7aja ma tab9atch l page dyalo.",
+        "Kol téléphone mosta3mal kaydouz men Contrôle Electro Zaki (7tal 25 point 3la 7sab l modèle) 9bel l bi3, w n-natija bayna f l page dyalo: s-sa7a dyal l batterie, les pièces mbdlin, l7ala. Les comptes iCloud w Google m7ydin, l'IMEI mchouf, t-téléphone mise à jour w fih garantie 3 chhour. Mli twslek, t9der tchoufo m3ana f appel vidéo wla f l7anout f Mknas, w trfed l colis ila chi 7aja ma tab9atch l page dyalo.",
     },
     "pieces-origine-ou-remplacees": {
       title: "Pièces d'origine wla pièces mbdlin: chno kaytbdel",

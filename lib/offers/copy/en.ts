@@ -14,6 +14,7 @@ export const en: OfferCopy = {
   },
 
   hero: {
+    used: "Used",
     eyebrow: "Electro Zaki promo · In stock in Meknes",
     priceLabel: "Promo price",
     instead: "instead of",
@@ -144,7 +145,7 @@ export const en: OfferCopy = {
     title: "You may be wondering…",
     advance: {
       q: "Why a 300 DH deposit?",
-      a: "It reserves your phone and covers shipping costs. The rest is paid on delivery. How to pay it is explained during the confirmation call.",
+      a: "It reserves your phone. The rest is paid on delivery. Delivery is paid by you: the fee depends on your town and shows as soon as you pick it. How to pay it is explained during the confirmation call.",
     },
     when: {
       q: "When will I get my phone?",

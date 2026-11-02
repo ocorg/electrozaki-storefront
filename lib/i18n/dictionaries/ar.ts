@@ -88,7 +88,7 @@ export const ar: Dictionary = {
   },
 
   aisleBlurb: {
-    tablettes: "سامسونج جالاكسي تاب وآيباد - جديدة ومستعملة",
+    tablettes: "أجهزة سامسونج جالاكسي تاب اللوحية، جديدة ومستعملة",
     telephones: "iPhone و Samsung و Xiaomi - جديدة ومستعملة",
     pochettes: "أغلفة لكل طراز",
     incassables: "زجاج مقوّى وحماية للشاشة",
@@ -216,6 +216,13 @@ export const ar: Dictionary = {
       { title: "فحص من طرف تقنيين", desc: "تشخيص قبل كل بيع" },
       { title: "دعم عبر واتساب", desc: "رد سريع، بدون روبوت" },
     ],
+    reviews: {
+      eyebrow: "آراء الزبناء",
+      title: "ماذا يقول زبناؤنا",
+      intro: "يقيّمنا زبناؤنا أيضًا على Google، بعد زيارة المحل أو بعد التوصيل.",
+      seeGoogle: "شاهد آراءنا على Google",
+      leaveGoogle: "اترك رأيك على Google",
+    },
     whatsappBand: { lead: "تبحث عن طراز معيّن؟", rest: "اسألنا، نجيبك على واتساب." },
     writeWhatsapp: "راسلنا على واتساب",
   },
@@ -229,6 +236,9 @@ export const ar: Dictionary = {
     metaPhonesTitle: "هواتف جديدة ومستعملة في مكناس",
     metaPhonesDescription:
       "iPhone و Samsung و Xiaomi جديدة ومستعملة في مكناس: الحالة والبطارية والقطع معروضة لكل هاتف. التوصيل إلى جميع أنحاء المغرب.",
+    metaTabletsTitle: "أجهزة لوحية جديدة ومستعملة في مكناس",
+    metaTabletsDescription:
+      "أجهزة سامسونج جالاكسي تاب اللوحية الجديدة والمستعملة لدى إلكترو زكي في مكناس: الحالة معروضة، وضمان المتجر. التوصيل إلى جميع أنحاء المغرب.",
     metaAisleTitle: (name: string) => `${name} - إكسسوارات الهاتف في مكناس`,
     metaAisleDescription: (name: string, blurb: string | null) =>
       `${name} لهاتفك عند إلكترو زكي، مكناس. ${blurb ?? "متوفرة"} - التوصيل إلى جميع أنحاء المغرب.`,
@@ -386,6 +396,9 @@ export const ar: Dictionary = {
     comingSoon: "قريبًا",
     unavailable: "غير متوفر",
     priceOfSelected: "سعر الهاتف المختار أدناه.",
+    payAdvance: (amount: string) => `تسبيق ${amount}، والباقي عند الاستلام`,
+    payNoAdvance: "بدون تسبيق: تدفع عند الاستلام",
+    deliveryFrom: (fee: string) => `التوصيل ابتداءً من ${fee} · حوالي 24 ساعة بعد الشحن`,
     transparency: "للشفافية",
     color: "اللون",
     storage: "السعة",
@@ -436,6 +449,7 @@ export const ar: Dictionary = {
     speakerReplaced: "مكبر صوت مستبدل",
     partsReplaced: "قطع مستبدلة",
     originalParts: "لم تُستبدل أي قطعة",
+    unitNo: (n: number, of: number) => `الوحدة ${n}/${of}`,
   },
 
   inspection: {
@@ -485,7 +499,7 @@ export const ar: Dictionary = {
     newEyebrow: "هاتف جديد",
     newTitle: "جديد ومختوم.",
     newIntro: "يصلك في علبته الأصلية، لم تُفتح ولم يُفعَّل.",
-    newItems: ["علبة مختومة، لم يُفعَّل قط", "رقم IMEI مفحوص وغير محظور", "ضمان المتجر 12 شهرًا", "التوصيل إلى جميع أنحاء المغرب"],
+    newItems: ["علبة مختومة، والهاتف لم يُفعَّل قط", "رقم IMEI مفحوص وغير محظور", "ضمان المتجر 12 شهرًا", "التوصيل إلى جميع أنحاء المغرب"],
   },
 
   orderTracking: {
@@ -568,6 +582,7 @@ export const ar: Dictionary = {
     title: "هاتفك معطّل؟",
     titleGold: "نحن نتكفّل به.",
     lead: "عتاد أو برمجيات، في المحل أو باستشارة عن بعد: إصلاحات ابتداءً من 150 درهم، تقدير مجاني قبل أي إصلاح، وتتبع جهازك عبر الإنترنت.",
+    facts: ["الإصلاح ابتداءً من 150 درهم، والتقدير مجاني", "المدة: 24 ساعة على الأقل", "قطع أصلية أو متوافقة، حسب اختيارك"],
     askQuote: "اطلب تقديرًا",
     track: "تتبع الإصلاح",
     howItWorks: "كيف تعمل الخدمة",
@@ -877,7 +892,7 @@ export const ar: Dictionary = {
     callFirst: "لا شيء للدفع الآن: أكّد طلبك وسنتصل بك قريبًا جدًا.",
     payNow: "تفضّل دفع التسبيق الآن؟ (اختياري)",
     whyAdvance: "لماذا هذا التسبيق؟",
-    whyAdvanceText: "يغطي هذا التسبيق مصاريف الشحن ويضمن حجز هاتفك طوال مدة التوصيل.",
+    whyAdvanceText: "يحجز هذا التسبيق هاتفك لك حتى التوصيل، ويُخصم من الثمن. أما مصاريف التوصيل، حسب مدينتك، فهي على حسابك.",
     consent: "أوافق على معالجة بياناتي ووصل التحويل البنكي بسرية، وفقًا لقوانين CNDP.",
     termsBefore: "قرأت وأوافق على ",
     termsLink: "الشروط العامة للبيع",

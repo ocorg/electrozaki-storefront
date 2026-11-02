@@ -86,7 +86,7 @@ export const fr: GuidesText = {
       ],
       shopTitle: "Chez Electro Zaki",
       shop:
-        "Chaque téléphone d'occasion passe notre Contrôle Electro Zaki de 25 points avant la vente, et le résultat est affiché sur sa fiche : santé de la batterie, pièces remplacées, état. Les comptes iCloud et Google sont retirés, l'IMEI est vérifié, le téléphone est mis à jour et garanti 3 mois. À la réception, vous pouvez le vérifier avec nous en appel vidéo, ou en boutique à Meknès, et refuser le colis si un point ne correspond pas à sa fiche.",
+        "Chaque téléphone d'occasion passe notre Contrôle Electro Zaki, jusqu'à 25 points selon le modèle, avant la vente, et le résultat est affiché sur sa fiche : santé de la batterie, pièces remplacées, état. Les comptes iCloud et Google sont retirés, l'IMEI est vérifié, le téléphone est mis à jour et garanti 3 mois. À la réception, vous pouvez le vérifier avec nous en appel vidéo, ou en boutique à Meknès, et refuser le colis si un point ne correspond pas à sa fiche.",
     },
     "pieces-origine-ou-remplacees": {
       title: "Pièces d'origine ou pièces remplacées : ce que ça change",

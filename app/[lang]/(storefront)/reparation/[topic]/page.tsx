@@ -7,6 +7,7 @@ import { repairSeo } from "@/lib/i18n/repair/seo";
 import { getLocale, getT } from "@/lib/i18n/server";
 import { alternates } from "@/lib/i18n/seo";
 import { LinkButton } from "@/components/ui/Button";
+import { RepairFacts } from "@/components/storefront/RepairFacts";
 import { IconTile } from "@/components/ui/IconTile";
 import { Reveal } from "@/components/ui/Reveal";
 import { WHATSAPP_URL } from "@/lib/site";
@@ -56,6 +57,7 @@ export default async function RepairTopicPage({ params }: Props) {
             <div>
               <h1 className="font-display text-[2.4rem] font-extrabold leading-none sm:text-6xl">{data.title}</h1>
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-300">{data.intro}</p>
+              <RepairFacts t={t} className="mt-6" />
             </div>
           </div>
         </div>

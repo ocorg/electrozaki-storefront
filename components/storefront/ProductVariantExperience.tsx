@@ -4,9 +4,9 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "@/components/i18n/Link";
-import { Camera, Check, ChevronLeft, ChevronRight, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
+import { Banknote, Camera, Check, ChevronLeft, ChevronRight, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
-import { formatMAD, savingOf } from "@/lib/format";
+import { brandLabel, formatMAD, savingOf } from "@/lib/format";
 import { swatch } from "@/lib/colors";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -16,8 +16,8 @@ import { whatsappLink } from "@/lib/site";
 import { ConditionDashboard, type ConditionData } from "@/components/storefront/ConditionDashboard";
 import type { SpecRow } from "@/lib/offers/spec-row";
 import { Select } from "@/components/ui/Select";
-import { UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
-import { useT } from "@/components/i18n/I18nProvider";
+import { UnitPicker, matchUnits, twinNumbers, type BatteryRange } from "@/components/storefront/UnitPicker";
+import { useLocale, useT } from "@/components/i18n/I18nProvider";
 import { colorName, unitLabel } from "@/lib/i18n/labels";
 import { photoAlt } from "@/components/storefront/photo-alt";
 import { metaTrack } from "@/components/analytics/meta";
@@ -72,8 +72,13 @@ type Props = {
   /** `color`: the photo's colour when known, for its description */
   images: { url: string; altText: string | null; color?: string | null }[];
   categorySlug: string;
+  /** the cheapest delivery fee in the Ameex list, for "Livraison dès …" */
+  minDeliveryFee: number;
   children?: ReactNode; // static content (specs/compatibility/gift/bundle) rendered after the transparency block
 };
+
+// The advance that reserves a phone (cart page, same amount).
+const PHONE_ADVANCE = 300;
 
 // A variant only sets what actually differs for that unit — everything
 // else falls back to the product's own answer, field by field.
@@ -81,8 +86,9 @@ function pick<T>(variantValue: T | null | undefined, productValue: T): T {
   return variantValue === null || variantValue === undefined ? productValue : variantValue;
 }
 
-export function ProductVariantExperience({ product, variants, images: photos, categorySlug, children }: Props) {
+export function ProductVariantExperience({ product, variants, images: photos, categorySlug, minDeliveryFee, children }: Props) {
   const t = useT();
+  const locale = useLocale();
   // Each photo described by its colour ("iPhone 13 128GB - Rouge"), from the
   // ERP's model photos or the units shown in it.
   const images = photos.map((img, i) => ({
@@ -225,6 +231,8 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
 
   const inStock = product.availability === "IN_STOCK";
   const unitsInStock = variants.filter((v) => v.stockQuantity > 0).length;
+  // Versions that would read the same in the list ("Noir · Batterie 88 %" twice).
+  const versionTwins = useMemo(() => twinNumbers(variants, t), [variants, t]);
 
   // The buy bar (phones) shows while the main "add to cart" button is out of sight.
   const buyRef = useRef<HTMLDivElement>(null);
@@ -292,7 +300,7 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
           )}
           {saving !== null && (
             <span dir="ltr" className="readout absolute inset-s-4 top-4 z-3 rounded-full bg-red-600 px-3 py-1.5 text-sm font-bold text-white">
-              -{formatMAD(saving)}
+              -{formatMAD(saving, locale)}
             </span>
           )}
           {slideshow && (
@@ -347,7 +355,7 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
 
       {/* ── Details ── */}
       <div>
-        {product.brand && (
+        {brandLabel(product.brand, product.name) && (
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-gold-deep">{product.brand}</p>
         )}
         <h1 className="font-display mt-2 text-[2.2rem] font-extrabold leading-[1.02] text-ink sm:text-5xl">
@@ -373,14 +381,26 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
         </div>
 
         <div className="mt-6 flex flex-wrap items-end gap-x-3 gap-y-1">
-          <p dir="ltr" className="readout text-[2.6rem] font-bold leading-none text-ink">{formatMAD(price)}</p>
+          <p dir="ltr" className="readout text-[2.6rem] font-bold leading-none text-ink">{formatMAD(price, locale)}</p>
           {saving !== null && wasPrice && (
-            <p dir="ltr" className="readout pb-1 text-lg text-neutral-500 line-through">{formatMAD(wasPrice)}</p>
+            <p dir="ltr" className="readout pb-1 text-lg text-neutral-500 line-through">{formatMAD(wasPrice, locale)}</p>
           )}
         </div>
         {unitMode && unitsInStock > 1 && (
           <p className="mt-1.5 text-sm text-neutral-600">{p.priceOfSelected}</p>
         )}
+
+        {/* How paying and delivery work, right under the price. */}
+        <ul className="mt-4 space-y-1.5 text-sm text-neutral-700">
+          <li className="flex items-center gap-2">
+            <Banknote size={17} aria-hidden className="flex-none text-gold-deep" />
+            {product.isPhone ? p.payAdvance(formatMAD(PHONE_ADVANCE, locale)) : p.payNoAdvance}
+          </li>
+          <li className="flex items-center gap-2">
+            <Truck size={17} aria-hidden className="flex-none text-gold-deep" />
+            {p.deliveryFrom(formatMAD(minDeliveryFee, locale))}
+          </li>
+        </ul>
 
         <ConditionDashboard {...condition} specs={product.specSheet} />
 
@@ -486,7 +506,13 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
                 {variants.map((v) => (
                   <option key={v.id} value={v.id} disabled={v.stockQuantity <= 0}>
                     {/* In the visitor's language (the ERP name is French). */}
-                    {[v.storageLabel, unitLabel(t, { color: v.color, battery: v.batteryHealthPercent })].filter(Boolean).join(" · ") || v.name}
+                    {[
+                      v.storageLabel,
+                      unitLabel(t, { color: v.color, battery: v.batteryHealthPercent }),
+                      versionTwins.has(v.id) ? t.unitPicker.unitNo(versionTwins.get(v.id)!.n, versionTwins.get(v.id)!.of) : null,
+                    ]
+                      .filter(Boolean)
+                      .join(" · ") || v.name}
                     {v.stockQuantity <= 0 ? p.soldOutSuffix : ""}
                   </option>
                 ))}
@@ -548,9 +574,9 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
                 className="fixed inset-x-0 bottom-[calc(61px+env(safe-area-inset-bottom))] z-30 flex items-center gap-3 border-t border-ink/10 bg-paper/95 px-4 py-2.5 backdrop-blur-xl md:hidden"
               >
                 <div className="min-w-0 flex-1">
-                  <p dir="ltr" className="readout text-lg font-bold leading-tight text-ink rtl:text-end">{formatMAD(price)}</p>
+                  <p dir="ltr" className="readout text-lg font-bold leading-tight text-ink rtl:text-end">{formatMAD(price, locale)}</p>
                   {saving !== null && wasPrice && (
-                    <p dir="ltr" className="readout text-xs text-neutral-500 line-through rtl:text-end">{formatMAD(wasPrice)}</p>
+                    <p dir="ltr" className="readout text-xs text-neutral-500 line-through rtl:text-end">{formatMAD(wasPrice, locale)}</p>
                   )}
                 </div>
                 <Button onClick={handleAdd} disabled={variantOutOfStock} variant="accent" className="min-h-12 px-6">

@@ -1,4 +1,5 @@
 "use client";
+import { cityLabel } from "@/lib/delivery/label";
 import { ACCESSORIES_OPEN } from "@/lib/site";
 
 import { useState, useMemo, useRef, type ReactNode } from "react";
@@ -17,7 +18,7 @@ import { DeliveryPicker } from "@/components/cart/DeliveryPicker";
 import { dayParts, estimateDelivery, findCity } from "@/lib/delivery";
 import { MOROCCAN_PHONE_RE } from "@/lib/validation";
 import { catalogId, metaTrack } from "@/components/analytics/meta";
-import { useT } from "@/components/i18n/I18nProvider";
+import { useLocale, useT } from "@/components/i18n/I18nProvider";
 import { localizeUnitText, translateError } from "@/lib/i18n/labels";
 
 // The phone reservation advance, in DH (the server applies the same rule).
@@ -37,6 +38,7 @@ const inputClass = (invalid: boolean) =>
 
 export default function CartPage() {
   const t = useT();
+  const locale = useLocale();
   const c = t.cartPage;
   const k = t.checkout;
   const { items, updateQuantity, removeItem, totalPrice, clear } = useCart();
@@ -289,9 +291,10 @@ export default function CartPage() {
                 <div className="min-w-0 flex-1">
                   <p className="font-medium">{item.productName}</p>
                   {item.variantName && <p className="text-sm text-neutral-500">{localizeUnitText(t, item.variantName)}</p>}
-                  <p className="mt-1 inline-block rounded-lg bg-ink px-2 py-0.5 text-sm font-bold text-gold">{formatMAD(item.price)}</p>
+                  <p className="mt-1 inline-block rounded-lg bg-ink px-2 py-0.5 text-sm font-bold text-gold">{formatMAD(item.price, locale)}</p>
                 </div>
-                {item.isGift || item.bundleId ? (
+                {/* A phone unit (one exact phone) can't be ordered twice. */}
+                {item.isGift || item.bundleId || (item.isPhone && item.variantId) ? (
                   <span dir="ltr" className="w-16 text-center text-sm text-neutral-500">
                     ×{item.quantity}
                   </span>
@@ -354,32 +357,32 @@ export default function CartPage() {
             {discountAmount > 0 && (
               <div className="flex justify-between text-sm text-neutral-600">
                 <span>{c.subtotal}</span>
-                <span>{formatMAD(totalPrice)}</span>
+                <span>{formatMAD(totalPrice, locale)}</span>
               </div>
             )}
             {discountAmount > 0 && (
               <div className="flex justify-between text-sm text-green-700">
                 <span>{c.discount}</span>
-                <span dir="ltr">-{formatMAD(discountAmount)}</span>
+                <span dir="ltr">-{formatMAD(discountAmount, locale)}</span>
               </div>
             )}
             <div className="flex justify-between text-sm text-neutral-600">
               <span>
                 {c.delivery}
-                {deliveryCity ? ` (${deliveryCity})` : ""}
+                {deliveryCity ? ` (${cityLabel(deliveryCity)})` : ""}
               </span>
-              <span>{deliveryCity ? formatMAD(deliveryFee) : c.deliveryNext}</span>
+              <span>{deliveryCity ? formatMAD(deliveryFee, locale) : c.deliveryNext}</span>
             </div>
             <div className="flex justify-between text-lg font-semibold">
               <span>{c.estimatedTotal}</span>
-              <span>{formatMAD(discountedTotal)}</span>
+              <span>{formatMAD(discountedTotal, locale)}</span>
             </div>
           </div>
 
           {requiresAdvance && (
             <p className="mt-4 flex items-start gap-2 rounded-2xl bg-gold/8 px-4 py-3 text-sm text-neutral-700 ring-1 ring-gold/30">
               <Wallet size={16} className="mt-0.5 flex-none text-gold-deep" aria-hidden />
-              {c.advanceNote(formatMAD(ADVANCE))}
+              {c.advanceNote(formatMAD(ADVANCE, locale))}
             </p>
           )}
 
@@ -523,17 +526,17 @@ export default function CartPage() {
                 {c.items}
                 {discountAmount > 0 ? c.afterDiscount : ""}
               </span>
-              <span>{formatMAD(Math.max(0, totalPrice - discountAmount))}</span>
+              <span>{formatMAD(Math.max(0, totalPrice - discountAmount), locale)}</span>
             </div>
             <div className="flex justify-between text-neutral-600">
               <span>
-                {c.delivery} ({deliveryCity})
+                {c.delivery} ({cityLabel(deliveryCity ?? "")})
               </span>
-              <span>{formatMAD(deliveryFee)}</span>
+              <span>{formatMAD(deliveryFee, locale)}</span>
             </div>
             <div className="flex justify-between border-t border-black/10 pt-1 text-base font-semibold">
               <span>{c.total}</span>
-              <span>{formatMAD(discountedTotal)}</span>
+              <span>{formatMAD(discountedTotal, locale)}</span>
             </div>
             {arrival && (
               <p className="flex items-center gap-2 pt-2 text-[13px] text-signal">
@@ -547,9 +550,9 @@ export default function CartPage() {
               <div className="rounded-2xl border border-gold/40 bg-gold/5 p-4">
                 <p className="flex items-center gap-2 text-sm font-semibold">
                   <Wallet size={16} className="text-gold-deep" aria-hidden />
-                  {c.advanceTitle(formatMAD(ADVANCE))}
+                  {c.advanceTitle(formatMAD(ADVANCE, locale))}
                 </p>
-                <p className="mt-1 text-sm text-neutral-700">{c.advanceLater(formatMAD(ADVANCE), formatMAD(discountedTotal - ADVANCE))}</p>
+                <p className="mt-1 text-sm text-neutral-700">{c.advanceLater(formatMAD(ADVANCE, locale), formatMAD(discountedTotal - ADVANCE, locale))}</p>
                 <p className="mt-2 flex items-start gap-2 text-sm text-neutral-700">
                   <Phone size={15} aria-hidden className="mt-0.5 flex-none text-gold-deep" />
                   {c.callFirst}

@@ -16,6 +16,7 @@ export const fr = {
   },
 
   hero: {
+    used: "Occasion",
     eyebrow: "Promo Electro Zaki · Stock à Meknès",
     priceLabel: "Prix promo",
     instead: "au lieu de",
@@ -149,7 +150,7 @@ export const fr = {
     title: "Vous vous demandez…",
     advance: {
       q: "Pourquoi une avance de 300 DH ?",
-      a: "Elle réserve votre téléphone et couvre les frais d'expédition. Le reste du montant se paie à la livraison. Les détails pour la régler vous sont donnés lors de l'appel de confirmation.",
+      a: "Elle réserve votre téléphone. Le reste du montant se paie à la livraison. Les frais de livraison sont à votre charge : ils dépendent de votre ville et s'affichent dès que vous la choisissez. Les détails pour la régler vous sont donnés lors de l'appel de confirmation.",
     },
     when: {
       q: "Quand vais-je recevoir mon téléphone ?",

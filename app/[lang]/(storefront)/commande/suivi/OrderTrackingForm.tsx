@@ -1,5 +1,6 @@
 "use client";
 
+import { cityLabel } from "@/lib/delivery/label";
 import { useState, type FormEvent } from "react";
 import { Check, CheckCircle2, Copy, ExternalLink, MessageCircle, PackageCheck, Search, Truck, Undo2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -194,7 +195,7 @@ export function OrderTrackingForm({ initialRef }: { initialRef: string }) {
             {order.deliveryCity && (
               <div className="flex justify-between gap-4">
                 <dt className="text-neutral-600">{o.city}</dt>
-                <dd className="font-semibold text-ink">{order.deliveryCity}</dd>
+                <dd className="font-semibold text-ink">{cityLabel(order.deliveryCity)}</dd>
               </div>
             )}
             {order.deliveryEstimate && order.state === "active" && (
@@ -218,7 +219,7 @@ export function OrderTrackingForm({ initialRef }: { initialRef: string }) {
             </div>
             <div className="flex justify-between gap-4 border-t border-ink/8 pt-2">
               <dt className="font-bold text-ink">{o.total}</dt>
-              <dd className="readout font-bold text-ink">{formatMAD(order.total)}</dd>
+              <dd className="readout font-bold text-ink">{formatMAD(order.total, locale)}</dd>
             </div>
           </dl>
 

@@ -8,7 +8,7 @@ import { formatMAD } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { cardClasses } from "@/components/ui/Card";
 import { allocateBundlePrices } from "@/lib/bundle-pricing";
-import { useT } from "@/components/i18n/I18nProvider";
+import { useLocale, useT } from "@/components/i18n/I18nProvider";
 
 // Plain, JSON-serializable shape — Prisma's Decimal instances (bundlePrice,
 // recommendedSalePrice) can't cross the Server -> Client Component boundary
@@ -34,6 +34,7 @@ export type BundleOfferData = {
 
 export function BundleOffer({ bundles }: { bundles: BundleOfferData[] }) {
   const t = useT();
+  const locale = useLocale();
   const { addItem } = useCart();
   const [addedBundleId, setAddedBundleId] = useState<string | null>(null);
 
@@ -103,12 +104,12 @@ export function BundleOffer({ bundles }: { bundles: BundleOfferData[] }) {
 
             <div className="mt-3 flex flex-wrap items-baseline gap-2">
               <span className="rounded-lg bg-ink px-2.5 py-1 text-base font-bold text-gold">
-                {formatMAD(bundlePrice)}
+                {formatMAD(bundlePrice, locale)}
               </span>
-              <span className="text-sm text-neutral-500 line-through">{formatMAD(normalTotal)}</span>
+              <span className="text-sm text-neutral-500 line-through">{formatMAD(normalTotal, locale)}</span>
               {savings > 0 && (
                 <span className="text-sm font-medium text-green-700">
-                  {t.bundle.save(formatMAD(savings))}
+                  {t.bundle.save(formatMAD(savings, locale))}
                 </span>
               )}
             </div>

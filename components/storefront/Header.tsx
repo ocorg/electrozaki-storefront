@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronDown, Menu, ShoppingBag, Tag, Truck, X } from "lucide-react";
 import Link from "@/components/i18n/Link";
-import { useT } from "@/components/i18n/I18nProvider";
+import { useLocale, useT } from "@/components/i18n/I18nProvider";
 import { LanguageChips, LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { useCart } from "@/components/cart/CartContext";
 import { SearchBox } from "@/components/storefront/SearchBox";
@@ -37,6 +37,7 @@ const navLink = (active: boolean) =>
 
 export function Header({ categories, aisles, offers }: { categories: Category[]; aisles: AisleStat[]; offers: HeaderOffer[] }) {
   const t = useT();
+  const locale = useLocale();
   const { totalItems } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -61,8 +62,6 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
   const groups = categories.filter((c) => c.slug !== "telephones");
   const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
   const name = (c: { slug: string; name: string }) => categoryName(t, c.slug, c.name);
-  // One offer: straight to it. Several: the list.
-  const offersHref = offers.length === 1 ? offers[0].href : "/offres";
   const topOffer = offers[0];
 
   return (
@@ -120,7 +119,7 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
             )}
             {offers.length > 0 && (
               <Link
-                href={offersHref}
+                href="/offres"
                 aria-current={isActive("/offres") ? "page" : undefined}
                 className="inline-flex min-h-9 items-center gap-2 rounded-full bg-gold px-3.5 text-[14px] font-bold text-ink shadow-[0_6px_16px_-8px_rgb(184_145_47/0.9)] transition-[filter,transform] hover:-translate-y-px hover:brightness-105"
               >
@@ -161,7 +160,7 @@ export function Header({ categories, aisles, offers }: { categories: Category[];
                             <span className="block text-sm font-semibold text-ink">{name(c)}</span>
                             {c.fromPrice !== null && (
                               <span className="block text-xs text-neutral-500">
-                                {t.common.from} <span className="readout font-semibold text-neutral-700">{formatMAD(c.fromPrice)}</span>
+                                {t.common.from} <span className="readout font-semibold text-neutral-700">{formatMAD(c.fromPrice, locale)}</span>
                               </span>
                             )}
                           </span>

@@ -8,7 +8,7 @@ import { formatMAD } from "@/lib/format";
 import type { TrackedRepair } from "@/lib/repair-tracking";
 import { lookupRepair, answerQuote } from "./actions";
 import { WHATSAPP_URL } from "@/lib/site";
-import { useT } from "@/components/i18n/I18nProvider";
+import { useLocale, useT } from "@/components/i18n/I18nProvider";
 import { translateError } from "@/lib/i18n/labels";
 
 const inputClass =
@@ -21,6 +21,7 @@ const STEP_KEYS = ["en_attente", "devis_envoye", "en_cours", "pret", "recupere"]
 
 export function TrackingForm({ initialRef }: { initialRef: string }) {
   const t = useT();
+  const locale = useLocale();
   const tf = t.trackingForm;
   const [ref, setRef] = useState(initialRef);
   const [phone, setPhone] = useState("");
@@ -45,7 +46,7 @@ export function TrackingForm({ initialRef }: { initialRef: string }) {
 
   async function answer(accept: boolean) {
     if (!repair) return;
-    const text = accept ? tf.confirmAccept(formatMAD(repair.quoteAmount ?? 0)) : tf.confirmRefuse;
+    const text = accept ? tf.confirmAccept(formatMAD(repair.quoteAmount ?? 0, locale)) : tf.confirmRefuse;
     if (!window.confirm(text)) return;
     setError(null);
     setAnswering(accept);
@@ -132,7 +133,7 @@ export function TrackingForm({ initialRef }: { initialRef: string }) {
           {!repair.cancelled && repair.status === "devis_envoye" && repair.quoteAmount !== null && (
             <div className="space-y-3 rounded-xl border border-gold/50 bg-gold/5 p-4">
               <p className="text-sm">
-                {tf.quote} <b className="text-lg">{formatMAD(repair.quoteAmount)}</b>
+                {tf.quote} <b className="text-lg">{formatMAD(repair.quoteAmount, locale)}</b>
               </p>
               {repair.quoteDecision ? (
                 <p className="flex items-center gap-2 text-sm font-medium">

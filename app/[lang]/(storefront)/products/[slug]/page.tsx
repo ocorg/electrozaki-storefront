@@ -10,7 +10,6 @@ import { getFacetGroups } from "@/lib/db/facets";
 import { MODEL_GROUP, optionsIn } from "@/lib/facets";
 import { FitsYourPhone } from "@/components/storefront/RememberedPhone";
 import { CompatibilitySelector } from "@/components/storefront/CompatibilitySelector";
-import { GiftPicker } from "@/components/storefront/GiftPicker";
 import { BundleOffer, type BundleOfferData } from "@/components/storefront/BundleOffer";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import {
@@ -25,6 +24,7 @@ import { CONDITION_SCHEMA } from "@/lib/conditions";
 import { MAX_QTY } from "@/lib/db/cart-pricing";
 import { formatMAD, formatMADText } from "@/lib/format";
 import { CITIES } from "@/lib/delivery/cities.generated";
+import { MIN_DELIVERY_FEE } from "@/lib/delivery";
 import { JsonLd, returnPolicyJsonLd } from "@/lib/json-ld";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 import { LOCALE_META, localePath } from "@/lib/i18n/config";
@@ -65,16 +65,16 @@ function lowestPrice(product: NonNullable<Awaited<ReturnType<typeof getProductBy
 }
 
 // Delivery anywhere in Morocco with Ameex: the fee depends on the town
-// (lib/delivery), shipped the same or next working day, 1 to 3 days on the way.
-const FEES = CITIES.map((c) => c.fee);
+// (lib/delivery), shipped the same or next day, about 24 h on the way (24–30 h,
+// a little more for a town Ameex serves only some days).
 const SHIPPING_DETAILS = {
   "@type": "OfferShippingDetails",
   shippingDestination: { "@type": "DefinedRegion", addressCountry: "MA" },
-  shippingRate: { "@type": "MonetaryAmount", currency: "MAD", minValue: Math.min(...FEES), maxValue: Math.max(...FEES) },
+  shippingRate: { "@type": "MonetaryAmount", currency: "MAD", minValue: MIN_DELIVERY_FEE, maxValue: Math.max(...CITIES.map((c) => c.fee)) },
   deliveryTime: {
     "@type": "ShippingDeliveryTime",
     handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 1, unitCode: "DAY" },
-    transitTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 3, unitCode: "DAY" },
+    transitTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 2, unitCode: "DAY" },
   },
 };
 
@@ -130,7 +130,7 @@ export default async function ProductPage({ params }: Props) {
     const offer = await offerForListing(product.slug);
     if (offer) {
       const c = OFFER_COPY[locale];
-      offerBanner = { text: c.card.banner(offer.name, formatMAD(offer.fromPrice)), cta: c.card.cta, href: `/offres/${offer.slug}` };
+      offerBanner = { text: c.card.banner(offer.name, formatMAD(offer.fromPrice, locale)), cta: c.card.cta, href: `/offres/${offer.slug}` };
     }
   }
 
@@ -180,13 +180,15 @@ export default async function ProductPage({ params }: Props) {
     ? specRows(facts, locale, { storage: specs["Stockage"], ram: specs["RAM"]?.replace(/\s+/g, "") })
     : undefined;
 
+  // The ERP's own spec table, without its empty rows ("Téléphones: " with nothing).
+  const filledSpecs = Object.entries(specs).filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "");
+
   // A phone's other options: every colour of the model, and its other
   // listings (grade, storage), the sold-out ones shown crossed out.
   const modelOptions = product.isPhone && product.modelKey ? await getModelOptions(product.modelKey) : null;
   const siblings = modelOptions ? modelSiblings(modelOptions.listings, product.slug) : undefined;
   // Which colour each photo shows (its description: "iPhone 13 128GB - Rouge").
   const photoColor = product.modelKey ? await getPhotoColors([product.modelKey]) : new Map<string, string>();
-  const giftOptions = product.compatibleAccessories.filter((c) => c.isGiftOption);
   // An accessory sold in several colours: one page per colour (own stock),
   // linked by buttons. Shown only when this one and at least one other are named.
   const colorPages = !product.isPhone && product.colorGroup && product.colorName ? await getColorSiblings(product.colorGroup) : [];
@@ -342,7 +344,7 @@ export default async function ProductPage({ params }: Props) {
           <div>
             <p className="font-display text-xl font-bold">{t.productPage.soldOutTitle}</p>
             <p className="mt-1 text-neutral-300">
-              {t.productPage.soldOutText(modelInStock.units.length, modelInStock.name, formatMAD(modelInStock.fromPrice))}
+              {t.productPage.soldOutText(modelInStock.units.length, modelInStock.name, formatMAD(modelInStock.fromPrice, locale))}
             </p>
           </div>
           <Link
@@ -360,6 +362,7 @@ export default async function ProductPage({ params }: Props) {
           variants={variantsData}
           images={product.images.map((i) => ({ url: i.url, altText: i.altText, color: photoColor.get(i.url) ?? null }))}
           categorySlug={product.category.slug}
+          minDeliveryFee={MIN_DELIVERY_FEE}
         >
           {product.isPhone && (
             <InspectionReport t={t} facts={facts} brand={product.brand} isNew={product.condition === "NEUF"} compact className="mt-8" />
@@ -417,11 +420,11 @@ export default async function ProductPage({ params }: Props) {
             </div>
           )}
 
-          {!specSheet && Object.keys(specs).length > 0 && (
+          {!specSheet && filledSpecs.length > 0 && (
             <div className="mt-8">
               <h2 className="font-display text-xl font-bold text-ink">{t.productPage.specs}</h2>
               <dl className="mt-3 divide-y divide-ink/7 rounded-[1.25rem] bg-white px-5 ring-1 ring-ink/7">
-                {Object.entries(specs).map(([rawKey, rawValue]) => {
+                {filledSpecs.map(([rawKey, rawValue]) => {
                   const row = specRow(t, rawKey, String(rawValue));
                   return (
                     <div key={rawKey} className="flex justify-between gap-4 py-3 text-sm">
@@ -459,8 +462,6 @@ export default async function ProductPage({ params }: Props) {
               />
             </div>
           )}
-
-          <GiftPicker giftOptions={giftOptions} />
 
           {bundles.length > 0 && <BundleOffer bundles={bundles} />}
 

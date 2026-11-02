@@ -87,7 +87,7 @@ export const en: Dictionary = {
   },
 
   aisleBlurb: {
-    tablettes: "Samsung Galaxy Tab, iPad - new and used",
+    tablettes: "Samsung Galaxy Tab tablets, new and used",
     telephones: "iPhone, Samsung, Xiaomi - new and used",
     pochettes: "Cases for every model",
     incassables: "Tempered glass, screen protection",
@@ -215,6 +215,13 @@ export const en: Dictionary = {
       { title: "Checked by technicians", desc: "Diagnosed before every sale" },
       { title: "WhatsApp support", desc: "Quick answers, no bots" },
     ],
+    reviews: {
+      eyebrow: "Customer reviews",
+      title: "What our customers say",
+      intro: "Our customers also rate us on Google, after a visit to the shop or a delivery.",
+      seeGoogle: "See our Google reviews",
+      leaveGoogle: "Leave a Google review",
+    },
     whatsappBand: { lead: "Looking for a specific model?", rest: "Ask us, we answer on WhatsApp." },
     writeWhatsapp: "Message on WhatsApp",
   },
@@ -228,6 +235,9 @@ export const en: Dictionary = {
     metaPhonesTitle: "New and used phones in Meknes",
     metaPhonesDescription:
       "New and used iPhone, Samsung, Xiaomi in Meknes: condition, battery and parts shown for every phone. Delivery anywhere in Morocco.",
+    metaTabletsTitle: "New and used tablets in Meknes",
+    metaTabletsDescription:
+      "New and used Samsung Galaxy Tab tablets at Electro Zaki in Meknes: condition shown, shop warranty. Delivery anywhere in Morocco.",
     metaAisleTitle: (name: string) => `${name} - phone accessories in Meknes`,
     metaAisleDescription: (name: string, blurb: string | null) =>
       `${name} for your phone at Electro Zaki, Meknes. ${blurb ?? "In stock"} - delivery anywhere in Morocco.`,
@@ -382,6 +392,9 @@ export const en: Dictionary = {
     comingSoon: "Coming soon",
     unavailable: "Unavailable",
     priceOfSelected: "Price of the phone selected below.",
+    payAdvance: (amount: string) => `${amount} deposit, the rest on delivery`,
+    payNoAdvance: "No deposit: you pay on delivery",
+    deliveryFrom: (fee: string) => `Delivery from ${fee} · about 24 h after shipping`,
     transparency: "Full disclosure",
     color: "Colour",
     storage: "Storage",
@@ -432,6 +445,7 @@ export const en: Dictionary = {
     speakerReplaced: "Speaker replaced",
     partsReplaced: "Parts replaced",
     originalParts: "No parts replaced",
+    unitNo: (n: number, of: number) => `Unit ${n}/${of}`,
   },
 
   inspection: {
@@ -564,6 +578,7 @@ export const en: Dictionary = {
     title: "Broken phone?",
     titleGold: "We've got it.",
     lead: "Hardware or software, in the shop or in an online consultation: repairs from 150 DH, a free quote before any repair, and online tracking of your device.",
+    facts: ["Repairs from 150 DH, free quote", "Turnaround: 24 h minimum", "Original or compatible parts, your choice"],
     askQuote: "Get a quote",
     track: "Track my repair",
     howItWorks: "How it works",
@@ -875,7 +890,7 @@ export const en: Dictionary = {
     callFirst: "Nothing to pay for now: confirm your order and we'll call you very soon.",
     payNow: "Prefer to pay the advance now? (optional)",
     whyAdvance: "Why a deposit?",
-    whyAdvanceText: "The deposit covers shipping costs and holds your phone for you until delivery.",
+    whyAdvanceText: "The deposit holds your phone for you until delivery. It comes off the price: the delivery fee, set by your town, is paid by you.",
     consent:
       "I agree that my data and bank receipt are handled confidentially, in line with CNDP regulations.",
     termsBefore: "I have read and accept the ",

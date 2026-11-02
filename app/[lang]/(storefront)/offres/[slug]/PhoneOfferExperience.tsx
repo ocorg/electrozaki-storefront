@@ -1,5 +1,6 @@
 "use client";
 
+import { cityLabel } from "@/lib/delivery/label";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import Image from "next/image";
 import {
@@ -23,7 +24,7 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
-import { useT } from "@/components/i18n/I18nProvider";
+import { useLocale, useT } from "@/components/i18n/I18nProvider";
 import Link from "@/components/i18n/Link";
 import { ProductVisual } from "@/components/storefront/ProductVisual";
 import { OptionChip, UnitPicker, matchUnits, type BatteryRange } from "@/components/storefront/UnitPicker";
@@ -135,6 +136,7 @@ function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; chi
 
 export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, images, addons, sheets, models = [], options = {}, kind = "promo" }: Props) {
   const t = useT();
+  const locale = useLocale();
   const formRef = useRef<HTMLDivElement>(null);
 
   const grades = useMemo(() => GRADE_ORDER.filter((g) => units.some((u) => u.grade === g)), [units]);
@@ -361,14 +363,14 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
             </p>
             <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
               <p dir="ltr" className="readout text-5xl font-bold leading-none text-ink">
-                {formatMAD(unit.price)}
+                {formatMAD(unit.price, locale)}
               </p>
               {saving > 0 && (
                 <>
                   <p className="text-base text-neutral-500">
-                    {hero.instead} <span className="readout line-through">{formatMAD(unit.normalPrice)}</span>
+                    {hero.instead} <span className="readout line-through">{formatMAD(unit.normalPrice, locale)}</span>
                   </p>
-                  <span dir="ltr" className="rounded-full bg-red-600 px-2.5 py-1 text-sm font-bold text-white">-{formatMAD(saving)}</span>
+                  <span dir="ltr" className="rounded-full bg-red-600 px-2.5 py-1 text-sm font-bold text-white">-{formatMAD(saving, locale)}</span>
                 </>
               )}
             </div>
@@ -580,7 +582,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                             <Icon size={20} aria-hidden className="flex-none text-gold-deep" />
                             <span className="min-w-0 flex-1 text-sm font-semibold text-ink">{a.name}</span>
                             <span className="flex flex-col items-end gap-1">
-                              <span dir="ltr" className="readout text-sm font-bold text-ink">+{formatMAD(a.price)}</span>
+                              <span dir="ltr" className="readout text-sm font-bold text-ink">+{formatMAD(a.price, locale)}</span>
                               <span
                                 className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
                                   on ? "bg-ink text-white" : "bg-ink/6 text-ink"
@@ -662,26 +664,26 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                     <dt className="text-neutral-700">
                       {unit ? `${unit.productName} · ${t.grades.label[unit.grade] ?? unit.grade}` : name}
                     </dt>
-                    <dd className="readout font-semibold">{unit ? formatMAD(unit.price) : "-"}</dd>
+                    <dd className="readout font-semibold">{unit ? formatMAD(unit.price, locale) : "-"}</dd>
                   </div>
                   {addons
                     .filter((a) => picked.has(a.key))
                     .map((a) => (
                       <div key={a.key} className="flex justify-between gap-4">
                         <dt className="text-neutral-700">{a.name}</dt>
-                        <dd className="readout font-semibold">{formatMAD(a.price)}</dd>
+                        <dd className="readout font-semibold">{formatMAD(a.price, locale)}</dd>
                       </div>
                     ))}
                   <div className="flex justify-between gap-4">
                     <dt className="text-neutral-700">
                       {copy.delivery}
-                      {city ? ` (${city})` : ""}
+                      {city ? ` (${cityLabel(city)})` : ""}
                     </dt>
-                    <dd className={city ? "readout font-semibold" : "text-neutral-500"}>{city ? formatMAD(fee) : copy.deliveryPending}</dd>
+                    <dd className={city ? "readout font-semibold" : "text-neutral-500"}>{city ? formatMAD(fee, locale) : copy.deliveryPending}</dd>
                   </div>
                   <div className="flex justify-between gap-4 border-t border-ink/10 pt-3 text-lg">
                     <dt className="font-bold text-ink">{copy.total}</dt>
-                    <dd className="readout font-bold text-ink">{formatMAD(total)}</dd>
+                    <dd className="readout font-bold text-ink">{formatMAD(total, locale)}</dd>
                   </div>
                 </dl>
               </section>
@@ -690,7 +692,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
               <div className="mt-4 rounded-3xl border border-gold/50 bg-gold/8 p-4 sm:p-5">
                 <p className="font-semibold text-ink">{copy.advanceTitle}</p>
                 <p className="mt-1 text-sm leading-relaxed text-neutral-700">
-                  {fill(copy.advanceText, { rest: formatMAD(Math.max(0, total - ADVANCE)) })}
+                  {fill(copy.advanceText, { rest: formatMAD(Math.max(0, total - ADVANCE), locale) })}
                 </p>
                 <p className="mt-2 flex items-start gap-2 text-sm leading-relaxed text-neutral-700">
                   <Phone size={16} aria-hidden className="mt-0.5 flex-none text-gold-deep" />
@@ -723,7 +725,7 @@ export function PhoneOfferExperience({ slug, name, brand, hero, copy, units, ima
                   copy.sending
                 ) : (
                   <>
-                    {copy.submit} {unit && city ? <span className="readout">· {formatMAD(total)}</span> : null}
+                    {copy.submit} {unit && city ? <span className="readout">· {formatMAD(total, locale)}</span> : null}
                   </>
                 )}
               </Button>

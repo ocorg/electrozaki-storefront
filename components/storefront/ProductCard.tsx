@@ -1,8 +1,8 @@
 import { ArrowUpRight, Check, MemoryStick } from "lucide-react";
 import Link from "@/components/i18n/Link";
-import { formatMAD, savingOf } from "@/lib/format";
+import { brandLabel, formatMAD, savingOf } from "@/lib/format";
 import type { PublicProduct } from "@/lib/db/public-products";
-import { getT } from "@/lib/i18n/server";
+import { getLocale, getT } from "@/lib/i18n/server";
 import { photoAlt } from "@/components/storefront/photo-alt";
 import { getAllPhotoColors } from "@/lib/db/model-options";
 import { categoryName } from "@/lib/i18n/labels";
@@ -19,7 +19,7 @@ export async function ProductCard({
   /** In a guided aisle: the phone it fits and what kind it is ("Luxe · Antichoc"). */
   fiche?: { fits?: string; traits: string[] };
 }) {
-  const t = await getT();
+  const [t, locale] = await Promise.all([getT(), getLocale()]);
   // The cover described by its colour ("iPhone 13 128GB - Rouge"): the ERP's
   // photo per model + colour, else a unit shown in it; just the name otherwise.
   const coverPhoto = product.images[0];
@@ -78,7 +78,7 @@ export async function ProductCard({
           )}
           {(saving !== null || unitPromo) && (
             <span dir={saving !== null ? "ltr" : undefined} className="rounded-full bg-red-600 px-2.5 py-1 font-mono text-xs font-bold text-white">
-              {saving !== null ? `-${formatMAD(saving)}` : t.product.promo}
+              {saving !== null ? `-${formatMAD(saving, locale)}` : t.product.promo}
             </span>
           )}
         </div>
@@ -86,7 +86,7 @@ export async function ProductCard({
 
       <div className="flex flex-1 flex-col px-3.5 pb-3.5 pt-3 sm:px-4 sm:pb-4">
         <p className="min-h-4 font-mono text-xs font-semibold uppercase tracking-wider text-neutral-500">
-          {product.brand ?? categoryName(t, product.category.slug, product.category.name)}
+          {brandLabel(product.brand, product.name) ?? categoryName(t, product.category.slug, product.category.name)}
         </p>
         <h3 className="mt-0.5 line-clamp-2 min-h-[2.6em] text-[15px] font-semibold leading-snug text-ink" title={product.name}>
           {product.name}
@@ -122,11 +122,11 @@ export async function ProductCard({
           <p className="leading-none">
             {fromPrice && <span className="mb-1 block text-xs font-medium text-neutral-500">{t.product.fromPrice}</span>}
             <span className="readout text-lg font-bold text-ink sm:text-xl">
-              {formatMAD(product.recommendedSalePrice.toString())}
+              {formatMAD(product.recommendedSalePrice.toString(), locale)}
             </span>
             {saving !== null && product.compareAtPrice && (
               <span className="readout ms-1.5 text-xs text-neutral-500 line-through">
-                {formatMAD(product.compareAtPrice.toString())}
+                {formatMAD(product.compareAtPrice.toString(), locale)}
               </span>
             )}
           </p>

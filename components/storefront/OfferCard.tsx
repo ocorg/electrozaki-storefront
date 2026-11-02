@@ -49,18 +49,18 @@ export function OfferCard({ offer, t, intl, priority = false }: { offer: LiveOff
 
         {offer.price !== null ? (
           <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <span className="text-sm text-neutral-400">{t.offers.from}</span>
+            <span className="text-sm text-neutral-400">{t.offers.from}</span>{" "}
             <span dir="ltr" className="readout text-4xl font-bold text-gold">
-              {formatMAD(offer.price)}
+              {formatMAD(offer.price, intl)}
             </span>
             {saving > 0 && offer.normalPrice !== null && (
               <span className="text-sm text-neutral-400">
-                {t.offers.instead} <span className="readout line-through">{formatMAD(offer.normalPrice)}</span>
+                {t.offers.instead} <span className="readout line-through">{formatMAD(offer.normalPrice, intl)}</span>
               </span>
             )}
             {saving > 0 && (
               <span dir="ltr" className="rounded-full bg-red-600 px-2.5 py-1 text-sm font-bold text-white">
-                -{formatMAD(saving)}
+                -{formatMAD(saving, intl)}
               </span>
             )}
           </p>

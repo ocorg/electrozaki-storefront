@@ -91,7 +91,7 @@ export const fr = {
 
   // Short line under each aisle (home tiles, category page intro).
   aisleBlurb: {
-    tablettes: "Samsung Galaxy Tab, iPad - neuves et d'occasion",
+    tablettes: "Tablettes Samsung Galaxy Tab, neuves et d'occasion",
     telephones: "iPhone, Samsung, Xiaomi - neufs et d'occasion",
     pochettes: "Coques pour chaque modèle",
     incassables: "Verres trempés, protection d'écran",
@@ -220,6 +220,13 @@ export const fr = {
       { title: "Techniciens vérifiés", desc: "Diagnostic avant chaque vente" },
       { title: "Support WhatsApp", desc: "Réponse rapide, sans robot" },
     ],
+    reviews: {
+      eyebrow: "Avis clients",
+      title: "Ce que disent nos clients",
+      intro: "Nos clients nous notent aussi sur Google, après une visite en boutique ou une livraison.",
+      seeGoogle: "Voir nos avis Google",
+      leaveGoogle: "Laisser un avis Google",
+    },
     whatsappBand: { lead: "Vous cherchez un modèle précis ?", rest: "Demandez-nous, on vous répond sur WhatsApp." },
     writeWhatsapp: "Écrire sur WhatsApp",
   },
@@ -233,6 +240,9 @@ export const fr = {
     metaPhonesTitle: "Téléphones d'occasion et neufs à Meknès",
     metaPhonesDescription:
       "iPhone, Samsung, Xiaomi neufs et d'occasion à Meknès : état, batterie et pièces affichés pour chaque téléphone. Livraison partout au Maroc.",
+    metaTabletsTitle: "Tablettes neuves et d'occasion à Meknès",
+    metaTabletsDescription:
+      "Tablettes Samsung Galaxy Tab neuves et d'occasion chez Electro Zaki à Meknès : état affiché, garantie boutique. Livraison partout au Maroc.",
     metaAisleTitle: (name: string) => `${name} - accessoires téléphone à Meknès`,
     metaAisleDescription: (name: string, blurb: string | null) =>
       `${name} pour téléphone chez Electro Zaki, Meknès. ${blurb ?? "En stock"} - livraison partout au Maroc.`,
@@ -366,6 +376,9 @@ export const fr = {
     comingSoon: "Bientôt disponible",
     unavailable: "Indisponible",
     priceOfSelected: "Prix du téléphone sélectionné ci-dessous.",
+    payAdvance: (amount: string) => `Avance de ${amount}, le reste à la livraison`,
+    payNoAdvance: "Sans avance : vous payez à la livraison",
+    deliveryFrom: (fee: string) => `Livraison dès ${fee} · environ 24 h après l'expédition`,
     transparency: "Transparence",
     color: "Couleur",
     storage: "Stockage",
@@ -416,6 +429,7 @@ export const fr = {
     speakerReplaced: "Haut-parleur remplacé",
     partsReplaced: "Pièces remplacées",
     originalParts: "Aucune pièce remplacée",
+    unitNo: (n: number, of: number) => `Unité ${n}/${of}`,
   },
 
   inspection: {
@@ -464,8 +478,8 @@ export const fr = {
     } as Record<string, string>,
     newEyebrow: "Téléphone neuf",
     newTitle: "Neuf, scellé.",
-    newIntro: "Il vous arrive dans sa boîte d'origine, jamais ouverte ni activée.",
-    newItems: ["Boîte scellée, jamais activé", "IMEI vérifié, non bloqué", "Garantie boutique 12 mois", "Livraison partout au Maroc"],
+    newIntro: "Il vous arrive dans sa boîte d'origine jamais ouverte, et n'a jamais été activé.",
+    newItems: ["Boîte scellée, téléphone jamais activé", "IMEI vérifié, non bloqué", "Garantie boutique 12 mois", "Livraison partout au Maroc"],
   },
 
   orderTracking: {
@@ -550,6 +564,7 @@ export const fr = {
     title: "Votre téléphone cassé ?",
     titleGold: "On s'en occupe.",
     lead: "Matériel ou logiciel, en boutique ou en consultation en ligne : réparations à partir de 150 DH, devis gratuit avant toute réparation, et suivi de votre appareil en ligne.",
+    facts: ["Réparation dès 150 DH, devis gratuit", "Délai : 24 h minimum", "Pièces d'origine ou compatibles, au choix"],
     askQuote: "Demander un devis",
     track: "Suivre ma réparation",
     howItWorks: "Comment ça marche",
@@ -865,7 +880,7 @@ export const fr = {
     payNow: "Vous préférez payer l'avance maintenant ? (facultatif)",
     whyAdvance: "Pourquoi cette avance ?",
     whyAdvanceText:
-      "Cette avance couvre les frais logistiques et garantit la réservation de votre téléphone le temps de la livraison.",
+      "Cette avance réserve votre téléphone pour vous jusqu'à la livraison. Elle est déduite du prix : les frais de livraison, selon votre ville, restent à votre charge.",
     consent:
       "J'accepte que mes données et mon reçu bancaire soient traités de manière confidentielle, conformément à la réglementation CNDP.",
     termsBefore: "J'ai lu et j'accepte les ",

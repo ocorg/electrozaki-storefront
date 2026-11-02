@@ -67,7 +67,7 @@ export const en: TermsCopy = {
       id: "livraison",
       title: "6. Delivery",
       paragraphs: [
-        "We deliver anywhere in Morocco with Ameex. The parcel leaves Meknès the same day or the next working day after confirmation (and the advance, for a phone), then usually takes 1 to 3 working days. An expected delivery date is given when you order.",
+        "We deliver anywhere in Morocco with Ameex. The parcel leaves Meknès the same day or the next working day after confirmation (and the advance, for a phone), then usually arrives about 24 hours after shipping (a little longer for a place Ameex only serves on some days). An expected delivery date is given when you order.",
         "On delivery you can check the phone, in front of the courier or on a video call with us. If it isn't as described, refuse the parcel: the advance is refunded in full.",
         "If delivery is more than 7 days later than the expected date, except in case of force majeure, you can cancel the order and get back everything you paid.",
       ],

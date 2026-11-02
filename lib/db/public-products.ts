@@ -478,7 +478,16 @@ export async function getFeaturedProducts(
     orderBy: [{ images: { _count: "desc" } }, { createdAt: "desc" }],
     take: limit * 3,
   });
-  return bestFirst(rows).slice(0, limit);
+  // One listing per phone model in a shop window (the best one comes first).
+  const seen = new Set<string>();
+  return bestFirst(rows)
+    .filter((r) => {
+      if (!r.isPhone || !r.modelKey) return true;
+      if (seen.has(r.modelKey)) return false;
+      seen.add(r.modelKey);
+      return true;
+    })
+    .slice(0, limit);
 }
 
 const GRADE_RANK: Record<string, number> = { NEUF: 0, TRES_BON: 1, BON: 2, PIECES_REMPLACEES: 3 };

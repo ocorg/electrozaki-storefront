@@ -67,7 +67,7 @@ export const darija: TermsCopy = {
       id: "livraison",
       title: "6. L-livraison",
       paragraphs: [
-        "Kanwslo l ga3 lmghrib m3a Ameex. L-colis kaykhrej mn Meknès f nfs nhar wla nhar l-khedma li mn ba3d la confirmation (w l-3arboun l téléphone), w 3adatan kaytsenna 1 l 3 iyam dyal l-khedma. Kan3tiwk nhar l-livraison l-motawa99a3 f la commande.",
+        "Kanwslo l ga3 lmghrib m3a Ameex. L-colis kaykhrej mn Meknès f nfs nhar wla nhar l-khedma li mn ba3d la confirmation (w l-3arboun l téléphone), w 3adatan kaywsel 24 sa3a ta9riban men b3d l'expédition (chwiya ktar l blassa ma kaymchiw liha Ameex ghir chi iyam). Kan3tiwk nhar l-livraison l-motawa99a3 f la commande.",
         "Mli ywslek, tqder tchouf t-téléphone 9eddam l-livreur wla f appel vidéo m3ana. Ila ma kanch b7al l-i3lan, raffad l-colis: l-3arboun kayrja3 lik kamel.",
         "Ila t3e3tlat l-livraison ktar mn 7 iyam 3la n-nhar l-motawa99a3, ghir ila kanet 9owwa 9ahira, tqder tlghi la commande w trejje3 ga3 flousek.",
       ],

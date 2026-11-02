@@ -90,7 +90,7 @@ export const darija: Dictionary = {
   },
 
   aisleBlurb: {
-    tablettes: "Samsung Galaxy Tab, iPad - jdad w mosta3mlin",
+    tablettes: "Tablettes Samsung Galaxy Tab, jdad w mosta3mlin",
     telephones: "iPhone, Samsung, Xiaomi - jdad w mosta3mlin",
     pochettes: "Coques l kol modèle",
     incassables: "Verre trempé, 7imaya l l'écran",
@@ -218,6 +218,13 @@ export const darija: Dictionary = {
       { title: "Techniciens kaychoufo", desc: "Diagnostic 9bel kol bi3" },
       { title: "Support f WhatsApp", desc: "Jawab dghya, bla robot" },
     ],
+    reviews: {
+      eyebrow: "Ara2 l clients",
+      title: "Chno kay9olo l clients dyalna",
+      intro: "L clients dyalna kay3tiwna ta9yim 7ta f Google, men b3d ma ijiw l l7anout wla iwslhom téléphone.",
+      seeGoogle: "Chouf l ara2 dyalna f Google",
+      leaveGoogle: "3ti ra2yek f Google",
+    },
     whatsappBand: { lead: "Katgelleb 3la chi modèle b dbt?", rest: "Soulna, kanjawbok f WhatsApp." },
     writeWhatsapp: "Kteb f WhatsApp",
   },
@@ -231,6 +238,9 @@ export const darija: Dictionary = {
     metaPhonesTitle: "Tilifounat jdad w mosta3mlin f Mknas",
     metaPhonesDescription:
       "iPhone, Samsung, Xiaomi jdad w mosta3mlin f Mknas: l7ala, l batterie w l pièces bayna l kol téléphone. Livraison l ga3 lmghrib.",
+    metaTabletsTitle: "Tablettes jdad w mosta3mlin f Mknas",
+    metaTabletsDescription:
+      "Tablettes Samsung Galaxy Tab jdad w mosta3mlin 3nd Electro Zaki f Mknas: l7ala bayna, garantie dyal l7anout. Livraison l ga3 lmghrib.",
     metaAisleTitle: (name: string) => `${name} - accessoires dyal téléphone f Mknas`,
     metaAisleDescription: (name: string, blurb: string | null) =>
       `${name} l téléphone dyalek 3nd Electro Zaki, Mknas. ${blurb ?? "Kaynin"} - livraison l ga3 lmghrib.`,
@@ -368,6 +378,9 @@ export const darija: Dictionary = {
     comingSoon: "Jay qrib",
     unavailable: "Makaynch",
     priceOfSelected: "L prix dyal téléphone li khtariti lta7t.",
+    payAdvance: (amount: string) => `3arboun ${amount}, w lba9i mnin iwslek`,
+    payNoAdvance: "Bla 3arboun: katkhlles mnin iwslek",
+    deliveryFrom: (fee: string) => `Livraison men ${fee} · 24 sa3a ta9riban men b3d l'expédition`,
     transparency: "Bla ma nkhbiw 3lik",
     color: "Couleur",
     storage: "Stockage",
@@ -418,6 +431,7 @@ export const darija: Dictionary = {
     speakerReplaced: "Haut-parleur mbeddel",
     partsReplaced: "Pièces mbeddlin",
     originalParts: "Hta pièce ma tbeddlat",
+    unitNo: (n: number, of: number) => `Wa7da ${n}/${of}`,
   },
 
   inspection: {
@@ -550,6 +564,7 @@ export const darija: Dictionary = {
     title: "Téléphone dyalek khasser?",
     titleGold: "7na nthallaw fih.",
     lead: "Matériel wla logiciel, f l7anout wla consultation 3la b3d: tasli7 men 150 DH, devis fabor 9bel ay tasli7, w tba3 l'appareil dyalek f l'internet.",
+    facts: ["Tasli7 men 150 DH, devis fabor", "L mouda: 24 sa3a 3la l a9al", "Pièces d'origine wla compatibles, kif bghiti"],
     askQuote: "Tleb devis",
     track: "Tba3 tasli7 dyali",
     howItWorks: "Kifach kankhdmo",
@@ -859,7 +874,7 @@ export const darija: Dictionary = {
     callFirst: "Walo ma tkhelles daba: confirmi la commande w ghadi n3ayto lik dghya.",
     payNow: "Bghiti tkhelles 3arboun daba? (ila bghiti)",
     whyAdvance: "3lach had l3arboun?",
-    whyAdvanceText: "Had l3arboun kaygetti masarif l livraison w kay7jez lik téléphone 7tal iwslek.",
+    whyAdvanceText: "Had l3arboun kay7jez lik téléphone 7tal iwslek, w kayt7ayed mn taman. L livraison, 3la 7sab lmdina dyalek, 3lik.",
     consent: "Mwafe9 belli les données dyali w l reçu dyal banque ytkhdmo b sirriya, 7sab l9anoun dyal CNDP.",
     termsBefore: "9rit w kanwafe9 3la ",
     termsLink: "chorout 3amma dyal lbi3",

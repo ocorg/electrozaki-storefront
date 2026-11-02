@@ -47,8 +47,11 @@ export function displayName(fullName: string): string {
  * The reviews shown for a listing: every review of the phone model (all its
  * storages and grades), or of the product itself when it has no model.
  */
-export async function getReviewSummary(target: { modelKey: string | null; productId?: string }, take = 8): Promise<ReviewSummary | null> {
-  const where = target.modelKey
+export async function getReviewSummary(target: { modelKey: string | null; productId?: string; all?: boolean }, take = 8): Promise<ReviewSummary | null> {
+  // `all`: every review on the site (the home page).
+  const where = target.all
+    ? { hidden: false }
+    : target.modelKey
     ? { modelKey: target.modelKey, hidden: false }
     : target.productId
       ? { productId: target.productId, hidden: false }

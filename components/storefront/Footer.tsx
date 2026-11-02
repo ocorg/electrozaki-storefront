@@ -1,8 +1,8 @@
-import { MapPin, MessageCircle } from "lucide-react";
+import { Clock, MapPin, MessageCircle } from "lucide-react";
 import Link from "@/components/i18n/Link";
 import { AnchorButton } from "@/components/ui/Button";
 import { SocialLinks } from "@/components/storefront/SocialLinks";
-import { ACCESSORIES_OPEN, SHOP, TERMS_PATH, WHATSAPP_URL } from "@/lib/site";
+import { ACCESSORIES_OPEN, LEGAL, SHOP, TERMS_PATH, WHATSAPP_URL } from "@/lib/site";
 import { getT } from "@/lib/i18n/server";
 import { categoryName } from "@/lib/i18n/labels";
 import type { AisleStat } from "@/lib/db/storefront";
@@ -62,7 +62,20 @@ export async function Footer({ aisles }: { aisles: AisleStat[] }) {
               <MapPin size={15} className="text-gold" aria-hidden />
               {t.common.city}, {t.common.country} · {t.footer.findUs}
             </Link>
-            <p className="mt-1 ps-6 text-xs text-neutral-400">{t.footer.address}</p>
+            <p className="mt-1 ps-6 text-xs text-neutral-400">
+              {t.footer.address}
+              <br />
+              {t.contact.landmark}
+            </p>
+            <div className="mt-4 flex gap-1.5 text-sm">
+              <Clock size={15} className="mt-0.5 flex-none text-gold" aria-hidden />
+              <ul className="space-y-0.5">
+                <li className="sr-only">{t.contact.hoursTitle}</li>
+                {t.contact.hours.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </div>
             <SocialLinks className="mt-5" />
           </div>
         </div>
@@ -79,6 +92,10 @@ export async function Footer({ aisles }: { aisles: AisleStat[] }) {
 
       <div className="relative border-t border-white/10 px-4 py-5 pb-[calc(5.5rem+env(safe-area-inset-bottom))] text-center text-xs text-neutral-400 md:pb-5">
         © {new Date().getFullYear()} {SHOP.name} · {t.common.city}. {t.footer.rights}
+        {/* The seller's legal identity (the full one is on the terms of sale). */}
+        <p dir="ltr" className="mt-1">
+          {[LEGAL.legalName, LEGAL.rc && `RC ${LEGAL.rc}`, LEGAL.ice && `ICE ${LEGAL.ice}`].filter(Boolean).join(" · ")}
+        </p>
       </div>
     </footer>
   );

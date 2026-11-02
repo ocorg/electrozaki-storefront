@@ -143,11 +143,11 @@ export function BrandOfferPage({ brand, locale, t }: { brand: BrandOffer; locale
                       <span className="font-display text-lg font-bold text-ink">{m.name}</span>
                       <span className="text-sm text-neutral-600">{b.phones(m.units.length)}</span>
                       <span className="mt-auto flex flex-wrap items-baseline gap-x-2 pt-2">
-                        <span className="text-xs text-neutral-500">{b.from}</span>
-                        <span dir="ltr" className="readout text-lg font-bold text-ink">{formatMAD(m.fromPrice)}</span>
+                        <span className="text-xs text-neutral-500">{b.from}</span>{" "}
+                        <span dir="ltr" className="readout text-lg font-bold text-ink">{formatMAD(m.fromPrice, locale)}</span>
                         {m.bestSaving > 0 && (
                           <span dir="ltr" className="rounded-full bg-red-600 px-2 py-0.5 text-xs font-bold text-white">
-                            {b.upTo(formatMAD(m.bestSaving))}
+                            {b.upTo(formatMAD(m.bestSaving, locale))}
                           </span>
                         )}
                       </span>

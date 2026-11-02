@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { BadgeCheck } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { LOCALE_META, type Locale } from "@/lib/i18n/config";
@@ -13,9 +14,15 @@ export function ReviewsSection({
   t,
   locale,
   className = "",
+  title,
+  footer,
 }: {
   summary: ReviewSummary;
   name: string;
+  /** replaces "Avis sur <name>" (the home page speaks of the shop) */
+  title?: string;
+  /** under the reviews, e.g. the links to the shop's Google reviews */
+  footer?: ReactNode;
   t: Dictionary;
   locale: Locale;
   className?: string;
@@ -30,7 +37,7 @@ export function ReviewsSection({
     <section aria-labelledby="avis" className={className}>
       <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-gold-deep">{r.eyebrow}</p>
       <h2 id="avis" className="font-display mt-3 text-[2rem] font-bold leading-[1.05] text-ink sm:text-[2.4rem]">
-        {r.title(name)}
+        {title ?? r.title(name)}
       </h2>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-10">
@@ -87,6 +94,7 @@ export function ReviewsSection({
           ))}
         </ul>
       </div>
+      {footer}
     </section>
   );
 }

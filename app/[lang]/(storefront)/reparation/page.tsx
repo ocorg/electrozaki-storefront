@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "@/components/i18n/Link";
 import { ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react";
 import { RepairDiagnostic } from "@/components/storefront/RepairDiagnostic";
+import { RepairFacts } from "@/components/storefront/RepairFacts";
 import { RepairHeroArt } from "@/components/storefront/RepairHeroArt";
 import { AnchorButton, LinkButton } from "@/components/ui/Button";
 import { IconTile } from "@/components/ui/IconTile";
@@ -95,6 +96,7 @@ export default async function ReparationPage() {
               {r.title} <span className="text-gold">{r.titleGold}</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-300">{r.lead}</p>
+            <RepairFacts t={t} className="mt-6" />
             <div className="mt-8 flex flex-wrap gap-3">
               <AnchorButton href="#diagnostic" variant="accent" size="lg" className="px-6 sm:px-8">
                 {r.askQuote} <ArrowRight size={18} aria-hidden className="rtl:rotate-180" />

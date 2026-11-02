@@ -1,11 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { cityLabel } from "@/lib/delivery/label";
 import dynamic from "next/dynamic";
 import { AlertTriangle, Clock, MapPin, Search, Truck, X } from "lucide-react";
 import { formatMAD } from "@/lib/format";
 import { DELIVERY_CITIES, ORDER_CUTOFF_HOUR, dayParts, estimateDelivery, findCity, searchKey } from "@/lib/delivery";
-import { useT } from "@/components/i18n/I18nProvider";
+import { useLocale, useT } from "@/components/i18n/I18nProvider";
 
 // Leaflet needs the browser — never render the map on the server.
 const DeliveryMap = dynamic(() => import("./DeliveryMap").then((m) => m.DeliveryMap), {
@@ -22,6 +23,7 @@ type Props = {
 
 export function DeliveryPicker({ value, onChangeAction }: Props) {
   const t = useT();
+  const locale = useLocale();
   const dl = t.delivery;
   const fullDay = (isoDate: string) => {
     const p = dayParts(isoDate);
@@ -63,7 +65,7 @@ export function DeliveryPicker({ value, onChangeAction }: Props) {
         <div className="flex items-center justify-between gap-2 rounded-lg border border-gold/60 bg-gold/5 px-3 py-2">
           <span className="flex items-center gap-2 font-medium">
             <MapPin size={16} className="text-gold-deep" />
-            {city.name}
+            {cityLabel(city.name)}
           </span>
           <button
             type="button"
@@ -110,9 +112,9 @@ export function DeliveryPicker({ value, onChangeAction }: Props) {
                         onClick={() => choose(c.name)}
                         className="flex w-full items-center justify-between gap-2 px-3 py-2 text-start text-sm hover:bg-neutral-50"
                       >
-                        <span>{c.name}</span>
+                        <span>{cityLabel(c.name)}</span>
                         <span className={`shrink-0 text-xs ${served ? "text-neutral-500" : "text-amber-700"}`}>
-                          {served ? formatMAD(c.fee) : dl.notServed}
+                          {served ? formatMAD(c.fee, locale) : dl.notServed}
                         </span>
                       </button>
                     </li>
@@ -130,7 +132,7 @@ export function DeliveryPicker({ value, onChangeAction }: Props) {
             <span className="flex items-center gap-2 font-semibold">
               <Truck size={16} /> {dl.carrier}
             </span>
-            <span className="font-semibold">{formatMAD(city.fee)}</span>
+            <span className="font-semibold">{formatMAD(city.fee, locale)}</span>
           </div>
 
           <div className="flex flex-wrap gap-1" aria-label={dl.days}>
@@ -155,7 +157,7 @@ export function DeliveryPicker({ value, onChangeAction }: Props) {
               </p>
               {estimate.waitsForDeliveryDay && (
                 <p className="text-xs text-neutral-500">
-                  {dl.waits(city.name)}
+                  {dl.waits(cityLabel(city.name))}
                 </p>
               )}
               <p className="text-xs text-neutral-500">{dl.indicative}</p>
@@ -164,7 +166,7 @@ export function DeliveryPicker({ value, onChangeAction }: Props) {
             <div className="flex gap-2 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
               <AlertTriangle size={16} className="mt-0.5 shrink-0" />
               <p>
-                {dl.notDeliverableBefore} <b>{city.name}</b>
+                {dl.notDeliverableBefore} <b>{cityLabel(city.name)}</b>
                 {dl.notDeliverableAfter}
               </p>
             </div>
@@ -172,7 +174,7 @@ export function DeliveryPicker({ value, onChangeAction }: Props) {
 
           {city.lat !== null && city.lng !== null ? (
             <div className="space-y-1">
-              <DeliveryMap lat={city.lat} lng={city.lng} label={city.name} ariaLabel={dl.map(city.name)} />
+              <DeliveryMap lat={city.lat} lng={city.lng} label={cityLabel(city.name)} ariaLabel={dl.map(cityLabel(city.name))} />
               <p className="text-xs text-neutral-500">
                 {dl.checkPin}
               </p>

@@ -94,7 +94,10 @@ export function PhoneOfferPage({
 
   // Android models: their RAM next to the storage (no battery health for them).
   const ramLine = offer.brandKey !== "apple" && offer.rams.length ? t.common.ram(offer.rams.join(" / ")) : "";
-  const subtitle = [offer.storages.join(" / "), ramLine, offer.grades.map((g) => t.grades.label[g] ?? g).join(" · ")].filter(Boolean).join(" · ");
+  // "Occasion · Bon état": a used phone says so in words, not only by its grade.
+  const usedOnly = offer.grades.length > 0 && !offer.grades.includes("NEUF");
+  const gradeLine = [usedOnly ? c.hero.used : "", ...offer.grades.map((g) => t.grades.label[g] ?? g)].filter(Boolean).join(" · ");
+  const subtitle = [offer.storages.join(" / "), ramLine, gradeLine].filter(Boolean).join(" · ");
   // New phones carry the 12-month warranty; every phone gets real photos
   // and a video on WhatsApp before shipping.
   const baseTrust = isNew ? c.hero.trust.map((item, i) => (i === 1 ? c.hero.trustNewWarranty : item)) : c.hero.trust;
