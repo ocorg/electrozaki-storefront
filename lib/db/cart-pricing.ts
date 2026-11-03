@@ -3,6 +3,7 @@ import { allocateBundlePrices } from "@/lib/bundle-pricing";
 import { prisma } from "./client";
 import { landingStatus, landingPrice, landingProductIds } from "./landing";
 import { MODEL_GROUP } from "@/lib/facets";
+import { choiceProblem } from "@/lib/accessoryChoice";
 
 // ─────────────────────────────────────────────────────────────────────────
 // The ONLY source of truth for what an order costs. The browser's cart
@@ -20,7 +21,9 @@ export type CartLineInput = {
   bundleId?: string;
   /** added from a promo page (/offres/…): gets that page's price while it is live */
   landingId?: string;
-  /** accessory family (owner, 2026-11-02): the colour (a photo's colour name) and phone model (fiche option key) chosen */
+  /** accessory family (owner, 2026-11-02/03): the design and colour (from the
+   * photos) and the phone model (fiche option key) chosen */
+  design?: string;
   color?: string;
   model?: string;
 };
@@ -35,6 +38,7 @@ export type PricedLine = {
   quantity: number;
   isGift: boolean;
   bundleId?: string;
+  optionDesign?: string;
   optionColor?: string;
   optionModel?: string;
 };
@@ -61,6 +65,7 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
     isGift: l.isGift === true,
     bundleId: l.bundleId ? String(l.bundleId) : undefined,
     landingId: l.landingId ? String(l.landingId) : undefined,
+    design: l.design ? String(l.design).slice(0, 40) : undefined,
     color: l.color ? String(l.color).slice(0, 40) : undefined,
     model: l.model ? String(l.model).slice(0, 80) : undefined,
   }));
@@ -80,7 +85,7 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
       categoryId: true,
       internal: { select: { stockQuantity: true } },
       variants: { select: { id: true, name: true, priceOverride: true, stockQuantity: true, erpRef: true } },
-      images: { where: { colorName: { not: null } }, select: { colorName: true } },
+      images: { select: { colorName: true, designName: true, phoneShape: true } },
       facets: { where: { option: { active: true, group: { key: MODEL_GROUP, active: true } } }, select: { option: { select: { key: true, name: true } } } },
       compatibleAccessories: {
         where: { isGiftOption: true },
@@ -127,25 +132,28 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
       return { error: `Stock insuffisant pour « ${product.name} ». Merci de réduire la quantité.` };
     }
 
-    // An accessory family: the colour and phone model chosen on the page
-    // must be one it has; they are required on a line bought from its page.
-    const colors = new Set(product.images.map((i) => i.colorName!));
-    const models = new Map(product.facets.map((f) => [f.option.key, f.option.name]));
+    // An accessory family: design, colour and phone model chosen on its page,
+    // all required there and checked against its photos (lib/accessoryChoice).
+    // Promo-page, pack and gift lines carry no choice (confirmed by phone).
+    const models = product.facets.map((f) => f.option);
     const chosen = !line.isGift && !line.bundleId && !line.landingId;
-    if (line.color && !colors.has(line.color)) return { error: `La couleur choisie pour « ${product.name} » n'est plus proposée. Merci de la choisir à nouveau.` };
-    if (line.model && !models.has(line.model)) return { error: `Le modèle choisi pour « ${product.name} » n'est plus proposé. Merci de le choisir à nouveau.` };
-    if (chosen && colors.size > 0 && !line.color) return { error: `Merci de choisir la couleur de « ${product.name} ».` };
-    if (chosen && models.size > 0 && !line.model) return { error: `Merci de choisir le modèle de téléphone pour « ${product.name} ».` };
-    const optionColor = line.color;
-    const optionModel = line.model ? models.get(line.model) : undefined;
+    let optionDesign: string | undefined, optionColor: string | undefined, optionModel: string | undefined;
+    if (chosen) {
+      const photos = product.images.map((i) => ({ color: i.colorName, design: i.designName, shape: i.phoneShape }));
+      const problem = choiceProblem(photos, models, line, product.name);
+      if (problem) return { error: problem };
+      optionDesign = line.design;
+      optionColor = line.color;
+      optionModel = line.model ? models.find((m) => m.key === line.model)?.name : undefined;
+    }
 
     const normalPrice = Number(variant?.priceOverride ?? product.recommendedSalePrice);
-    return { product, variant, normalPrice, optionColor, optionModel };
+    return { product, variant, normalPrice, optionDesign, optionColor, optionModel };
   }
 
   // what was chosen, said on the order line ("Rose · iPhone 16 Pro Max")
-  const choiceText = (r: { variant?: { name: string }; optionColor?: string; optionModel?: string }) =>
-    [r.variant?.name, r.optionColor, r.optionModel].filter(Boolean).join(" · ") || undefined;
+  const choiceText = (r: { variant?: { name: string }; optionDesign?: string; optionColor?: string; optionModel?: string }) =>
+    [r.variant?.name, r.optionDesign, r.optionColor, r.optionModel].filter(Boolean).join(" · ") || undefined;
 
   // ── Promo pages used by this cart: must be live, and offer the product ──
   const landingIds = [...new Set(lines.filter((l) => l.landingId && !l.isGift && !l.bundleId).map((l) => l.landingId!))];
@@ -178,6 +186,7 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
       unitPrice: landing ? landing.price(r.normalPrice) : r.normalPrice,
       quantity: line.quantity,
       isGift: false,
+      optionDesign: r.optionDesign,
       optionColor: r.optionColor,
       optionModel: r.optionModel,
     });
@@ -229,7 +238,8 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
           unitRef: r.variant?.erpRef ?? undefined,
           productName: `${r.product.name} (pack ${bundle.name})`,
           variantName: choiceText(r),
-          optionColor: r.optionColor,
+          optionDesign: r.optionDesign,
+      optionColor: r.optionColor,
           optionModel: r.optionModel,
           unitPrice: unitPrices[i],
           quantity: line.quantity,
@@ -265,6 +275,7 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
       variantId: r.variant?.id,
       productName: `${r.product.name} (cadeau offert)`,
       variantName: choiceText(r),
+      optionDesign: r.optionDesign,
       optionColor: r.optionColor,
       optionModel: r.optionModel,
       unitPrice: 0,

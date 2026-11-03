@@ -18,6 +18,7 @@ import type { SpecRow } from "@/lib/offers/spec-row";
 import { Select } from "@/components/ui/Select";
 import { UnitPicker, matchUnits, twinNumbers, type BatteryRange } from "@/components/storefront/UnitPicker";
 import { useLocale, useT } from "@/components/i18n/I18nProvider";
+import { accessoryChoices, PHONE_SHAPES } from "@/lib/accessoryChoice";
 import { colorName, unitLabel } from "@/lib/i18n/labels";
 import { photoAlt } from "@/components/storefront/photo-alt";
 import { metaTrack } from "@/components/analytics/meta";
@@ -70,13 +71,13 @@ type Props = {
   product: ProductVariantExperienceData;
   variants: VariantData[];
   /** `color`: the photo's colour when known, for its description */
-  images: { url: string; altText: string | null; color?: string | null }[];
+  images: { url: string; altText: string | null; color?: string | null; design?: string | null; shape?: string | null }[];
   categorySlug: string;
   /** the cheapest delivery fee in the Ameex list, for "Livraison dès …" */
   minDeliveryFee: number;
-  /** accessory family (owner, 2026-11-02): the colours of its photos and the
-   * phone models it fits; the customer picks one of each before adding */
-  choices?: { colors: string[]; models: { key: string; name: string }[] };
+  /** accessory family (owner, 2026-11-02/03): the phone models it fits; with
+   * its photos' designs and colours, the customer picks each before adding */
+  choices?: { models: { key: string; name: string }[] };
   children?: ReactNode; // static content (specs/compatibility/gift/bundle) rendered after the transparency block
 };
 
@@ -196,32 +197,54 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
   const maxQuantity = selectedVariant ? Math.max(1, Math.min(20, selectedVariant.stockQuantity)) : 20;
   const variantOutOfStock = variants.length > 0 && (!selectedVariant || selectedVariant.stockQuantity <= 0);
 
-  // Accessory family: colour (from its photos) and phone model, both required.
-  const choiceColors = choices?.colors ?? [];
-  const choiceModels = choices?.models ?? [];
-  const [choiceColor, setChoiceColor] = useState<string | null>(choiceColors.length === 1 ? choiceColors[0] : null);
-  const [choiceModel, setChoiceModel] = useState<string>(choiceModels.length === 1 ? choiceModels[0].key : "");
-  const choicesMissing = (choiceColors.length > 0 && !choiceColor) || (choiceModels.length > 0 && !choiceModel);
-  function pickChoiceColor(color: string) {
-    setChoiceColor(color);
-    const at = photos.findIndex((img) => img.color === color);
-    if (at >= 0) goToImage(at);
+  // Accessory family: design (when several), colour and phone model, read from
+  // its photos (lib/accessoryChoice); all required, checked again at checkout.
+  const [choiceDesign, setChoiceDesign] = useState<string | null>(null);
+  const [choiceColor, setChoiceColor] = useState<string | null>(null);
+  const [choiceModel, setChoiceModel] = useState<string>("");
+  const allModels = choices?.models ?? [];
+  const designs = choices ? accessoryChoices(photos, allModels, {}).designs : [];
+  // a single option needs no click
+  const design = designs.length === 1 ? designs[0] : choiceDesign;
+  const colors = choices ? accessoryChoices(photos, allModels, { design }).colors : [];
+  const color = colors.length === 1 ? colors[0] : choiceColor && colors.includes(choiceColor) ? choiceColor : null;
+  const fit = choices ? accessoryChoices(photos, allModels, { design, color }).models : [];
+  const model = fit.some((m) => m.key === choiceModel) ? choiceModel : fit.length === 1 ? fit[0].key : "";
+  const choicesMissing =
+    Boolean(choices) && ((designs.length > 0 && !design) || (colors.length > 0 && !color) || (allModels.length > 0 && !model));
+  // show the photo of what is chosen: same design, colour and phone shape when possible
+  function showChoice(next: { design?: string | null; color?: string | null; model?: string }) {
+    const d = next.design !== undefined ? next.design : design;
+    const c = next.color !== undefined ? next.color : color;
+    const m = allModels.find((x) => x.key === (next.model ?? model));
+    type Photo = (typeof photos)[number];
+    const shapeOk = (img: Photo) => !m || !img.shape || ((PHONE_SHAPES as Record<string, string[]>)[img.shape] ?? []).includes(m.name);
+    const tries = [
+      (img: Photo) => (!d || img.design === d) && (!c || img.color === c) && shapeOk(img),
+      (img: Photo) => (!d || img.design === d) && (!c || img.color === c),
+      (img: Photo) => !d || img.design === d,
+    ];
+    for (const ok of tries) {
+      const at = photos.findIndex(ok);
+      if (at >= 0) return goToImage(at);
+    }
   }
 
   function handleAdd() {
     if (choicesMissing) return;
-    const modelName = choiceModels.find((m) => m.key === choiceModel)?.name;
+    const modelName = allModels.find((m) => m.key === model)?.name;
     addItem(
       {
         productId: product.id,
         variantId: selectedVariant?.id,
         productName: product.name,
-        variantName: [selectedVariant?.name, choiceColor, modelName].filter(Boolean).join(" · ") || undefined,
+        variantName: [selectedVariant?.name, design, color, modelName].filter(Boolean).join(" · ") || undefined,
         price,
-        image: (choiceColor && photos.find((img) => img.color === choiceColor)?.url) || displayImage?.url,
+        image: (choices && coverImage?.url) || displayImage?.url,
         isPhone: product.isPhone,
-        color: choiceColor ?? undefined,
-        model: choiceModel || undefined,
+        design: (choices && design) || undefined,
+        color: (choices && color) || undefined,
+        model: (choices && model) || undefined,
       },
       Math.min(quantity, maxQuantity)
     );
@@ -538,41 +561,65 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
               </Select>
             )}
 
-            {choiceColors.length > 0 && (
+            {designs.length > 1 && (
               <div>
                 <p className="mb-2 text-sm font-semibold text-ink">
-                  {p.color}{choiceColor ? ` · ${colorName(t, choiceColor)}` : ""}
+                  {p.design}{design ? ` · ${design}` : ""}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {choiceColors.map((color) => (
+                  {designs.map((d) => (
                     <button
-                      key={color}
+                      key={d}
                       type="button"
-                      onClick={() => pickChoiceColor(color)}
-                      aria-pressed={choiceColor === color}
+                      onClick={() => { setChoiceDesign(d); showChoice({ design: d, color: null }); }}
+                      aria-pressed={design === d}
                       className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors ${
-                        choiceColor === color ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
+                        design === d ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
                       }`}
                     >
-                      <span aria-hidden className="h-4 w-4 rounded-full border border-ink/15" style={{ background: swatch(color) }} />
-                      {colorName(t, color)}
+                      {d}
                     </button>
                   ))}
                 </div>
               </div>
             )}
 
-            {choiceModels.length > 0 && (
+            {colors.length > 0 && (
+              <div>
+                <p className="mb-2 text-sm font-semibold text-ink">
+                  {p.color}{color ? ` · ${colorName(t, color)}` : ""}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {colors.map((c) => (
+                    <button
+                      key={c}
+                      type="button"
+                      onClick={() => { setChoiceColor(c); showChoice({ color: c }); }}
+                      aria-pressed={color === c}
+                      className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors ${
+                        color === c ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
+                      }`}
+                    >
+                      <span aria-hidden className="h-4 w-4 rounded-full border border-ink/15" style={{ background: swatch(c) }} />
+                      {colorName(t, c)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {allModels.length > 0 && (
               <div>
                 <p className="mb-2 text-sm font-semibold text-ink">{p.phoneModel}</p>
                 <Select
+                  key={`${design ?? ""}-${color ?? ""}`}
                   aria-label={p.phoneModel}
-                  value={choiceModel}
-                  onChange={(e) => setChoiceModel(e.target.value)}
+                  value={model}
+                  onChange={(e) => { setChoiceModel(e.target.value); showChoice({ model: e.target.value }); }}
                   className="min-h-12 w-full rounded-2xl border border-ink/15 px-4 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
                 >
                   <option value="" disabled>{p.chooseModel}</option>
-                  {choiceModels.map((m) => (
+                  {fit.map((m) => (
                     <option key={m.key} value={m.key}>{m.name}</option>
                   ))}
                 </Select>

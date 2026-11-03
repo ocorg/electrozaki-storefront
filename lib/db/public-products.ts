@@ -40,7 +40,7 @@ const PUBLIC_PRODUCT_SELECT = {
   colorGroup: true,
   category: { select: { id: true, name: true, slug: true } },
   images: {
-    select: { url: true, altText: true, sortOrder: true, colorName: true },
+    select: { url: true, altText: true, sortOrder: true, colorName: true, designName: true, phoneShape: true },
     orderBy: { sortOrder: "asc" as const },
   },
   variants: {
@@ -134,7 +134,7 @@ export interface PublicProduct {
   colorName: string | null;
   colorGroup: string | null;
   category: { id: string; name: string; slug: string };
-  images: { url: string; altText: string | null; sortOrder: number; colorName: string | null }[];
+  images: { url: string; altText: string | null; sortOrder: number; colorName: string | null; designName: string | null; phoneShape: string | null }[];
   variants: {
     id: string;
     name: string;

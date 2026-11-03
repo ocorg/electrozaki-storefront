@@ -3,6 +3,15 @@
 // colour for the colour picker — by keyword, most specific first. Unknown
 // names get a neutral swatch; the name is always shown next to it anyway.
 const SWATCHES: [RegExp, string][] = [
+  // Pochette colours (owner, 2026-11-03): two-colour names show their first colour
+  [/^turquoise/, "#3fbfb7"],
+  [/^kaki/, "#6b6b3a"],
+  [/camel|fauve/, "#b07a45"],
+  [/^marron|^brun|chocolat/, "#6b4430"],
+  [/ecru|ecossais/, "#e3d6bc"],
+  [/transparent/, "#eef3f6"],
+  [/chrome/, "#b9bcc2"],
+  [/multicolore/, "conic-gradient(#e8784a, #f2d15c, #4f8a63, #3d6fb0, #8d6fb8, #e8784a)"],
   [/titane\s*noir|noir\s*titane/, "#3b3a38"],
   [/titane\s*(naturel)?$|titane/, "#9c958c"],
   [/lumi[eè]re\s*stellaire|starlight|cr[eè]me|ivoire|beige/, "#efe6d6"],

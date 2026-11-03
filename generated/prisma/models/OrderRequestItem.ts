@@ -44,6 +44,7 @@ export type OrderRequestItemMinAggregateOutputType = {
   unitRef: string | null
   isGift: boolean | null
   bundleId: string | null
+  optionDesign: string | null
   optionColor: string | null
   optionModel: string | null
   productNameSnapshot: string | null
@@ -59,6 +60,7 @@ export type OrderRequestItemMaxAggregateOutputType = {
   unitRef: string | null
   isGift: boolean | null
   bundleId: string | null
+  optionDesign: string | null
   optionColor: string | null
   optionModel: string | null
   productNameSnapshot: string | null
@@ -74,6 +76,7 @@ export type OrderRequestItemCountAggregateOutputType = {
   unitRef: number
   isGift: number
   bundleId: number
+  optionDesign: number
   optionColor: number
   optionModel: number
   productNameSnapshot: number
@@ -101,6 +104,7 @@ export type OrderRequestItemMinAggregateInputType = {
   unitRef?: true
   isGift?: true
   bundleId?: true
+  optionDesign?: true
   optionColor?: true
   optionModel?: true
   productNameSnapshot?: true
@@ -116,6 +120,7 @@ export type OrderRequestItemMaxAggregateInputType = {
   unitRef?: true
   isGift?: true
   bundleId?: true
+  optionDesign?: true
   optionColor?: true
   optionModel?: true
   productNameSnapshot?: true
@@ -131,6 +136,7 @@ export type OrderRequestItemCountAggregateInputType = {
   unitRef?: true
   isGift?: true
   bundleId?: true
+  optionDesign?: true
   optionColor?: true
   optionModel?: true
   productNameSnapshot?: true
@@ -233,6 +239,7 @@ export type OrderRequestItemGroupByOutputType = {
   unitRef: string | null
   isGift: boolean
   bundleId: string | null
+  optionDesign: string | null
   optionColor: string | null
   optionModel: string | null
   productNameSnapshot: string
@@ -271,6 +278,7 @@ export type OrderRequestItemWhereInput = {
   unitRef?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   isGift?: Prisma.BoolFilter<"OrderRequestItem"> | boolean
   bundleId?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
+  optionDesign?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   optionColor?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   optionModel?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   productNameSnapshot?: Prisma.StringFilter<"OrderRequestItem"> | string
@@ -290,6 +298,7 @@ export type OrderRequestItemOrderByWithRelationInput = {
   unitRef?: Prisma.SortOrderInput | Prisma.SortOrder
   isGift?: Prisma.SortOrder
   bundleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  optionDesign?: Prisma.SortOrderInput | Prisma.SortOrder
   optionColor?: Prisma.SortOrderInput | Prisma.SortOrder
   optionModel?: Prisma.SortOrderInput | Prisma.SortOrder
   productNameSnapshot?: Prisma.SortOrder
@@ -312,6 +321,7 @@ export type OrderRequestItemWhereUniqueInput = Prisma.AtLeast<{
   unitRef?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   isGift?: Prisma.BoolFilter<"OrderRequestItem"> | boolean
   bundleId?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
+  optionDesign?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   optionColor?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   optionModel?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   productNameSnapshot?: Prisma.StringFilter<"OrderRequestItem"> | string
@@ -331,6 +341,7 @@ export type OrderRequestItemOrderByWithAggregationInput = {
   unitRef?: Prisma.SortOrderInput | Prisma.SortOrder
   isGift?: Prisma.SortOrder
   bundleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  optionDesign?: Prisma.SortOrderInput | Prisma.SortOrder
   optionColor?: Prisma.SortOrderInput | Prisma.SortOrder
   optionModel?: Prisma.SortOrderInput | Prisma.SortOrder
   productNameSnapshot?: Prisma.SortOrder
@@ -354,6 +365,7 @@ export type OrderRequestItemScalarWhereWithAggregatesInput = {
   unitRef?: Prisma.StringNullableWithAggregatesFilter<"OrderRequestItem"> | string | null
   isGift?: Prisma.BoolWithAggregatesFilter<"OrderRequestItem"> | boolean
   bundleId?: Prisma.StringNullableWithAggregatesFilter<"OrderRequestItem"> | string | null
+  optionDesign?: Prisma.StringNullableWithAggregatesFilter<"OrderRequestItem"> | string | null
   optionColor?: Prisma.StringNullableWithAggregatesFilter<"OrderRequestItem"> | string | null
   optionModel?: Prisma.StringNullableWithAggregatesFilter<"OrderRequestItem"> | string | null
   productNameSnapshot?: Prisma.StringWithAggregatesFilter<"OrderRequestItem"> | string
@@ -366,6 +378,7 @@ export type OrderRequestItemCreateInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -385,6 +398,7 @@ export type OrderRequestItemUncheckedCreateInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -398,6 +412,7 @@ export type OrderRequestItemUpdateInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -417,6 +432,7 @@ export type OrderRequestItemUncheckedUpdateInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -433,6 +449,7 @@ export type OrderRequestItemCreateManyInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -445,6 +462,7 @@ export type OrderRequestItemUpdateManyMutationInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -460,6 +478,7 @@ export type OrderRequestItemUncheckedUpdateManyInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -485,6 +504,7 @@ export type OrderRequestItemCountOrderByAggregateInput = {
   unitRef?: Prisma.SortOrder
   isGift?: Prisma.SortOrder
   bundleId?: Prisma.SortOrder
+  optionDesign?: Prisma.SortOrder
   optionColor?: Prisma.SortOrder
   optionModel?: Prisma.SortOrder
   productNameSnapshot?: Prisma.SortOrder
@@ -505,6 +525,7 @@ export type OrderRequestItemMaxOrderByAggregateInput = {
   unitRef?: Prisma.SortOrder
   isGift?: Prisma.SortOrder
   bundleId?: Prisma.SortOrder
+  optionDesign?: Prisma.SortOrder
   optionColor?: Prisma.SortOrder
   optionModel?: Prisma.SortOrder
   productNameSnapshot?: Prisma.SortOrder
@@ -520,6 +541,7 @@ export type OrderRequestItemMinOrderByAggregateInput = {
   unitRef?: Prisma.SortOrder
   isGift?: Prisma.SortOrder
   bundleId?: Prisma.SortOrder
+  optionDesign?: Prisma.SortOrder
   optionColor?: Prisma.SortOrder
   optionModel?: Prisma.SortOrder
   productNameSnapshot?: Prisma.SortOrder
@@ -682,6 +704,7 @@ export type OrderRequestItemCreateWithoutProductInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -699,6 +722,7 @@ export type OrderRequestItemUncheckedCreateWithoutProductInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -744,6 +768,7 @@ export type OrderRequestItemScalarWhereInput = {
   unitRef?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   isGift?: Prisma.BoolFilter<"OrderRequestItem"> | boolean
   bundleId?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
+  optionDesign?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   optionColor?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   optionModel?: Prisma.StringNullableFilter<"OrderRequestItem"> | string | null
   productNameSnapshot?: Prisma.StringFilter<"OrderRequestItem"> | string
@@ -756,6 +781,7 @@ export type OrderRequestItemCreateWithoutVariantInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -773,6 +799,7 @@ export type OrderRequestItemUncheckedCreateWithoutVariantInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -812,6 +839,7 @@ export type OrderRequestItemCreateWithoutOrderRequestInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -829,6 +857,7 @@ export type OrderRequestItemUncheckedCreateWithoutOrderRequestInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -868,6 +897,7 @@ export type OrderRequestItemCreateWithoutReviewInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -886,6 +916,7 @@ export type OrderRequestItemUncheckedCreateWithoutReviewInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -914,6 +945,7 @@ export type OrderRequestItemUpdateWithoutReviewInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -932,6 +964,7 @@ export type OrderRequestItemUncheckedUpdateWithoutReviewInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -946,6 +979,7 @@ export type OrderRequestItemCreateManyProductInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -958,6 +992,7 @@ export type OrderRequestItemUpdateWithoutProductInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -975,6 +1010,7 @@ export type OrderRequestItemUncheckedUpdateWithoutProductInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -990,6 +1026,7 @@ export type OrderRequestItemUncheckedUpdateManyWithoutProductInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1004,6 +1041,7 @@ export type OrderRequestItemCreateManyVariantInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -1016,6 +1054,7 @@ export type OrderRequestItemUpdateWithoutVariantInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1033,6 +1072,7 @@ export type OrderRequestItemUncheckedUpdateWithoutVariantInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1048,6 +1088,7 @@ export type OrderRequestItemUncheckedUpdateManyWithoutVariantInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1062,6 +1103,7 @@ export type OrderRequestItemCreateManyOrderRequestInput = {
   unitRef?: string | null
   isGift?: boolean
   bundleId?: string | null
+  optionDesign?: string | null
   optionColor?: string | null
   optionModel?: string | null
   productNameSnapshot: string
@@ -1074,6 +1116,7 @@ export type OrderRequestItemUpdateWithoutOrderRequestInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1091,6 +1134,7 @@ export type OrderRequestItemUncheckedUpdateWithoutOrderRequestInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1106,6 +1150,7 @@ export type OrderRequestItemUncheckedUpdateManyWithoutOrderRequestInput = {
   unitRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bundleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optionDesign?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1123,6 +1168,7 @@ export type OrderRequestItemSelect<ExtArgs extends runtime.Types.Extensions.Inte
   unitRef?: boolean
   isGift?: boolean
   bundleId?: boolean
+  optionDesign?: boolean
   optionColor?: boolean
   optionModel?: boolean
   productNameSnapshot?: boolean
@@ -1142,6 +1188,7 @@ export type OrderRequestItemSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   unitRef?: boolean
   isGift?: boolean
   bundleId?: boolean
+  optionDesign?: boolean
   optionColor?: boolean
   optionModel?: boolean
   productNameSnapshot?: boolean
@@ -1160,6 +1207,7 @@ export type OrderRequestItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   unitRef?: boolean
   isGift?: boolean
   bundleId?: boolean
+  optionDesign?: boolean
   optionColor?: boolean
   optionModel?: boolean
   productNameSnapshot?: boolean
@@ -1178,6 +1226,7 @@ export type OrderRequestItemSelectScalar = {
   unitRef?: boolean
   isGift?: boolean
   bundleId?: boolean
+  optionDesign?: boolean
   optionColor?: boolean
   optionModel?: boolean
   productNameSnapshot?: boolean
@@ -1185,7 +1234,7 @@ export type OrderRequestItemSelectScalar = {
   quantity?: boolean
 }
 
-export type OrderRequestItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderRequestId" | "productId" | "variantId" | "unitRef" | "isGift" | "bundleId" | "optionColor" | "optionModel" | "productNameSnapshot" | "priceAtRequest" | "quantity", ExtArgs["result"]["orderRequestItem"]>
+export type OrderRequestItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderRequestId" | "productId" | "variantId" | "unitRef" | "isGift" | "bundleId" | "optionDesign" | "optionColor" | "optionModel" | "productNameSnapshot" | "priceAtRequest" | "quantity", ExtArgs["result"]["orderRequestItem"]>
 export type OrderRequestItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderRequest?: boolean | Prisma.OrderRequestDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -1219,6 +1268,7 @@ export type $OrderRequestItemPayload<ExtArgs extends runtime.Types.Extensions.In
     unitRef: string | null
     isGift: boolean
     bundleId: string | null
+    optionDesign: string | null
     optionColor: string | null
     optionModel: string | null
     productNameSnapshot: string
@@ -1658,6 +1708,7 @@ export interface OrderRequestItemFieldRefs {
   readonly unitRef: Prisma.FieldRef<"OrderRequestItem", 'String'>
   readonly isGift: Prisma.FieldRef<"OrderRequestItem", 'Boolean'>
   readonly bundleId: Prisma.FieldRef<"OrderRequestItem", 'String'>
+  readonly optionDesign: Prisma.FieldRef<"OrderRequestItem", 'String'>
   readonly optionColor: Prisma.FieldRef<"OrderRequestItem", 'String'>
   readonly optionModel: Prisma.FieldRef<"OrderRequestItem", 'String'>
   readonly productNameSnapshot: Prisma.FieldRef<"OrderRequestItem", 'String'>

@@ -8,6 +8,10 @@
 export const COLOR_PHRASES = ["arc-en-ciel", "clair de lune", "coucher de soleil", "pop art"];
 
 export const colorWordsEn: Record<string, string> = {
+  // pochette colours (owner, 2026-11-03)
+  et: "&", raye: "Striped", ecossais: "Tartan", ecru: "Ecru", camel: "Camel", fauve: "Tawny", turquoise: "Turquoise",
+  anthracite: "Charcoal", jean: "Denim", irise: "Iridescent", degrade: "Gradient", neige: "Snow", chrome: "Chrome",
+  multicolore: "Multicolour", casse: "Off", transparent: "Clear",
   "arc-en-ciel": "Rainbow", "clair de lune": "Moonlight", "coucher de soleil": "Sunset", "pop art": "Pop Art",
   acier: "Steel", agate: "Agate", alpin: "Alpine", ambre: "Amber", aqua: "Aqua", arctique: "Arctic",
   argent: "Silver", argentee: "Silvery", artisanal: "Crafted", asteroide: "Asteroid", aube: "Dawn",
@@ -41,6 +45,10 @@ export const colorWordsEn: Record<string, string> = {
 };
 
 export const colorWordsAr: Record<string, string> = {
+  // pochette colours (owner, 2026-11-03)
+  et: "و", raye: "مخطط", ecossais: "مربعات", ecru: "عاجي", camel: "جملي", fauve: "أسمر", turquoise: "فيروزي",
+  anthracite: "فحمي", jean: "جينز", irise: "قزحي", degrade: "متدرج", neige: "ثلجي", chrome: "كروم",
+  multicolore: "متعدد الألوان", casse: "مكسور", transparent: "شفاف",
   "arc-en-ciel": "قوس قزح", "clair de lune": "ضوء القمر", "coucher de soleil": "غروب الشمس", "pop art": "بوب آرت",
   acier: "فولاذي", agate: "عقيقي", alpin: "ألبي", ambre: "كهرماني", aqua: "مائي", arctique: "قطبي",
   argent: "فضي", argentee: "فضي", artisanal: "حرفي", asteroide: "كويكبي", aube: "فجري", aura: "أورا",
