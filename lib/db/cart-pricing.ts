@@ -2,6 +2,7 @@ import { AvailabilityStatus } from "@/generated/prisma/enums";
 import { allocateBundlePrices } from "@/lib/bundle-pricing";
 import { prisma } from "./client";
 import { landingStatus, landingPrice, landingProductIds } from "./landing";
+import { MODEL_GROUP } from "@/lib/facets";
 
 // ─────────────────────────────────────────────────────────────────────────
 // The ONLY source of truth for what an order costs. The browser's cart
@@ -19,6 +20,9 @@ export type CartLineInput = {
   bundleId?: string;
   /** added from a promo page (/offres/…): gets that page's price while it is live */
   landingId?: string;
+  /** accessory family (owner, 2026-11-02): the colour (a photo's colour name) and phone model (fiche option key) chosen */
+  color?: string;
+  model?: string;
 };
 
 export type PricedLine = {
@@ -31,6 +35,8 @@ export type PricedLine = {
   quantity: number;
   isGift: boolean;
   bundleId?: string;
+  optionColor?: string;
+  optionModel?: string;
 };
 
 export type PricedCart =
@@ -55,6 +61,8 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
     isGift: l.isGift === true,
     bundleId: l.bundleId ? String(l.bundleId) : undefined,
     landingId: l.landingId ? String(l.landingId) : undefined,
+    color: l.color ? String(l.color).slice(0, 40) : undefined,
+    model: l.model ? String(l.model).slice(0, 80) : undefined,
   }));
   if (lines.some((l) => !l.productId || !Number.isInteger(l.quantity) || l.quantity < 1 || l.quantity > MAX_QTY)) {
     return fail("Quantité invalide dans le panier.");
@@ -72,6 +80,8 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
       categoryId: true,
       internal: { select: { stockQuantity: true } },
       variants: { select: { id: true, name: true, priceOverride: true, stockQuantity: true, erpRef: true } },
+      images: { where: { colorName: { not: null } }, select: { colorName: true } },
+      facets: { where: { option: { active: true, group: { key: MODEL_GROUP, active: true } } }, select: { option: { select: { key: true, name: true } } } },
       compatibleAccessories: {
         where: { isGiftOption: true },
         select: { productId: true, product: { select: { categoryId: true } } },
@@ -117,9 +127,25 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
       return { error: `Stock insuffisant pour « ${product.name} ». Merci de réduire la quantité.` };
     }
 
+    // An accessory family: the colour and phone model chosen on the page
+    // must be one it has; they are required on a line bought from its page.
+    const colors = new Set(product.images.map((i) => i.colorName!));
+    const models = new Map(product.facets.map((f) => [f.option.key, f.option.name]));
+    const chosen = !line.isGift && !line.bundleId && !line.landingId;
+    if (line.color && !colors.has(line.color)) return { error: `La couleur choisie pour « ${product.name} » n'est plus proposée. Merci de la choisir à nouveau.` };
+    if (line.model && !models.has(line.model)) return { error: `Le modèle choisi pour « ${product.name} » n'est plus proposé. Merci de le choisir à nouveau.` };
+    if (chosen && colors.size > 0 && !line.color) return { error: `Merci de choisir la couleur de « ${product.name} ».` };
+    if (chosen && models.size > 0 && !line.model) return { error: `Merci de choisir le modèle de téléphone pour « ${product.name} ».` };
+    const optionColor = line.color;
+    const optionModel = line.model ? models.get(line.model) : undefined;
+
     const normalPrice = Number(variant?.priceOverride ?? product.recommendedSalePrice);
-    return { product, variant, normalPrice };
+    return { product, variant, normalPrice, optionColor, optionModel };
   }
+
+  // what was chosen, said on the order line ("Rose · iPhone 16 Pro Max")
+  const choiceText = (r: { variant?: { name: string }; optionColor?: string; optionModel?: string }) =>
+    [r.variant?.name, r.optionColor, r.optionModel].filter(Boolean).join(" · ") || undefined;
 
   // ── Promo pages used by this cart: must be live, and offer the product ──
   const landingIds = [...new Set(lines.filter((l) => l.landingId && !l.isGift && !l.bundleId).map((l) => l.landingId!))];
@@ -148,10 +174,12 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
       variantId: r.variant?.id,
       unitRef: r.variant?.erpRef ?? undefined,
       productName: landing ? `${r.product.name} (offre ${landing.title})` : r.product.name,
-      variantName: r.variant?.name,
+      variantName: choiceText(r),
       unitPrice: landing ? landing.price(r.normalPrice) : r.normalPrice,
       quantity: line.quantity,
       isGift: false,
+      optionColor: r.optionColor,
+      optionModel: r.optionModel,
     });
   }
 
@@ -200,7 +228,9 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
           variantId: r.variant?.id,
           unitRef: r.variant?.erpRef ?? undefined,
           productName: `${r.product.name} (pack ${bundle.name})`,
-          variantName: r.variant?.name,
+          variantName: choiceText(r),
+          optionColor: r.optionColor,
+          optionModel: r.optionModel,
           unitPrice: unitPrices[i],
           quantity: line.quantity,
           isGift: false,
@@ -234,7 +264,9 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
       productId: r.product.id,
       variantId: r.variant?.id,
       productName: `${r.product.name} (cadeau offert)`,
-      variantName: r.variant?.name,
+      variantName: choiceText(r),
+      optionColor: r.optionColor,
+      optionModel: r.optionModel,
       unitPrice: 0,
       quantity: line.quantity,
       isGift: true,

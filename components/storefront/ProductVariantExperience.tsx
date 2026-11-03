@@ -74,6 +74,9 @@ type Props = {
   categorySlug: string;
   /** the cheapest delivery fee in the Ameex list, for "Livraison dès …" */
   minDeliveryFee: number;
+  /** accessory family (owner, 2026-11-02): the colours of its photos and the
+   * phone models it fits; the customer picks one of each before adding */
+  choices?: { colors: string[]; models: { key: string; name: string }[] };
   children?: ReactNode; // static content (specs/compatibility/gift/bundle) rendered after the transparency block
 };
 
@@ -86,7 +89,7 @@ function pick<T>(variantValue: T | null | undefined, productValue: T): T {
   return variantValue === null || variantValue === undefined ? productValue : variantValue;
 }
 
-export function ProductVariantExperience({ product, variants, images: photos, categorySlug, minDeliveryFee, children }: Props) {
+export function ProductVariantExperience({ product, variants, images: photos, categorySlug, minDeliveryFee, choices, children }: Props) {
   const t = useT();
   const locale = useLocale();
   // Each photo described by its colour ("iPhone 13 128GB - Rouge"), from the
@@ -193,16 +196,32 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
   const maxQuantity = selectedVariant ? Math.max(1, Math.min(20, selectedVariant.stockQuantity)) : 20;
   const variantOutOfStock = variants.length > 0 && (!selectedVariant || selectedVariant.stockQuantity <= 0);
 
+  // Accessory family: colour (from its photos) and phone model, both required.
+  const choiceColors = choices?.colors ?? [];
+  const choiceModels = choices?.models ?? [];
+  const [choiceColor, setChoiceColor] = useState<string | null>(choiceColors.length === 1 ? choiceColors[0] : null);
+  const [choiceModel, setChoiceModel] = useState<string>(choiceModels.length === 1 ? choiceModels[0].key : "");
+  const choicesMissing = (choiceColors.length > 0 && !choiceColor) || (choiceModels.length > 0 && !choiceModel);
+  function pickChoiceColor(color: string) {
+    setChoiceColor(color);
+    const at = photos.findIndex((img) => img.color === color);
+    if (at >= 0) goToImage(at);
+  }
+
   function handleAdd() {
+    if (choicesMissing) return;
+    const modelName = choiceModels.find((m) => m.key === choiceModel)?.name;
     addItem(
       {
         productId: product.id,
         variantId: selectedVariant?.id,
         productName: product.name,
-        variantName: selectedVariant?.name,
+        variantName: [selectedVariant?.name, choiceColor, modelName].filter(Boolean).join(" · ") || undefined,
         price,
-        image: displayImage?.url,
+        image: (choiceColor && photos.find((img) => img.color === choiceColor)?.url) || displayImage?.url,
         isPhone: product.isPhone,
+        color: choiceColor ?? undefined,
+        model: choiceModel || undefined,
       },
       Math.min(quantity, maxQuantity)
     );
@@ -519,6 +538,47 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
               </Select>
             )}
 
+            {choiceColors.length > 0 && (
+              <div>
+                <p className="mb-2 text-sm font-semibold text-ink">
+                  {p.color}{choiceColor ? ` · ${colorName(t, choiceColor)}` : ""}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {choiceColors.map((color) => (
+                    <button
+                      key={color}
+                      type="button"
+                      onClick={() => pickChoiceColor(color)}
+                      aria-pressed={choiceColor === color}
+                      className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors ${
+                        choiceColor === color ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
+                      }`}
+                    >
+                      <span aria-hidden className="h-4 w-4 rounded-full border border-ink/15" style={{ background: swatch(color) }} />
+                      {colorName(t, color)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {choiceModels.length > 0 && (
+              <div>
+                <p className="mb-2 text-sm font-semibold text-ink">{p.phoneModel}</p>
+                <Select
+                  aria-label={p.phoneModel}
+                  value={choiceModel}
+                  onChange={(e) => setChoiceModel(e.target.value)}
+                  className="min-h-12 w-full rounded-2xl border border-ink/15 px-4 focus:border-gold-deep focus:outline-none focus:ring-2 focus:ring-gold/30"
+                >
+                  <option value="" disabled>{p.chooseModel}</option>
+                  {choiceModels.map((m) => (
+                    <option key={m.key} value={m.key}>{m.name}</option>
+                  ))}
+                </Select>
+              </div>
+            )}
+
             <div ref={buyRef} className="flex items-stretch gap-3">
               {!unitMode && maxQuantity > 1 && (
                 <div className="flex items-center rounded-full border border-ink/15 bg-white" role="group" aria-label={p.quantity}>
@@ -545,9 +605,11 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
                   </button>
                 </div>
               )}
-              <Button onClick={handleAdd} disabled={variantOutOfStock} variant="accent" size="lg" className="flex-1">
+              <Button onClick={handleAdd} disabled={variantOutOfStock || choicesMissing} variant="accent" size="lg" className="flex-1">
                 {variantOutOfStock ? (
                   p.soldOut
+                ) : choicesMissing ? (
+                  p.chooseFirst
                 ) : justAdded ? (
                   <>
                     <Check size={19} aria-hidden /> {p.added}

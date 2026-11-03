@@ -25,9 +25,13 @@ export type CartItem = {
   isGift?: boolean; // free gift picked for a phone in the cart
   bundleId?: string; // line added as part of a pack
   landingId?: string; // added from a promo page (/offres/…), priced by that page
+  // accessory family (owner, 2026-11-02): colour (a photo's colour name) and
+  // phone model (fiche option key) chosen on the product page
+  color?: string;
+  model?: string;
 };
 
-type LineKey = { productId: string; variantId?: string; isGift?: boolean; bundleId?: string; landingId?: string };
+type LineKey = { productId: string; variantId?: string; isGift?: boolean; bundleId?: string; landingId?: string; color?: string; model?: string };
 
 type CartContextValue = {
   items: CartItem[];
@@ -52,7 +56,9 @@ function sameLine(a: LineKey, b: LineKey) {
     (a.variantId ?? null) === (b.variantId ?? null) &&
     Boolean(a.isGift) === Boolean(b.isGift) &&
     (a.bundleId ?? null) === (b.bundleId ?? null) &&
-    (a.landingId ?? null) === (b.landingId ?? null)
+    (a.landingId ?? null) === (b.landingId ?? null) &&
+    (a.color ?? null) === (b.color ?? null) &&
+    (a.model ?? null) === (b.model ?? null)
   );
 }
 

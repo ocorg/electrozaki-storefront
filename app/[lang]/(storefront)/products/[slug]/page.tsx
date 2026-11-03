@@ -360,7 +360,15 @@ export default async function ProductPage({ params }: Props) {
         <ProductVariantExperience
           product={productData}
           variants={variantsData}
-          images={product.images.map((i) => ({ url: i.url, altText: i.altText, color: photoColor.get(i.url) ?? null }))}
+          images={product.images.map((i) => ({ url: i.url, altText: i.altText, color: i.colorName ?? photoColor.get(i.url) ?? null }))}
+          choices={
+            product.isPhone
+              ? undefined
+              : {
+                  colors: [...new Set(product.images.map((i) => i.colorName).filter((c): c is string => Boolean(c)))],
+                  models: fitsModels.map((o) => ({ key: o.key, name: o.name })),
+                }
+          }
           categorySlug={product.category.slug}
           minDeliveryFee={MIN_DELIVERY_FEE}
         >

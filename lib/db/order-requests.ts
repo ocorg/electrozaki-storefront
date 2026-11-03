@@ -87,6 +87,8 @@ export async function createOrderRequest(input: OrderRequestInput) {
             isGift: l.isGift,
             bundleId: l.bundleId,
             productNameSnapshot: l.variantName ? `${l.productName} (${l.variantName})` : l.productName,
+            optionColor: l.optionColor,
+            optionModel: l.optionModel,
             priceAtRequest: l.unitPrice,
             quantity: l.quantity,
           })),

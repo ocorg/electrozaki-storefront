@@ -151,7 +151,8 @@ export const ProductImageScalarFieldEnum = {
   productId: 'productId',
   url: 'url',
   altText: 'altText',
-  sortOrder: 'sortOrder'
+  sortOrder: 'sortOrder',
+  colorName: 'colorName'
 } as const
 
 export type ProductImageScalarFieldEnum = (typeof ProductImageScalarFieldEnum)[keyof typeof ProductImageScalarFieldEnum]
@@ -300,6 +301,8 @@ export const OrderRequestItemScalarFieldEnum = {
   unitRef: 'unitRef',
   isGift: 'isGift',
   bundleId: 'bundleId',
+  optionColor: 'optionColor',
+  optionModel: 'optionModel',
   productNameSnapshot: 'productNameSnapshot',
   priceAtRequest: 'priceAtRequest',
   quantity: 'quantity'
