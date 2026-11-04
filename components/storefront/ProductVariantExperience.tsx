@@ -527,6 +527,7 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
 
             {unitMode && (
               <UnitPicker
+                grade={product.grade}
                 allColors={product.modelColors}
                 units={variants}
                 color={unitColor}

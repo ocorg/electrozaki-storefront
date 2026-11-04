@@ -452,7 +452,6 @@ export const en: Dictionary = {
     portReplaced: "Charging port replaced",
     speakerReplaced: "Speaker replaced",
     partsReplaced: "Parts replaced",
-    originalParts: "No parts replaced",
     unitNo: (n: number, of: number) => `Unit ${n}/${of}`,
   },
 

@@ -438,7 +438,6 @@ export const darija: Dictionary = {
     portReplaced: "Port de charge mbeddel",
     speakerReplaced: "Haut-parleur mbeddel",
     partsReplaced: "Pièces mbeddlin",
-    originalParts: "Hta pièce ma tbeddlat",
     unitNo: (n: number, of: number) => `Wa7da ${n}/${of}`,
   },
 

@@ -456,7 +456,6 @@ export const ar: Dictionary = {
     portReplaced: "منفذ شحن مستبدل",
     speakerReplaced: "مكبر صوت مستبدل",
     partsReplaced: "قطع مستبدلة",
-    originalParts: "لم تُستبدل أي قطعة",
     unitNo: (n: number, of: number) => `الوحدة ${n}/${of}`,
   },
 

@@ -436,7 +436,6 @@ export const fr = {
     portReplaced: "Port de charge remplacé",
     speakerReplaced: "Haut-parleur remplacé",
     partsReplaced: "Pièces remplacées",
-    originalParts: "Aucune pièce remplacée",
     unitNo: (n: number, of: number) => `Unité ${n}/${of}`,
   },
 

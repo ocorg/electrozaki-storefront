@@ -72,6 +72,8 @@ type Props = {
   onSelect: (id: string) => void;
   /** every colour the model has had: the ones with no phone here show crossed out */
   allColors?: string[];
+  /** the listing's grade ("TRES_BON"…), shown on a phone with no part replaced */
+  grade?: string;
 };
 
 // An option out of stock stays visible, crossed out and not selectable, so
@@ -111,7 +113,7 @@ export function OptionChip({
 }
 const Chip = OptionChip;
 
-export function UnitPicker({ units, color, battery, selectedId, onColor, onBattery, onSelect, allColors = [] }: Props) {
+export function UnitPicker({ units, color, battery, selectedId, onColor, onBattery, onSelect, allColors = [], grade }: Props) {
   const t = useT();
   const locale = useLocale();
   const label = (c: string) => (c === NO_COLOR ? t.unitPicker.other : colorName(t, c));
@@ -228,9 +230,14 @@ export function UnitPicker({ units, color, battery, selectedId, onColor, onBatte
                       <span dir="ltr" className="tabular-nums font-medium">{b} %</span>
                     </span>
                   )}
-                  <span className={`mt-2 block text-xs ${parts.length ? "text-amber-800" : "text-green-800"}`}>
-                    {parts.length ? parts.join(" · ") : t.unitPicker.originalParts}
-                  </span>
+                  {/* Its condition ("Très bon état"), or the parts replaced when
+                      there are some: "Aucune pièce remplacée" on every card read
+                      as a warning (owner, 2026-11-04). */}
+                  {(parts.length > 0 || grade) && (
+                    <span className={`mt-2 block text-xs font-medium ${parts.length ? "text-amber-800" : "text-green-800"}`}>
+                      {parts.length ? parts.join(" · ") : (t.grades.label[grade!] ?? grade)}
+                    </span>
+                  )}
                   <span className="mt-2 flex flex-wrap items-baseline gap-x-2">
                     <span className="readout text-lg font-bold">{formatMAD(Number(u.priceOverride ?? 0), locale)}</span>
                     {saving !== null && u.compareAtPrice && (
