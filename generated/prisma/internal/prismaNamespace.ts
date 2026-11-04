@@ -421,7 +421,8 @@ export const ModelName = {
   LandingPage: 'LandingPage',
   LandingPageProduct: 'LandingPageProduct',
   AnalyticsEvent: 'AnalyticsEvent',
-  BotHit: 'BotHit'
+  BotHit: 'BotHit',
+  Color: 'Color'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -437,7 +438,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "facetGroup" | "facetOption" | "facetGroupCategory" | "productFacet" | "productInternal" | "orderRequest" | "orderRequestItem" | "productReview" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem" | "modelPhoto" | "rateLimitHit" | "repairTracking" | "landingPage" | "landingPageProduct" | "analyticsEvent" | "botHit"
+    modelProps: "category" | "product" | "productImage" | "productVariant" | "productCompatibility" | "facetGroup" | "facetOption" | "facetGroupCategory" | "productFacet" | "productInternal" | "orderRequest" | "orderRequestItem" | "productReview" | "contactMessage" | "repairRequest" | "promoCode" | "bundle" | "bundleItem" | "modelPhoto" | "rateLimitHit" | "repairTracking" | "landingPage" | "landingPageProduct" | "analyticsEvent" | "botHit" | "color"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2291,6 +2292,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Color: {
+      payload: Prisma.$ColorPayload<ExtArgs>
+      fields: Prisma.ColorFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ColorFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ColorFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        findFirst: {
+          args: Prisma.ColorFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ColorFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        findMany: {
+          args: Prisma.ColorFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>[]
+        }
+        create: {
+          args: Prisma.ColorCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        createMany: {
+          args: Prisma.ColorCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ColorCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>[]
+        }
+        delete: {
+          args: Prisma.ColorDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        update: {
+          args: Prisma.ColorUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        deleteMany: {
+          args: Prisma.ColorDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ColorUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ColorUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>[]
+        }
+        upsert: {
+          args: Prisma.ColorUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        aggregate: {
+          args: Prisma.ColorAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateColor>
+        }
+        groupBy: {
+          args: Prisma.ColorGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ColorGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ColorCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ColorCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2741,6 +2816,18 @@ export const BotHitScalarFieldEnum = {
 } as const
 
 export type BotHitScalarFieldEnum = (typeof BotHitScalarFieldEnum)[keyof typeof BotHitScalarFieldEnum]
+
+
+export const ColorScalarFieldEnum = {
+  name: 'name',
+  nameEn: 'nameEn',
+  nameAr: 'nameAr',
+  hex: 'hex',
+  motif: 'motif',
+  sortOrder: 'sortOrder'
+} as const
+
+export type ColorScalarFieldEnum = (typeof ColorScalarFieldEnum)[keyof typeof ColorScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -3224,6 +3311,7 @@ export type GlobalOmitConfig = {
   landingPageProduct?: Prisma.LandingPageProductOmit
   analyticsEvent?: Prisma.AnalyticsEventOmit
   botHit?: Prisma.BotHitOmit
+  color?: Prisma.ColorOmit
 }
 
 /* Types for Logging */

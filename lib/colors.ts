@@ -48,3 +48,23 @@ export function swatch(name: string | null | undefined): string {
   }
   return "#d4d4d4";
 }
+
+// The accessory colour list (owner, 2026-11-04), copied here by the ERP: a
+// colour's real dot and its name in each language. Client-safe.
+export type PaletteColor = { name: string; nameEn: string | null; nameAr: string | null; hex: string; motif: string | null };
+
+/** CSS background of a colour's dot: its colour, or a pattern for clear / multicolour / tartan. */
+export function paletteBackground(c: Pick<PaletteColor, "hex" | "motif"> | null | undefined, fallbackName?: string): string {
+  if (!c) return swatch(fallbackName);
+  if (c.motif === "transparent") return "repeating-conic-gradient(#e6eaee 0 25%, #ffffff 0 50%) 50% / 8px 8px";
+  if (c.motif === "multicolore") return "conic-gradient(#e8784a, #f2d15c, #4f8a63, #3d6fb0, #8d6fb8, #e8784a)";
+  if (c.motif === "ecossais") return `repeating-linear-gradient(0deg, rgba(160,40,40,.35) 0 2px, transparent 2px 7px), repeating-linear-gradient(90deg, rgba(40,40,40,.25) 0 2px, transparent 2px 7px), ${c.hex}`;
+  return c.hex;
+}
+
+/** The colour's name for the visitor: Arabic, English, else the French name (French and Darija pages). */
+export function paletteName(c: PaletteColor, locale: string): string {
+  if (locale === "ar" && c.nameAr) return c.nameAr;
+  if (locale === "en" && c.nameEn) return c.nameEn;
+  return c.name;
+}

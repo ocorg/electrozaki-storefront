@@ -7,7 +7,7 @@ import Link from "@/components/i18n/Link";
 import { Banknote, Camera, Check, ChevronLeft, ChevronRight, MessageCircle, Minus, Plus, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
 import { brandLabel, formatMAD, savingOf } from "@/lib/format";
-import { swatch } from "@/lib/colors";
+import { swatch, paletteBackground, paletteName, type PaletteColor } from "@/lib/colors";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { ProductVisual } from "@/components/storefront/ProductVisual";
@@ -77,7 +77,7 @@ type Props = {
   minDeliveryFee: number;
   /** accessory family (owner, 2026-11-02/03): the phone models it fits; with
    * its photos' designs and colours, the customer picks each before adding */
-  choices?: { models: { key: string; name: string }[] };
+  choices?: { models: { key: string; name: string }[]; palette?: Record<string, PaletteColor> };
   children?: ReactNode; // static content (specs/compatibility/gift/bundle) rendered after the transparency block
 };
 
@@ -203,6 +203,11 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
   const [choiceColor, setChoiceColor] = useState<string | null>(null);
   const [choiceModel, setChoiceModel] = useState<string>("");
   const allModels = choices?.models ?? [];
+  // listed colours: their own name in the visitor's language (else word by word)
+  const colourText = (c: string) => {
+    const listed = choices?.palette?.[c];
+    return listed ? paletteName(listed, locale) : colorName(t, c);
+  };
   const designs = choices ? accessoryChoices(photos, allModels, {}).designs : [];
   // a single option needs no click
   const design = designs.length === 1 ? designs[0] : choiceDesign;
@@ -588,7 +593,7 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
             {colors.length > 0 && (
               <div>
                 <p className="mb-2 text-sm font-semibold text-ink">
-                  {p.color}{color ? ` · ${colorName(t, color)}` : ""}
+                  {p.color}{color ? ` · ${colourText(color)}` : ""}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {colors.map((c) => (
@@ -601,8 +606,8 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
                         color === c ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
                       }`}
                     >
-                      <span aria-hidden className="h-4 w-4 rounded-full border border-ink/15" style={{ background: swatch(c) }} />
-                      {colorName(t, c)}
+                      <span aria-hidden className="h-4 w-4 rounded-full border border-ink/15" style={{ background: paletteBackground(choices?.palette?.[c], c) }} />
+                      {colourText(c)}
                     </button>
                   ))}
                 </div>

@@ -142,3 +142,8 @@ export type AnalyticsEvent = Prisma.AnalyticsEventModel
  * 
  */
 export type BotHit = Prisma.BotHitModel
+/**
+ * Model Color
+ * 
+ */
+export type Color = Prisma.ColorModel

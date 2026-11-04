@@ -39,6 +39,7 @@ import { getModelPages, offerForListing, offerSlug } from "@/lib/offers/phone-of
 import { OFFER_COPY } from "@/lib/offers/copy";
 import { SINGLE_SIM_NOTE, factsFor, isSingleSim, specRows } from "@/lib/offers/spec-sheet";
 import { getModelOptions, getPhotoColors, type ModelListing } from "@/lib/db/model-options";
+import { getPalette } from "@/lib/db/colors";
 import { InspectionReport } from "@/components/storefront/InspectionReport";
 import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { getReviewSummary, reviewJsonLd } from "@/lib/reviews";
@@ -189,6 +190,8 @@ export default async function ProductPage({ params }: Props) {
   const siblings = modelOptions ? modelSiblings(modelOptions.listings, product.slug) : undefined;
   // Which colour each photo shows (its description: "iPhone 13 128GB - Rouge").
   const photoColor = product.modelKey ? await getPhotoColors([product.modelKey]) : new Map<string, string>();
+  // An accessory's photo colours come from the colour list: real dot, name in each language.
+  const palette = product.isPhone ? {} : await getPalette(product.images.map((i) => i.colorName));
   // An accessory sold in several colours: one page per colour (own stock),
   // linked by buttons. Shown only when this one and at least one other are named.
   const colorPages = !product.isPhone && product.colorGroup && product.colorName ? await getColorSiblings(product.colorGroup) : [];
@@ -361,7 +364,7 @@ export default async function ProductPage({ params }: Props) {
           product={productData}
           variants={variantsData}
           images={product.images.map((i) => ({ url: i.url, altText: i.altText, color: i.colorName ?? photoColor.get(i.url) ?? null, design: i.designName, shape: i.phoneShape }))}
-          choices={product.isPhone ? undefined : { models: fitsModels.map((o) => ({ key: o.key, name: o.name })) }}
+          choices={product.isPhone ? undefined : { models: fitsModels.map((o) => ({ key: o.key, name: o.name })), palette }}
           categorySlug={product.category.slug}
           minDeliveryFee={MIN_DELIVERY_FEE}
         >

@@ -75,7 +75,8 @@ export const ModelName = {
   LandingPage: 'LandingPage',
   LandingPageProduct: 'LandingPageProduct',
   AnalyticsEvent: 'AnalyticsEvent',
-  BotHit: 'BotHit'
+  BotHit: 'BotHit',
+  Color: 'Color'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -505,6 +506,18 @@ export const BotHitScalarFieldEnum = {
 } as const
 
 export type BotHitScalarFieldEnum = (typeof BotHitScalarFieldEnum)[keyof typeof BotHitScalarFieldEnum]
+
+
+export const ColorScalarFieldEnum = {
+  name: 'name',
+  nameEn: 'nameEn',
+  nameAr: 'nameAr',
+  hex: 'hex',
+  motif: 'motif',
+  sortOrder: 'sortOrder'
+} as const
+
+export type ColorScalarFieldEnum = (typeof ColorScalarFieldEnum)[keyof typeof ColorScalarFieldEnum]
 
 
 export const SortOrder = {
