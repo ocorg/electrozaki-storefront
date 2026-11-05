@@ -45,7 +45,11 @@ import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { getReviewSummary, reviewJsonLd } from "@/lib/reviews";
 import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
-export const revalidate = 3600;
+// 6 hours: the ERP refreshes this page as soon as one of its products changes
+// (api/revalidate); rebuilding it every hour for robots used up the hosting's
+// processor time (owner, 2026-11-05). Not a full day: a promo banner with an
+// end date must not linger.
+export const revalidate = 21600;
 
 // Pages are built on their first visit and then served from the cache
 // (refreshed every hour and at once by the ERP): without this, Next renders

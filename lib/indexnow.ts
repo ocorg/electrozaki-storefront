@@ -11,16 +11,18 @@ import { OPEN_PRODUCTS, absoluteUrl } from "@/lib/site";
 export const INDEXNOW_KEY = "5505e4a29ff66d36f648a5395daaea51";
 
 // The ERP refreshes the site on every stock change: one batch at most every
-// 10 minutes (per server instance; a repeat is harmless), with every listing
-// changed since the last one (2 hours back for a fresh instance).
-const EVERY_MS = 10 * 60_000;
+// 6 hours (per server instance; a repeat is harmless), with every listing
+// changed since the last one (a day back for a fresh instance). Every 10
+// minutes brought search robots back to rebuild pages all day long, which used
+// up the hosting's processor time (owner, 2026-11-05).
+const EVERY_MS = 6 * 3_600_000;
 let lastSent = 0;
 
 export async function pingIndexNow(): Promise<void> {
   if (process.env.VERCEL_ENV !== "production") return;
   const now = Date.now();
   if (now - lastSent < EVERY_MS) return;
-  const since = new Date(lastSent || now - 2 * 3_600_000);
+  const since = new Date(lastSent || now - 24 * 3_600_000);
   lastSent = now;
   try {
     const changed = await prisma.product.findMany({

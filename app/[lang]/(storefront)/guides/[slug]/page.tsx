@@ -23,7 +23,10 @@ import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 // A buying guide (/guides/<slug>). Text in lib/guides; guide 2's price
 // example comes from live stock. Cached an hour, refreshed by the ERP.
-export const revalidate = 3600;
+// A day: the ERP refreshes this page as soon as one of its products changes
+// (api/revalidate); rebuilding it every hour for robots used up the hosting's
+// processor time (owner, 2026-11-05).
+export const revalidate = 86400;
 
 export function generateStaticParams() {
   return GUIDE_SLUGS.map((slug) => ({ slug }));

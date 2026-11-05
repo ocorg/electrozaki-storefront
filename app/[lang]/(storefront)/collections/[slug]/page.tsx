@@ -31,7 +31,10 @@ import { clipDescription, pageTitle } from "@/lib/seo-fit";
 
 // An hour's cache keeps pages fast and cheap; the ERP asks for an immediate refresh
 // (/api/revalidate) whenever stock or presentation changes.
-export const revalidate = 3600;
+// A day: the ERP refreshes this page as soon as one of its products changes
+// (api/revalidate); rebuilding it every hour for robots used up the hosting's
+// processor time (owner, 2026-11-05).
+export const revalidate = 86400;
 
 const PER_PAGE = 24;
 

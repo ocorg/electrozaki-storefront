@@ -14,7 +14,11 @@ import { PhoneOfferPage, phoneOfferMetadata } from "../../offres/[slug]/PhoneOff
 // ("iPhone 13 d'occasion Meknès"); the promo pages point to it.
 //
 // Cached an hour; the ERP refreshes it at once whenever stock or prices change.
-export const revalidate = 3600;
+// 6 hours: the ERP refreshes this page as soon as one of its products changes
+// (api/revalidate); rebuilding it every hour for robots used up the hosting's
+// processor time (owner, 2026-11-05). Not a full day: a promo banner with an
+// end date must not linger.
+export const revalidate = 21600;
 
 // Built on first visit, then served from the cache.
 export async function generateStaticParams() {
