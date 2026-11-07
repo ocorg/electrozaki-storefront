@@ -27,6 +27,19 @@ export type ChoiceModel = { key: string; name: string };
 export type ChoiceSelection = { design?: string | null; color?: string | null; model?: string | null };
 
 const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
+
+/**
+ * Stock per variant (owner, 2026-11-07): the choices still in stock, from the
+ * ERP (Product.choicesInStock). Each part null = any. Null list = no limit.
+ */
+export type InStockChoice = { design?: string | null; color?: string | null; model?: string | null };
+
+/** Can this (possibly partial) selection still be ordered? Unchosen parts match anything. */
+export function inStock(list: InStockChoice[] | null | undefined, sel: { design?: string | null; color?: string | null; model?: string | null }): boolean {
+  if (!Array.isArray(list)) return true;
+  const same = (a: string | null | undefined, b: string | null | undefined) => !a || !b || norm(a) === norm(b);
+  return list.some((c) => same(c.design, sel.design) && same(c.color, sel.color) && same(c.model, sel.model));
+}
 const uniq = (list: (string | null | undefined)[]) => [...new Set(list.filter((v): v is string => Boolean(v)))];
 
 /** What can be chosen, given what is already chosen. */
@@ -45,7 +58,7 @@ export function accessoryChoices(photos: ChoicePhoto[], models: ChoiceModel[], s
 }
 
 /** The order check: null when the choice is complete and possible, else what to tell the customer. */
-export function choiceProblem(photos: ChoicePhoto[], models: ChoiceModel[], sel: ChoiceSelection, productName: string): string | null {
+export function choiceProblem(photos: ChoicePhoto[], models: ChoiceModel[], sel: ChoiceSelection, productName: string, stock?: InStockChoice[] | null): string | null {
   const designs = uniq(photos.map((p) => p.design));
   if (sel.design && !designs.includes(sel.design)) return `Le design choisi pour « ${productName} » n'est plus proposé. Merci de le choisir à nouveau.`;
   if (designs.length > 0 && !sel.design) return `Merci de choisir le design de « ${productName} ».`;
@@ -54,5 +67,9 @@ export function choiceProblem(photos: ChoicePhoto[], models: ChoiceModel[], sel:
   if (c.colors.length > 0 && !sel.color) return `Merci de choisir la couleur de « ${productName} ».`;
   if (sel.model && !c.models.some((m) => m.key === sel.model)) return `Le modèle choisi pour « ${productName} » n'existe pas dans cette couleur. Merci de le choisir à nouveau.`;
   if (models.length > 0 && !sel.model) return `Merci de choisir le modèle de téléphone pour « ${productName} ».`;
+  const modelName = sel.model ? models.find((m) => m.key === sel.model)?.name : null;
+  if (!inStock(stock, { design: sel.design, color: sel.color, model: modelName })) {
+    return `Ce choix de « ${productName} » vient d'être épuisé. Merci d'en choisir un autre.`;
+  }
   return null;
 }

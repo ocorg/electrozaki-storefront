@@ -123,6 +123,7 @@ export type ProductCountAggregateOutputType = {
   modelKey: number
   colorName: number
   colorGroup: number
+  choicesInStock: number
   batteryHealthPercent: number
   faceIdWorking: number
   screenGenuine: number
@@ -238,6 +239,7 @@ export type ProductCountAggregateInputType = {
   modelKey?: true
   colorName?: true
   colorGroup?: true
+  choicesInStock?: true
   batteryHealthPercent?: true
   faceIdWorking?: true
   screenGenuine?: true
@@ -360,6 +362,7 @@ export type ProductGroupByOutputType = {
   modelKey: string | null
   colorName: string | null
   colorGroup: string | null
+  choicesInStock: runtime.JsonValue | null
   batteryHealthPercent: number | null
   faceIdWorking: boolean | null
   screenGenuine: boolean | null
@@ -418,6 +421,7 @@ export type ProductWhereInput = {
   modelKey?: Prisma.StringNullableFilter<"Product"> | string | null
   colorName?: Prisma.StringNullableFilter<"Product"> | string | null
   colorGroup?: Prisma.StringNullableFilter<"Product"> | string | null
+  choicesInStock?: Prisma.JsonNullableFilter<"Product">
   batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
   faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
@@ -463,6 +467,7 @@ export type ProductOrderByWithRelationInput = {
   modelKey?: Prisma.SortOrderInput | Prisma.SortOrder
   colorName?: Prisma.SortOrderInput | Prisma.SortOrder
   colorGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  choicesInStock?: Prisma.SortOrderInput | Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrderInput | Prisma.SortOrder
   faceIdWorking?: Prisma.SortOrderInput | Prisma.SortOrder
   screenGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -511,6 +516,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   modelKey?: Prisma.StringNullableFilter<"Product"> | string | null
   colorName?: Prisma.StringNullableFilter<"Product"> | string | null
   colorGroup?: Prisma.StringNullableFilter<"Product"> | string | null
+  choicesInStock?: Prisma.JsonNullableFilter<"Product">
   batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
   faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
@@ -556,6 +562,7 @@ export type ProductOrderByWithAggregationInput = {
   modelKey?: Prisma.SortOrderInput | Prisma.SortOrder
   colorName?: Prisma.SortOrderInput | Prisma.SortOrder
   colorGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  choicesInStock?: Prisma.SortOrderInput | Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrderInput | Prisma.SortOrder
   faceIdWorking?: Prisma.SortOrderInput | Prisma.SortOrder
   screenGenuine?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -599,6 +606,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   modelKey?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   colorName?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   colorGroup?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  choicesInStock?: Prisma.JsonNullableWithAggregatesFilter<"Product">
   batteryHealthPercent?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
   faceIdWorking?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableWithAggregatesFilter<"Product"> | boolean | null
@@ -634,6 +642,7 @@ export type ProductCreateInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -678,6 +687,7 @@ export type ProductUncheckedCreateInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -722,6 +732,7 @@ export type ProductUpdateInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -766,6 +777,7 @@ export type ProductUncheckedUpdateInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -810,6 +822,7 @@ export type ProductCreateManyInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -845,6 +858,7 @@ export type ProductUpdateManyMutationInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -879,6 +893,7 @@ export type ProductUncheckedUpdateManyInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -932,6 +947,7 @@ export type ProductCountOrderByAggregateInput = {
   modelKey?: Prisma.SortOrder
   colorName?: Prisma.SortOrder
   colorGroup?: Prisma.SortOrder
+  choicesInStock?: Prisma.SortOrder
   batteryHealthPercent?: Prisma.SortOrder
   faceIdWorking?: Prisma.SortOrder
   screenGenuine?: Prisma.SortOrder
@@ -1271,6 +1287,7 @@ export type ProductCreateWithoutCategoryInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1314,6 +1331,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1386,6 +1404,7 @@ export type ProductScalarWhereInput = {
   modelKey?: Prisma.StringNullableFilter<"Product"> | string | null
   colorName?: Prisma.StringNullableFilter<"Product"> | string | null
   colorGroup?: Prisma.StringNullableFilter<"Product"> | string | null
+  choicesInStock?: Prisma.JsonNullableFilter<"Product">
   batteryHealthPercent?: Prisma.IntNullableFilter<"Product"> | number | null
   faceIdWorking?: Prisma.BoolNullableFilter<"Product"> | boolean | null
   screenGenuine?: Prisma.BoolNullableFilter<"Product"> | boolean | null
@@ -1421,6 +1440,7 @@ export type ProductCreateWithoutImagesInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1464,6 +1484,7 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1523,6 +1544,7 @@ export type ProductUpdateWithoutImagesInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1566,6 +1588,7 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1609,6 +1632,7 @@ export type ProductCreateWithoutVariantsInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1652,6 +1676,7 @@ export type ProductUncheckedCreateWithoutVariantsInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1711,6 +1736,7 @@ export type ProductUpdateWithoutVariantsInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1754,6 +1780,7 @@ export type ProductUncheckedUpdateWithoutVariantsInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1797,6 +1824,7 @@ export type ProductCreateWithoutCompatibleWithPhonesInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1840,6 +1868,7 @@ export type ProductUncheckedCreateWithoutCompatibleWithPhonesInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1888,6 +1917,7 @@ export type ProductCreateWithoutCompatibleAccessoriesInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1931,6 +1961,7 @@ export type ProductUncheckedCreateWithoutCompatibleAccessoriesInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -1990,6 +2021,7 @@ export type ProductUpdateWithoutCompatibleWithPhonesInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2033,6 +2065,7 @@ export type ProductUncheckedUpdateWithoutCompatibleWithPhonesInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2087,6 +2120,7 @@ export type ProductUpdateWithoutCompatibleAccessoriesInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2130,6 +2164,7 @@ export type ProductUncheckedUpdateWithoutCompatibleAccessoriesInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2173,6 +2208,7 @@ export type ProductCreateWithoutFacetsInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2216,6 +2252,7 @@ export type ProductUncheckedCreateWithoutFacetsInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2275,6 +2312,7 @@ export type ProductUpdateWithoutFacetsInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2318,6 +2356,7 @@ export type ProductUncheckedUpdateWithoutFacetsInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2361,6 +2400,7 @@ export type ProductCreateWithoutInternalInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2404,6 +2444,7 @@ export type ProductUncheckedCreateWithoutInternalInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2463,6 +2504,7 @@ export type ProductUpdateWithoutInternalInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2506,6 +2548,7 @@ export type ProductUncheckedUpdateWithoutInternalInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2549,6 +2592,7 @@ export type ProductCreateWithoutOrderRequestItemsInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2592,6 +2636,7 @@ export type ProductUncheckedCreateWithoutOrderRequestItemsInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2651,6 +2696,7 @@ export type ProductUpdateWithoutOrderRequestItemsInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2694,6 +2740,7 @@ export type ProductUncheckedUpdateWithoutOrderRequestItemsInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2737,6 +2784,7 @@ export type ProductCreateWithoutBundleItemsInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2780,6 +2828,7 @@ export type ProductUncheckedCreateWithoutBundleItemsInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2839,6 +2888,7 @@ export type ProductUpdateWithoutBundleItemsInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2882,6 +2932,7 @@ export type ProductUncheckedUpdateWithoutBundleItemsInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2925,6 +2976,7 @@ export type ProductCreateWithoutLandingPagesInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -2968,6 +3020,7 @@ export type ProductUncheckedCreateWithoutLandingPagesInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -3027,6 +3080,7 @@ export type ProductUpdateWithoutLandingPagesInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -3070,6 +3124,7 @@ export type ProductUncheckedUpdateWithoutLandingPagesInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -3113,6 +3168,7 @@ export type ProductCreateManyCategoryInput = {
   modelKey?: string | null
   colorName?: string | null
   colorGroup?: string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: number | null
   faceIdWorking?: boolean | null
   screenGenuine?: boolean | null
@@ -3147,6 +3203,7 @@ export type ProductUpdateWithoutCategoryInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -3190,6 +3247,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -3233,6 +3291,7 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   modelKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  choicesInStock?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   batteryHealthPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   faceIdWorking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   screenGenuine?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -3361,6 +3420,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   modelKey?: boolean
   colorName?: boolean
   colorGroup?: boolean
+  choicesInStock?: boolean
   batteryHealthPercent?: boolean
   faceIdWorking?: boolean
   screenGenuine?: boolean
@@ -3407,6 +3467,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   modelKey?: boolean
   colorName?: boolean
   colorGroup?: boolean
+  choicesInStock?: boolean
   batteryHealthPercent?: boolean
   faceIdWorking?: boolean
   screenGenuine?: boolean
@@ -3443,6 +3504,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   modelKey?: boolean
   colorName?: boolean
   colorGroup?: boolean
+  choicesInStock?: boolean
   batteryHealthPercent?: boolean
   faceIdWorking?: boolean
   screenGenuine?: boolean
@@ -3479,6 +3541,7 @@ export type ProductSelectScalar = {
   modelKey?: boolean
   colorName?: boolean
   colorGroup?: boolean
+  choicesInStock?: boolean
   batteryHealthPercent?: boolean
   faceIdWorking?: boolean
   screenGenuine?: boolean
@@ -3495,7 +3558,7 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "isPhone" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "source" | "erpKey" | "published" | "modelKey" | "colorName" | "colorGroup" | "batteryHealthPercent" | "faceIdWorking" | "screenGenuine" | "batteryGenuine" | "cameraGenuine" | "chargingPortGenuine" | "speakerGenuine" | "hasDefects" | "transparencyNotes" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "brand" | "condition" | "description" | "isPhone" | "specs" | "recommendedSalePrice" | "compareAtPrice" | "availability" | "tags" | "source" | "erpKey" | "published" | "modelKey" | "colorName" | "colorGroup" | "choicesInStock" | "batteryHealthPercent" | "faceIdWorking" | "screenGenuine" | "batteryGenuine" | "cameraGenuine" | "chargingPortGenuine" | "speakerGenuine" | "hasDefects" | "transparencyNotes" | "metaTitle" | "metaDescription" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
@@ -3549,6 +3612,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     modelKey: string | null
     colorName: string | null
     colorGroup: string | null
+    choicesInStock: runtime.JsonValue | null
     batteryHealthPercent: number | null
     faceIdWorking: boolean | null
     screenGenuine: boolean | null
@@ -4014,6 +4078,7 @@ export interface ProductFieldRefs {
   readonly modelKey: Prisma.FieldRef<"Product", 'String'>
   readonly colorName: Prisma.FieldRef<"Product", 'String'>
   readonly colorGroup: Prisma.FieldRef<"Product", 'String'>
+  readonly choicesInStock: Prisma.FieldRef<"Product", 'Json'>
   readonly batteryHealthPercent: Prisma.FieldRef<"Product", 'Int'>
   readonly faceIdWorking: Prisma.FieldRef<"Product", 'Boolean'>
   readonly screenGenuine: Prisma.FieldRef<"Product", 'Boolean'>

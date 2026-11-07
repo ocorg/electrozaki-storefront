@@ -18,7 +18,7 @@ import type { SpecRow } from "@/lib/offers/spec-row";
 import { Select } from "@/components/ui/Select";
 import { UnitPicker, matchUnits, twinNumbers, type BatteryRange } from "@/components/storefront/UnitPicker";
 import { useLocale, useT } from "@/components/i18n/I18nProvider";
-import { accessoryChoices, PHONE_SHAPES } from "@/lib/accessoryChoice";
+import { accessoryChoices, inStock as choiceInStock, PHONE_SHAPES, type InStockChoice } from "@/lib/accessoryChoice";
 import { colorName, unitLabel } from "@/lib/i18n/labels";
 import { photoAlt } from "@/components/storefront/photo-alt";
 import { metaTrack } from "@/components/analytics/meta";
@@ -77,7 +77,7 @@ type Props = {
   minDeliveryFee: number;
   /** accessory family (owner, 2026-11-02/03): the phone models it fits; with
    * its photos' designs and colours, the customer picks each before adding */
-  choices?: { models: { key: string; name: string }[]; palette?: Record<string, PaletteColor> };
+  choices?: { models: { key: string; name: string }[]; palette?: Record<string, PaletteColor>; inStock?: InStockChoice[] | null };
   children?: ReactNode; // static content (specs/compatibility/gift/bundle) rendered after the transparency block
 };
 
@@ -215,6 +215,13 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
   const color = colors.length === 1 ? colors[0] : choiceColor && colors.includes(choiceColor) ? choiceColor : null;
   const fit = choices ? accessoryChoices(photos, allModels, { design, color }).models : [];
   const model = fit.some((m) => m.key === choiceModel) ? choiceModel : fit.length === 1 ? fit[0].key : "";
+  // stock per variant (owner, 2026-11-07): a sold-out choice is greyed « Épuisé »
+  const stocked = choices?.inStock;
+  const nameOf = (key: string) => allModels.find((m) => m.key === key)?.name ?? null;
+  const designOut = (d: string) => !choiceInStock(stocked, { design: d });
+  const colorOut = (c: string) => !choiceInStock(stocked, { design, color: c });
+  const modelOut = (key: string) => !choiceInStock(stocked, { design, color, model: nameOf(key) });
+  const choiceSoldOut = Boolean(choices) && !choiceInStock(stocked, { design, color, model: model ? nameOf(model) : null });
   const choicesMissing =
     Boolean(choices) && ((designs.length > 0 && !design) || (colors.length > 0 && !color) || (allModels.length > 0 && !model));
   // show the photo of what is chosen: same design, colour and phone shape when possible
@@ -236,7 +243,7 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
   }
 
   function handleAdd() {
-    if (choicesMissing) return;
+    if (choicesMissing || choiceSoldOut) return;
     const modelName = allModels.find((m) => m.key === model)?.name;
     addItem(
       {
@@ -579,11 +586,13 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
                       type="button"
                       onClick={() => { setChoiceDesign(d); showChoice({ design: d, color: null }); }}
                       aria-pressed={design === d}
-                      className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors ${
+                      disabled={designOut(d)}
+                      className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:border-dashed disabled:text-neutral-400 ${
                         design === d ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
                       }`}
                     >
                       {d}
+                      {designOut(d) && <span className="text-xs font-normal">· {p.soldOut}</span>}
                     </button>
                   ))}
                 </div>
@@ -602,12 +611,14 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
                       type="button"
                       onClick={() => { setChoiceColor(c); showChoice({ color: c }); }}
                       aria-pressed={color === c}
-                      className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors ${
+                      disabled={colorOut(c)}
+                      className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:border-dashed disabled:text-neutral-400 ${
                         color === c ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
                       }`}
                     >
-                      <span aria-hidden className="h-4 w-4 rounded-full border border-ink/15" style={{ background: paletteBackground(choices?.palette?.[c], c) }} />
+                      <span aria-hidden className={`h-4 w-4 rounded-full border border-ink/15 ${colorOut(c) ? "opacity-40" : ""}`} style={{ background: paletteBackground(choices?.palette?.[c], c) }} />
                       {colourText(c)}
+                      {colorOut(c) && <span className="text-xs font-normal">· {p.soldOut}</span>}
                     </button>
                   ))}
                 </div>
@@ -626,7 +637,7 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
                 >
                   <option value="" disabled>{p.chooseModel}</option>
                   {fit.map((m) => (
-                    <option key={m.key} value={m.key}>{m.name}</option>
+                    <option key={m.key} value={m.key} disabled={modelOut(m.key)}>{m.name}{modelOut(m.key) ? ` — ${p.soldOut}` : ""}</option>
                   ))}
                 </Select>
               </div>
@@ -658,8 +669,8 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
                   </button>
                 </div>
               )}
-              <Button onClick={handleAdd} disabled={variantOutOfStock || choicesMissing} variant="accent" size="lg" className="flex-1">
-                {variantOutOfStock ? (
+              <Button onClick={handleAdd} disabled={variantOutOfStock || choicesMissing || choiceSoldOut} variant="accent" size="lg" className="flex-1">
+                {variantOutOfStock || choiceSoldOut ? (
                   p.soldOut
                 ) : choicesMissing ? (
                   p.chooseFirst

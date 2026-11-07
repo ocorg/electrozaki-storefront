@@ -2438,6 +2438,7 @@ export const ProductScalarFieldEnum = {
   modelKey: 'modelKey',
   colorName: 'colorName',
   colorGroup: 'colorGroup',
+  choicesInStock: 'choicesInStock',
   batteryHealthPercent: 'batteryHealthPercent',
   faceIdWorking: 'faceIdWorking',
   screenGenuine: 'screenGenuine',

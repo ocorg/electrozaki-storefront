@@ -38,6 +38,7 @@ const PUBLIC_PRODUCT_SELECT = {
   metaDescription: true,
   colorName: true,
   colorGroup: true,
+  choicesInStock: true,
   category: { select: { id: true, name: true, slug: true } },
   images: {
     select: { url: true, altText: true, sortOrder: true, colorName: true, designName: true, phoneShape: true },
@@ -133,6 +134,8 @@ export interface PublicProduct {
   metaDescription: string | null;
   colorName: string | null;
   colorGroup: string | null;
+  // stock per variant: choices still orderable (null = no limit), lib/accessoryChoice
+  choicesInStock: unknown;
   category: { id: string; name: string; slug: string };
   images: { url: string; altText: string | null; sortOrder: number; colorName: string | null; designName: string | null; phoneShape: string | null }[];
   variants: {

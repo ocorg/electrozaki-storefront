@@ -44,6 +44,7 @@ import { InspectionReport } from "@/components/storefront/InspectionReport";
 import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { getReviewSummary, reviewJsonLd } from "@/lib/reviews";
 import { clipDescription, pageTitle } from "@/lib/seo-fit";
+import type { InStockChoice } from "@/lib/accessoryChoice";
 
 // 6 hours: the ERP refreshes this page as soon as one of its products changes
 // (api/revalidate); rebuilding it every hour for robots used up the hosting's
@@ -368,7 +369,7 @@ export default async function ProductPage({ params }: Props) {
           product={productData}
           variants={variantsData}
           images={product.images.map((i) => ({ url: i.url, altText: i.altText, color: i.colorName ?? photoColor.get(i.url) ?? null, design: i.designName, shape: i.phoneShape }))}
-          choices={product.isPhone ? undefined : { models: fitsModels.map((o) => ({ key: o.key, name: o.name })), palette }}
+          choices={product.isPhone ? undefined : { models: fitsModels.map((o) => ({ key: o.key, name: o.name })), palette, inStock: product.choicesInStock as InStockChoice[] | null }}
           categorySlug={product.category.slug}
           minDeliveryFee={MIN_DELIVERY_FEE}
         >

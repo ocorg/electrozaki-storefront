@@ -3,7 +3,7 @@ import { allocateBundlePrices } from "@/lib/bundle-pricing";
 import { prisma } from "./client";
 import { landingStatus, landingPrice, landingProductIds } from "./landing";
 import { MODEL_GROUP } from "@/lib/facets";
-import { choiceProblem } from "@/lib/accessoryChoice";
+import { choiceProblem, type InStockChoice } from "@/lib/accessoryChoice";
 
 // ─────────────────────────────────────────────────────────────────────────
 // The ONLY source of truth for what an order costs. The browser's cart
@@ -86,6 +86,7 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
       internal: { select: { stockQuantity: true } },
       variants: { select: { id: true, name: true, priceOverride: true, stockQuantity: true, erpRef: true } },
       images: { select: { colorName: true, designName: true, phoneShape: true } },
+      choicesInStock: true,
       facets: { where: { option: { active: true, group: { key: MODEL_GROUP, active: true } } }, select: { option: { select: { key: true, name: true } } } },
       compatibleAccessories: {
         where: { isGiftOption: true },
@@ -140,7 +141,7 @@ export async function priceCart(rawLines: CartLineInput[]): Promise<PricedCart> 
     let optionDesign: string | undefined, optionColor: string | undefined, optionModel: string | undefined;
     if (chosen) {
       const photos = product.images.map((i) => ({ color: i.colorName, design: i.designName, shape: i.phoneShape }));
-      const problem = choiceProblem(photos, models, line, product.name);
+      const problem = choiceProblem(photos, models, line, product.name, product.choicesInStock as InStockChoice[] | null);
       if (problem) return { error: problem };
       optionDesign = line.design;
       optionColor = line.color;
