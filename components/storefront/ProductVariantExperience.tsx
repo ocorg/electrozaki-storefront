@@ -587,12 +587,14 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
                       onClick={() => { setChoiceDesign(d); showChoice({ design: d, color: null }); }}
                       aria-pressed={design === d}
                       disabled={designOut(d)}
-                      className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:border-dashed disabled:text-neutral-400 ${
+                      aria-label={designOut(d) ? `${d} — ${p.soldOut}` : undefined}
+                      title={designOut(d) ? p.soldOut : undefined}
+                      className={`relative inline-flex min-h-11 items-center gap-2 overflow-hidden rounded-full border px-4 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:text-neutral-400 ${
                         design === d ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
                       }`}
                     >
                       {d}
-                      {designOut(d) && <span className="text-xs font-normal">· {p.soldOut}</span>}
+                      {designOut(d) && <SoldOutBar />}
                     </button>
                   ))}
                 </div>
@@ -612,13 +614,15 @@ export function ProductVariantExperience({ product, variants, images: photos, ca
                       onClick={() => { setChoiceColor(c); showChoice({ color: c }); }}
                       aria-pressed={color === c}
                       disabled={colorOut(c)}
-                      className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:border-dashed disabled:text-neutral-400 ${
+                      aria-label={colorOut(c) ? `${colourText(c)} — ${p.soldOut}` : undefined}
+                      title={colorOut(c) ? p.soldOut : undefined}
+                      className={`relative inline-flex min-h-11 items-center gap-2 overflow-hidden rounded-full border px-4 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:text-neutral-400 ${
                         color === c ? "border-ink bg-ink text-white" : "border-ink/15 bg-white text-ink hover:border-ink/40"
                       }`}
                     >
                       <span aria-hidden className={`h-4 w-4 rounded-full border border-ink/15 ${colorOut(c) ? "opacity-40" : ""}`} style={{ background: paletteBackground(choices?.palette?.[c], c) }} />
                       {colourText(c)}
-                      {colorOut(c) && <span className="text-xs font-normal">· {p.soldOut}</span>}
+                      {colorOut(c) && <SoldOutBar />}
                     </button>
                   ))}
                 </div>
@@ -818,5 +822,17 @@ function SiblingRow({
         )}
       </div>
     </div>
+  );
+}
+
+/** A sold-out choice (owner, 2026-11-07): a red line from the bottom-left to
+ *  the top-right corner instead of the word, like a crossed-out size. */
+function SoldOutBar() {
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute inset-0"
+      style={{ background: "linear-gradient(to bottom right, transparent calc(50% - 1px), #dc2626 calc(50% - 1px), #dc2626 calc(50% + 1px), transparent calc(50% + 1px))" }}
+    />
   );
 }
